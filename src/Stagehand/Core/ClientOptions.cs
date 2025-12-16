@@ -105,8 +105,14 @@ public struct ClientOptions()
         set { _browserbaseProjectID = new(() => value); }
     }
 
-    Lazy<string?> _modelAPIKey = new(() => Environment.GetEnvironmentVariable("MODEL_API_KEY"));
-    public string? ModelAPIKey
+    Lazy<string> _modelAPIKey = new(() =>
+        Environment.GetEnvironmentVariable("MODEL_API_KEY")
+        ?? throw new StagehandInvalidDataException(
+            string.Format("{0} cannot be null", nameof(ModelAPIKey)),
+            new ArgumentNullException(nameof(ModelAPIKey))
+        )
+    );
+    public string ModelAPIKey
     {
         readonly get { return _modelAPIKey.Value; }
         set { _modelAPIKey = new(() => value); }

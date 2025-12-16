@@ -77,7 +77,7 @@ public interface IStagehandClient
 
     string BrowserbaseProjectID { get; init; }
 
-    string? ModelAPIKey { get; init; }
+    string ModelAPIKey { get; init; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.
