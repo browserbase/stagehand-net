@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2025-12-16)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/browserbase/stagehand-net/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** manual updates ([b06c260](https://github.com/browserbase/stagehand-net/commit/b06c260afc9a91b6d49e74b1fb9384506c47e31b))
+
 ## 0.1.0 (2025-12-16)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/browserbase/stagehand-net/compare/v0.0.1...v0.1.0)
