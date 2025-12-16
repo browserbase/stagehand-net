@@ -53,7 +53,7 @@ Configure the client using environment variables:
 ```csharp
 using Stagehand;
 
-// Configured using the STAGEHAND_API_KEY and STAGEHAND_BASE_URL environment variables
+// Configured using the BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY and STAGEHAND_BASE_URL environment variables
 StagehandClient client = new();
 ```
 
@@ -62,17 +62,24 @@ Or manually:
 ```csharp
 using Stagehand;
 
-StagehandClient client = new() { APIKey = "My API Key" };
+StagehandClient client = new()
+{
+    BrowserbaseAPIKey = "My Browserbase API Key",
+    BrowserbaseProjectID = "My Browserbase Project ID",
+    ModelAPIKey = "My Model API Key",
+};
 ```
 
 Or using a combination of the two approaches.
 
 See this table for the available options:
 
-| Property  | Environment variable | Required | Default value                                |
-| --------- | -------------------- | -------- | -------------------------------------------- |
-| `APIKey`  | `STAGEHAND_API_KEY`  | true     | -                                            |
-| `BaseUrl` | `STAGEHAND_BASE_URL` | true     | `"https://api.stagehand.browserbase.com/v1"` |
+| Property               | Environment variable     | Required | Default value                                |
+| ---------------------- | ------------------------ | -------- | -------------------------------------------- |
+| `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                            |
+| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                            |
+| `ModelAPIKey`          | `MODEL_API_KEY`          | false    | -                                            |
+| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com/v1"` |
 
 ### Modifying configuration
 
@@ -194,17 +201,6 @@ var response = await client
     .Sessions.Start(parameters);
 
 Console.WriteLine(response);
-```
-
-### Environments
-
-The SDK sends requests to the production environment by default. To send requests to a different environment, configure the client like so:
-
-```csharp
-using Stagehand;
-using Stagehand.Core;
-
-StagehandClient client = new() { BaseUrl = EnvironmentUrl.Dev };
 ```
 
 ## Undocumented API functionality
