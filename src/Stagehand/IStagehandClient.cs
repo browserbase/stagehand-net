@@ -73,10 +73,19 @@ public interface IStagehandClient
     /// </summary>
     TimeSpan? Timeout { get; init; }
 
+    /// <summary>
+    /// Your [Browserbase API Key](https://www.browserbase.com/settings)
+    /// </summary>
     string BrowserbaseAPIKey { get; init; }
 
+    /// <summary>
+    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// </summary>
     string BrowserbaseProjectID { get; init; }
 
+    /// <summary>
+    /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
+    /// </summary>
     string ModelAPIKey { get; init; }
 
     /// <summary>
