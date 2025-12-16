@@ -17,7 +17,7 @@ The REST API documentation can be found on [browserbase.com](https://browserbase
 
 ```bash
 git clone git@github.com:stainless-sdks/stagehand-csharp.git
-dotnet add reference stagehand-csharp/src/Stagehand
+dotnet add reference stagehand-csharp/src/BrowserbaseStagehandNet
 ```
 
 ## Requirements
@@ -30,8 +30,8 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using Stagehand;
-using Stagehand.Models.Sessions;
+using BrowserbaseStagehandNet;
+using BrowserbaseStagehandNet.Models.Sessions;
 
 StagehandClient client = new();
 
@@ -47,7 +47,7 @@ Console.WriteLine(response);
 Configure the client using environment variables:
 
 ```csharp
-using Stagehand;
+using BrowserbaseStagehandNet;
 
 // Configured using the STAGEHAND_API_KEY and STAGEHAND_BASE_URL environment variables
 StagehandClient client = new();
@@ -56,7 +56,7 @@ StagehandClient client = new();
 Or manually:
 
 ```csharp
-using Stagehand;
+using BrowserbaseStagehandNet;
 
 StagehandClient client = new() { APIKey = "My API Key" };
 ```
@@ -146,7 +146,7 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using Stagehand;
+using BrowserbaseStagehandNet;
 
 StagehandClient client = new() { MaxRetries = 3 };
 ```
@@ -173,7 +173,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using Stagehand;
+using BrowserbaseStagehandNet;
 
 StagehandClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
@@ -197,8 +197,8 @@ Console.WriteLine(response);
 The SDK sends requests to the production environment by default. To send requests to a different environment, configure the client like so:
 
 ```csharp
-using Stagehand;
-using Stagehand.Core;
+using BrowserbaseStagehandNet;
+using BrowserbaseStagehandNet.Core;
 
 StagehandClient client = new() { BaseUrl = EnvironmentUrl.Environment1 };
 ```
@@ -223,7 +223,7 @@ response.Validate();
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using Stagehand;
+using BrowserbaseStagehandNet;
 
 StagehandClient client = new() { ResponseValidation = true };
 ```
