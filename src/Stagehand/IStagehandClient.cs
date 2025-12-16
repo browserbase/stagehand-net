@@ -30,14 +30,6 @@ public interface IStagehandClient
     /// The base URL to use for every request.
     ///
     /// <para>Defaults to the production environment: <see cref="EnvironmentUrl.Production"/></para>
-    ///
-    /// <para>
-    /// The following other environments are available:
-    /// <list type="bullet">
-    ///   <item>dev: <see cref="EnvironmentUrl.Dev"/></item>
-    ///   <item>local: <see cref="EnvironmentUrl.Local"/></item>
-    /// </list>
-    /// </para>
     /// </summary>
     string BaseUrl { get; init; }
 
@@ -81,7 +73,11 @@ public interface IStagehandClient
     /// </summary>
     TimeSpan? Timeout { get; init; }
 
-    string APIKey { get; init; }
+    string BrowserbaseAPIKey { get; init; }
+
+    string BrowserbaseProjectID { get; init; }
+
+    string? ModelAPIKey { get; init; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.

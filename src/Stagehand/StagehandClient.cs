@@ -59,10 +59,24 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string APIKey
+    public string BrowserbaseAPIKey
     {
-        get { return this._options.APIKey; }
-        init { this._options.APIKey = value; }
+        get { return this._options.BrowserbaseAPIKey; }
+        init { this._options.BrowserbaseAPIKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BrowserbaseProjectID
+    {
+        get { return this._options.BrowserbaseProjectID; }
+        init { this._options.BrowserbaseProjectID = value; }
+    }
+
+    /// <inheritdoc/>
+    public string? ModelAPIKey
+    {
+        get { return this._options.ModelAPIKey; }
+        init { this._options.ModelAPIKey = value; }
     }
 
     /// <inheritdoc/>
