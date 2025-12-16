@@ -78,7 +78,7 @@ See this table for the available options:
 | ---------------------- | ------------------------ | -------- | -------------------------------------------- |
 | `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                            |
 | `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                            |
-| `ModelAPIKey`          | `MODEL_API_KEY`          | false    | -                                            |
+| `ModelAPIKey`          | `MODEL_API_KEY`          | true     | -                                            |
 | `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com/v1"` |
 
 ### Modifying configuration

@@ -73,7 +73,7 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string? ModelAPIKey
+    public string ModelAPIKey
     {
         get { return this._options.ModelAPIKey; }
         init { this._options.ModelAPIKey = value; }
