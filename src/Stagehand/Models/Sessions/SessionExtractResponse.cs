@@ -73,14 +73,14 @@ public record class SessionExtractResponse
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickJsonElements(out var value)) {
+    /// if (instance.TryPickCustom(out var value)) {
     ///     // `value` is of type `IReadOnlyDictionary<string, JsonElement>`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickJsonElements(
+    public bool TryPickCustom(
         [NotNullWhen(true)] out IReadOnlyDictionary<string, JsonElement>? value
     )
     {
@@ -110,7 +110,7 @@ public record class SessionExtractResponse
     /// </summary>
     public void Switch(
         System::Action<Extraction> extraction,
-        System::Action<IReadOnlyDictionary<string, JsonElement>> jsonElements
+        System::Action<IReadOnlyDictionary<string, JsonElement>> custom
     )
     {
         switch (this.Value)
@@ -119,7 +119,7 @@ public record class SessionExtractResponse
                 extraction(value);
                 break;
             case Dictionary<string, JsonElement> value:
-                jsonElements(value);
+                custom(value);
                 break;
             default:
                 throw new StagehandInvalidDataException(
@@ -151,13 +151,13 @@ public record class SessionExtractResponse
     /// </summary>
     public T Match<T>(
         System::Func<Extraction, T> extraction,
-        System::Func<IReadOnlyDictionary<string, JsonElement>, T> jsonElements
+        System::Func<IReadOnlyDictionary<string, JsonElement>, T> custom
     )
     {
         return this.Value switch
         {
             Extraction value => extraction(value),
-            IReadOnlyDictionary<string, JsonElement> value => jsonElements(value),
+            IReadOnlyDictionary<string, JsonElement> value => custom(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of SessionExtractResponse"
             ),
