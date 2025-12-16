@@ -14,7 +14,7 @@ public class SessionExtractResponseTest : TestBase
     }
 
     [Fact]
-    public void JsonElementsValidation_Works()
+    public void customValidation_Works()
     {
         SessionExtractResponse value = new(
             new Dictionary<string, JsonElement>()
@@ -36,7 +36,7 @@ public class SessionExtractResponseTest : TestBase
     }
 
     [Fact]
-    public void JsonElementsSerializationRoundtrip_Works()
+    public void customSerializationRoundtrip_Works()
     {
         SessionExtractResponse value = new(
             new Dictionary<string, JsonElement>()
