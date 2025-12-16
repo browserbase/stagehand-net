@@ -17,7 +17,7 @@ The REST API documentation can be found on [browserbase.com](https://browserbase
 
 ```bash
 git clone git@github.com:browserbase/stagehand-net.git
-dotnet add reference stagehand-net/src/StagehandSDK
+dotnet add reference stagehand-net/src/Stagehand
 ```
 
 ## Requirements
@@ -30,8 +30,8 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using StagehandSDK;
-using StagehandSDK.Models.Sessions;
+using Stagehand;
+using Stagehand.Models.Sessions;
 
 BrowserbaseClient client = new();
 
@@ -47,7 +47,7 @@ Console.WriteLine(response);
 Configure the client using environment variables:
 
 ```csharp
-using StagehandSDK;
+using Stagehand;
 
 // Configured using the STAGEHAND_API_KEY and BROWSERBASE_BASE_URL environment variables
 BrowserbaseClient client = new();
@@ -56,7 +56,7 @@ BrowserbaseClient client = new();
 Or manually:
 
 ```csharp
-using StagehandSDK;
+using Stagehand;
 
 BrowserbaseClient client = new() { APIKey = "My API Key" };
 ```
@@ -146,7 +146,7 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using StagehandSDK;
+using Stagehand;
 
 BrowserbaseClient client = new() { MaxRetries = 3 };
 ```
@@ -173,7 +173,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using StagehandSDK;
+using Stagehand;
 
 BrowserbaseClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
@@ -197,8 +197,8 @@ Console.WriteLine(response);
 The SDK sends requests to the production environment by default. To send requests to a different environment, configure the client like so:
 
 ```csharp
-using StagehandSDK;
-using StagehandSDK.Core;
+using Stagehand;
+using Stagehand.Core;
 
 BrowserbaseClient client = new() { BaseUrl = EnvironmentUrl.Dev };
 ```
@@ -223,7 +223,7 @@ response.Validate();
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using StagehandSDK;
+using Stagehand;
 
 BrowserbaseClient client = new() { ResponseValidation = true };
 ```
