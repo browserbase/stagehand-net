@@ -32,14 +32,6 @@ public struct ClientOptions()
     /// The base URL to use for every request.
     ///
     /// <para>Defaults to the production environment: <see cref="EnvironmentUrl.Production"/></para>
-    ///
-    /// <para>
-    /// The following other environments are available:
-    /// <list type="bullet">
-    ///   <item>dev: <see cref="EnvironmentUrl.Dev"/></item>
-    ///   <item>local: <see cref="EnvironmentUrl.Local"/></item>
-    /// </list>
-    /// </para>
     /// </summary>
     public string BaseUrl
     {
@@ -87,16 +79,36 @@ public struct ClientOptions()
     /// </summary>
     public TimeSpan? Timeout { get; set; }
 
-    Lazy<string> _apiKey = new(() =>
-        Environment.GetEnvironmentVariable("STAGEHAND_API_KEY")
+    Lazy<string> _browserbaseAPIKey = new(() =>
+        Environment.GetEnvironmentVariable("BROWSERBASE_API_KEY")
         ?? throw new StagehandInvalidDataException(
-            string.Format("{0} cannot be null", nameof(APIKey)),
-            new ArgumentNullException(nameof(APIKey))
+            string.Format("{0} cannot be null", nameof(BrowserbaseAPIKey)),
+            new ArgumentNullException(nameof(BrowserbaseAPIKey))
         )
     );
-    public string APIKey
+    public string BrowserbaseAPIKey
     {
-        readonly get { return _apiKey.Value; }
-        set { _apiKey = new(() => value); }
+        readonly get { return _browserbaseAPIKey.Value; }
+        set { _browserbaseAPIKey = new(() => value); }
+    }
+
+    Lazy<string> _browserbaseProjectID = new(() =>
+        Environment.GetEnvironmentVariable("BROWSERBASE_PROJECT_ID")
+        ?? throw new StagehandInvalidDataException(
+            string.Format("{0} cannot be null", nameof(BrowserbaseProjectID)),
+            new ArgumentNullException(nameof(BrowserbaseProjectID))
+        )
+    );
+    public string BrowserbaseProjectID
+    {
+        readonly get { return _browserbaseProjectID.Value; }
+        set { _browserbaseProjectID = new(() => value); }
+    }
+
+    Lazy<string?> _modelAPIKey = new(() => Environment.GetEnvironmentVariable("MODEL_API_KEY"));
+    public string? ModelAPIKey
+    {
+        readonly get { return _modelAPIKey.Value; }
+        set { _modelAPIKey = new(() => value); }
     }
 }
