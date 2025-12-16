@@ -329,7 +329,7 @@ public record class Model
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
     /// if you need your function parameters to return something.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -354,9 +354,7 @@ public record class Model
                 config(value);
                 break;
             default:
-                throw new BrowserbaseInvalidDataException(
-                    "Data did not match any variant of Model"
-                );
+                throw new StagehandInvalidDataException("Data did not match any variant of Model");
         }
     }
 
@@ -367,7 +365,7 @@ public record class Model
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
     /// if you don't need your function parameters to return a value.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -387,9 +385,7 @@ public record class Model
         {
             string value => @string(value),
             ModelConfig value => config(value),
-            _ => throw new BrowserbaseInvalidDataException(
-                "Data did not match any variant of Model"
-            ),
+            _ => throw new StagehandInvalidDataException("Data did not match any variant of Model"),
         };
     }
 
@@ -403,7 +399,7 @@ public record class Model
     ///
     /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
@@ -411,7 +407,7 @@ public record class Model
     {
         if (this.Value == null)
         {
-            throw new BrowserbaseInvalidDataException("Data did not match any variant of Model");
+            throw new StagehandInvalidDataException("Data did not match any variant of Model");
         }
         this.Switch((_) => { }, (config) => config.Validate());
     }
@@ -445,8 +441,7 @@ sealed class ModelConverter1 : JsonConverter<Model>
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }
@@ -459,8 +454,7 @@ sealed class ModelConverter1 : JsonConverter<Model>
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }
@@ -508,7 +502,7 @@ sealed class ProviderConverter : JsonConverter<Provider>
                 Provider.OpenAI => "openai",
                 Provider.Anthropic => "anthropic",
                 Provider.Google => "google",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },
@@ -646,7 +640,7 @@ sealed class SessionExecuteAgentParamsXStreamResponseConverter
             {
                 SessionExecuteAgentParamsXStreamResponse.True => "true",
                 SessionExecuteAgentParamsXStreamResponse.False => "false",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

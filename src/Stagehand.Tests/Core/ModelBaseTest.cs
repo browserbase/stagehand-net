@@ -23,7 +23,7 @@ public class ModelBaseTest
     {
         var dictionary = new Dictionary<string, JsonElement>();
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullClass<string>(dictionary, "key")
         );
 
@@ -36,7 +36,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set<string?>(dictionary, "key", null);
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullClass<string>(dictionary, "key")
         );
 
@@ -49,7 +49,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set(dictionary, "key", 42);
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullClass<string>(dictionary, "key")
         );
 
@@ -72,7 +72,7 @@ public class ModelBaseTest
     {
         var dictionary = new Dictionary<string, JsonElement>();
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullStruct<int>(dictionary, "key")
         );
 
@@ -85,7 +85,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set<int?>(dictionary, "key", null);
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullStruct<int>(dictionary, "key")
         );
 
@@ -98,7 +98,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set(dictionary, "key", "value");
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNotNullStruct<int>(dictionary, "key")
         );
 
@@ -143,7 +143,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set(dictionary, "key", 42);
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNullableClass<string>(dictionary, "key")
         );
 
@@ -188,7 +188,7 @@ public class ModelBaseTest
         var dictionary = new Dictionary<string, JsonElement>();
         ModelBase.Set(dictionary, "key", "value");
 
-        var exception = Assert.Throws<BrowserbaseInvalidDataException>(() =>
+        var exception = Assert.Throws<StagehandInvalidDataException>(() =>
             ModelBase.GetNullableStruct<int>(dictionary, "key")
         );
 

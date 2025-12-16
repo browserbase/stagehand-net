@@ -238,7 +238,7 @@ public record class Input
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
     /// if you need your function parameters to return something.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -263,9 +263,7 @@ public record class Input
                 action(value);
                 break;
             default:
-                throw new BrowserbaseInvalidDataException(
-                    "Data did not match any variant of Input"
-                );
+                throw new StagehandInvalidDataException("Data did not match any variant of Input");
         }
     }
 
@@ -276,7 +274,7 @@ public record class Input
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
     /// if you don't need your function parameters to return a value.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -296,9 +294,7 @@ public record class Input
         {
             string value => @string(value),
             Action value => action(value),
-            _ => throw new BrowserbaseInvalidDataException(
-                "Data did not match any variant of Input"
-            ),
+            _ => throw new StagehandInvalidDataException("Data did not match any variant of Input"),
         };
     }
 
@@ -312,7 +308,7 @@ public record class Input
     ///
     /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
@@ -320,7 +316,7 @@ public record class Input
     {
         if (this.Value == null)
         {
-            throw new BrowserbaseInvalidDataException("Data did not match any variant of Input");
+            throw new StagehandInvalidDataException("Data did not match any variant of Input");
         }
         this.Switch((_) => { }, (action) => action.Validate());
     }
@@ -354,8 +350,7 @@ sealed class InputConverter : JsonConverter<Input>
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }
@@ -368,8 +363,7 @@ sealed class InputConverter : JsonConverter<Input>
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }
@@ -515,7 +509,7 @@ sealed class XStreamResponseConverter : JsonConverter<XStreamResponse>
             {
                 XStreamResponse.True => "true",
                 XStreamResponse.False => "false",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

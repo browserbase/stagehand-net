@@ -301,7 +301,7 @@ sealed class SessionObserveParamsXStreamResponseConverter
             {
                 SessionObserveParamsXStreamResponse.True => "true",
                 SessionObserveParamsXStreamResponse.False => "false",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

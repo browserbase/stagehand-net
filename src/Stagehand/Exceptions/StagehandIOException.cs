@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Stagehand.Exceptions;
 
-public class BrowserbaseIOException : BrowserbaseException
+public class StagehandIOException : StagehandException
 {
     public new HttpRequestException InnerException
     {
@@ -17,6 +17,6 @@ public class BrowserbaseIOException : BrowserbaseException
         }
     }
 
-    public BrowserbaseIOException(string message, HttpRequestException? innerException = null)
+    public StagehandIOException(string message, HttpRequestException? innerException = null)
         : base(message, innerException) { }
 }

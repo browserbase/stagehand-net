@@ -1,17 +1,17 @@
-# Browserbase C# API Library
+# Stagehand C# API Library
 
 > [!NOTE]
-> The Browserbase C# API Library is currently in **beta** and we're excited for you to experiment with it!
+> The Stagehand C# API Library is currently in **beta** and we're excited for you to experiment with it!
 >
 > This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
 >
 > **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/browserbase/stagehand-net/issues/new).
 
-The Browserbase C# SDK provides convenient access to the [Browserbase REST API](https://browserbase.com) from applications written in C#.
+The Stagehand C# SDK provides convenient access to the [Stagehand REST API](https://docs.stagehand.dev) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
-The REST API documentation can be found on [browserbase.com](https://browserbase.com).
+The REST API documentation can be found on [docs.stagehand.dev](https://docs.stagehand.dev).
 
 ## Installation
 
@@ -33,7 +33,7 @@ using System;
 using Stagehand;
 using Stagehand.Models.Sessions;
 
-BrowserbaseClient client = new();
+StagehandClient client = new();
 
 SessionStartParams parameters = new() { Env = Env.Local };
 
@@ -49,8 +49,8 @@ Configure the client using environment variables:
 ```csharp
 using Stagehand;
 
-// Configured using the STAGEHAND_API_KEY and BROWSERBASE_BASE_URL environment variables
-BrowserbaseClient client = new();
+// Configured using the STAGEHAND_API_KEY and STAGEHAND_BASE_URL environment variables
+StagehandClient client = new();
 ```
 
 Or manually:
@@ -58,17 +58,17 @@ Or manually:
 ```csharp
 using Stagehand;
 
-BrowserbaseClient client = new() { APIKey = "My API Key" };
+StagehandClient client = new() { APIKey = "My API Key" };
 ```
 
 Or using a combination of the two approaches.
 
 See this table for the available options:
 
-| Property  | Environment variable   | Required | Default value                                |
-| --------- | ---------------------- | -------- | -------------------------------------------- |
-| `APIKey`  | `STAGEHAND_API_KEY`    | true     | -                                            |
-| `BaseUrl` | `BROWSERBASE_BASE_URL` | true     | `"https://api.stagehand.browserbase.com/v1"` |
+| Property  | Environment variable | Required | Default value                                |
+| --------- | -------------------- | -------- | -------------------------------------------- |
+| `APIKey`  | `STAGEHAND_API_KEY`  | true     | -                                            |
+| `BaseUrl` | `STAGEHAND_BASE_URL` | true     | `"https://api.stagehand.browserbase.com/v1"` |
 
 ### Modifying configuration
 
@@ -96,7 +96,7 @@ The `WithOptions` method does not affect the original client or service.
 
 ## Requests and responses
 
-To send a request to the Browserbase API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
+To send a request to the Stagehand API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
 For example, `client.Sessions.Start` should be called with an instance of `SessionStartParams`, and it will return an instance of `Task<SessionStartResponse>`.
 
@@ -104,28 +104,28 @@ For example, `client.Sessions.Start` should be called with an instance of `Sessi
 
 The SDK throws custom unchecked exception types:
 
-- `BrowserbaseApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
+- `StagehandApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-| Status | Exception                                  |
-| ------ | ------------------------------------------ |
-| 400    | `BrowserbaseBadRequestException`           |
-| 401    | `BrowserbaseUnauthorizedException`         |
-| 403    | `BrowserbaseForbiddenException`            |
-| 404    | `BrowserbaseNotFoundException`             |
-| 422    | `BrowserbaseUnprocessableEntityException`  |
-| 429    | `BrowserbaseRateLimitException`            |
-| 5xx    | `Browserbase5xxException`                  |
-| others | `BrowserbaseUnexpectedStatusCodeException` |
+| Status | Exception                                |
+| ------ | ---------------------------------------- |
+| 400    | `StagehandBadRequestException`           |
+| 401    | `StagehandUnauthorizedException`         |
+| 403    | `StagehandForbiddenException`            |
+| 404    | `StagehandNotFoundException`             |
+| 422    | `StagehandUnprocessableEntityException`  |
+| 429    | `StagehandRateLimitException`            |
+| 5xx    | `Stagehand5xxException`                  |
+| others | `StagehandUnexpectedStatusCodeException` |
 
-Additionally, all 4xx errors inherit from `Browserbase4xxException`.
+Additionally, all 4xx errors inherit from `Stagehand4xxException`.
 
 false
 
-- `BrowserbaseIOException`: I/O networking errors.
+- `StagehandIOException`: I/O networking errors.
 
-- `BrowserbaseInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
+- `StagehandInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
-- `BrowserbaseException`: Base class for all exceptions.
+- `StagehandException`: Base class for all exceptions.
 
 ## Network options
 
@@ -148,7 +148,7 @@ To set a custom number of retries, configure the client using the `MaxRetries` m
 ```csharp
 using Stagehand;
 
-BrowserbaseClient client = new() { MaxRetries = 3 };
+StagehandClient client = new() { MaxRetries = 3 };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):
@@ -175,7 +175,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 using System;
 using Stagehand;
 
-BrowserbaseClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
+StagehandClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):
@@ -200,7 +200,7 @@ The SDK sends requests to the production environment by default. To send request
 using Stagehand;
 using Stagehand.Core;
 
-BrowserbaseClient client = new() { BaseUrl = EnvironmentUrl.Dev };
+StagehandClient client = new() { BaseUrl = EnvironmentUrl.Dev };
 ```
 
 ## Undocumented API functionality
@@ -211,7 +211,7 @@ The SDK is typed for convenient usage of the documented API. However, it also su
 
 In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `string`, but the API could return something else.
 
-By default, the SDK will not throw an exception in this case. It will throw `BrowserbaseInvalidDataException` only if you directly access the property.
+By default, the SDK will not throw an exception in this case. It will throw `StagehandInvalidDataException` only if you directly access the property.
 
 If you would prefer to check that the response is completely well-typed upfront, then either call `Validate`:
 
@@ -225,7 +225,7 @@ Or configure the client using the `ResponseValidation` option:
 ```csharp
 using Stagehand;
 
-BrowserbaseClient client = new() { ResponseValidation = true };
+StagehandClient client = new() { ResponseValidation = true };
 ```
 
 Or configure a single method call using [`WithOptions`](#modifying-configuration):

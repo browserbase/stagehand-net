@@ -18,9 +18,9 @@ public sealed class SessionService : ISessionService
         return new SessionService(this._client.WithOptions(modifier));
     }
 
-    readonly IBrowserbaseClient _client;
+    readonly IStagehandClient _client;
 
-    public SessionService(IBrowserbaseClient client)
+    public SessionService(IStagehandClient client)
     {
         _client = client;
     }
@@ -33,7 +33,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionActParams> request = new()
@@ -72,7 +72,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionEndParams> request = new()
@@ -113,7 +113,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionExecuteAgentParams> request = new()
@@ -158,7 +158,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionExtractParams> request = new()
@@ -199,7 +199,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionNavigateParams> request = new()
@@ -238,7 +238,7 @@ public sealed class SessionService : ISessionService
     {
         if (parameters.SessionID == null)
         {
-            throw new BrowserbaseInvalidDataException("'parameters.SessionID' cannot be null");
+            throw new StagehandInvalidDataException("'parameters.SessionID' cannot be null");
         }
 
         HttpRequest<Sessions::SessionObserveParams> request = new()

@@ -8,7 +8,7 @@ using Stagehand.Services;
 namespace Stagehand;
 
 /// <summary>
-/// A client for interacting with the Browserbase REST API.
+/// A client for interacting with the Stagehand REST API.
 ///
 /// <para>This client performs best when you create a single instance and reuse it
 /// for all interactions with the REST API. This is because each client holds its
@@ -19,7 +19,7 @@ namespace Stagehand;
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public interface IBrowserbaseClient
+public interface IStagehandClient
 {
     /// <summary>
     /// The HTTP client to use for making requests in the SDK.
@@ -88,12 +88,12 @@ public interface IBrowserbaseClient
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    IBrowserbaseClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
+    IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ISessionService Sessions { get; }
 
     /// <summary>
-    /// Sends a request to the Browserbase REST API.
+    /// Sends a request to the Stagehand REST API.
     /// </summary>
     Task<HttpResponse> Execute<T>(
         HttpRequest<T> request,
