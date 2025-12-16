@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Metadata -->
-    <AssemblyTitle>Browserbase C#</AssemblyTitle>
+    <AssemblyTitle>Stagehand C#</AssemblyTitle>
     <AssemblyName>Stagehand</AssemblyName>
     <VersionPrefix>0.0.1</VersionPrefix>
-    <Authors>Browserbase</Authors>
-    <Company>Browserbase</Company>
-    <Description>The official .NET library for the Browserbase API.</Description>
+    <Authors>Stagehand</Authors>
+    <Company>Stagehand</Company>
+    <Description>The official .NET library for the Stagehand API.</Description>
     <PackageTags>sdk;api;http;library</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Copyright>Copyright 2025 Browserbase</Copyright>
-    <PackageProjectUrl>https://browserbase.com</PackageProjectUrl>
+    <Copyright>Copyright 2025 Stagehand</Copyright>
+    <PackageProjectUrl>https://docs.stagehand.dev</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/browserbase/stagehand-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <OutputType>Library</OutputType>

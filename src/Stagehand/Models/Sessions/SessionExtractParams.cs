@@ -324,7 +324,7 @@ sealed class SessionExtractParamsXStreamResponseConverter
             {
                 SessionExtractParamsXStreamResponse.True => "true",
                 SessionExtractParamsXStreamResponse.False => "false",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

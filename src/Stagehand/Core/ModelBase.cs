@@ -61,17 +61,17 @@ public abstract record class ModelBase
     {
         if (!dictionary.TryGetValue(key, out JsonElement element))
         {
-            throw new BrowserbaseInvalidDataException($"'{key}' cannot be absent");
+            throw new StagehandInvalidDataException($"'{key}' cannot be absent");
         }
 
         try
         {
             return JsonSerializer.Deserialize<T>(element, SerializerOptions)
-                ?? throw new BrowserbaseInvalidDataException($"'{key}' cannot be null");
+                ?? throw new StagehandInvalidDataException($"'{key}' cannot be null");
         }
         catch (JsonException e)
         {
-            throw new BrowserbaseInvalidDataException(
+            throw new StagehandInvalidDataException(
                 $"'{key}' must be of type {typeof(T).FullName}",
                 e
             );
@@ -86,17 +86,17 @@ public abstract record class ModelBase
     {
         if (!dictionary.TryGetValue(key, out JsonElement element))
         {
-            throw new BrowserbaseInvalidDataException($"'{key}' cannot be absent");
+            throw new StagehandInvalidDataException($"'{key}' cannot be absent");
         }
 
         try
         {
             return JsonSerializer.Deserialize<T?>(element, SerializerOptions)
-                ?? throw new BrowserbaseInvalidDataException($"'{key}' cannot be null");
+                ?? throw new StagehandInvalidDataException($"'{key}' cannot be null");
         }
         catch (JsonException e)
         {
-            throw new BrowserbaseInvalidDataException(
+            throw new StagehandInvalidDataException(
                 $"'{key}' must be of type {typeof(T).FullName}",
                 e
             );
@@ -120,7 +120,7 @@ public abstract record class ModelBase
         }
         catch (JsonException e)
         {
-            throw new BrowserbaseInvalidDataException(
+            throw new StagehandInvalidDataException(
                 $"'{key}' must be of type {typeof(T).FullName}",
                 e
             );
@@ -144,7 +144,7 @@ public abstract record class ModelBase
         }
         catch (JsonException e)
         {
-            throw new BrowserbaseInvalidDataException(
+            throw new StagehandInvalidDataException(
                 $"'{key}' must be of type {typeof(T).FullName}",
                 e
             );
@@ -189,7 +189,7 @@ public abstract record class ModelBase
     ///
     /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>

@@ -113,7 +113,7 @@ public class WaitUntilTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
-        Assert.Throws<BrowserbaseInvalidDataException>(() => value.Validate());
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
     [Theory]
@@ -172,7 +172,7 @@ public class SessionNavigateParamsXStreamResponseTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
-        Assert.Throws<BrowserbaseInvalidDataException>(() => value.Validate());
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
     [Theory]

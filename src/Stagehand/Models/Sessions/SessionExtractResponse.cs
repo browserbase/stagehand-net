@@ -94,7 +94,7 @@ public record class SessionExtractResponse
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
     /// if you need your function parameters to return something.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -122,7 +122,7 @@ public record class SessionExtractResponse
                 jsonElements(value);
                 break;
             default:
-                throw new BrowserbaseInvalidDataException(
+                throw new StagehandInvalidDataException(
                     "Data did not match any variant of SessionExtractResponse"
                 );
         }
@@ -135,7 +135,7 @@ public record class SessionExtractResponse
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
     /// if you don't need your function parameters to return a value.</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
     /// that doesn't match any variant's expected shape).
     /// </exception>
@@ -158,7 +158,7 @@ public record class SessionExtractResponse
         {
             Extraction value => extraction(value),
             IReadOnlyDictionary<string, JsonElement> value => jsonElements(value),
-            _ => throw new BrowserbaseInvalidDataException(
+            _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of SessionExtractResponse"
             ),
         };
@@ -175,7 +175,7 @@ public record class SessionExtractResponse
     ///
     /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
     ///
-    /// <exception cref="BrowserbaseInvalidDataException">
+    /// <exception cref="StagehandInvalidDataException">
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
@@ -183,7 +183,7 @@ public record class SessionExtractResponse
     {
         if (this.Value == null)
         {
-            throw new BrowserbaseInvalidDataException(
+            throw new StagehandInvalidDataException(
                 "Data did not match any variant of SessionExtractResponse"
             );
         }
@@ -219,8 +219,7 @@ sealed class SessionExtractResponseConverter : JsonConverter<SessionExtractRespo
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }
@@ -236,8 +235,7 @@ sealed class SessionExtractResponseConverter : JsonConverter<SessionExtractRespo
                 return new(deserialized, json);
             }
         }
-        catch (System::Exception e)
-            when (e is JsonException || e is BrowserbaseInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
             // ignore
         }

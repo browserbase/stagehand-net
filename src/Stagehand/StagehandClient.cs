@@ -12,7 +12,7 @@ using Stagehand.Services;
 namespace Stagehand;
 
 /// <inheritdoc/>
-public sealed class BrowserbaseClient : IBrowserbaseClient
+public sealed class StagehandClient : IStagehandClient
 {
     static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
 
@@ -66,9 +66,9 @@ public sealed class BrowserbaseClient : IBrowserbaseClient
     }
 
     /// <inheritdoc/>
-    public IBrowserbaseClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new BrowserbaseClient(modifier(this._options));
+        return new StagehandClient(modifier(this._options));
     }
 
     readonly Lazy<ISessionService> _sessions;
@@ -111,14 +111,14 @@ public sealed class BrowserbaseClient : IBrowserbaseClient
 
                 try
                 {
-                    throw BrowserbaseExceptionFactory.CreateApiException(
+                    throw StagehandExceptionFactory.CreateApiException(
                         response.Message.StatusCode,
                         await response.ReadAsString(cancellationToken).ConfigureAwait(false)
                     );
                 }
                 catch (HttpRequestException e)
                 {
-                    throw new BrowserbaseIOException("I/O Exception", e);
+                    throw new StagehandIOException("I/O Exception", e);
                 }
                 finally
                 {
@@ -171,7 +171,7 @@ public sealed class BrowserbaseClient : IBrowserbaseClient
         }
         catch (HttpRequestException e)
         {
-            throw new BrowserbaseIOException("I/O exception", e);
+            throw new StagehandIOException("I/O exception", e);
         }
         return new() { Message = responseMessage, CancellationToken = cts.Token };
     }
@@ -262,17 +262,17 @@ public sealed class BrowserbaseClient : IBrowserbaseClient
 
     static bool ShouldRetry(Exception e)
     {
-        return e is IOException || e is BrowserbaseIOException;
+        return e is IOException || e is StagehandIOException;
     }
 
-    public BrowserbaseClient()
+    public StagehandClient()
     {
         _options = new();
 
         _sessions = new(() => new SessionService(this));
     }
 
-    public BrowserbaseClient(ClientOptions options)
+    public StagehandClient(ClientOptions options)
         : this()
     {
         _options = options;

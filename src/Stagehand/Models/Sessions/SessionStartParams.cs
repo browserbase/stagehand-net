@@ -278,7 +278,7 @@ sealed class EnvConverter : JsonConverter<Env>
             {
                 Env.Local => "LOCAL",
                 Env.Browserbase => "BROWSERBASE",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },
