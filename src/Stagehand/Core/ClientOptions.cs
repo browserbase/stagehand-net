@@ -79,6 +79,9 @@ public struct ClientOptions()
     /// </summary>
     public TimeSpan? Timeout { get; set; }
 
+    /// <summary>
+    /// Your [Browserbase API Key](https://www.browserbase.com/settings)
+    /// </summary>
     Lazy<string> _browserbaseAPIKey = new(() =>
         Environment.GetEnvironmentVariable("BROWSERBASE_API_KEY")
         ?? throw new StagehandInvalidDataException(
@@ -86,12 +89,19 @@ public struct ClientOptions()
             new ArgumentNullException(nameof(BrowserbaseAPIKey))
         )
     );
+
+    /// <summary>
+    /// Your [Browserbase API Key](https://www.browserbase.com/settings)
+    /// </summary>
     public string BrowserbaseAPIKey
     {
         readonly get { return _browserbaseAPIKey.Value; }
         set { _browserbaseAPIKey = new(() => value); }
     }
 
+    /// <summary>
+    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// </summary>
     Lazy<string> _browserbaseProjectID = new(() =>
         Environment.GetEnvironmentVariable("BROWSERBASE_PROJECT_ID")
         ?? throw new StagehandInvalidDataException(
@@ -99,12 +109,19 @@ public struct ClientOptions()
             new ArgumentNullException(nameof(BrowserbaseProjectID))
         )
     );
+
+    /// <summary>
+    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// </summary>
     public string BrowserbaseProjectID
     {
         readonly get { return _browserbaseProjectID.Value; }
         set { _browserbaseProjectID = new(() => value); }
     }
 
+    /// <summary>
+    /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
+    /// </summary>
     Lazy<string> _modelAPIKey = new(() =>
         Environment.GetEnvironmentVariable("MODEL_API_KEY")
         ?? throw new StagehandInvalidDataException(
@@ -112,6 +129,10 @@ public struct ClientOptions()
             new ArgumentNullException(nameof(ModelAPIKey))
         )
     );
+
+    /// <summary>
+    /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
+    /// </summary>
     public string ModelAPIKey
     {
         readonly get { return _modelAPIKey.Value; }
