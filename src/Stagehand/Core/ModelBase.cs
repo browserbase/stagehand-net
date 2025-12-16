@@ -39,7 +39,6 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, WaitUntil>(),
             new ApiEnumConverter<string, SessionNavigateParamsXStreamResponse>(),
             new ApiEnumConverter<string, SessionObserveParamsXStreamResponse>(),
-            new ApiEnumConverter<string, Env>(),
         },
     };
 

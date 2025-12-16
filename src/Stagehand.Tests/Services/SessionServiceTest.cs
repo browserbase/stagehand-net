@@ -93,7 +93,11 @@ public class SessionServiceTest : TestBase
     public async Task Start_Works()
     {
         var response = await this.client.Sessions.Start(
-            new() { Env = Env.Local },
+            new()
+            {
+                BrowserbaseAPIKey = "BROWSERBASE_API_KEY",
+                BrowserbaseProjectID = "BROWSERBASE_PROJECT_ID",
+            },
             TestContext.Current.CancellationToken
         );
         response.Validate();

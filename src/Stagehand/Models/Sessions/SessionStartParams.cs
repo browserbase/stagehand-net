@@ -5,9 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Stagehand.Core;
-using Stagehand.Exceptions;
 
 namespace Stagehand.Models.Sessions;
 
@@ -24,29 +22,24 @@ public sealed record class SessionStartParams : ParamsBase
     }
 
     /// <summary>
-    /// Environment to run the browser in
+    /// API key for Browserbase Cloud
     /// </summary>
-    public required ApiEnum<string, Env> Env
+    public required string BrowserbaseAPIKey
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Env>>(this.RawBodyData, "env"); }
-        init { ModelBase.Set(this._rawBodyData, "env", value); }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "BROWSERBASE_API_KEY"); }
+        init { ModelBase.Set(this._rawBodyData, "BROWSERBASE_API_KEY", value); }
     }
 
     /// <summary>
-    /// API key for Browserbase (required when env=BROWSERBASE)
+    /// Project ID for Browserbase
     /// </summary>
-    public string? APIKey
+    public required string BrowserbaseProjectID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "apiKey"); }
-        init
+        get
         {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "apiKey", value);
+            return ModelBase.GetNotNullClass<string>(this.RawBodyData, "BROWSERBASE_PROJECT_ID");
         }
+        init { ModelBase.Set(this._rawBodyData, "BROWSERBASE_PROJECT_ID", value); }
     }
 
     /// <summary>
@@ -67,30 +60,7 @@ public sealed record class SessionStartParams : ParamsBase
     }
 
     /// <summary>
-    /// Options for local browser launch
-    /// </summary>
-    public LocalBrowserLaunchOptions? LocalBrowserLaunchOptions
-    {
-        get
-        {
-            return ModelBase.GetNullableClass<LocalBrowserLaunchOptions>(
-                this.RawBodyData,
-                "localBrowserLaunchOptions"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "localBrowserLaunchOptions", value);
-        }
-    }
-
-    /// <summary>
-    /// AI model to use for actions
+    /// AI model to use for actions (must be prefixed with provider/)
     /// </summary>
     public string? Model
     {
@@ -103,23 +73,6 @@ public sealed record class SessionStartParams : ParamsBase
             }
 
             ModelBase.Set(this._rawBodyData, "model", value);
-        }
-    }
-
-    /// <summary>
-    /// Project ID for Browserbase (required when env=BROWSERBASE)
-    /// </summary>
-    public string? ProjectID
-    {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "projectId"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "projectId", value);
         }
     }
 
@@ -242,108 +195,4 @@ public sealed record class SessionStartParams : ParamsBase
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
-}
-
-/// <summary>
-/// Environment to run the browser in
-/// </summary>
-[JsonConverter(typeof(EnvConverter))]
-public enum Env
-{
-    Local,
-    Browserbase,
-}
-
-sealed class EnvConverter : JsonConverter<Env>
-{
-    public override Env Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "LOCAL" => Env.Local,
-            "BROWSERBASE" => Env.Browserbase,
-            _ => (Env)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Env value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Env.Local => "LOCAL",
-                Env.Browserbase => "BROWSERBASE",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Options for local browser launch
-/// </summary>
-[JsonConverter(typeof(ModelConverter<LocalBrowserLaunchOptions, LocalBrowserLaunchOptionsFromRaw>))]
-public sealed record class LocalBrowserLaunchOptions : ModelBase
-{
-    public bool? Headless
-    {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "headless"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "headless", value);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        _ = this.Headless;
-    }
-
-    public LocalBrowserLaunchOptions() { }
-
-    public LocalBrowserLaunchOptions(LocalBrowserLaunchOptions localBrowserLaunchOptions)
-        : base(localBrowserLaunchOptions) { }
-
-    public LocalBrowserLaunchOptions(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    LocalBrowserLaunchOptions(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="LocalBrowserLaunchOptionsFromRaw.FromRawUnchecked"/>
-    public static LocalBrowserLaunchOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-}
-
-class LocalBrowserLaunchOptionsFromRaw : IFromRaw<LocalBrowserLaunchOptions>
-{
-    /// <inheritdoc/>
-    public LocalBrowserLaunchOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => LocalBrowserLaunchOptions.FromRawUnchecked(rawData);
 }
