@@ -29,11 +29,11 @@ public sealed class HttpResponse : IDisposable
                         cts.Token
                     )
                     .ConfigureAwait(false)
-                ?? throw new BrowserbaseInvalidDataException("Response cannot be null");
+                ?? throw new StagehandInvalidDataException("Response cannot be null");
         }
         catch (HttpRequestException e)
         {
-            throw new BrowserbaseIOException("I/O Exception", e);
+            throw new StagehandIOException("I/O Exception", e);
         }
     }
 

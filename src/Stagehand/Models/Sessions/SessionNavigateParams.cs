@@ -269,7 +269,7 @@ sealed class WaitUntilConverter : JsonConverter<WaitUntil>
                 WaitUntil.Load => "load",
                 WaitUntil.Domcontentloaded => "domcontentloaded",
                 WaitUntil.Networkidle => "networkidle",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },
@@ -314,7 +314,7 @@ sealed class SessionNavigateParamsXStreamResponseConverter
             {
                 SessionNavigateParamsXStreamResponse.True => "true",
                 SessionNavigateParamsXStreamResponse.False => "false",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

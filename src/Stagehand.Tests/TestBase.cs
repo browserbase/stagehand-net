@@ -5,11 +5,11 @@ namespace Stagehand.Tests;
 
 public class TestBase
 {
-    protected IBrowserbaseClient client;
+    protected IStagehandClient client;
 
     public TestBase()
     {
-        client = new BrowserbaseClient()
+        client = new StagehandClient()
         {
             BaseUrl =
                 Environment.GetEnvironmentVariable("TEST_API_BASE_URL") ?? "http://localhost:4010",

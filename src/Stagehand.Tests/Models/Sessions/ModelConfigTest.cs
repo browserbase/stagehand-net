@@ -167,7 +167,7 @@ public class ModelConfigProviderTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
-        Assert.Throws<BrowserbaseInvalidDataException>(() => value.Validate());
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
     [Theory]

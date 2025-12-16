@@ -162,7 +162,7 @@ sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
                 ModelConfigProvider.OpenAI => "openai",
                 ModelConfigProvider.Anthropic => "anthropic",
                 ModelConfigProvider.Google => "google",
-                _ => throw new BrowserbaseInvalidDataException(
+                _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
             },

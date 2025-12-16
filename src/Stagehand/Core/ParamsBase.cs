@@ -206,7 +206,7 @@ public abstract record class ParamsBase
         );
     }
 
-    static string GetUserAgent() => $"{typeof(BrowserbaseClient).Name}/C# {GetPackageVersion()}";
+    static string GetUserAgent() => $"{typeof(StagehandClient).Name}/C# {GetPackageVersion()}";
 
     static string GetOSArch() =>
         RuntimeInformation.OSArchitecture switch

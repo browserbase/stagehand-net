@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace Stagehand.Exceptions;
 
-public class BrowserbaseApiException : BrowserbaseException
+public class StagehandApiException : StagehandException
 {
     public new HttpRequestException InnerException
     {
@@ -18,10 +18,10 @@ public class BrowserbaseApiException : BrowserbaseException
         }
     }
 
-    public BrowserbaseApiException(string message, HttpRequestException? innerException = null)
+    public StagehandApiException(string message, HttpRequestException? innerException = null)
         : base(message, innerException) { }
 
-    protected BrowserbaseApiException(HttpRequestException? innerException)
+    protected StagehandApiException(HttpRequestException? innerException)
         : base(innerException) { }
 
     public required HttpStatusCode StatusCode { get; init; }

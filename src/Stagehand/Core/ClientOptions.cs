@@ -25,7 +25,7 @@ public struct ClientOptions()
     public HttpClient HttpClient { get; set; } = new();
 
     Lazy<string> _baseUrl = new(() =>
-        Environment.GetEnvironmentVariable("BROWSERBASE_BASE_URL") ?? EnvironmentUrl.Production
+        Environment.GetEnvironmentVariable("STAGEHAND_BASE_URL") ?? EnvironmentUrl.Production
     );
 
     /// <summary>
@@ -89,7 +89,7 @@ public struct ClientOptions()
 
     Lazy<string> _apiKey = new(() =>
         Environment.GetEnvironmentVariable("STAGEHAND_API_KEY")
-        ?? throw new BrowserbaseInvalidDataException(
+        ?? throw new StagehandInvalidDataException(
             string.Format("{0} cannot be null", nameof(APIKey)),
             new ArgumentNullException(nameof(APIKey))
         )
