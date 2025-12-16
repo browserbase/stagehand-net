@@ -29,28 +29,10 @@ public sealed record class SessionExecuteAgentResponse : ModelBase
         }
     }
 
-    /// <summary>
-    /// Steps taken by the agent
-    /// </summary>
-    public IReadOnlyList<JsonElement>? Steps
-    {
-        get { return ModelBase.GetNullableClass<List<JsonElement>>(this.RawData, "steps"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "steps", value);
-        }
-    }
-
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Message;
-        _ = this.Steps;
     }
 
     public SessionExecuteAgentResponse() { }
