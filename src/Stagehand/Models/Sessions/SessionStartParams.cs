@@ -10,8 +10,8 @@ using Stagehand.Core;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Initializes a new Stagehand session with a browser instance. Returns a session
-/// ID that must be used for all subsequent requests.
+/// Creates a new browser session with the specified configuration. Returns a session
+/// ID used for all subsequent operations.
 /// </summary>
 public sealed record class SessionStartParams : ParamsBase
 {
@@ -21,33 +21,40 @@ public sealed record class SessionStartParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    /// <summary>
-    /// API key for Browserbase Cloud
-    /// </summary>
-    public required string BrowserbaseAPIKey
+    public JsonElement? Body
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "BROWSERBASE_API_KEY"); }
-        init { ModelBase.Set(this._rawBodyData, "BROWSERBASE_API_KEY", value); }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawBodyData, "body"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawBodyData, "body", value);
+        }
     }
 
-    /// <summary>
-    /// Project ID for Browserbase
-    /// </summary>
-    public required string BrowserbaseProjectID
+    public JsonElement? XLanguage
+    {
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawHeaderData, "x-language"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawHeaderData, "x-language", value);
+        }
+    }
+
+    public JsonElement? XSDKVersion
     {
         get
         {
-            return ModelBase.GetNotNullClass<string>(this.RawBodyData, "BROWSERBASE_PROJECT_ID");
+            return ModelBase.GetNullableStruct<JsonElement>(this.RawHeaderData, "x-sdk-version");
         }
-        init { ModelBase.Set(this._rawBodyData, "BROWSERBASE_PROJECT_ID", value); }
-    }
-
-    /// <summary>
-    /// Timeout in ms to wait for DOM to settle
-    /// </summary>
-    public long? DomSettleTimeout
-    {
-        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "domSettleTimeout"); }
         init
         {
             if (value == null)
@@ -55,16 +62,13 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "domSettleTimeout", value);
+            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
-    /// <summary>
-    /// AI model to use for actions (must be prefixed with provider/)
-    /// </summary>
-    public string? Model
+    public JsonElement? XSentAt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "model"); }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawHeaderData, "x-sent-at"); }
         init
         {
             if (value == null)
@@ -72,16 +76,19 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "model", value);
+            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
-    /// <summary>
-    /// Enable self-healing for failed actions
-    /// </summary>
-    public bool? SelfHeal
+    public JsonElement? XStreamResponse
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "selfHeal"); }
+        get
+        {
+            return ModelBase.GetNullableStruct<JsonElement>(
+                this.RawHeaderData,
+                "x-stream-response"
+            );
+        }
         init
         {
             if (value == null)
@@ -89,41 +96,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "selfHeal", value);
-        }
-    }
-
-    /// <summary>
-    /// Custom system prompt for AI actions
-    /// </summary>
-    public string? SystemPrompt
-    {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "systemPrompt"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "systemPrompt", value);
-        }
-    }
-
-    /// <summary>
-    /// Logging verbosity level
-    /// </summary>
-    public long? Verbose
-    {
-        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "verbose", value);
+            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
