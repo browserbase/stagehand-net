@@ -37,7 +37,7 @@ StagehandClient client = new();
 
 SessionActParams parameters = new()
 {
-    ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+    ID = "00000000-your-session-id-000000000000",
     Input = "click the first link on the page",
 };
 
