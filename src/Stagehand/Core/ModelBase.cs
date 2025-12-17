@@ -31,13 +31,6 @@ public abstract record class ModelBase
     {
         Converters =
         {
-            new ApiEnumConverter<bool, Success>(),
-            new ApiEnumConverter<bool, SessionEndResponseSuccess>(),
-            new ApiEnumConverter<bool, SessionExecuteResponseSuccess>(),
-            new ApiEnumConverter<bool, SessionExtractResponseSuccess>(),
-            new ApiEnumConverter<bool, SessionNavigateResponseSuccess>(),
-            new ApiEnumConverter<bool, SessionObserveResponseSuccess>(),
-            new ApiEnumConverter<bool, SessionStartResponseSuccess>(),
             new ApiEnumConverter<string, XLanguage>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXLanguage>(),
@@ -56,10 +49,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Device>(),
             new ApiEnumConverter<string, HTTPVersion>(),
             new ApiEnumConverter<string, OperatingSystem>(),
-            new ApiEnumConverter<string, BrowserbaseProxyConfigType>(),
-            new ApiEnumConverter<string, ExternalProxyConfigType>(),
             new ApiEnumConverter<string, Region>(),
-            new ApiEnumConverter<double, Verbose>(),
             new ApiEnumConverter<string, SessionStartParamsXLanguage>(),
             new ApiEnumConverter<string, SessionStartParamsXStreamResponse>(),
         },

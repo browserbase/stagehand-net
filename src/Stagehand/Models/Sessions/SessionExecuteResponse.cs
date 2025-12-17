@@ -4,8 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Stagehand.Core;
-using Stagehand.Exceptions;
-using System = System;
 
 namespace Stagehand.Models.Sessions;
 
@@ -18,15 +16,12 @@ public sealed record class SessionExecuteResponse : ModelBase
         init { ModelBase.Set(this._rawData, "data", value); }
     }
 
-    public required ApiEnum<bool, SessionExecuteResponseSuccess> Success
+    /// <summary>
+    /// Indicates whether the request was successful
+    /// </summary>
+    public required bool Success
     {
-        get
-        {
-            return ModelBase.GetNotNullClass<ApiEnum<bool, SessionExecuteResponseSuccess>>(
-                this.RawData,
-                "success"
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
         init { ModelBase.Set(this._rawData, "success", value); }
     }
 
@@ -34,7 +29,7 @@ public sealed record class SessionExecuteResponse : ModelBase
     public override void Validate()
     {
         this.Data.Validate();
-        this.Success.Validate();
+        _ = this.Success;
     }
 
     public SessionExecuteResponse() { }
@@ -537,45 +532,4 @@ class UsageFromRaw : IFromRaw<Usage>
     /// <inheritdoc/>
     public Usage FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Usage.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(SessionExecuteResponseSuccessConverter))]
-public enum SessionExecuteResponseSuccess
-{
-    True,
-}
-
-sealed class SessionExecuteResponseSuccessConverter : JsonConverter<SessionExecuteResponseSuccess>
-{
-    public override SessionExecuteResponseSuccess Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<bool>(ref reader, options) switch
-        {
-            true => SessionExecuteResponseSuccess.True,
-            _ => (SessionExecuteResponseSuccess)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        SessionExecuteResponseSuccess value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                SessionExecuteResponseSuccess.True => true,
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

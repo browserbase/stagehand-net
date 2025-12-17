@@ -183,15 +183,9 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Logging verbosity level (0=quiet, 1=normal, 2=debug)
     /// </summary>
-    public ApiEnum<double, Verbose>? Verbose
+    public long? Verbose
     {
-        get
-        {
-            return ModelBase.GetNullableClass<ApiEnum<double, Verbose>>(
-                this.RawBodyData,
-                "verbose"
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
         init
         {
             if (value == null)
@@ -2388,6 +2382,14 @@ public record class UnnamedSchemaWithArrayParent0
         get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
+    public JsonElement Type
+    {
+        get
+        {
+            return Match(browserbaseProxyConfig: (x) => x.Type, externalProxyConfig: (x) => x.Type);
+        }
+    }
+
     public string? DomainPattern
     {
         get
@@ -2628,15 +2630,9 @@ sealed class UnnamedSchemaWithArrayParent0Converter : JsonConverter<UnnamedSchem
 [JsonConverter(typeof(ModelConverter<BrowserbaseProxyConfig, BrowserbaseProxyConfigFromRaw>))]
 public sealed record class BrowserbaseProxyConfig : ModelBase
 {
-    public required ApiEnum<string, BrowserbaseProxyConfigType> Type
+    public JsonElement Type
     {
-        get
-        {
-            return ModelBase.GetNotNullClass<ApiEnum<string, BrowserbaseProxyConfigType>>(
-                this.RawData,
-                "type"
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
@@ -2671,12 +2667,23 @@ public sealed record class BrowserbaseProxyConfig : ModelBase
     /// <inheritdoc/>
     public override void Validate()
     {
-        this.Type.Validate();
+        if (
+            !JsonElement.DeepEquals(
+                this.Type,
+                JsonSerializer.Deserialize<JsonElement>("\"browserbase\"")
+            )
+        )
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
         _ = this.DomainPattern;
         this.Geolocation?.Validate();
     }
 
-    public BrowserbaseProxyConfig() { }
+    public BrowserbaseProxyConfig()
+    {
+        this.Type = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
+    }
 
     public BrowserbaseProxyConfig(BrowserbaseProxyConfig browserbaseProxyConfig)
         : base(browserbaseProxyConfig) { }
@@ -2684,6 +2691,8 @@ public sealed record class BrowserbaseProxyConfig : ModelBase
     public BrowserbaseProxyConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
+
+        this.Type = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
     }
 
 #pragma warning disable CS8618
@@ -2701,13 +2710,6 @@ public sealed record class BrowserbaseProxyConfig : ModelBase
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
-
-    [SetsRequiredMembers]
-    public BrowserbaseProxyConfig(ApiEnum<string, BrowserbaseProxyConfigType> type)
-        : this()
-    {
-        this.Type = type;
-    }
 }
 
 class BrowserbaseProxyConfigFromRaw : IFromRaw<BrowserbaseProxyConfig>
@@ -2716,47 +2718,6 @@ class BrowserbaseProxyConfigFromRaw : IFromRaw<BrowserbaseProxyConfig>
     public BrowserbaseProxyConfig FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => BrowserbaseProxyConfig.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(BrowserbaseProxyConfigTypeConverter))]
-public enum BrowserbaseProxyConfigType
-{
-    Browserbase,
-}
-
-sealed class BrowserbaseProxyConfigTypeConverter : JsonConverter<BrowserbaseProxyConfigType>
-{
-    public override BrowserbaseProxyConfigType Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "browserbase" => BrowserbaseProxyConfigType.Browserbase,
-            _ => (BrowserbaseProxyConfigType)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        BrowserbaseProxyConfigType value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                BrowserbaseProxyConfigType.Browserbase => "browserbase",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }
 
 [JsonConverter(typeof(ModelConverter<Geolocation, GeolocationFromRaw>))]
@@ -2852,15 +2813,9 @@ public sealed record class ExternalProxyConfig : ModelBase
         init { ModelBase.Set(this._rawData, "server", value); }
     }
 
-    public required ApiEnum<string, ExternalProxyConfigType> Type
+    public JsonElement Type
     {
-        get
-        {
-            return ModelBase.GetNotNullClass<ApiEnum<string, ExternalProxyConfigType>>(
-                this.RawData,
-                "type"
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
@@ -2910,13 +2865,24 @@ public sealed record class ExternalProxyConfig : ModelBase
     public override void Validate()
     {
         _ = this.Server;
-        this.Type.Validate();
+        if (
+            !JsonElement.DeepEquals(
+                this.Type,
+                JsonSerializer.Deserialize<JsonElement>("\"external\"")
+            )
+        )
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
         _ = this.DomainPattern;
         _ = this.Password;
         _ = this.Username;
     }
 
-    public ExternalProxyConfig() { }
+    public ExternalProxyConfig()
+    {
+        this.Type = JsonSerializer.Deserialize<JsonElement>("\"external\"");
+    }
 
     public ExternalProxyConfig(ExternalProxyConfig externalProxyConfig)
         : base(externalProxyConfig) { }
@@ -2924,6 +2890,8 @@ public sealed record class ExternalProxyConfig : ModelBase
     public ExternalProxyConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
+
+        this.Type = JsonSerializer.Deserialize<JsonElement>("\"external\"");
     }
 
 #pragma warning disable CS8618
@@ -2941,6 +2909,13 @@ public sealed record class ExternalProxyConfig : ModelBase
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public ExternalProxyConfig(string server)
+        : this()
+    {
+        this.Server = server;
+    }
 }
 
 class ExternalProxyConfigFromRaw : IFromRaw<ExternalProxyConfig>
@@ -2948,47 +2923,6 @@ class ExternalProxyConfigFromRaw : IFromRaw<ExternalProxyConfig>
     /// <inheritdoc/>
     public ExternalProxyConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ExternalProxyConfig.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(ExternalProxyConfigTypeConverter))]
-public enum ExternalProxyConfigType
-{
-    External,
-}
-
-sealed class ExternalProxyConfigTypeConverter : JsonConverter<ExternalProxyConfigType>
-{
-    public override ExternalProxyConfigType Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "external" => ExternalProxyConfigType.External,
-            _ => (ExternalProxyConfigType)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        ExternalProxyConfigType value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                ExternalProxyConfigType.External => "external",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }
 
 [JsonConverter(typeof(RegionConverter))]
@@ -3028,52 +2962,6 @@ sealed class RegionConverter : JsonConverter<Region>
                 Region.UsEast1 => "us-east-1",
                 Region.EuCentral1 => "eu-central-1",
                 Region.ApSoutheast1 => "ap-southeast-1",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Logging verbosity level (0=quiet, 1=normal, 2=debug)
-/// </summary>
-[JsonConverter(typeof(VerboseConverter))]
-public enum Verbose
-{
-    V0,
-    V1,
-    V2,
-}
-
-sealed class VerboseConverter : JsonConverter<Verbose>
-{
-    public override Verbose Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<double>(ref reader, options) switch
-        {
-            0 => Verbose.V0,
-            1 => Verbose.V1,
-            2 => Verbose.V2,
-            _ => (Verbose)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Verbose value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Verbose.V0 => 0,
-                Verbose.V1 => 1,
-                Verbose.V2 => 2,
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

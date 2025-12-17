@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Text.Json;
-using Stagehand.Core;
-using Stagehand.Exceptions;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -47,7 +45,7 @@ public class SessionExecuteResponseTest : TestBase
                     },
                 }
             ),
-            Success = SessionExecuteResponseSuccess.True,
+            Success = true,
         };
 
         SessionExecuteResponseData expectedData = new(
@@ -84,8 +82,7 @@ public class SessionExecuteResponseTest : TestBase
                 },
             }
         );
-        ApiEnum<bool, SessionExecuteResponseSuccess> expectedSuccess =
-            SessionExecuteResponseSuccess.True;
+        bool expectedSuccess = true;
 
         Assert.Equal(expectedData, model.Data);
         Assert.Equal(expectedSuccess, model.Success);
@@ -130,7 +127,7 @@ public class SessionExecuteResponseTest : TestBase
                     },
                 }
             ),
-            Success = SessionExecuteResponseSuccess.True,
+            Success = true,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -178,7 +175,7 @@ public class SessionExecuteResponseTest : TestBase
                     },
                 }
             ),
-            Success = SessionExecuteResponseSuccess.True,
+            Success = true,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -219,8 +216,7 @@ public class SessionExecuteResponseTest : TestBase
                 },
             }
         );
-        ApiEnum<bool, SessionExecuteResponseSuccess> expectedSuccess =
-            SessionExecuteResponseSuccess.True;
+        bool expectedSuccess = true;
 
         Assert.Equal(expectedData, deserialized.Data);
         Assert.Equal(expectedSuccess, deserialized.Success);
@@ -265,7 +261,7 @@ public class SessionExecuteResponseTest : TestBase
                     },
                 }
             ),
-            Success = SessionExecuteResponseSuccess.True,
+            Success = true,
         };
 
         model.Validate();
@@ -1243,59 +1239,5 @@ public class UsageTest : TestBase
         };
 
         model.Validate();
-    }
-}
-
-public class SessionExecuteResponseSuccessTest : TestBase
-{
-    [Theory]
-    [InlineData(SessionExecuteResponseSuccess.True)]
-    public void Validation_Works(SessionExecuteResponseSuccess rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<bool, SessionExecuteResponseSuccess> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<bool, SessionExecuteResponseSuccess>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(SessionExecuteResponseSuccess.True)]
-    public void SerializationRoundtrip_Works(SessionExecuteResponseSuccess rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<bool, SessionExecuteResponseSuccess> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<bool, SessionExecuteResponseSuccess>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<bool, SessionExecuteResponseSuccess>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<bool, SessionExecuteResponseSuccess>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
