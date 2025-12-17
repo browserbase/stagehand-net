@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Text.Json;
-using Stagehand.Core;
-using Stagehand.Exceptions;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -33,7 +31,7 @@ public class SessionActResponseTest : TestBase
                 },
                 ActionID = "actionId",
             },
-            Success = Success.True,
+            Success = true,
         };
 
         Data expectedData = new()
@@ -56,7 +54,7 @@ public class SessionActResponseTest : TestBase
             },
             ActionID = "actionId",
         };
-        ApiEnum<bool, Success> expectedSuccess = Success.True;
+        bool expectedSuccess = true;
 
         Assert.Equal(expectedData, model.Data);
         Assert.Equal(expectedSuccess, model.Success);
@@ -87,7 +85,7 @@ public class SessionActResponseTest : TestBase
                 },
                 ActionID = "actionId",
             },
-            Success = Success.True,
+            Success = true,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -121,7 +119,7 @@ public class SessionActResponseTest : TestBase
                 },
                 ActionID = "actionId",
             },
-            Success = Success.True,
+            Success = true,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -148,7 +146,7 @@ public class SessionActResponseTest : TestBase
             },
             ActionID = "actionId",
         };
-        ApiEnum<bool, Success> expectedSuccess = Success.True;
+        bool expectedSuccess = true;
 
         Assert.Equal(expectedData, deserialized.Data);
         Assert.Equal(expectedSuccess, deserialized.Success);
@@ -179,7 +177,7 @@ public class SessionActResponseTest : TestBase
                 },
                 ActionID = "actionId",
             },
-            Success = Success.True,
+            Success = true,
         };
 
         model.Validate();
@@ -595,59 +593,5 @@ public class ResultTest : TestBase
         };
 
         model.Validate();
-    }
-}
-
-public class SuccessTest : TestBase
-{
-    [Theory]
-    [InlineData(Success.True)]
-    public void Validation_Works(Success rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<bool, Success> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<bool, Success>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Success.True)]
-    public void SerializationRoundtrip_Works(Success rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<bool, Success> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<bool, Success>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<bool, Success>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<bool, Success>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }

@@ -4,8 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Stagehand.Core;
-using Stagehand.Exceptions;
-using System = System;
 
 namespace Stagehand.Models.Sessions;
 
@@ -18,15 +16,12 @@ public sealed record class SessionNavigateResponse : ModelBase
         init { ModelBase.Set(this._rawData, "data", value); }
     }
 
-    public required ApiEnum<bool, SessionNavigateResponseSuccess> Success
+    /// <summary>
+    /// Indicates whether the request was successful
+    /// </summary>
+    public required bool Success
     {
-        get
-        {
-            return ModelBase.GetNotNullClass<ApiEnum<bool, SessionNavigateResponseSuccess>>(
-                this.RawData,
-                "success"
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
         init { ModelBase.Set(this._rawData, "success", value); }
     }
 
@@ -34,7 +29,7 @@ public sealed record class SessionNavigateResponse : ModelBase
     public override void Validate()
     {
         this.Data.Validate();
-        this.Success.Validate();
+        _ = this.Success;
     }
 
     public SessionNavigateResponse() { }
@@ -150,45 +145,4 @@ class SessionNavigateResponseDataFromRaw : IFromRaw<SessionNavigateResponseData>
     public SessionNavigateResponseData FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SessionNavigateResponseData.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(SessionNavigateResponseSuccessConverter))]
-public enum SessionNavigateResponseSuccess
-{
-    True,
-}
-
-sealed class SessionNavigateResponseSuccessConverter : JsonConverter<SessionNavigateResponseSuccess>
-{
-    public override SessionNavigateResponseSuccess Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<bool>(ref reader, options) switch
-        {
-            true => SessionNavigateResponseSuccess.True,
-            _ => (SessionNavigateResponseSuccess)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        SessionNavigateResponseSuccess value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                SessionNavigateResponseSuccess.True => true,
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }
