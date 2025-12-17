@@ -1,6 +1,5 @@
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Stagehand.Core;
@@ -26,7 +25,7 @@ public sealed class SessionService : ISessionService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Act(
+    public async Task<SessionActResponse> Act(
         SessionActParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -44,23 +43,28 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionActResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Act(
-        JsonElement id,
-        SessionActParams? parameters = null,
+    public async Task<SessionActResponse> Act(
+        string id,
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
         return await this.Act(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> End(
+    public async Task<SessionEndResponse> End(
         SessionEndParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -78,12 +82,19 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionEndResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> End(
-        JsonElement id,
+    public async Task<SessionEndResponse> End(
+        string id,
         SessionEndParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -94,8 +105,8 @@ public sealed class SessionService : ISessionService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> ExecuteAgent(
-        SessionExecuteAgentParams parameters,
+    public async Task<SessionExecuteResponse> Execute(
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
@@ -104,7 +115,7 @@ public sealed class SessionService : ISessionService
             throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
         }
 
-        HttpRequest<SessionExecuteAgentParams> request = new()
+        HttpRequest<SessionExecuteParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
@@ -112,23 +123,28 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionExecuteResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> ExecuteAgent(
-        JsonElement id,
-        SessionExecuteAgentParams? parameters = null,
+    public async Task<SessionExecuteResponse> Execute(
+        string id,
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
-        return await this.ExecuteAgent(parameters with { ID = id }, cancellationToken);
+        return await this.Execute(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Extract(
+    public async Task<SessionExtractResponse> Extract(
         SessionExtractParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -146,12 +162,19 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionExtractResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Extract(
-        JsonElement id,
+    public async Task<SessionExtractResponse> Extract(
+        string id,
         SessionExtractParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -162,7 +185,7 @@ public sealed class SessionService : ISessionService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Navigate(
+    public async Task<SessionNavigateResponse> Navigate(
         SessionNavigateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -180,23 +203,28 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionNavigateResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Navigate(
-        JsonElement id,
-        SessionNavigateParams? parameters = null,
+    public async Task<SessionNavigateResponse> Navigate(
+        string id,
+        SessionNavigateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
         return await this.Navigate(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Observe(
+    public async Task<SessionObserveResponse> Observe(
         SessionObserveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -214,12 +242,19 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionObserveResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Observe(
-        JsonElement id,
+    public async Task<SessionObserveResponse> Observe(
+        string id,
         SessionObserveParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -230,13 +265,11 @@ public sealed class SessionService : ISessionService
     }
 
     /// <inheritdoc/>
-    public async Task<JsonElement> Start(
-        SessionStartParams? parameters = null,
+    public async Task<SessionStartResponse> Start(
+        SessionStartParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
         HttpRequest<SessionStartParams> request = new()
         {
             Method = HttpMethod.Post,
@@ -245,6 +278,13 @@ public sealed class SessionService : ISessionService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        return await response.Deserialize<JsonElement>(cancellationToken).ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SessionStartResponse>(cancellationToken)
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

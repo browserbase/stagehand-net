@@ -12,9 +12,9 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Extracts structured data from the current page using AI-powered analysis.
+/// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
 /// </summary>
-public sealed record class SessionExtractParams : ParamsBase
+public sealed record class SessionExecuteParams : ParamsBase
 {
     readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -24,8 +24,23 @@ public sealed record class SessionExtractParams : ParamsBase
 
     public string? ID { get; init; }
 
+    public required AgentConfig AgentConfig
+    {
+        get { return ModelBase.GetNotNullClass<AgentConfig>(this.RawBodyData, "agentConfig"); }
+        init { ModelBase.Set(this._rawBodyData, "agentConfig", value); }
+    }
+
+    public required ExecuteOptions ExecuteOptions
+    {
+        get
+        {
+            return ModelBase.GetNotNullClass<ExecuteOptions>(this.RawBodyData, "executeOptions");
+        }
+        init { ModelBase.Set(this._rawBodyData, "executeOptions", value); }
+    }
+
     /// <summary>
-    /// Target frame ID for the extraction
+    /// Target frame ID for the agent
     /// </summary>
     public string? FrameID
     {
@@ -42,73 +57,13 @@ public sealed record class SessionExtractParams : ParamsBase
     }
 
     /// <summary>
-    /// Natural language instruction for what to extract
-    /// </summary>
-    public string? Instruction
-    {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "instruction"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "instruction", value);
-        }
-    }
-
-    public SessionExtractParamsOptions? Options
-    {
-        get
-        {
-            return ModelBase.GetNullableClass<SessionExtractParamsOptions>(
-                this.RawBodyData,
-                "options"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "options", value);
-        }
-    }
-
-    /// <summary>
-    /// JSON Schema defining the structure of data to extract
-    /// </summary>
-    public IReadOnlyDictionary<string, JsonElement>? Schema
-    {
-        get
-        {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
-                "schema"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawBodyData, "schema", value);
-        }
-    }
-
-    /// <summary>
     /// Client SDK language
     /// </summary>
-    public ApiEnum<string, SessionExtractParamsXLanguage>? XLanguage
+    public ApiEnum<string, SessionExecuteParamsXLanguage>? XLanguage
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExtractParamsXLanguage>>(
+            return ModelBase.GetNullableClass<ApiEnum<string, SessionExecuteParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -167,11 +122,11 @@ public sealed record class SessionExtractParams : ParamsBase
     /// <summary>
     /// Whether to stream the response via SSE
     /// </summary>
-    public ApiEnum<string, SessionExtractParamsXStreamResponse>? XStreamResponse
+    public ApiEnum<string, SessionExecuteParamsXStreamResponse>? XStreamResponse
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExtractParamsXStreamResponse>>(
+            return ModelBase.GetNullableClass<ApiEnum<string, SessionExecuteParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -187,15 +142,15 @@ public sealed record class SessionExtractParams : ParamsBase
         }
     }
 
-    public SessionExtractParams() { }
+    public SessionExecuteParams() { }
 
-    public SessionExtractParams(SessionExtractParams sessionExtractParams)
-        : base(sessionExtractParams)
+    public SessionExecuteParams(SessionExecuteParams sessionExecuteParams)
+        : base(sessionExecuteParams)
     {
-        this._rawBodyData = [.. sessionExtractParams._rawBodyData];
+        this._rawBodyData = [.. sessionExecuteParams._rawBodyData];
     }
 
-    public SessionExtractParams(
+    public SessionExecuteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -208,7 +163,7 @@ public sealed record class SessionExtractParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionExtractParams(
+    SessionExecuteParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData
@@ -221,7 +176,7 @@ public sealed record class SessionExtractParams : ParamsBase
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
-    public static SessionExtractParams FromRawUnchecked(
+    public static SessionExecuteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -238,7 +193,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         return new System::UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/v1/sessions/{0}/extract", this.ID)
+                + string.Format("/v1/sessions/{0}/agentExecute", this.ID)
         )
         {
             Query = this.QueryString(options),
@@ -260,11 +215,26 @@ public sealed record class SessionExtractParams : ParamsBase
     }
 }
 
-[JsonConverter(
-    typeof(ModelConverter<SessionExtractParamsOptions, SessionExtractParamsOptionsFromRaw>)
-)]
-public sealed record class SessionExtractParamsOptions : ModelBase
+[JsonConverter(typeof(ModelConverter<AgentConfig, AgentConfigFromRaw>))]
+public sealed record class AgentConfig : ModelBase
 {
+    /// <summary>
+    /// Enable Computer Use Agent mode
+    /// </summary>
+    public bool? Cua
+    {
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "cua"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawData, "cua", value);
+        }
+    }
+
     public ModelConfig? Model
     {
         get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }
@@ -280,11 +250,11 @@ public sealed record class SessionExtractParamsOptions : ModelBase
     }
 
     /// <summary>
-    /// CSS selector to scope extraction to a specific element
+    /// Custom system prompt for the agent
     /// </summary>
-    public string? Selector
+    public string? SystemPrompt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "selector"); }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "systemPrompt"); }
         init
         {
             if (value == null)
@@ -292,84 +262,157 @@ public sealed record class SessionExtractParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "selector", value);
-        }
-    }
-
-    /// <summary>
-    /// Timeout in ms for the extraction
-    /// </summary>
-    public double? Timeout
-    {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "timeout"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "timeout", value);
+            ModelBase.Set(this._rawData, "systemPrompt", value);
         }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.Cua;
         this.Model?.Validate();
-        _ = this.Selector;
-        _ = this.Timeout;
+        _ = this.SystemPrompt;
     }
 
-    public SessionExtractParamsOptions() { }
+    public AgentConfig() { }
 
-    public SessionExtractParamsOptions(SessionExtractParamsOptions sessionExtractParamsOptions)
-        : base(sessionExtractParamsOptions) { }
+    public AgentConfig(AgentConfig agentConfig)
+        : base(agentConfig) { }
 
-    public SessionExtractParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
+    public AgentConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionExtractParamsOptions(FrozenDictionary<string, JsonElement> rawData)
+    AgentConfig(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="SessionExtractParamsOptionsFromRaw.FromRawUnchecked"/>
-    public static SessionExtractParamsOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="AgentConfigFromRaw.FromRawUnchecked"/>
+    public static AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class SessionExtractParamsOptionsFromRaw : IFromRaw<SessionExtractParamsOptions>
+class AgentConfigFromRaw : IFromRaw<AgentConfig>
 {
     /// <inheritdoc/>
-    public SessionExtractParamsOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => SessionExtractParamsOptions.FromRawUnchecked(rawData);
+    public AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AgentConfig.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<ExecuteOptions, ExecuteOptionsFromRaw>))]
+public sealed record class ExecuteOptions : ModelBase
+{
+    /// <summary>
+    /// Natural language instruction for the agent
+    /// </summary>
+    public required string Instruction
+    {
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "instruction"); }
+        init { ModelBase.Set(this._rawData, "instruction", value); }
+    }
+
+    /// <summary>
+    /// Whether to visually highlight the cursor during execution
+    /// </summary>
+    public bool? HighlightCursor
+    {
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "highlightCursor"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawData, "highlightCursor", value);
+        }
+    }
+
+    /// <summary>
+    /// Maximum number of steps the agent can take
+    /// </summary>
+    public double? MaxSteps
+    {
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "maxSteps"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawData, "maxSteps", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Instruction;
+        _ = this.HighlightCursor;
+        _ = this.MaxSteps;
+    }
+
+    public ExecuteOptions() { }
+
+    public ExecuteOptions(ExecuteOptions executeOptions)
+        : base(executeOptions) { }
+
+    public ExecuteOptions(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecuteOptions(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecuteOptionsFromRaw.FromRawUnchecked"/>
+    public static ExecuteOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ExecuteOptions(string instruction)
+        : this()
+    {
+        this.Instruction = instruction;
+    }
+}
+
+class ExecuteOptionsFromRaw : IFromRaw<ExecuteOptions>
+{
+    /// <inheritdoc/>
+    public ExecuteOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ExecuteOptions.FromRawUnchecked(rawData);
 }
 
 /// <summary>
 /// Client SDK language
 /// </summary>
-[JsonConverter(typeof(SessionExtractParamsXLanguageConverter))]
-public enum SessionExtractParamsXLanguage
+[JsonConverter(typeof(SessionExecuteParamsXLanguageConverter))]
+public enum SessionExecuteParamsXLanguage
 {
     Typescript,
     Python,
     Playground,
 }
 
-sealed class SessionExtractParamsXLanguageConverter : JsonConverter<SessionExtractParamsXLanguage>
+sealed class SessionExecuteParamsXLanguageConverter : JsonConverter<SessionExecuteParamsXLanguage>
 {
-    public override SessionExtractParamsXLanguage Read(
+    public override SessionExecuteParamsXLanguage Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -377,16 +420,16 @@ sealed class SessionExtractParamsXLanguageConverter : JsonConverter<SessionExtra
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "typescript" => SessionExtractParamsXLanguage.Typescript,
-            "python" => SessionExtractParamsXLanguage.Python,
-            "playground" => SessionExtractParamsXLanguage.Playground,
-            _ => (SessionExtractParamsXLanguage)(-1),
+            "typescript" => SessionExecuteParamsXLanguage.Typescript,
+            "python" => SessionExecuteParamsXLanguage.Python,
+            "playground" => SessionExecuteParamsXLanguage.Playground,
+            _ => (SessionExecuteParamsXLanguage)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        SessionExtractParamsXLanguage value,
+        SessionExecuteParamsXLanguage value,
         JsonSerializerOptions options
     )
     {
@@ -394,9 +437,9 @@ sealed class SessionExtractParamsXLanguageConverter : JsonConverter<SessionExtra
             writer,
             value switch
             {
-                SessionExtractParamsXLanguage.Typescript => "typescript",
-                SessionExtractParamsXLanguage.Python => "python",
-                SessionExtractParamsXLanguage.Playground => "playground",
+                SessionExecuteParamsXLanguage.Typescript => "typescript",
+                SessionExecuteParamsXLanguage.Python => "python",
+                SessionExecuteParamsXLanguage.Playground => "playground",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -409,17 +452,17 @@ sealed class SessionExtractParamsXLanguageConverter : JsonConverter<SessionExtra
 /// <summary>
 /// Whether to stream the response via SSE
 /// </summary>
-[JsonConverter(typeof(SessionExtractParamsXStreamResponseConverter))]
-public enum SessionExtractParamsXStreamResponse
+[JsonConverter(typeof(SessionExecuteParamsXStreamResponseConverter))]
+public enum SessionExecuteParamsXStreamResponse
 {
     True,
     False,
 }
 
-sealed class SessionExtractParamsXStreamResponseConverter
-    : JsonConverter<SessionExtractParamsXStreamResponse>
+sealed class SessionExecuteParamsXStreamResponseConverter
+    : JsonConverter<SessionExecuteParamsXStreamResponse>
 {
-    public override SessionExtractParamsXStreamResponse Read(
+    public override SessionExecuteParamsXStreamResponse Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -427,15 +470,15 @@ sealed class SessionExtractParamsXStreamResponseConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "true" => SessionExtractParamsXStreamResponse.True,
-            "false" => SessionExtractParamsXStreamResponse.False,
-            _ => (SessionExtractParamsXStreamResponse)(-1),
+            "true" => SessionExecuteParamsXStreamResponse.True,
+            "false" => SessionExecuteParamsXStreamResponse.False,
+            _ => (SessionExecuteParamsXStreamResponse)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        SessionExtractParamsXStreamResponse value,
+        SessionExecuteParamsXStreamResponse value,
         JsonSerializerOptions options
     )
     {
@@ -443,8 +486,8 @@ sealed class SessionExtractParamsXStreamResponseConverter
             writer,
             value switch
             {
-                SessionExtractParamsXStreamResponse.True => "true",
-                SessionExtractParamsXStreamResponse.False => "false",
+                SessionExecuteParamsXStreamResponse.True => "true",
+                SessionExecuteParamsXStreamResponse.False => "false",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

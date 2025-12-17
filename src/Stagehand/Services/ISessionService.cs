@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Stagehand.Core;
@@ -25,29 +24,29 @@ public interface ISessionService
     /// Executes a browser action using natural language instructions or a predefined
     /// Action object.
     /// </summary>
-    Task<JsonElement> Act(
+    Task<SessionActResponse> Act(
         SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Act(SessionActParams, CancellationToken)"/>
-    Task<JsonElement> Act(
-        JsonElement id,
-        SessionActParams? parameters = null,
+    Task<SessionActResponse> Act(
+        string id,
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// Terminates the browser session and releases all associated resources.
     /// </summary>
-    Task<JsonElement> End(
+    Task<SessionEndResponse> End(
         SessionEndParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="End(SessionEndParams, CancellationToken)"/>
-    Task<JsonElement> End(
-        JsonElement id,
+    Task<SessionEndResponse> End(
+        string id,
         SessionEndParams? parameters = null,
         CancellationToken cancellationToken = default
     );
@@ -55,29 +54,29 @@ public interface ISessionService
     /// <summary>
     /// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
     /// </summary>
-    Task<JsonElement> ExecuteAgent(
-        SessionExecuteAgentParams parameters,
+    Task<SessionExecuteResponse> Execute(
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="ExecuteAgent(SessionExecuteAgentParams, CancellationToken)"/>
-    Task<JsonElement> ExecuteAgent(
-        JsonElement id,
-        SessionExecuteAgentParams? parameters = null,
+    /// <inheritdoc cref="Execute(SessionExecuteParams, CancellationToken)"/>
+    Task<SessionExecuteResponse> Execute(
+        string id,
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// Extracts structured data from the current page using AI-powered analysis.
     /// </summary>
-    Task<JsonElement> Extract(
+    Task<SessionExtractResponse> Extract(
         SessionExtractParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Extract(SessionExtractParams, CancellationToken)"/>
-    Task<JsonElement> Extract(
-        JsonElement id,
+    Task<SessionExtractResponse> Extract(
+        string id,
         SessionExtractParams? parameters = null,
         CancellationToken cancellationToken = default
     );
@@ -85,15 +84,15 @@ public interface ISessionService
     /// <summary>
     /// Navigates the browser to the specified URL.
     /// </summary>
-    Task<JsonElement> Navigate(
+    Task<SessionNavigateResponse> Navigate(
         SessionNavigateParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Navigate(SessionNavigateParams, CancellationToken)"/>
-    Task<JsonElement> Navigate(
-        JsonElement id,
-        SessionNavigateParams? parameters = null,
+    Task<SessionNavigateResponse> Navigate(
+        string id,
+        SessionNavigateParams parameters,
         CancellationToken cancellationToken = default
     );
 
@@ -101,14 +100,14 @@ public interface ISessionService
     /// Identifies and returns available actions on the current page that match the
     /// given instruction.
     /// </summary>
-    Task<JsonElement> Observe(
+    Task<SessionObserveResponse> Observe(
         SessionObserveParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Observe(SessionObserveParams, CancellationToken)"/>
-    Task<JsonElement> Observe(
-        JsonElement id,
+    Task<SessionObserveResponse> Observe(
+        string id,
         SessionObserveParams? parameters = null,
         CancellationToken cancellationToken = default
     );
@@ -117,8 +116,8 @@ public interface ISessionService
     /// Creates a new browser session with the specified configuration. Returns a
     /// session ID used for all subsequent operations.
     /// </summary>
-    Task<JsonElement> Start(
-        SessionStartParams? parameters = null,
+    Task<SessionStartResponse> Start(
+        SessionStartParams parameters,
         CancellationToken cancellationToken = default
     );
 }

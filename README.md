@@ -35,9 +35,13 @@ using Stagehand.Models.Sessions;
 
 StagehandClient client = new();
 
-SessionStartParams parameters = new();
+SessionActParams parameters = new()
+{
+    ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+    Input = "Click the login button",
+};
 
-var response = await client.Sessions.Start(parameters);
+var response = await client.Sessions.Act(parameters);
 
 Console.WriteLine(response);
 ```
@@ -92,7 +96,7 @@ var response = await client
             Timeout = TimeSpan.FromSeconds(42),
         }
     )
-    .Sessions.Start(parameters);
+    .Sessions.Act(parameters);
 
 Console.WriteLine(response);
 ```
@@ -105,7 +109,7 @@ The `WithOptions` method does not affect the original client or service.
 
 To send a request to the Stagehand API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Sessions.Start` should be called with an instance of `SessionStartParams`, and it will return an instance of `Task<JsonElement>`.
+For example, `client.Sessions.Act` should be called with an instance of `SessionActParams`, and it will return an instance of `Task<SessionActResponse>`.
 
 ## Error handling
 
@@ -167,7 +171,7 @@ var response = await client
     .WithOptions(options =>
         options with { MaxRetries = 3 }
     )
-    .Sessions.Start(parameters);
+    .Sessions.Act(parameters);
 
 Console.WriteLine(response);
 ```
@@ -194,7 +198,7 @@ var response = await client
     .WithOptions(options =>
         options with { Timeout = TimeSpan.FromSeconds(42) }
     )
-    .Sessions.Start(parameters);
+    .Sessions.Act(parameters);
 
 Console.WriteLine(response);
 ```
@@ -212,7 +216,7 @@ By default, the SDK will not throw an exception in this case. It will throw `Sta
 If you would prefer to check that the response is completely well-typed upfront, then either call `Validate`:
 
 ```csharp
-var response = client.Sessions.Start();
+var response = client.Sessions.Act(parameters);
 response.Validate();
 ```
 
@@ -233,7 +237,7 @@ var response = await client
     .WithOptions(options =>
         options with { ResponseValidation = true }
     )
-    .Sessions.Start(parameters);
+    .Sessions.Act(parameters);
 
 Console.WriteLine(response);
 ```

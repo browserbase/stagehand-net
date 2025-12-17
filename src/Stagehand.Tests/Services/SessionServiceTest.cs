@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Stagehand.Tests.Services;
@@ -8,66 +7,91 @@ public class SessionServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Act_Works()
     {
-        await this.client.Sessions.Act(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
-            new(),
+        var response = await this.client.Sessions.Act(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new() { Input = "Click the login button" },
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task End_Works()
     {
-        await this.client.Sessions.End(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
+        var response = await this.client.Sessions.End(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             new(),
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task ExecuteAgent_Works()
+    public async Task Execute_Works()
     {
-        await this.client.Sessions.ExecuteAgent(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
-            new(),
+        var response = await this.client.Sessions.Execute(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new()
+            {
+                AgentConfig = new()
+                {
+                    Cua = true,
+                    Model = "string",
+                    SystemPrompt = "systemPrompt",
+                },
+                ExecuteOptions = new()
+                {
+                    Instruction =
+                        "Log in with username 'demo' and password 'test123', then navigate to settings",
+                    HighlightCursor = true,
+                    MaxSteps = 20,
+                },
+            },
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Extract_Works()
     {
-        await this.client.Sessions.Extract(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
+        var response = await this.client.Sessions.Extract(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             new(),
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Navigate_Works()
     {
-        await this.client.Sessions.Navigate(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
-            new(),
+        var response = await this.client.Sessions.Navigate(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new() { URL = "https://example.com" },
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Observe_Works()
     {
-        await this.client.Sessions.Observe(
-            JsonSerializer.Deserialize<JsonElement>("{}"),
+        var response = await this.client.Sessions.Observe(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             new(),
             TestContext.Current.CancellationToken
         );
+        response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Start_Works()
     {
-        await this.client.Sessions.Start(new(), TestContext.Current.CancellationToken);
+        var response = await this.client.Sessions.Start(
+            new() { ModelName = "gpt-4o" },
+            TestContext.Current.CancellationToken
+        );
+        response.Validate();
     }
 }
