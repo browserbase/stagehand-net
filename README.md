@@ -38,7 +38,7 @@ StagehandClient client = new();
 SessionActParams parameters = new()
 {
     ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-    Input = "Click the login button",
+    Input = "click the first link on the page",
 };
 
 var response = await client.Sessions.Act(parameters);
@@ -96,7 +96,7 @@ var response = await client
             Timeout = TimeSpan.FromSeconds(42),
         }
     )
-    .Sessions.Act(parameters);
+    .Sessions.Start(parameters);
 
 Console.WriteLine(response);
 ```
@@ -171,7 +171,7 @@ var response = await client
     .WithOptions(options =>
         options with { MaxRetries = 3 }
     )
-    .Sessions.Act(parameters);
+    .Sessions.Start(parameters);
 
 Console.WriteLine(response);
 ```
@@ -198,7 +198,7 @@ var response = await client
     .WithOptions(options =>
         options with { Timeout = TimeSpan.FromSeconds(42) }
     )
-    .Sessions.Act(parameters);
+    .Sessions.Start(parameters);
 
 Console.WriteLine(response);
 ```
