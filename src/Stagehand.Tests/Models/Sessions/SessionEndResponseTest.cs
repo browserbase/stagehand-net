@@ -8,17 +8,17 @@ public class SessionEndResponseTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new SessionEndResponse { };
+        var model = new SessionEndResponse { Success = true };
 
-        JsonElement expectedSuccess = JsonSerializer.Deserialize<JsonElement>("true");
+        bool expectedSuccess = true;
 
-        Assert.True(JsonElement.DeepEquals(expectedSuccess, model.Success));
+        Assert.Equal(expectedSuccess, model.Success);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new SessionEndResponse { };
+        var model = new SessionEndResponse { Success = true };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(json);
@@ -29,21 +29,21 @@ public class SessionEndResponseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new SessionEndResponse { };
+        var model = new SessionEndResponse { Success = true };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(json);
         Assert.NotNull(deserialized);
 
-        JsonElement expectedSuccess = JsonSerializer.Deserialize<JsonElement>("true");
+        bool expectedSuccess = true;
 
-        Assert.True(JsonElement.DeepEquals(expectedSuccess, deserialized.Success));
+        Assert.Equal(expectedSuccess, deserialized.Success);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new SessionEndResponse { };
+        var model = new SessionEndResponse { Success = true };
 
         model.Validate();
     }

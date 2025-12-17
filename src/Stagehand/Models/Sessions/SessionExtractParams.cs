@@ -265,6 +265,9 @@ public sealed record class SessionExtractParams : ParamsBase
 )]
 public sealed record class SessionExtractParamsOptions : ModelBase
 {
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// </summary>
     public ModelConfig? Model
     {
         get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }

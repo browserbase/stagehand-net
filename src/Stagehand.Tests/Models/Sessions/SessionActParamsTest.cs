@@ -220,12 +220,12 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -245,7 +245,7 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -261,7 +261,7 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -270,7 +270,7 @@ public class OptionsTest : TestBase
         var deserialized = JsonSerializer.Deserialize<Options>(json);
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -290,7 +290,7 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };

@@ -544,6 +544,9 @@ class ActionInputFromRaw : IFromRaw<ActionInput>
 [JsonConverter(typeof(ModelConverter<Options, OptionsFromRaw>))]
 public sealed record class Options : ModelBase
 {
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// </summary>
     public ModelConfig? Model
     {
         get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }

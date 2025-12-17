@@ -4,32 +4,28 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Stagehand.Core;
-using Stagehand.Exceptions;
 
 namespace Stagehand.Models.Sessions;
 
 [JsonConverter(typeof(ModelConverter<SessionEndResponse, SessionEndResponseFromRaw>))]
 public sealed record class SessionEndResponse : ModelBase
 {
-    public JsonElement Success
+    /// <summary>
+    /// Indicates whether the request was successful
+    /// </summary>
+    public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "success"); }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
         init { ModelBase.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        if (!JsonElement.DeepEquals(this.Success, JsonSerializer.Deserialize<JsonElement>("true")))
-        {
-            throw new StagehandInvalidDataException("Invalid value given for constant");
-        }
+        _ = this.Success;
     }
 
-    public SessionEndResponse()
-    {
-        this.Success = JsonSerializer.Deserialize<JsonElement>("true");
-    }
+    public SessionEndResponse() { }
 
     public SessionEndResponse(SessionEndResponse sessionEndResponse)
         : base(sessionEndResponse) { }
@@ -37,8 +33,6 @@ public sealed record class SessionEndResponse : ModelBase
     public SessionEndResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
-
-        this.Success = JsonSerializer.Deserialize<JsonElement>("true");
     }
 
 #pragma warning disable CS8618
@@ -55,6 +49,13 @@ public sealed record class SessionEndResponse : ModelBase
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionEndResponse(bool success)
+        : this()
+    {
+        this.Success = success;
     }
 }
 

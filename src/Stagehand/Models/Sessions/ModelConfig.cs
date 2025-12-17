@@ -9,6 +9,9 @@ using System = System;
 
 namespace Stagehand.Models.Sessions;
 
+/// <summary>
+/// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+/// </summary>
 [JsonConverter(typeof(ModelConfigConverter))]
 public record class ModelConfig
 {
@@ -27,7 +30,7 @@ public record class ModelConfig
         this._json = json;
     }
 
-    public ModelConfig(UnionMember1 value, JsonElement? json = null)
+    public ModelConfig(ModelConfigObject value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
@@ -46,14 +49,14 @@ public record class ModelConfig
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickString(out var value)) {
+    /// if (instance.TryPickName(out var value)) {
     ///     // `value` is of type `string`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickString([NotNullWhen(true)] out string? value)
+    public bool TryPickName([NotNullWhen(true)] out string? value)
     {
         value = this.Value as string;
         return value != null;
@@ -61,22 +64,22 @@ public record class ModelConfig
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="UnionMember1"/>.
+    /// type <see cref="ModelConfigObject"/>.
     ///
     /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickUnionMember1(out var value)) {
-    ///     // `value` is of type `UnionMember1`
+    /// if (instance.TryPickObject(out var value)) {
+    ///     // `value` is of type `ModelConfigObject`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickUnionMember1([NotNullWhen(true)] out UnionMember1? value)
+    public bool TryPickObject([NotNullWhen(true)] out ModelConfigObject? value)
     {
-        value = this.Value as UnionMember1;
+        value = this.Value as ModelConfigObject;
         return value != null;
     }
 
@@ -95,20 +98,20 @@ public record class ModelConfig
     /// <code>
     /// instance.Switch(
     ///     (string value) => {...},
-    ///     (UnionMember1 value) => {...}
+    ///     (ModelConfigObject value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(System::Action<string> @string, System::Action<UnionMember1> unionMember1)
+    public void Switch(System::Action<string> @modelName, System::Action<ModelConfigObject> object1)
     {
         switch (this.Value)
         {
             case string value:
-                @string(value);
+                @modelName(value);
                 break;
-            case UnionMember1 value:
-                unionMember1(value);
+            case ModelConfigObject value:
+                object1(value);
                 break;
             default:
                 throw new StagehandInvalidDataException(
@@ -133,17 +136,20 @@ public record class ModelConfig
     /// <code>
     /// var result = instance.Match(
     ///     (string value) => {...},
-    ///     (UnionMember1 value) => {...}
+    ///     (ModelConfigObject value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public T Match<T>(System::Func<string, T> @string, System::Func<UnionMember1, T> unionMember1)
+    public T Match<T>(
+        System::Func<string, T> @modelName,
+        System::Func<ModelConfigObject, T> object1
+    )
     {
         return this.Value switch
         {
-            string value => @string(value),
-            UnionMember1 value => unionMember1(value),
+            string value => @modelName(value),
+            ModelConfigObject value => object1(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of ModelConfig"
             ),
@@ -152,7 +158,7 @@ public record class ModelConfig
 
     public static implicit operator ModelConfig(string value) => new(value);
 
-    public static implicit operator ModelConfig(UnionMember1 value) => new(value);
+    public static implicit operator ModelConfig(ModelConfigObject value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -172,7 +178,7 @@ public record class ModelConfig
                 "Data did not match any variant of ModelConfig"
             );
         }
-        this.Switch((_) => { }, (unionMember1) => unionMember1.Validate());
+        this.Switch((_) => { }, (object1) => object1.Validate());
     }
 
     public virtual bool Equals(ModelConfig? other)
@@ -197,7 +203,7 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
         var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember1>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -235,15 +241,21 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<UnionMember1, UnionMember1FromRaw>))]
-public sealed record class UnionMember1 : ModelBase
+[JsonConverter(typeof(ModelConverter<ModelConfigObject, ModelConfigObjectFromRaw>))]
+public sealed record class ModelConfigObject : ModelBase
 {
+    /// <summary>
+    /// Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+    /// </summary>
     public required string ModelName
     {
         get { return ModelBase.GetNotNullClass<string>(this.RawData, "modelName"); }
         init { ModelBase.Set(this._rawData, "modelName", value); }
     }
 
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
     public string? APIKey
     {
         get { return ModelBase.GetNullableClass<string>(this.RawData, "apiKey"); }
@@ -258,6 +270,9 @@ public sealed record class UnionMember1 : ModelBase
         }
     }
 
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
     public string? BaseURL
     {
         get { return ModelBase.GetNullableClass<string>(this.RawData, "baseURL"); }
@@ -280,41 +295,43 @@ public sealed record class UnionMember1 : ModelBase
         _ = this.BaseURL;
     }
 
-    public UnionMember1() { }
+    public ModelConfigObject() { }
 
-    public UnionMember1(UnionMember1 unionMember1)
-        : base(unionMember1) { }
+    public ModelConfigObject(ModelConfigObject modelConfigObject)
+        : base(modelConfigObject) { }
 
-    public UnionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ModelConfigObject(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember1(FrozenDictionary<string, JsonElement> rawData)
+    ModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="UnionMember1FromRaw.FromRawUnchecked"/>
-    public static UnionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="ModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static ModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public UnionMember1(string modelName)
+    public ModelConfigObject(string modelName)
         : this()
     {
         this.ModelName = modelName;
     }
 }
 
-class UnionMember1FromRaw : IFromRaw<UnionMember1>
+class ModelConfigObjectFromRaw : IFromRaw<ModelConfigObject>
 {
     /// <inheritdoc/>
-    public UnionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        UnionMember1.FromRawUnchecked(rawData);
+    public ModelConfigObject FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ModelConfigObject.FromRawUnchecked(rawData);
 }
