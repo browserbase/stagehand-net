@@ -183,12 +183,9 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Logging verbosity level (0=quiet, 1=normal, 2=debug)
     /// </summary>
-    public ApiEnum<long, Verbose>? Verbose
+    public long? Verbose
     {
-        get
-        {
-            return ModelBase.GetNullableClass<ApiEnum<long, Verbose>>(this.RawBodyData, "verbose");
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
         init
         {
             if (value == null)
@@ -2163,7 +2160,7 @@ public record class Proxies
         this._json = json;
     }
 
-    public Proxies(IReadOnlyList<UnnamedSchemaWithArrayParent0> value, JsonElement? json = null)
+    public Proxies(IReadOnlyList<ProxyConfig> value, JsonElement? json = null)
     {
         this.Value = ImmutableArray.ToImmutableArray(value);
         this._json = json;
@@ -2197,24 +2194,22 @@ public record class Proxies
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<UnnamedSchemaWithArrayParent0>"/>.
+    /// type <see cref="IReadOnlyList<ProxyConfig>"/>.
     ///
     /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickUnnamedSchemaWithArrayParent0s(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<UnnamedSchemaWithArrayParent0>`
+    /// if (instance.TryPickProxyConfigList(out var value)) {
+    ///     // `value` is of type `IReadOnlyList<ProxyConfig>`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickUnnamedSchemaWithArrayParent0s(
-        [NotNullWhen(true)] out IReadOnlyList<UnnamedSchemaWithArrayParent0>? value
-    )
+    public bool TryPickProxyConfigList([NotNullWhen(true)] out IReadOnlyList<ProxyConfig>? value)
     {
-        value = this.Value as IReadOnlyList<UnnamedSchemaWithArrayParent0>;
+        value = this.Value as IReadOnlyList<ProxyConfig>;
         return value != null;
     }
 
@@ -2233,14 +2228,14 @@ public record class Proxies
     /// <code>
     /// instance.Switch(
     ///     (bool value) => {...},
-    ///     (IReadOnlyList<UnnamedSchemaWithArrayParent0> value) => {...}
+    ///     (IReadOnlyList<ProxyConfig> value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
     public void Switch(
         System::Action<bool> @bool,
-        System::Action<IReadOnlyList<UnnamedSchemaWithArrayParent0>> unnamedSchemaWithArrayParent0s
+        System::Action<IReadOnlyList<ProxyConfig>> proxyConfigList
     )
     {
         switch (this.Value)
@@ -2248,8 +2243,8 @@ public record class Proxies
             case bool value:
                 @bool(value);
                 break;
-            case List<UnnamedSchemaWithArrayParent0> value:
-                unnamedSchemaWithArrayParent0s(value);
+            case List<ProxyConfig> value:
+                proxyConfigList(value);
                 break;
             default:
                 throw new StagehandInvalidDataException(
@@ -2274,22 +2269,20 @@ public record class Proxies
     /// <code>
     /// var result = instance.Match(
     ///     (bool value) => {...},
-    ///     (IReadOnlyList<UnnamedSchemaWithArrayParent0> value) => {...}
+    ///     (IReadOnlyList<ProxyConfig> value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
     public T Match<T>(
         System::Func<bool, T> @bool,
-        System::Func<IReadOnlyList<UnnamedSchemaWithArrayParent0>, T> unnamedSchemaWithArrayParent0s
+        System::Func<IReadOnlyList<ProxyConfig>, T> proxyConfigList
     )
     {
         return this.Value switch
         {
             bool value => @bool(value),
-            IReadOnlyList<UnnamedSchemaWithArrayParent0> value => unnamedSchemaWithArrayParent0s(
-                value
-            ),
+            IReadOnlyList<ProxyConfig> value => proxyConfigList(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of Proxies"
             ),
@@ -2298,8 +2291,8 @@ public record class Proxies
 
     public static implicit operator Proxies(bool value) => new(value);
 
-    public static implicit operator Proxies(List<UnnamedSchemaWithArrayParent0> value) =>
-        new((IReadOnlyList<UnnamedSchemaWithArrayParent0>)value);
+    public static implicit operator Proxies(List<ProxyConfig> value) =>
+        new((IReadOnlyList<ProxyConfig>)value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -2350,10 +2343,7 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<UnnamedSchemaWithArrayParent0>>(
-                json,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(json, options);
             if (deserialized != null)
             {
                 return new(deserialized, json);
@@ -2373,8 +2363,8 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
     }
 }
 
-[JsonConverter(typeof(UnnamedSchemaWithArrayParent0Converter))]
-public record class UnnamedSchemaWithArrayParent0
+[JsonConverter(typeof(ProxyConfigConverter))]
+public record class ProxyConfig
 {
     public object? Value { get; } = null;
 
@@ -2401,19 +2391,19 @@ public record class UnnamedSchemaWithArrayParent0
         }
     }
 
-    public UnnamedSchemaWithArrayParent0(Browserbase value, JsonElement? json = null)
+    public ProxyConfig(Browserbase value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
     }
 
-    public UnnamedSchemaWithArrayParent0(External value, JsonElement? json = null)
+    public ProxyConfig(External value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
     }
 
-    public UnnamedSchemaWithArrayParent0(JsonElement json)
+    public ProxyConfig(JsonElement json)
     {
         this._json = json;
     }
@@ -2492,7 +2482,7 @@ public record class UnnamedSchemaWithArrayParent0
                 break;
             default:
                 throw new StagehandInvalidDataException(
-                    "Data did not match any variant of UnnamedSchemaWithArrayParent0"
+                    "Data did not match any variant of ProxyConfig"
                 );
         }
     }
@@ -2525,14 +2515,14 @@ public record class UnnamedSchemaWithArrayParent0
             Browserbase value => browserbase(value),
             External value => external(value),
             _ => throw new StagehandInvalidDataException(
-                "Data did not match any variant of UnnamedSchemaWithArrayParent0"
+                "Data did not match any variant of ProxyConfig"
             ),
         };
     }
 
-    public static implicit operator UnnamedSchemaWithArrayParent0(Browserbase value) => new(value);
+    public static implicit operator ProxyConfig(Browserbase value) => new(value);
 
-    public static implicit operator UnnamedSchemaWithArrayParent0(External value) => new(value);
+    public static implicit operator ProxyConfig(External value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -2549,13 +2539,13 @@ public record class UnnamedSchemaWithArrayParent0
         if (this.Value == null)
         {
             throw new StagehandInvalidDataException(
-                "Data did not match any variant of UnnamedSchemaWithArrayParent0"
+                "Data did not match any variant of ProxyConfig"
             );
         }
         this.Switch((browserbase) => browserbase.Validate(), (external) => external.Validate());
     }
 
-    public virtual bool Equals(UnnamedSchemaWithArrayParent0? other)
+    public virtual bool Equals(ProxyConfig? other)
     {
         return other != null && JsonElement.DeepEquals(this.Json, other.Json);
     }
@@ -2566,9 +2556,9 @@ public record class UnnamedSchemaWithArrayParent0
     }
 }
 
-sealed class UnnamedSchemaWithArrayParent0Converter : JsonConverter<UnnamedSchemaWithArrayParent0>
+sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
 {
-    public override UnnamedSchemaWithArrayParent0? Read(
+    public override ProxyConfig? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -2627,14 +2617,14 @@ sealed class UnnamedSchemaWithArrayParent0Converter : JsonConverter<UnnamedSchem
             }
             default:
             {
-                return new UnnamedSchemaWithArrayParent0(json);
+                return new ProxyConfig(json);
             }
         }
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        UnnamedSchemaWithArrayParent0 value,
+        ProxyConfig value,
         JsonSerializerOptions options
     )
     {
@@ -2972,52 +2962,6 @@ sealed class RegionConverter : JsonConverter<Region>
                 Region.UsEast1 => "us-east-1",
                 Region.EuCentral1 => "eu-central-1",
                 Region.ApSoutheast1 => "ap-southeast-1",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Logging verbosity level (0=quiet, 1=normal, 2=debug)
-/// </summary>
-[JsonConverter(typeof(VerboseConverter))]
-public enum Verbose
-{
-    V0,
-    V1,
-    V2,
-}
-
-sealed class VerboseConverter : JsonConverter<Verbose>
-{
-    public override Verbose Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<long>(ref reader, options) switch
-        {
-            0L => Verbose.V0,
-            1L => Verbose.V1,
-            2L => Verbose.V2,
-            _ => (Verbose)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Verbose value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Verbose.V0 => 0L,
-                Verbose.V1 => 1L,
-                Verbose.V2 => 2L,
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

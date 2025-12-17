@@ -2457,7 +2457,7 @@ public class ProxiesTest : TestBase
     }
 
     [Fact]
-    public void UnnamedSchemaWithArrayParent0sValidation_Works()
+    public void proxy_config_listValidation_Works()
     {
         Proxies value = new(
             [
@@ -2487,7 +2487,7 @@ public class ProxiesTest : TestBase
     }
 
     [Fact]
-    public void UnnamedSchemaWithArrayParent0sSerializationRoundtrip_Works()
+    public void proxy_config_listSerializationRoundtrip_Works()
     {
         Proxies value = new(
             [
@@ -2510,12 +2510,12 @@ public class ProxiesTest : TestBase
     }
 }
 
-public class UnnamedSchemaWithArrayParent0Test : TestBase
+public class ProxyConfigTest : TestBase
 {
     [Fact]
     public void browserbaseValidation_Works()
     {
-        UnnamedSchemaWithArrayParent0 value = new(
+        ProxyConfig value = new(
             new Browserbase()
             {
                 DomainPattern = "domainPattern",
@@ -2533,7 +2533,7 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     [Fact]
     public void externalValidation_Works()
     {
-        UnnamedSchemaWithArrayParent0 value = new(
+        ProxyConfig value = new(
             new External()
             {
                 Server = "server",
@@ -2548,7 +2548,7 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     [Fact]
     public void browserbaseSerializationRoundtrip_Works()
     {
-        UnnamedSchemaWithArrayParent0 value = new(
+        ProxyConfig value = new(
             new Browserbase()
             {
                 DomainPattern = "domainPattern",
@@ -2561,7 +2561,7 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
             }
         );
         string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UnnamedSchemaWithArrayParent0>(json);
+        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(json);
 
         Assert.Equal(value, deserialized);
     }
@@ -2569,7 +2569,7 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     [Fact]
     public void externalSerializationRoundtrip_Works()
     {
-        UnnamedSchemaWithArrayParent0 value = new(
+        ProxyConfig value = new(
             new External()
             {
                 Server = "server",
@@ -2579,7 +2579,7 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
             }
         );
         string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UnnamedSchemaWithArrayParent0>(json);
+        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(json);
 
         Assert.Equal(value, deserialized);
     }
@@ -3055,64 +3055,6 @@ public class RegionTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class VerboseTest : TestBase
-{
-    [Theory]
-    [InlineData(Verbose.V0)]
-    [InlineData(Verbose.V1)]
-    [InlineData(Verbose.V2)]
-    public void Validation_Works(Verbose rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<long, Verbose> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Verbose.V0)]
-    [InlineData(Verbose.V1)]
-    [InlineData(Verbose.V2)]
-    public void SerializationRoundtrip_Works(Verbose rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<long, Verbose> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
             json,
             ModelBase.SerializerOptions
         );
