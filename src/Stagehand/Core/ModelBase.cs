@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Stagehand.Exceptions;
+using Stagehand.Models.Sessions;
 
 namespace Stagehand.Core;
 
@@ -26,7 +27,43 @@ public abstract record class ModelBase
         get { return this._rawData.Freeze(); }
     }
 
-    internal static readonly JsonSerializerOptions SerializerOptions = new();
+    internal static readonly JsonSerializerOptions SerializerOptions = new()
+    {
+        Converters =
+        {
+            new ApiEnumConverter<bool, Success>(),
+            new ApiEnumConverter<bool, SessionEndResponseSuccess>(),
+            new ApiEnumConverter<bool, SessionExecuteResponseSuccess>(),
+            new ApiEnumConverter<bool, SessionExtractResponseSuccess>(),
+            new ApiEnumConverter<bool, SessionNavigateResponseSuccess>(),
+            new ApiEnumConverter<bool, SessionObserveResponseSuccess>(),
+            new ApiEnumConverter<bool, SessionStartResponseSuccess>(),
+            new ApiEnumConverter<string, XLanguage>(),
+            new ApiEnumConverter<string, XStreamResponse>(),
+            new ApiEnumConverter<string, SessionEndParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionEndParamsXStreamResponse>(),
+            new ApiEnumConverter<string, SessionExecuteParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionExecuteParamsXStreamResponse>(),
+            new ApiEnumConverter<string, SessionExtractParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionExtractParamsXStreamResponse>(),
+            new ApiEnumConverter<string, WaitUntil>(),
+            new ApiEnumConverter<string, SessionNavigateParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionNavigateParamsXStreamResponse>(),
+            new ApiEnumConverter<string, SessionObserveParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionObserveParamsXStreamResponse>(),
+            new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, FingerprintBrowser>(),
+            new ApiEnumConverter<string, Device>(),
+            new ApiEnumConverter<string, HTTPVersion>(),
+            new ApiEnumConverter<string, OperatingSystem>(),
+            new ApiEnumConverter<string, BrowserbaseProxyConfigType>(),
+            new ApiEnumConverter<string, ExternalProxyConfigType>(),
+            new ApiEnumConverter<string, Region>(),
+            new ApiEnumConverter<double, Verbose>(),
+            new ApiEnumConverter<string, SessionStartParamsXLanguage>(),
+            new ApiEnumConverter<string, SessionStartParamsXStreamResponse>(),
+        },
+    };
 
     static readonly JsonSerializerOptions _toStringSerializerOptions = new(SerializerOptions)
     {
