@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Stagehand.Exceptions;
-using Stagehand.Models.Sessions;
 
 namespace Stagehand.Core;
 
@@ -27,20 +26,7 @@ public abstract record class ModelBase
         get { return this._rawData.Freeze(); }
     }
 
-    internal static readonly JsonSerializerOptions SerializerOptions = new()
-    {
-        Converters =
-        {
-            new ApiEnumConverter<string, ModelConfigProvider>(),
-            new ApiEnumConverter<string, XStreamResponse>(),
-            new ApiEnumConverter<string, Provider>(),
-            new ApiEnumConverter<string, SessionExecuteAgentParamsXStreamResponse>(),
-            new ApiEnumConverter<string, SessionExtractParamsXStreamResponse>(),
-            new ApiEnumConverter<string, WaitUntil>(),
-            new ApiEnumConverter<string, SessionNavigateParamsXStreamResponse>(),
-            new ApiEnumConverter<string, SessionObserveParamsXStreamResponse>(),
-        },
-    };
+    internal static readonly JsonSerializerOptions SerializerOptions = new();
 
     static readonly JsonSerializerOptions _toStringSerializerOptions = new(SerializerOptions)
     {

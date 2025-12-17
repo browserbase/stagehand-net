@@ -35,13 +35,9 @@ using Stagehand.Models.Sessions;
 
 StagehandClient client = new();
 
-SessionActParams parameters = new()
-{
-    SessionID = "00000000-your-session-id-000000000000",
-    Input = "click the first link on the page",
-};
+SessionStartParams parameters = new();
 
-var response = await client.Sessions.Act(parameters);
+var response = await client.Sessions.Start(parameters);
 
 Console.WriteLine(response);
 ```
@@ -109,7 +105,7 @@ The `WithOptions` method does not affect the original client or service.
 
 To send a request to the Stagehand API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Sessions.Act` should be called with an instance of `SessionActParams`, and it will return an instance of `Task<SessionActResponse>`.
+For example, `client.Sessions.Start` should be called with an instance of `SessionStartParams`, and it will return an instance of `Task<JsonElement>`.
 
 ## Error handling
 
@@ -216,7 +212,7 @@ By default, the SDK will not throw an exception in this case. It will throw `Sta
 If you would prefer to check that the response is completely well-typed upfront, then either call `Validate`:
 
 ```csharp
-var response = client.Sessions.Act(parameters);
+var response = client.Sessions.Start();
 response.Validate();
 ```
 
@@ -237,7 +233,7 @@ var response = await client
     .WithOptions(options =>
         options with { ResponseValidation = true }
     )
-    .Sessions.Act(parameters);
+    .Sessions.Start(parameters);
 
 Console.WriteLine(response);
 ```
