@@ -12,12 +12,12 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "#main-content",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -31,7 +31,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -47,7 +47,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -56,7 +56,7 @@ public class SessionExtractParamsOptionsTest : TestBase
         var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptions>(json);
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -70,7 +70,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "#main-content",
             Timeout = 30000,
         };

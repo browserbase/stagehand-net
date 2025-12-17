@@ -183,9 +183,12 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Logging verbosity level (0=quiet, 1=normal, 2=debug)
     /// </summary>
-    public long? Verbose
+    public ApiEnum<long, Verbose>? Verbose
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
+        get
+        {
+            return ModelBase.GetNullableClass<ApiEnum<long, Verbose>>(this.RawBodyData, "verbose");
+        }
         init
         {
             if (value == null)
@@ -2384,10 +2387,7 @@ public record class UnnamedSchemaWithArrayParent0
 
     public JsonElement Type
     {
-        get
-        {
-            return Match(browserbaseProxyConfig: (x) => x.Type, externalProxyConfig: (x) => x.Type);
-        }
+        get { return Match(browserbase: (x) => x.Type, external: (x) => x.Type); }
     }
 
     public string? DomainPattern
@@ -2395,19 +2395,19 @@ public record class UnnamedSchemaWithArrayParent0
         get
         {
             return Match<string?>(
-                browserbaseProxyConfig: (x) => x.DomainPattern,
-                externalProxyConfig: (x) => x.DomainPattern
+                browserbase: (x) => x.DomainPattern,
+                external: (x) => x.DomainPattern
             );
         }
     }
 
-    public UnnamedSchemaWithArrayParent0(BrowserbaseProxyConfig value, JsonElement? json = null)
+    public UnnamedSchemaWithArrayParent0(Browserbase value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
     }
 
-    public UnnamedSchemaWithArrayParent0(ExternalProxyConfig value, JsonElement? json = null)
+    public UnnamedSchemaWithArrayParent0(External value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
@@ -2420,43 +2420,43 @@ public record class UnnamedSchemaWithArrayParent0
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="BrowserbaseProxyConfig"/>.
+    /// type <see cref="Browserbase"/>.
     ///
     /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickBrowserbaseProxyConfig(out var value)) {
-    ///     // `value` is of type `BrowserbaseProxyConfig`
+    /// if (instance.TryPickBrowserbase(out var value)) {
+    ///     // `value` is of type `Browserbase`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickBrowserbaseProxyConfig([NotNullWhen(true)] out BrowserbaseProxyConfig? value)
+    public bool TryPickBrowserbase([NotNullWhen(true)] out Browserbase? value)
     {
-        value = this.Value as BrowserbaseProxyConfig;
+        value = this.Value as Browserbase;
         return value != null;
     }
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="ExternalProxyConfig"/>.
+    /// type <see cref="External"/>.
     ///
     /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickExternalProxyConfig(out var value)) {
-    ///     // `value` is of type `ExternalProxyConfig`
+    /// if (instance.TryPickExternal(out var value)) {
+    ///     // `value` is of type `External`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickExternalProxyConfig([NotNullWhen(true)] out ExternalProxyConfig? value)
+    public bool TryPickExternal([NotNullWhen(true)] out External? value)
     {
-        value = this.Value as ExternalProxyConfig;
+        value = this.Value as External;
         return value != null;
     }
 
@@ -2474,24 +2474,21 @@ public record class UnnamedSchemaWithArrayParent0
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (BrowserbaseProxyConfig value) => {...},
-    ///     (ExternalProxyConfig value) => {...}
+    ///     (Browserbase value) => {...},
+    ///     (External value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(
-        System::Action<BrowserbaseProxyConfig> browserbaseProxyConfig,
-        System::Action<ExternalProxyConfig> externalProxyConfig
-    )
+    public void Switch(System::Action<Browserbase> browserbase, System::Action<External> external)
     {
         switch (this.Value)
         {
-            case BrowserbaseProxyConfig value:
-                browserbaseProxyConfig(value);
+            case Browserbase value:
+                browserbase(value);
                 break;
-            case ExternalProxyConfig value:
-                externalProxyConfig(value);
+            case External value:
+                external(value);
                 break;
             default:
                 throw new StagehandInvalidDataException(
@@ -2515,32 +2512,27 @@ public record class UnnamedSchemaWithArrayParent0
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (BrowserbaseProxyConfig value) => {...},
-    ///     (ExternalProxyConfig value) => {...}
+    ///     (Browserbase value) => {...},
+    ///     (External value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public T Match<T>(
-        System::Func<BrowserbaseProxyConfig, T> browserbaseProxyConfig,
-        System::Func<ExternalProxyConfig, T> externalProxyConfig
-    )
+    public T Match<T>(System::Func<Browserbase, T> browserbase, System::Func<External, T> external)
     {
         return this.Value switch
         {
-            BrowserbaseProxyConfig value => browserbaseProxyConfig(value),
-            ExternalProxyConfig value => externalProxyConfig(value),
+            Browserbase value => browserbase(value),
+            External value => external(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of UnnamedSchemaWithArrayParent0"
             ),
         };
     }
 
-    public static implicit operator UnnamedSchemaWithArrayParent0(BrowserbaseProxyConfig value) =>
-        new(value);
+    public static implicit operator UnnamedSchemaWithArrayParent0(Browserbase value) => new(value);
 
-    public static implicit operator UnnamedSchemaWithArrayParent0(ExternalProxyConfig value) =>
-        new(value);
+    public static implicit operator UnnamedSchemaWithArrayParent0(External value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -2560,10 +2552,7 @@ public record class UnnamedSchemaWithArrayParent0
                 "Data did not match any variant of UnnamedSchemaWithArrayParent0"
             );
         }
-        this.Switch(
-            (browserbaseProxyConfig) => browserbaseProxyConfig.Validate(),
-            (externalProxyConfig) => externalProxyConfig.Validate()
-        );
+        this.Switch((browserbase) => browserbase.Validate(), (external) => external.Validate());
     }
 
     public virtual bool Equals(UnnamedSchemaWithArrayParent0? other)
@@ -2586,35 +2575,61 @@ sealed class UnnamedSchemaWithArrayParent0Converter : JsonConverter<UnnamedSchem
     )
     {
         var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        string? type;
         try
         {
-            var deserialized = JsonSerializer.Deserialize<BrowserbaseProxyConfig>(json, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, json);
-            }
+            type = json.GetProperty("type").GetString();
         }
-        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        catch
         {
-            // ignore
+            type = null;
         }
 
-        try
+        switch (type)
         {
-            var deserialized = JsonSerializer.Deserialize<ExternalProxyConfig>(json, options);
-            if (deserialized != null)
+            case "browserbase":
             {
-                deserialized.Validate();
-                return new(deserialized, json);
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<Browserbase>(json, options);
+                    if (deserialized != null)
+                    {
+                        deserialized.Validate();
+                        return new(deserialized, json);
+                    }
+                }
+                catch (System::Exception e)
+                    when (e is JsonException || e is StagehandInvalidDataException)
+                {
+                    // ignore
+                }
+
+                return new(json);
+            }
+            case "external":
+            {
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<External>(json, options);
+                    if (deserialized != null)
+                    {
+                        deserialized.Validate();
+                        return new(deserialized, json);
+                    }
+                }
+                catch (System::Exception e)
+                    when (e is JsonException || e is StagehandInvalidDataException)
+                {
+                    // ignore
+                }
+
+                return new(json);
+            }
+            default:
+            {
+                return new UnnamedSchemaWithArrayParent0(json);
             }
         }
-        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
-        {
-            // ignore
-        }
-
-        return new(json);
     }
 
     public override void Write(
@@ -2627,8 +2642,8 @@ sealed class UnnamedSchemaWithArrayParent0Converter : JsonConverter<UnnamedSchem
     }
 }
 
-[JsonConverter(typeof(ModelConverter<BrowserbaseProxyConfig, BrowserbaseProxyConfigFromRaw>))]
-public sealed record class BrowserbaseProxyConfig : ModelBase
+[JsonConverter(typeof(ModelConverter<Browserbase, BrowserbaseFromRaw>))]
+public sealed record class Browserbase : ModelBase
 {
     public JsonElement Type
     {
@@ -2680,15 +2695,15 @@ public sealed record class BrowserbaseProxyConfig : ModelBase
         this.Geolocation?.Validate();
     }
 
-    public BrowserbaseProxyConfig()
+    public Browserbase()
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
     }
 
-    public BrowserbaseProxyConfig(BrowserbaseProxyConfig browserbaseProxyConfig)
-        : base(browserbaseProxyConfig) { }
+    public Browserbase(Browserbase browserbase)
+        : base(browserbase) { }
 
-    public BrowserbaseProxyConfig(IReadOnlyDictionary<string, JsonElement> rawData)
+    public Browserbase(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
 
@@ -2697,27 +2712,24 @@ public sealed record class BrowserbaseProxyConfig : ModelBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrowserbaseProxyConfig(FrozenDictionary<string, JsonElement> rawData)
+    Browserbase(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="BrowserbaseProxyConfigFromRaw.FromRawUnchecked"/>
-    public static BrowserbaseProxyConfig FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="BrowserbaseFromRaw.FromRawUnchecked"/>
+    public static Browserbase FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class BrowserbaseProxyConfigFromRaw : IFromRaw<BrowserbaseProxyConfig>
+class BrowserbaseFromRaw : IFromRaw<Browserbase>
 {
     /// <inheritdoc/>
-    public BrowserbaseProxyConfig FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => BrowserbaseProxyConfig.FromRawUnchecked(rawData);
+    public Browserbase FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Browserbase.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ModelConverter<Geolocation, GeolocationFromRaw>))]
@@ -2804,8 +2816,8 @@ class GeolocationFromRaw : IFromRaw<Geolocation>
         Geolocation.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ExternalProxyConfig, ExternalProxyConfigFromRaw>))]
-public sealed record class ExternalProxyConfig : ModelBase
+[JsonConverter(typeof(ModelConverter<External, ExternalFromRaw>))]
+public sealed record class External : ModelBase
 {
     public required string Server
     {
@@ -2879,15 +2891,15 @@ public sealed record class ExternalProxyConfig : ModelBase
         _ = this.Username;
     }
 
-    public ExternalProxyConfig()
+    public External()
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"external\"");
     }
 
-    public ExternalProxyConfig(ExternalProxyConfig externalProxyConfig)
-        : base(externalProxyConfig) { }
+    public External(External external)
+        : base(external) { }
 
-    public ExternalProxyConfig(IReadOnlyDictionary<string, JsonElement> rawData)
+    public External(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
 
@@ -2896,33 +2908,31 @@ public sealed record class ExternalProxyConfig : ModelBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ExternalProxyConfig(FrozenDictionary<string, JsonElement> rawData)
+    External(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="ExternalProxyConfigFromRaw.FromRawUnchecked"/>
-    public static ExternalProxyConfig FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="ExternalFromRaw.FromRawUnchecked"/>
+    public static External FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public ExternalProxyConfig(string server)
+    public External(string server)
         : this()
     {
         this.Server = server;
     }
 }
 
-class ExternalProxyConfigFromRaw : IFromRaw<ExternalProxyConfig>
+class ExternalFromRaw : IFromRaw<External>
 {
     /// <inheritdoc/>
-    public ExternalProxyConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        ExternalProxyConfig.FromRawUnchecked(rawData);
+    public External FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        External.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(RegionConverter))]
@@ -2962,6 +2972,52 @@ sealed class RegionConverter : JsonConverter<Region>
                 Region.UsEast1 => "us-east-1",
                 Region.EuCentral1 => "eu-central-1",
                 Region.ApSoutheast1 => "ap-southeast-1",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Logging verbosity level (0=quiet, 1=normal, 2=debug)
+/// </summary>
+[JsonConverter(typeof(VerboseConverter))]
+public enum Verbose
+{
+    V0,
+    V1,
+    V2,
+}
+
+sealed class VerboseConverter : JsonConverter<Verbose>
+{
+    public override Verbose Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<long>(ref reader, options) switch
+        {
+            0L => Verbose.V0,
+            1L => Verbose.V1,
+            2L => Verbose.V2,
+            _ => (Verbose)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Verbose value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Verbose.V0 => 0L,
+                Verbose.V1 => 1L,
+                Verbose.V2 => 2L,
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

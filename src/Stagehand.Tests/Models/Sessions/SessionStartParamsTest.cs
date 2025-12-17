@@ -2461,7 +2461,7 @@ public class ProxiesTest : TestBase
     {
         Proxies value = new(
             [
-                new BrowserbaseProxyConfig()
+                new Browserbase()
                 {
                     DomainPattern = "domainPattern",
                     Geolocation = new()
@@ -2491,7 +2491,7 @@ public class ProxiesTest : TestBase
     {
         Proxies value = new(
             [
-                new BrowserbaseProxyConfig()
+                new Browserbase()
                 {
                     DomainPattern = "domainPattern",
                     Geolocation = new()
@@ -2513,10 +2513,10 @@ public class ProxiesTest : TestBase
 public class UnnamedSchemaWithArrayParent0Test : TestBase
 {
     [Fact]
-    public void browserbase_proxy_configValidation_Works()
+    public void browserbaseValidation_Works()
     {
         UnnamedSchemaWithArrayParent0 value = new(
-            new BrowserbaseProxyConfig()
+            new Browserbase()
             {
                 DomainPattern = "domainPattern",
                 Geolocation = new()
@@ -2531,10 +2531,10 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     }
 
     [Fact]
-    public void external_proxy_configValidation_Works()
+    public void externalValidation_Works()
     {
         UnnamedSchemaWithArrayParent0 value = new(
-            new ExternalProxyConfig()
+            new External()
             {
                 Server = "server",
                 DomainPattern = "domainPattern",
@@ -2546,10 +2546,10 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     }
 
     [Fact]
-    public void browserbase_proxy_configSerializationRoundtrip_Works()
+    public void browserbaseSerializationRoundtrip_Works()
     {
         UnnamedSchemaWithArrayParent0 value = new(
-            new BrowserbaseProxyConfig()
+            new Browserbase()
             {
                 DomainPattern = "domainPattern",
                 Geolocation = new()
@@ -2567,10 +2567,10 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     }
 
     [Fact]
-    public void external_proxy_configSerializationRoundtrip_Works()
+    public void externalSerializationRoundtrip_Works()
     {
         UnnamedSchemaWithArrayParent0 value = new(
-            new ExternalProxyConfig()
+            new External()
             {
                 Server = "server",
                 DomainPattern = "domainPattern",
@@ -2585,12 +2585,12 @@ public class UnnamedSchemaWithArrayParent0Test : TestBase
     }
 }
 
-public class BrowserbaseProxyConfigTest : TestBase
+public class BrowserbaseTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2618,7 +2618,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2630,7 +2630,7 @@ public class BrowserbaseProxyConfigTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserbaseProxyConfig>(json);
+        var deserialized = JsonSerializer.Deserialize<Browserbase>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2638,7 +2638,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2650,7 +2650,7 @@ public class BrowserbaseProxyConfigTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserbaseProxyConfig>(json);
+        var deserialized = JsonSerializer.Deserialize<Browserbase>(json);
         Assert.NotNull(deserialized);
 
         JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
@@ -2670,7 +2670,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2687,7 +2687,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new BrowserbaseProxyConfig { };
+        var model = new Browserbase { };
 
         Assert.Null(model.DomainPattern);
         Assert.False(model.RawData.ContainsKey("domainPattern"));
@@ -2698,7 +2698,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new BrowserbaseProxyConfig { };
+        var model = new Browserbase { };
 
         model.Validate();
     }
@@ -2706,7 +2706,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             // Null should be interpreted as omitted for these properties
             DomainPattern = null,
@@ -2722,7 +2722,7 @@ public class BrowserbaseProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new BrowserbaseProxyConfig
+        var model = new Browserbase
         {
             // Null should be interpreted as omitted for these properties
             DomainPattern = null,
@@ -2859,12 +2859,12 @@ public class GeolocationTest : TestBase
     }
 }
 
-public class ExternalProxyConfigTest : TestBase
+public class ExternalTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2888,7 +2888,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2897,7 +2897,7 @@ public class ExternalProxyConfigTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ExternalProxyConfig>(json);
+        var deserialized = JsonSerializer.Deserialize<External>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2905,7 +2905,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2914,7 +2914,7 @@ public class ExternalProxyConfigTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ExternalProxyConfig>(json);
+        var deserialized = JsonSerializer.Deserialize<External>(json);
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";
@@ -2933,7 +2933,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2947,7 +2947,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ExternalProxyConfig { Server = "server" };
+        var model = new External { Server = "server" };
 
         Assert.Null(model.DomainPattern);
         Assert.False(model.RawData.ContainsKey("domainPattern"));
@@ -2960,7 +2960,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ExternalProxyConfig { Server = "server" };
+        var model = new External { Server = "server" };
 
         model.Validate();
     }
@@ -2968,7 +2968,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
 
@@ -2989,7 +2989,7 @@ public class ExternalProxyConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ExternalProxyConfig
+        var model = new External
         {
             Server = "server",
 
@@ -3055,6 +3055,64 @@ public class RegionTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class VerboseTest : TestBase
+{
+    [Theory]
+    [InlineData(Verbose.V0)]
+    [InlineData(Verbose.V1)]
+    [InlineData(Verbose.V2)]
+    public void Validation_Works(Verbose rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<long, Verbose> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Verbose.V0)]
+    [InlineData(Verbose.V1)]
+    [InlineData(Verbose.V2)]
+    public void SerializationRoundtrip_Works(Verbose rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<long, Verbose> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<long, Verbose>>(
             json,
             ModelBase.SerializerOptions
         );

@@ -13,12 +13,12 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
@@ -32,7 +32,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
@@ -48,7 +48,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
@@ -57,7 +57,7 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
@@ -71,7 +71,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 

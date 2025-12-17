@@ -6,30 +6,30 @@ namespace Stagehand.Tests.Models.Sessions;
 public class ModelConfigTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void nameValidation_Works()
     {
-        ModelConfig value = new("string");
+        ModelConfig value = new("openai/gpt-5-nano");
         value.Validate();
     }
 
     [Fact]
-    public void UnionMember1Validation_Works()
+    public void objectValidation_Works()
     {
         ModelConfig value = new(
-            new UnionMember1()
+            new ModelConfigObject()
             {
-                ModelName = "modelName",
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
+                ModelName = "gpt-5-nano",
+                APIKey = "sk-some-openai-api-key",
+                BaseURL = "https://api.openai.com/v1",
             }
         );
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void nameSerializationRoundtrip_Works()
     {
-        ModelConfig value = new("string");
+        ModelConfig value = new("openai/gpt-5-nano");
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ModelConfig>(json);
 
@@ -37,14 +37,14 @@ public class ModelConfigTest : TestBase
     }
 
     [Fact]
-    public void UnionMember1SerializationRoundtrip_Works()
+    public void objectSerializationRoundtrip_Works()
     {
         ModelConfig value = new(
-            new UnionMember1()
+            new ModelConfigObject()
             {
-                ModelName = "modelName",
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
+                ModelName = "gpt-5-nano",
+                APIKey = "sk-some-openai-api-key",
+                BaseURL = "https://api.openai.com/v1",
             }
         );
         string json = JsonSerializer.Serialize(value);
@@ -54,21 +54,21 @@ public class ModelConfigTest : TestBase
     }
 }
 
-public class UnionMember1Test : TestBase
+public class ModelConfigObjectTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
+            ModelName = "gpt-5-nano",
+            APIKey = "sk-some-openai-api-key",
+            BaseURL = "https://api.openai.com/v1",
         };
 
-        string expectedModelName = "modelName";
-        string expectedAPIKey = "apiKey";
-        string expectedBaseURL = "https://example.com";
+        string expectedModelName = "gpt-5-nano";
+        string expectedAPIKey = "sk-some-openai-api-key";
+        string expectedBaseURL = "https://api.openai.com/v1";
 
         Assert.Equal(expectedModelName, model.ModelName);
         Assert.Equal(expectedAPIKey, model.APIKey);
@@ -78,15 +78,15 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
+            ModelName = "gpt-5-nano",
+            APIKey = "sk-some-openai-api-key",
+            BaseURL = "https://api.openai.com/v1",
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UnionMember1>(json);
+        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -94,20 +94,20 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
+            ModelName = "gpt-5-nano",
+            APIKey = "sk-some-openai-api-key",
+            BaseURL = "https://api.openai.com/v1",
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UnionMember1>(json);
+        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json);
         Assert.NotNull(deserialized);
 
-        string expectedModelName = "modelName";
-        string expectedAPIKey = "apiKey";
-        string expectedBaseURL = "https://example.com";
+        string expectedModelName = "gpt-5-nano";
+        string expectedAPIKey = "sk-some-openai-api-key";
+        string expectedBaseURL = "https://api.openai.com/v1";
 
         Assert.Equal(expectedModelName, deserialized.ModelName);
         Assert.Equal(expectedAPIKey, deserialized.APIKey);
@@ -117,11 +117,11 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
+            ModelName = "gpt-5-nano",
+            APIKey = "sk-some-openai-api-key",
+            BaseURL = "https://api.openai.com/v1",
         };
 
         model.Validate();
@@ -130,7 +130,7 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new UnionMember1 { ModelName = "modelName" };
+        var model = new ModelConfigObject { ModelName = "gpt-5-nano" };
 
         Assert.Null(model.APIKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
@@ -141,7 +141,7 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new UnionMember1 { ModelName = "modelName" };
+        var model = new ModelConfigObject { ModelName = "gpt-5-nano" };
 
         model.Validate();
     }
@@ -149,9 +149,9 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
+            ModelName = "gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
             APIKey = null,
@@ -167,9 +167,9 @@ public class UnionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new UnionMember1
+        var model = new ModelConfigObject
         {
-            ModelName = "modelName",
+            ModelName = "gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
             APIKey = null,

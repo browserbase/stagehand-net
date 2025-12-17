@@ -50,6 +50,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, HTTPVersion>(),
             new ApiEnumConverter<string, OperatingSystem>(),
             new ApiEnumConverter<string, Region>(),
+            new ApiEnumConverter<long, Verbose>(),
             new ApiEnumConverter<string, SessionStartParamsXLanguage>(),
             new ApiEnumConverter<string, SessionStartParamsXStreamResponse>(),
         },

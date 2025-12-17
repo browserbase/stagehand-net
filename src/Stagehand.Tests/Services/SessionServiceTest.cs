@@ -36,7 +36,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    Model = "string",
+                    Model = "openai/gpt-5-nano",
                     SystemPrompt = "systemPrompt",
                 },
                 ExecuteOptions = new()

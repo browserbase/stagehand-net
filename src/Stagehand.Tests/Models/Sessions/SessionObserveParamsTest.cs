@@ -12,12 +12,12 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "nav",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -31,7 +31,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "nav",
             Timeout = 30000,
         };
@@ -47,7 +47,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "nav",
             Timeout = 30000,
         };
@@ -56,7 +56,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptions>(json);
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "string";
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -70,7 +70,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "string",
+            Model = "openai/gpt-5-nano",
             Selector = "nav",
             Timeout = 30000,
         };
