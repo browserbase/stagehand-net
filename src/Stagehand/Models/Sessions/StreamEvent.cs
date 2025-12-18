@@ -12,22 +12,22 @@ namespace Stagehand.Models.Sessions;
 /// <summary>
 /// Server-Sent Event emitted during streaming responses. Events are sent as `data: <JSON>\n\n`.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<StreamEvent, StreamEventFromRaw>))]
-public sealed record class StreamEvent : ModelBase
+[JsonConverter(typeof(JsonModelConverter<StreamEvent, StreamEventFromRaw>))]
+public sealed record class StreamEvent : JsonModel
 {
     /// <summary>
     /// Unique identifier for this event
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required Data Data
     {
-        get { return ModelBase.GetNotNullClass<Data>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<Data>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -37,12 +37,12 @@ public sealed record class StreamEvent : ModelBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, StreamEventType>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, StreamEventType>>(
                 this.RawData,
                 "type"
             );
         }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <inheritdoc/>
@@ -78,7 +78,7 @@ public sealed record class StreamEvent : ModelBase
     }
 }
 
-class StreamEventFromRaw : IFromRaw<StreamEvent>
+class StreamEventFromRaw : IFromRawJson<StreamEvent>
 {
     /// <inheritdoc/>
     public StreamEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -90,28 +90,28 @@ public record class Data
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Data(StreamEventSystemDataOutput value, JsonElement? json = null)
+    public Data(StreamEventSystemDataOutput value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Data(StreamEventLogDataOutput value, JsonElement? json = null)
+    public Data(StreamEventLogDataOutput value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Data(JsonElement json)
+    public Data(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -277,17 +277,17 @@ sealed class DataConverter : JsonConverter<Data>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -297,11 +297,14 @@ sealed class DataConverter : JsonConverter<Data>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(json, options);
+            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -309,7 +312,7 @@ sealed class DataConverter : JsonConverter<Data>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Data value, JsonSerializerOptions options)
@@ -319,17 +322,17 @@ sealed class DataConverter : JsonConverter<Data>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<StreamEventSystemDataOutput, StreamEventSystemDataOutputFromRaw>)
+    typeof(JsonModelConverter<StreamEventSystemDataOutput, StreamEventSystemDataOutputFromRaw>)
 )]
-public sealed record class StreamEventSystemDataOutput : ModelBase
+public sealed record class StreamEventSystemDataOutput : JsonModel
 {
     /// <summary>
     /// Current status of the streaming operation
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -337,7 +340,7 @@ public sealed record class StreamEventSystemDataOutput : ModelBase
     /// </summary>
     public string? Error
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "error"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "error"); }
         init
         {
             if (value == null)
@@ -345,7 +348,7 @@ public sealed record class StreamEventSystemDataOutput : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "error", value);
+            JsonModel.Set(this._rawData, "error", value);
         }
     }
 
@@ -354,7 +357,7 @@ public sealed record class StreamEventSystemDataOutput : ModelBase
     /// </summary>
     public JsonElement? Result
     {
-        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "result"); }
+        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "result"); }
         init
         {
             if (value == null)
@@ -362,7 +365,7 @@ public sealed record class StreamEventSystemDataOutput : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "result", value);
+            JsonModel.Set(this._rawData, "result", value);
         }
     }
 
@@ -408,7 +411,7 @@ public sealed record class StreamEventSystemDataOutput : ModelBase
     }
 }
 
-class StreamEventSystemDataOutputFromRaw : IFromRaw<StreamEventSystemDataOutput>
+class StreamEventSystemDataOutputFromRaw : IFromRawJson<StreamEventSystemDataOutput>
 {
     /// <inheritdoc/>
     public StreamEventSystemDataOutput FromRawUnchecked(
@@ -468,22 +471,24 @@ sealed class StatusConverter : JsonConverter<Status>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<StreamEventLogDataOutput, StreamEventLogDataOutputFromRaw>))]
-public sealed record class StreamEventLogDataOutput : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<StreamEventLogDataOutput, StreamEventLogDataOutputFromRaw>)
+)]
+public sealed record class StreamEventLogDataOutput : JsonModel
 {
     /// <summary>
     /// Log message from the operation
     /// </summary>
     public required string Message
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     public JsonElement Status
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <inheritdoc/>
@@ -540,7 +545,7 @@ public sealed record class StreamEventLogDataOutput : ModelBase
     }
 }
 
-class StreamEventLogDataOutputFromRaw : IFromRaw<StreamEventLogDataOutput>
+class StreamEventLogDataOutputFromRaw : IFromRawJson<StreamEventLogDataOutput>
 {
     /// <inheritdoc/>
     public StreamEventLogDataOutput FromRawUnchecked(

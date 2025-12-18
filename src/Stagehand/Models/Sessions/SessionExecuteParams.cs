@@ -26,17 +26,17 @@ public sealed record class SessionExecuteParams : ParamsBase
 
     public required AgentConfig AgentConfig
     {
-        get { return ModelBase.GetNotNullClass<AgentConfig>(this.RawBodyData, "agentConfig"); }
-        init { ModelBase.Set(this._rawBodyData, "agentConfig", value); }
+        get { return JsonModel.GetNotNullClass<AgentConfig>(this.RawBodyData, "agentConfig"); }
+        init { JsonModel.Set(this._rawBodyData, "agentConfig", value); }
     }
 
     public required ExecuteOptions ExecuteOptions
     {
         get
         {
-            return ModelBase.GetNotNullClass<ExecuteOptions>(this.RawBodyData, "executeOptions");
+            return JsonModel.GetNotNullClass<ExecuteOptions>(this.RawBodyData, "executeOptions");
         }
-        init { ModelBase.Set(this._rawBodyData, "executeOptions", value); }
+        init { JsonModel.Set(this._rawBodyData, "executeOptions", value); }
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
         init
         {
             if (value == null)
@@ -52,7 +52,7 @@ public sealed record class SessionExecuteParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "frameId", value);
+            JsonModel.Set(this._rawBodyData, "frameId", value);
         }
     }
 
@@ -63,7 +63,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExecuteParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExecuteParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -75,7 +75,7 @@ public sealed record class SessionExecuteParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-language", value);
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
         }
     }
 
@@ -84,7 +84,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     /// </summary>
     public string? XSDKVersion
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
         {
             if (value == null)
@@ -92,7 +92,7 @@ public sealed record class SessionExecuteParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
@@ -103,7 +103,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableStruct<System::DateTimeOffset>(
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
                 this.RawHeaderData,
                 "x-sent-at"
             );
@@ -115,7 +115,7 @@ public sealed record class SessionExecuteParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
@@ -126,7 +126,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExecuteParamsXStreamResponse>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExecuteParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -138,7 +138,7 @@ public sealed record class SessionExecuteParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -175,7 +175,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionExecuteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -200,9 +200,13 @@ public sealed record class SessionExecuteParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -215,15 +219,15 @@ public sealed record class SessionExecuteParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AgentConfig, AgentConfigFromRaw>))]
-public sealed record class AgentConfig : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AgentConfig, AgentConfigFromRaw>))]
+public sealed record class AgentConfig : JsonModel
 {
     /// <summary>
     /// Enable Computer Use Agent mode
     /// </summary>
     public bool? Cua
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "cua"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "cua"); }
         init
         {
             if (value == null)
@@ -231,7 +235,7 @@ public sealed record class AgentConfig : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "cua", value);
+            JsonModel.Set(this._rawData, "cua", value);
         }
     }
 
@@ -240,7 +244,7 @@ public sealed record class AgentConfig : ModelBase
     /// </summary>
     public ModelConfig? Model
     {
-        get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
         init
         {
             if (value == null)
@@ -248,7 +252,7 @@ public sealed record class AgentConfig : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "model", value);
+            JsonModel.Set(this._rawData, "model", value);
         }
     }
 
@@ -257,7 +261,7 @@ public sealed record class AgentConfig : ModelBase
     /// </summary>
     public string? SystemPrompt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "systemPrompt"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "systemPrompt"); }
         init
         {
             if (value == null)
@@ -265,7 +269,7 @@ public sealed record class AgentConfig : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "systemPrompt", value);
+            JsonModel.Set(this._rawData, "systemPrompt", value);
         }
     }
 
@@ -302,23 +306,23 @@ public sealed record class AgentConfig : ModelBase
     }
 }
 
-class AgentConfigFromRaw : IFromRaw<AgentConfig>
+class AgentConfigFromRaw : IFromRawJson<AgentConfig>
 {
     /// <inheritdoc/>
     public AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AgentConfig.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ExecuteOptions, ExecuteOptionsFromRaw>))]
-public sealed record class ExecuteOptions : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ExecuteOptions, ExecuteOptionsFromRaw>))]
+public sealed record class ExecuteOptions : JsonModel
 {
     /// <summary>
     /// Natural language instruction for the agent
     /// </summary>
     public required string Instruction
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "instruction"); }
-        init { ModelBase.Set(this._rawData, "instruction", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "instruction"); }
+        init { JsonModel.Set(this._rawData, "instruction", value); }
     }
 
     /// <summary>
@@ -326,7 +330,7 @@ public sealed record class ExecuteOptions : ModelBase
     /// </summary>
     public bool? HighlightCursor
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "highlightCursor"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "highlightCursor"); }
         init
         {
             if (value == null)
@@ -334,7 +338,7 @@ public sealed record class ExecuteOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "highlightCursor", value);
+            JsonModel.Set(this._rawData, "highlightCursor", value);
         }
     }
 
@@ -343,7 +347,7 @@ public sealed record class ExecuteOptions : ModelBase
     /// </summary>
     public double? MaxSteps
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "maxSteps"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "maxSteps"); }
         init
         {
             if (value == null)
@@ -351,7 +355,7 @@ public sealed record class ExecuteOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "maxSteps", value);
+            JsonModel.Set(this._rawData, "maxSteps", value);
         }
     }
 
@@ -395,7 +399,7 @@ public sealed record class ExecuteOptions : ModelBase
     }
 }
 
-class ExecuteOptionsFromRaw : IFromRaw<ExecuteOptions>
+class ExecuteOptionsFromRaw : IFromRawJson<ExecuteOptions>
 {
     /// <inheritdoc/>
     public ExecuteOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

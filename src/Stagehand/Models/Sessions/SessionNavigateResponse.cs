@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionNavigateResponse, SessionNavigateResponseFromRaw>))]
-public sealed record class SessionNavigateResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionNavigateResponse, SessionNavigateResponseFromRaw>))]
+public sealed record class SessionNavigateResponse : JsonModel
 {
     public required SessionNavigateResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionNavigateResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionNavigateResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionNavigateResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class SessionNavigateResponse : ModelBase
     }
 }
 
-class SessionNavigateResponseFromRaw : IFromRaw<SessionNavigateResponse>
+class SessionNavigateResponseFromRaw : IFromRawJson<SessionNavigateResponse>
 {
     /// <inheritdoc/>
     public SessionNavigateResponse FromRawUnchecked(
@@ -68,17 +68,17 @@ class SessionNavigateResponseFromRaw : IFromRaw<SessionNavigateResponse>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionNavigateResponseData, SessionNavigateResponseDataFromRaw>)
+    typeof(JsonModelConverter<SessionNavigateResponseData, SessionNavigateResponseDataFromRaw>)
 )]
-public sealed record class SessionNavigateResponseData : ModelBase
+public sealed record class SessionNavigateResponseData : JsonModel
 {
     /// <summary>
     /// Navigation response (Playwright Response object or null)
     /// </summary>
     public required JsonElement Result
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "result"); }
-        init { ModelBase.Set(this._rawData, "result", value); }
+        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "result"); }
+        init { JsonModel.Set(this._rawData, "result", value); }
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public sealed record class SessionNavigateResponseData : ModelBase
     /// </summary>
     public string? ActionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "actionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "actionId"); }
         init
         {
             if (value == null)
@@ -94,7 +94,7 @@ public sealed record class SessionNavigateResponseData : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "actionId", value);
+            JsonModel.Set(this._rawData, "actionId", value);
         }
     }
 
@@ -139,7 +139,7 @@ public sealed record class SessionNavigateResponseData : ModelBase
     }
 }
 
-class SessionNavigateResponseDataFromRaw : IFromRaw<SessionNavigateResponseData>
+class SessionNavigateResponseDataFromRaw : IFromRawJson<SessionNavigateResponseData>
 {
     /// <inheritdoc/>
     public SessionNavigateResponseData FromRawUnchecked(

@@ -72,8 +72,8 @@ public class StreamEventTest : TestBase
             Type = StreamEventType.System,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEvent>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<StreamEvent>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
@@ -143,8 +143,8 @@ public class DataTest : TestBase
                 Result = JsonSerializer.Deserialize<JsonElement>("{}"),
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Data>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Data>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -153,8 +153,8 @@ public class DataTest : TestBase
     public void StreamEventLogDataOutputSerializationRoundtripWorks()
     {
         Data value = new(new StreamEventLogDataOutput("message"));
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Data>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Data>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -208,8 +208,8 @@ public class StreamEventSystemDataOutputTest : TestBase
             Result = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.Starting;
@@ -380,8 +380,8 @@ public class StreamEventLogDataOutputTest : TestBase
     {
         var model = new StreamEventLogDataOutput { Message = "message" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(element);
         Assert.NotNull(deserialized);
 
         string expectedMessage = "message";

@@ -24,7 +24,7 @@ public sealed record class SessionEndParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionEndParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -36,7 +36,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-language", value);
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
         }
     }
 
@@ -45,7 +45,7 @@ public sealed record class SessionEndParams : ParamsBase
     /// </summary>
     public string? XSDKVersion
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
         {
             if (value == null)
@@ -53,7 +53,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
@@ -64,7 +64,7 @@ public sealed record class SessionEndParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableStruct<System::DateTimeOffset>(
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
                 this.RawHeaderData,
                 "x-sent-at"
             );
@@ -76,7 +76,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
@@ -87,7 +87,7 @@ public sealed record class SessionEndParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionEndParamsXStreamResponse>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -99,7 +99,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -129,7 +129,7 @@ public sealed record class SessionEndParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionEndParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -31,8 +31,8 @@ public class SessionEndResponseTest : TestBase
     {
         var model = new SessionEndResponse { Success = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(element);
         Assert.NotNull(deserialized);
 
         bool expectedSuccess = true;

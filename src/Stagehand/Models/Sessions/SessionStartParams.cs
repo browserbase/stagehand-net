@@ -29,8 +29,8 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public required string ModelName
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "modelName"); }
-        init { ModelBase.Set(this._rawBodyData, "modelName", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "modelName"); }
+        init { JsonModel.Set(this._rawBodyData, "modelName", value); }
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public double? ActTimeoutMs
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawBodyData, "actTimeoutMs"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawBodyData, "actTimeoutMs"); }
         init
         {
             if (value == null)
@@ -46,13 +46,13 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "actTimeoutMs", value);
+            JsonModel.Set(this._rawBodyData, "actTimeoutMs", value);
         }
     }
 
     public Browser? Browser
     {
-        get { return ModelBase.GetNullableClass<Browser>(this.RawBodyData, "browser"); }
+        get { return JsonModel.GetNullableClass<Browser>(this.RawBodyData, "browser"); }
         init
         {
             if (value == null)
@@ -60,7 +60,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "browser", value);
+            JsonModel.Set(this._rawBodyData, "browser", value);
         }
     }
 
@@ -68,7 +68,7 @@ public sealed record class SessionStartParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<BrowserbaseSessionCreateParams>(
+            return JsonModel.GetNullableClass<BrowserbaseSessionCreateParams>(
                 this.RawBodyData,
                 "browserbaseSessionCreateParams"
             );
@@ -80,7 +80,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "browserbaseSessionCreateParams", value);
+            JsonModel.Set(this._rawBodyData, "browserbaseSessionCreateParams", value);
         }
     }
 
@@ -89,7 +89,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public string? BrowserbaseSessionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "browserbaseSessionID"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "browserbaseSessionID"); }
         init
         {
             if (value == null)
@@ -97,13 +97,13 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "browserbaseSessionID", value);
+            JsonModel.Set(this._rawBodyData, "browserbaseSessionID", value);
         }
     }
 
     public bool? DebugDom
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "debugDom"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "debugDom"); }
         init
         {
             if (value == null)
@@ -111,7 +111,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "debugDom", value);
+            JsonModel.Set(this._rawBodyData, "debugDom", value);
         }
     }
 
@@ -120,7 +120,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public double? DomSettleTimeoutMs
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawBodyData, "domSettleTimeoutMs"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawBodyData, "domSettleTimeoutMs"); }
         init
         {
             if (value == null)
@@ -128,13 +128,13 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "domSettleTimeoutMs", value);
+            JsonModel.Set(this._rawBodyData, "domSettleTimeoutMs", value);
         }
     }
 
     public bool? Experimental
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "experimental"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "experimental"); }
         init
         {
             if (value == null)
@@ -142,7 +142,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "experimental", value);
+            JsonModel.Set(this._rawBodyData, "experimental", value);
         }
     }
 
@@ -151,7 +151,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public bool? SelfHeal
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "selfHeal"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "selfHeal"); }
         init
         {
             if (value == null)
@@ -159,7 +159,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "selfHeal", value);
+            JsonModel.Set(this._rawBodyData, "selfHeal", value);
         }
     }
 
@@ -168,7 +168,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public string? SystemPrompt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "systemPrompt"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "systemPrompt"); }
         init
         {
             if (value == null)
@@ -176,7 +176,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "systemPrompt", value);
+            JsonModel.Set(this._rawBodyData, "systemPrompt", value);
         }
     }
 
@@ -185,7 +185,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public long? Verbose
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
         init
         {
             if (value == null)
@@ -193,13 +193,13 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "verbose", value);
+            JsonModel.Set(this._rawBodyData, "verbose", value);
         }
     }
 
     public bool? WaitForCaptchaSolves
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "waitForCaptchaSolves"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "waitForCaptchaSolves"); }
         init
         {
             if (value == null)
@@ -207,7 +207,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "waitForCaptchaSolves", value);
+            JsonModel.Set(this._rawBodyData, "waitForCaptchaSolves", value);
         }
     }
 
@@ -218,7 +218,7 @@ public sealed record class SessionStartParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionStartParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionStartParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -230,7 +230,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-language", value);
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
         }
     }
 
@@ -239,7 +239,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// </summary>
     public string? XSDKVersion
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
         {
             if (value == null)
@@ -247,7 +247,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
@@ -258,7 +258,7 @@ public sealed record class SessionStartParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableStruct<System::DateTimeOffset>(
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
                 this.RawHeaderData,
                 "x-sent-at"
             );
@@ -270,7 +270,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
@@ -281,7 +281,7 @@ public sealed record class SessionStartParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionStartParamsXStreamResponse>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionStartParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -293,7 +293,7 @@ public sealed record class SessionStartParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -330,7 +330,7 @@ public sealed record class SessionStartParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionStartParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -354,9 +354,13 @@ public sealed record class SessionStartParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -369,15 +373,15 @@ public sealed record class SessionStartParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Browser, BrowserFromRaw>))]
-public sealed record class Browser : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Browser, BrowserFromRaw>))]
+public sealed record class Browser : JsonModel
 {
     /// <summary>
     /// Chrome DevTools Protocol URL for connecting to existing browser
     /// </summary>
     public string? CdpURL
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "cdpUrl"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
         init
         {
             if (value == null)
@@ -385,13 +389,13 @@ public sealed record class Browser : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "cdpUrl", value);
+            JsonModel.Set(this._rawData, "cdpUrl", value);
         }
     }
 
     public LaunchOptions? LaunchOptions
     {
-        get { return ModelBase.GetNullableClass<LaunchOptions>(this.RawData, "launchOptions"); }
+        get { return JsonModel.GetNullableClass<LaunchOptions>(this.RawData, "launchOptions"); }
         init
         {
             if (value == null)
@@ -399,7 +403,7 @@ public sealed record class Browser : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "launchOptions", value);
+            JsonModel.Set(this._rawData, "launchOptions", value);
         }
     }
 
@@ -410,7 +414,7 @@ public sealed record class Browser : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, global::Stagehand.Models.Sessions.Type>
             >(this.RawData, "type");
         }
@@ -421,7 +425,7 @@ public sealed record class Browser : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -458,19 +462,19 @@ public sealed record class Browser : ModelBase
     }
 }
 
-class BrowserFromRaw : IFromRaw<Browser>
+class BrowserFromRaw : IFromRawJson<Browser>
 {
     /// <inheritdoc/>
     public Browser FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Browser.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<LaunchOptions, LaunchOptionsFromRaw>))]
-public sealed record class LaunchOptions : ModelBase
+[JsonConverter(typeof(JsonModelConverter<LaunchOptions, LaunchOptionsFromRaw>))]
+public sealed record class LaunchOptions : JsonModel
 {
     public bool? AcceptDownloads
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "acceptDownloads"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "acceptDownloads"); }
         init
         {
             if (value == null)
@@ -478,13 +482,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "acceptDownloads", value);
+            JsonModel.Set(this._rawData, "acceptDownloads", value);
         }
     }
 
     public IReadOnlyList<string>? Args
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "args"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "args"); }
         init
         {
             if (value == null)
@@ -492,13 +496,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "args", value);
+            JsonModel.Set(this._rawData, "args", value);
         }
     }
 
     public string? CdpURL
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "cdpUrl"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
         init
         {
             if (value == null)
@@ -506,13 +510,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "cdpUrl", value);
+            JsonModel.Set(this._rawData, "cdpUrl", value);
         }
     }
 
     public bool? ChromiumSandbox
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "chromiumSandbox"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "chromiumSandbox"); }
         init
         {
             if (value == null)
@@ -520,13 +524,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "chromiumSandbox", value);
+            JsonModel.Set(this._rawData, "chromiumSandbox", value);
         }
     }
 
     public double? ConnectTimeoutMs
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "connectTimeoutMs"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "connectTimeoutMs"); }
         init
         {
             if (value == null)
@@ -534,13 +538,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "connectTimeoutMs", value);
+            JsonModel.Set(this._rawData, "connectTimeoutMs", value);
         }
     }
 
     public double? DeviceScaleFactor
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "deviceScaleFactor"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "deviceScaleFactor"); }
         init
         {
             if (value == null)
@@ -548,13 +552,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "deviceScaleFactor", value);
+            JsonModel.Set(this._rawData, "deviceScaleFactor", value);
         }
     }
 
     public bool? Devtools
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "devtools"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "devtools"); }
         init
         {
             if (value == null)
@@ -562,13 +566,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "devtools", value);
+            JsonModel.Set(this._rawData, "devtools", value);
         }
     }
 
     public string? DownloadsPath
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "downloadsPath"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "downloadsPath"); }
         init
         {
             if (value == null)
@@ -576,13 +580,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "downloadsPath", value);
+            JsonModel.Set(this._rawData, "downloadsPath", value);
         }
     }
 
     public string? ExecutablePath
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "executablePath"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "executablePath"); }
         init
         {
             if (value == null)
@@ -590,13 +594,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "executablePath", value);
+            JsonModel.Set(this._rawData, "executablePath", value);
         }
     }
 
     public bool? HasTouch
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "hasTouch"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "hasTouch"); }
         init
         {
             if (value == null)
@@ -604,13 +608,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "hasTouch", value);
+            JsonModel.Set(this._rawData, "hasTouch", value);
         }
     }
 
     public bool? Headless
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "headless"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "headless"); }
         init
         {
             if (value == null)
@@ -618,7 +622,7 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "headless", value);
+            JsonModel.Set(this._rawData, "headless", value);
         }
     }
 
@@ -626,7 +630,7 @@ public sealed record class LaunchOptions : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<IgnoreDefaultArgs>(this.RawData, "ignoreDefaultArgs");
+            return JsonModel.GetNullableClass<IgnoreDefaultArgs>(this.RawData, "ignoreDefaultArgs");
         }
         init
         {
@@ -635,13 +639,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "ignoreDefaultArgs", value);
+            JsonModel.Set(this._rawData, "ignoreDefaultArgs", value);
         }
     }
 
     public bool? IgnoreHTTPSErrors
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "ignoreHTTPSErrors"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "ignoreHTTPSErrors"); }
         init
         {
             if (value == null)
@@ -649,13 +653,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "ignoreHTTPSErrors", value);
+            JsonModel.Set(this._rawData, "ignoreHTTPSErrors", value);
         }
     }
 
     public string? Locale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locale"); }
         init
         {
             if (value == null)
@@ -663,13 +667,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locale", value);
+            JsonModel.Set(this._rawData, "locale", value);
         }
     }
 
     public bool? PreserveUserDataDir
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "preserveUserDataDir"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "preserveUserDataDir"); }
         init
         {
             if (value == null)
@@ -677,13 +681,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "preserveUserDataDir", value);
+            JsonModel.Set(this._rawData, "preserveUserDataDir", value);
         }
     }
 
     public Proxy? Proxy
     {
-        get { return ModelBase.GetNullableClass<Proxy>(this.RawData, "proxy"); }
+        get { return JsonModel.GetNullableClass<Proxy>(this.RawData, "proxy"); }
         init
         {
             if (value == null)
@@ -691,13 +695,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "proxy", value);
+            JsonModel.Set(this._rawData, "proxy", value);
         }
     }
 
     public string? UserDataDir
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "userDataDir"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "userDataDir"); }
         init
         {
             if (value == null)
@@ -705,13 +709,13 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "userDataDir", value);
+            JsonModel.Set(this._rawData, "userDataDir", value);
         }
     }
 
     public Viewport? Viewport
     {
-        get { return ModelBase.GetNullableClass<Viewport>(this.RawData, "viewport"); }
+        get { return JsonModel.GetNullableClass<Viewport>(this.RawData, "viewport"); }
         init
         {
             if (value == null)
@@ -719,7 +723,7 @@ public sealed record class LaunchOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "viewport", value);
+            JsonModel.Set(this._rawData, "viewport", value);
         }
     }
 
@@ -771,7 +775,7 @@ public sealed record class LaunchOptions : ModelBase
     }
 }
 
-class LaunchOptionsFromRaw : IFromRaw<LaunchOptions>
+class LaunchOptionsFromRaw : IFromRawJson<LaunchOptions>
 {
     /// <inheritdoc/>
     public LaunchOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -783,28 +787,28 @@ public record class IgnoreDefaultArgs
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public IgnoreDefaultArgs(bool value, JsonElement? json = null)
+    public IgnoreDefaultArgs(bool value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public IgnoreDefaultArgs(IReadOnlyList<string> value, JsonElement? json = null)
+    public IgnoreDefaultArgs(IReadOnlyList<string> value, JsonElement? element = null)
     {
         this.Value = ImmutableArray.ToImmutableArray(value);
-        this._json = json;
+        this._element = element;
     }
 
-    public IgnoreDefaultArgs(JsonElement json)
+    public IgnoreDefaultArgs(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -963,10 +967,10 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            return new(JsonSerializer.Deserialize<bool>(json, options));
+            return new(JsonSerializer.Deserialize<bool>(element, options));
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
@@ -975,10 +979,10 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<string>>(json, options);
+            var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -986,7 +990,7 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(
@@ -999,18 +1003,18 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Proxy, ProxyFromRaw>))]
-public sealed record class Proxy : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Proxy, ProxyFromRaw>))]
+public sealed record class Proxy : JsonModel
 {
     public required string Server
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "server"); }
-        init { ModelBase.Set(this._rawData, "server", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "server"); }
+        init { JsonModel.Set(this._rawData, "server", value); }
     }
 
     public string? Bypass
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "bypass"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "bypass"); }
         init
         {
             if (value == null)
@@ -1018,13 +1022,13 @@ public sealed record class Proxy : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "bypass", value);
+            JsonModel.Set(this._rawData, "bypass", value);
         }
     }
 
     public string? Password
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "password"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "password"); }
         init
         {
             if (value == null)
@@ -1032,13 +1036,13 @@ public sealed record class Proxy : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "password", value);
+            JsonModel.Set(this._rawData, "password", value);
         }
     }
 
     public string? Username
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "username"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "username"); }
         init
         {
             if (value == null)
@@ -1046,7 +1050,7 @@ public sealed record class Proxy : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "username", value);
+            JsonModel.Set(this._rawData, "username", value);
         }
     }
 
@@ -1091,26 +1095,26 @@ public sealed record class Proxy : ModelBase
     }
 }
 
-class ProxyFromRaw : IFromRaw<Proxy>
+class ProxyFromRaw : IFromRawJson<Proxy>
 {
     /// <inheritdoc/>
     public Proxy FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Proxy.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Viewport, ViewportFromRaw>))]
-public sealed record class Viewport : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Viewport, ViewportFromRaw>))]
+public sealed record class Viewport : JsonModel
 {
     public required double Height
     {
-        get { return ModelBase.GetNotNullStruct<double>(this.RawData, "height"); }
-        init { ModelBase.Set(this._rawData, "height", value); }
+        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "height"); }
+        init { JsonModel.Set(this._rawData, "height", value); }
     }
 
     public required double Width
     {
-        get { return ModelBase.GetNotNullStruct<double>(this.RawData, "width"); }
-        init { ModelBase.Set(this._rawData, "width", value); }
+        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "width"); }
+        init { JsonModel.Set(this._rawData, "width", value); }
     }
 
     /// <inheritdoc/>
@@ -1145,7 +1149,7 @@ public sealed record class Viewport : ModelBase
     }
 }
 
-class ViewportFromRaw : IFromRaw<Viewport>
+class ViewportFromRaw : IFromRawJson<Viewport>
 {
     /// <inheritdoc/>
     public Viewport FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1200,13 +1204,16 @@ sealed class TypeConverter : JsonConverter<global::Stagehand.Models.Sessions.Typ
 }
 
 [JsonConverter(
-    typeof(ModelConverter<BrowserbaseSessionCreateParams, BrowserbaseSessionCreateParamsFromRaw>)
+    typeof(JsonModelConverter<
+        BrowserbaseSessionCreateParams,
+        BrowserbaseSessionCreateParamsFromRaw
+    >)
 )]
-public sealed record class BrowserbaseSessionCreateParams : ModelBase
+public sealed record class BrowserbaseSessionCreateParams : JsonModel
 {
     public BrowserSettings? BrowserSettings
     {
-        get { return ModelBase.GetNullableClass<BrowserSettings>(this.RawData, "browserSettings"); }
+        get { return JsonModel.GetNullableClass<BrowserSettings>(this.RawData, "browserSettings"); }
         init
         {
             if (value == null)
@@ -1214,13 +1221,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "browserSettings", value);
+            JsonModel.Set(this._rawData, "browserSettings", value);
         }
     }
 
     public string? ExtensionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "extensionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "extensionId"); }
         init
         {
             if (value == null)
@@ -1228,13 +1235,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "extensionId", value);
+            JsonModel.Set(this._rawData, "extensionId", value);
         }
     }
 
     public bool? KeepAlive
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "keepAlive"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "keepAlive"); }
         init
         {
             if (value == null)
@@ -1242,13 +1249,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "keepAlive", value);
+            JsonModel.Set(this._rawData, "keepAlive", value);
         }
     }
 
     public string? ProjectID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "projectId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "projectId"); }
         init
         {
             if (value == null)
@@ -1256,13 +1263,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "projectId", value);
+            JsonModel.Set(this._rawData, "projectId", value);
         }
     }
 
     public Proxies? Proxies
     {
-        get { return ModelBase.GetNullableClass<Proxies>(this.RawData, "proxies"); }
+        get { return JsonModel.GetNullableClass<Proxies>(this.RawData, "proxies"); }
         init
         {
             if (value == null)
@@ -1270,13 +1277,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "proxies", value);
+            JsonModel.Set(this._rawData, "proxies", value);
         }
     }
 
     public ApiEnum<string, Region>? Region
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Region>>(this.RawData, "region"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Region>>(this.RawData, "region"); }
         init
         {
             if (value == null)
@@ -1284,13 +1291,13 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "region", value);
+            JsonModel.Set(this._rawData, "region", value);
         }
     }
 
     public double? Timeout
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
         init
         {
             if (value == null)
@@ -1298,7 +1305,7 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeout", value);
+            JsonModel.Set(this._rawData, "timeout", value);
         }
     }
 
@@ -1306,7 +1313,7 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "userMetadata"
             );
@@ -1318,7 +1325,7 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "userMetadata", value);
+            JsonModel.Set(this._rawData, "userMetadata", value);
         }
     }
 
@@ -1364,7 +1371,7 @@ public sealed record class BrowserbaseSessionCreateParams : ModelBase
     }
 }
 
-class BrowserbaseSessionCreateParamsFromRaw : IFromRaw<BrowserbaseSessionCreateParams>
+class BrowserbaseSessionCreateParamsFromRaw : IFromRawJson<BrowserbaseSessionCreateParams>
 {
     /// <inheritdoc/>
     public BrowserbaseSessionCreateParams FromRawUnchecked(
@@ -1372,12 +1379,12 @@ class BrowserbaseSessionCreateParamsFromRaw : IFromRaw<BrowserbaseSessionCreateP
     ) => BrowserbaseSessionCreateParams.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<BrowserSettings, BrowserSettingsFromRaw>))]
-public sealed record class BrowserSettings : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrowserSettings, BrowserSettingsFromRaw>))]
+public sealed record class BrowserSettings : JsonModel
 {
     public bool? AdvancedStealth
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "advancedStealth"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "advancedStealth"); }
         init
         {
             if (value == null)
@@ -1385,13 +1392,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "advancedStealth", value);
+            JsonModel.Set(this._rawData, "advancedStealth", value);
         }
     }
 
     public bool? BlockAds
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "blockAds"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "blockAds"); }
         init
         {
             if (value == null)
@@ -1399,13 +1406,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "blockAds", value);
+            JsonModel.Set(this._rawData, "blockAds", value);
         }
     }
 
     public Context? Context
     {
-        get { return ModelBase.GetNullableClass<Context>(this.RawData, "context"); }
+        get { return JsonModel.GetNullableClass<Context>(this.RawData, "context"); }
         init
         {
             if (value == null)
@@ -1413,13 +1420,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "context", value);
+            JsonModel.Set(this._rawData, "context", value);
         }
     }
 
     public string? ExtensionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "extensionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "extensionId"); }
         init
         {
             if (value == null)
@@ -1427,13 +1434,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "extensionId", value);
+            JsonModel.Set(this._rawData, "extensionId", value);
         }
     }
 
     public Fingerprint? Fingerprint
     {
-        get { return ModelBase.GetNullableClass<Fingerprint>(this.RawData, "fingerprint"); }
+        get { return JsonModel.GetNullableClass<Fingerprint>(this.RawData, "fingerprint"); }
         init
         {
             if (value == null)
@@ -1441,13 +1448,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "fingerprint", value);
+            JsonModel.Set(this._rawData, "fingerprint", value);
         }
     }
 
     public bool? LogSession
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "logSession"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "logSession"); }
         init
         {
             if (value == null)
@@ -1455,13 +1462,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "logSession", value);
+            JsonModel.Set(this._rawData, "logSession", value);
         }
     }
 
     public bool? RecordSession
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "recordSession"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "recordSession"); }
         init
         {
             if (value == null)
@@ -1469,13 +1476,13 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "recordSession", value);
+            JsonModel.Set(this._rawData, "recordSession", value);
         }
     }
 
     public bool? SolveCaptchas
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "solveCaptchas"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "solveCaptchas"); }
         init
         {
             if (value == null)
@@ -1483,7 +1490,7 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "solveCaptchas", value);
+            JsonModel.Set(this._rawData, "solveCaptchas", value);
         }
     }
 
@@ -1491,7 +1498,7 @@ public sealed record class BrowserSettings : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<BrowserSettingsViewport>(this.RawData, "viewport");
+            return JsonModel.GetNullableClass<BrowserSettingsViewport>(this.RawData, "viewport");
         }
         init
         {
@@ -1500,7 +1507,7 @@ public sealed record class BrowserSettings : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "viewport", value);
+            JsonModel.Set(this._rawData, "viewport", value);
         }
     }
 
@@ -1543,25 +1550,25 @@ public sealed record class BrowserSettings : ModelBase
     }
 }
 
-class BrowserSettingsFromRaw : IFromRaw<BrowserSettings>
+class BrowserSettingsFromRaw : IFromRawJson<BrowserSettings>
 {
     /// <inheritdoc/>
     public BrowserSettings FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         BrowserSettings.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Context, ContextFromRaw>))]
-public sealed record class Context : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Context, ContextFromRaw>))]
+public sealed record class Context : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public bool? Persist
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "persist"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "persist"); }
         init
         {
             if (value == null)
@@ -1569,7 +1576,7 @@ public sealed record class Context : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "persist", value);
+            JsonModel.Set(this._rawData, "persist", value);
         }
     }
 
@@ -1612,21 +1619,21 @@ public sealed record class Context : ModelBase
     }
 }
 
-class ContextFromRaw : IFromRaw<Context>
+class ContextFromRaw : IFromRawJson<Context>
 {
     /// <inheritdoc/>
     public Context FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Context.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Fingerprint, FingerprintFromRaw>))]
-public sealed record class Fingerprint : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Fingerprint, FingerprintFromRaw>))]
+public sealed record class Fingerprint : JsonModel
 {
     public IReadOnlyList<ApiEnum<string, FingerprintBrowser>>? Browsers
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, FingerprintBrowser>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, FingerprintBrowser>>>(
                 this.RawData,
                 "browsers"
             );
@@ -1638,7 +1645,7 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "browsers", value);
+            JsonModel.Set(this._rawData, "browsers", value);
         }
     }
 
@@ -1646,7 +1653,7 @@ public sealed record class Fingerprint : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, Device>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, Device>>>(
                 this.RawData,
                 "devices"
             );
@@ -1658,7 +1665,7 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "devices", value);
+            JsonModel.Set(this._rawData, "devices", value);
         }
     }
 
@@ -1666,7 +1673,7 @@ public sealed record class Fingerprint : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, HTTPVersion>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, HTTPVersion>>(
                 this.RawData,
                 "httpVersion"
             );
@@ -1678,13 +1685,13 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "httpVersion", value);
+            JsonModel.Set(this._rawData, "httpVersion", value);
         }
     }
 
     public IReadOnlyList<string>? Locales
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "locales"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "locales"); }
         init
         {
             if (value == null)
@@ -1692,7 +1699,7 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locales", value);
+            JsonModel.Set(this._rawData, "locales", value);
         }
     }
 
@@ -1700,7 +1707,7 @@ public sealed record class Fingerprint : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, OperatingSystem>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, OperatingSystem>>>(
                 this.RawData,
                 "operatingSystems"
             );
@@ -1712,13 +1719,13 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "operatingSystems", value);
+            JsonModel.Set(this._rawData, "operatingSystems", value);
         }
     }
 
     public Screen? Screen
     {
-        get { return ModelBase.GetNullableClass<Screen>(this.RawData, "screen"); }
+        get { return JsonModel.GetNullableClass<Screen>(this.RawData, "screen"); }
         init
         {
             if (value == null)
@@ -1726,7 +1733,7 @@ public sealed record class Fingerprint : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "screen", value);
+            JsonModel.Set(this._rawData, "screen", value);
         }
     }
 
@@ -1775,7 +1782,7 @@ public sealed record class Fingerprint : ModelBase
     }
 }
 
-class FingerprintFromRaw : IFromRaw<Fingerprint>
+class FingerprintFromRaw : IFromRawJson<Fingerprint>
 {
     /// <inheritdoc/>
     public Fingerprint FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1969,12 +1976,12 @@ sealed class OperatingSystemConverter : JsonConverter<OperatingSystem>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Screen, ScreenFromRaw>))]
-public sealed record class Screen : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Screen, ScreenFromRaw>))]
+public sealed record class Screen : JsonModel
 {
     public double? MaxHeight
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "maxHeight"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "maxHeight"); }
         init
         {
             if (value == null)
@@ -1982,13 +1989,13 @@ public sealed record class Screen : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "maxHeight", value);
+            JsonModel.Set(this._rawData, "maxHeight", value);
         }
     }
 
     public double? MaxWidth
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "maxWidth"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "maxWidth"); }
         init
         {
             if (value == null)
@@ -1996,13 +2003,13 @@ public sealed record class Screen : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "maxWidth", value);
+            JsonModel.Set(this._rawData, "maxWidth", value);
         }
     }
 
     public double? MinHeight
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "minHeight"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "minHeight"); }
         init
         {
             if (value == null)
@@ -2010,13 +2017,13 @@ public sealed record class Screen : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "minHeight", value);
+            JsonModel.Set(this._rawData, "minHeight", value);
         }
     }
 
     public double? MinWidth
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "minWidth"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "minWidth"); }
         init
         {
             if (value == null)
@@ -2024,7 +2031,7 @@ public sealed record class Screen : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "minWidth", value);
+            JsonModel.Set(this._rawData, "minWidth", value);
         }
     }
 
@@ -2062,19 +2069,19 @@ public sealed record class Screen : ModelBase
     }
 }
 
-class ScreenFromRaw : IFromRaw<Screen>
+class ScreenFromRaw : IFromRawJson<Screen>
 {
     /// <inheritdoc/>
     public Screen FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Screen.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<BrowserSettingsViewport, BrowserSettingsViewportFromRaw>))]
-public sealed record class BrowserSettingsViewport : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrowserSettingsViewport, BrowserSettingsViewportFromRaw>))]
+public sealed record class BrowserSettingsViewport : JsonModel
 {
     public double? Height
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "height"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "height"); }
         init
         {
             if (value == null)
@@ -2082,13 +2089,13 @@ public sealed record class BrowserSettingsViewport : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "height", value);
+            JsonModel.Set(this._rawData, "height", value);
         }
     }
 
     public double? Width
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "width"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "width"); }
         init
         {
             if (value == null)
@@ -2096,7 +2103,7 @@ public sealed record class BrowserSettingsViewport : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "width", value);
+            JsonModel.Set(this._rawData, "width", value);
         }
     }
 
@@ -2134,7 +2141,7 @@ public sealed record class BrowserSettingsViewport : ModelBase
     }
 }
 
-class BrowserSettingsViewportFromRaw : IFromRaw<BrowserSettingsViewport>
+class BrowserSettingsViewportFromRaw : IFromRawJson<BrowserSettingsViewport>
 {
     /// <inheritdoc/>
     public BrowserSettingsViewport FromRawUnchecked(
@@ -2147,28 +2154,28 @@ public record class Proxies
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Proxies(bool value, JsonElement? json = null)
+    public Proxies(bool value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Proxies(IReadOnlyList<ProxyConfig> value, JsonElement? json = null)
+    public Proxies(IReadOnlyList<ProxyConfig> value, JsonElement? element = null)
     {
         this.Value = ImmutableArray.ToImmutableArray(value);
-        this._json = json;
+        this._element = element;
     }
 
-    public Proxies(JsonElement json)
+    public Proxies(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -2331,10 +2338,10 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            return new(JsonSerializer.Deserialize<bool>(json, options));
+            return new(JsonSerializer.Deserialize<bool>(element, options));
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
@@ -2343,10 +2350,10 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(json, options);
+            var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -2354,7 +2361,7 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Proxies value, JsonSerializerOptions options)
@@ -2368,11 +2375,11 @@ public record class ProxyConfig
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
     public JsonElement Type
@@ -2391,21 +2398,21 @@ public record class ProxyConfig
         }
     }
 
-    public ProxyConfig(Browserbase value, JsonElement? json = null)
+    public ProxyConfig(Browserbase value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ProxyConfig(External value, JsonElement? json = null)
+    public ProxyConfig(External value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ProxyConfig(JsonElement json)
+    public ProxyConfig(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -2564,11 +2571,11 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         string? type;
         try
         {
-            type = json.GetProperty("type").GetString();
+            type = element.GetProperty("type").GetString();
         }
         catch
         {
@@ -2581,11 +2588,11 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
             {
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Browserbase>(json, options);
+                    var deserialized = JsonSerializer.Deserialize<Browserbase>(element, options);
                     if (deserialized != null)
                     {
                         deserialized.Validate();
-                        return new(deserialized, json);
+                        return new(deserialized, element);
                     }
                 }
                 catch (System::Exception e)
@@ -2594,17 +2601,17 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
                     // ignore
                 }
 
-                return new(json);
+                return new(element);
             }
             case "external":
             {
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<External>(json, options);
+                    var deserialized = JsonSerializer.Deserialize<External>(element, options);
                     if (deserialized != null)
                     {
                         deserialized.Validate();
-                        return new(deserialized, json);
+                        return new(deserialized, element);
                     }
                 }
                 catch (System::Exception e)
@@ -2613,11 +2620,11 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
                     // ignore
                 }
 
-                return new(json);
+                return new(element);
             }
             default:
             {
-                return new ProxyConfig(json);
+                return new ProxyConfig(element);
             }
         }
     }
@@ -2632,18 +2639,18 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Browserbase, BrowserbaseFromRaw>))]
-public sealed record class Browserbase : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Browserbase, BrowserbaseFromRaw>))]
+public sealed record class Browserbase : JsonModel
 {
     public JsonElement Type
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     public string? DomainPattern
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "domainPattern"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "domainPattern"); }
         init
         {
             if (value == null)
@@ -2651,13 +2658,13 @@ public sealed record class Browserbase : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "domainPattern", value);
+            JsonModel.Set(this._rawData, "domainPattern", value);
         }
     }
 
     public Geolocation? Geolocation
     {
-        get { return ModelBase.GetNullableClass<Geolocation>(this.RawData, "geolocation"); }
+        get { return JsonModel.GetNullableClass<Geolocation>(this.RawData, "geolocation"); }
         init
         {
             if (value == null)
@@ -2665,7 +2672,7 @@ public sealed record class Browserbase : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "geolocation", value);
+            JsonModel.Set(this._rawData, "geolocation", value);
         }
     }
 
@@ -2715,25 +2722,25 @@ public sealed record class Browserbase : ModelBase
     }
 }
 
-class BrowserbaseFromRaw : IFromRaw<Browserbase>
+class BrowserbaseFromRaw : IFromRawJson<Browserbase>
 {
     /// <inheritdoc/>
     public Browserbase FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Browserbase.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Geolocation, GeolocationFromRaw>))]
-public sealed record class Geolocation : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Geolocation, GeolocationFromRaw>))]
+public sealed record class Geolocation : JsonModel
 {
     public required string Country
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "country"); }
-        init { ModelBase.Set(this._rawData, "country", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "country"); }
+        init { JsonModel.Set(this._rawData, "country", value); }
     }
 
     public string? City
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "city"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "city"); }
         init
         {
             if (value == null)
@@ -2741,13 +2748,13 @@ public sealed record class Geolocation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "city", value);
+            JsonModel.Set(this._rawData, "city", value);
         }
     }
 
     public string? State
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "state"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "state"); }
         init
         {
             if (value == null)
@@ -2755,7 +2762,7 @@ public sealed record class Geolocation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "state", value);
+            JsonModel.Set(this._rawData, "state", value);
         }
     }
 
@@ -2799,31 +2806,31 @@ public sealed record class Geolocation : ModelBase
     }
 }
 
-class GeolocationFromRaw : IFromRaw<Geolocation>
+class GeolocationFromRaw : IFromRawJson<Geolocation>
 {
     /// <inheritdoc/>
     public Geolocation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Geolocation.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<External, ExternalFromRaw>))]
-public sealed record class External : ModelBase
+[JsonConverter(typeof(JsonModelConverter<External, ExternalFromRaw>))]
+public sealed record class External : JsonModel
 {
     public required string Server
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "server"); }
-        init { ModelBase.Set(this._rawData, "server", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "server"); }
+        init { JsonModel.Set(this._rawData, "server", value); }
     }
 
     public JsonElement Type
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     public string? DomainPattern
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "domainPattern"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "domainPattern"); }
         init
         {
             if (value == null)
@@ -2831,13 +2838,13 @@ public sealed record class External : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "domainPattern", value);
+            JsonModel.Set(this._rawData, "domainPattern", value);
         }
     }
 
     public string? Password
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "password"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "password"); }
         init
         {
             if (value == null)
@@ -2845,13 +2852,13 @@ public sealed record class External : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "password", value);
+            JsonModel.Set(this._rawData, "password", value);
         }
     }
 
     public string? Username
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "username"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "username"); }
         init
         {
             if (value == null)
@@ -2859,7 +2866,7 @@ public sealed record class External : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "username", value);
+            JsonModel.Set(this._rawData, "username", value);
         }
     }
 
@@ -2918,7 +2925,7 @@ public sealed record class External : ModelBase
     }
 }
 
-class ExternalFromRaw : IFromRaw<External>
+class ExternalFromRaw : IFromRawJson<External>
 {
     /// <inheritdoc/>
     public External FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

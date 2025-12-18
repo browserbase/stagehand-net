@@ -65,8 +65,8 @@ public class SessionStartResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionStartResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionStartResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionStartResponseData expectedData = new()
@@ -146,8 +146,8 @@ public class SessionStartResponseDataTest : TestBase
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionStartResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionStartResponseData>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAvailable = true;

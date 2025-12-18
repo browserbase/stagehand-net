@@ -61,8 +61,8 @@ public class SessionExtractResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionExtractResponseData expectedData = new()
@@ -135,8 +135,8 @@ public class SessionExtractResponseDataTest : TestBase
             ActionID = "actionId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExtractResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponseData>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");

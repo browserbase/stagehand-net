@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionExtractResponse, SessionExtractResponseFromRaw>))]
-public sealed record class SessionExtractResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionExtractResponse, SessionExtractResponseFromRaw>))]
+public sealed record class SessionExtractResponse : JsonModel
 {
     public required SessionExtractResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionExtractResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionExtractResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionExtractResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class SessionExtractResponse : ModelBase
     }
 }
 
-class SessionExtractResponseFromRaw : IFromRaw<SessionExtractResponse>
+class SessionExtractResponseFromRaw : IFromRawJson<SessionExtractResponse>
 {
     /// <inheritdoc/>
     public SessionExtractResponse FromRawUnchecked(
@@ -68,17 +68,17 @@ class SessionExtractResponseFromRaw : IFromRaw<SessionExtractResponse>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionExtractResponseData, SessionExtractResponseDataFromRaw>)
+    typeof(JsonModelConverter<SessionExtractResponseData, SessionExtractResponseDataFromRaw>)
 )]
-public sealed record class SessionExtractResponseData : ModelBase
+public sealed record class SessionExtractResponseData : JsonModel
 {
     /// <summary>
     /// Extracted data matching the requested schema
     /// </summary>
     public required JsonElement Result
     {
-        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "result"); }
-        init { ModelBase.Set(this._rawData, "result", value); }
+        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "result"); }
+        init { JsonModel.Set(this._rawData, "result", value); }
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public sealed record class SessionExtractResponseData : ModelBase
     /// </summary>
     public string? ActionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "actionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "actionId"); }
         init
         {
             if (value == null)
@@ -94,7 +94,7 @@ public sealed record class SessionExtractResponseData : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "actionId", value);
+            JsonModel.Set(this._rawData, "actionId", value);
         }
     }
 
@@ -139,7 +139,7 @@ public sealed record class SessionExtractResponseData : ModelBase
     }
 }
 
-class SessionExtractResponseDataFromRaw : IFromRaw<SessionExtractResponseData>
+class SessionExtractResponseDataFromRaw : IFromRawJson<SessionExtractResponseData>
 {
     /// <inheritdoc/>
     public SessionExtractResponseData FromRawUnchecked(

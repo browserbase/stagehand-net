@@ -98,8 +98,8 @@ public class SessionObserveResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionObserveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionObserveResponseData expectedData = new()
@@ -230,8 +230,8 @@ public class SessionObserveResponseDataTest : TestBase
             ActionID = "actionId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionObserveResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveResponseData>(element);
         Assert.NotNull(deserialized);
 
         List<Action> expectedResult =

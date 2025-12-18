@@ -157,8 +157,8 @@ public class BrowserTest : TestBase
             Type = Type.Local,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browser>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Browser>(element);
         Assert.NotNull(deserialized);
 
         string expectedCdpURL = "ws://localhost:9222";
@@ -441,8 +441,8 @@ public class LaunchOptionsTest : TestBase
             Viewport = new() { Height = 0, Width = 0 },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LaunchOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<LaunchOptions>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAcceptDownloads = true;
@@ -694,8 +694,8 @@ public class IgnoreDefaultArgsTest : TestBase
     public void BoolSerializationRoundtripWorks()
     {
         IgnoreDefaultArgs value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -704,8 +704,8 @@ public class IgnoreDefaultArgsTest : TestBase
     public void StringsSerializationRoundtripWorks()
     {
         IgnoreDefaultArgs value = new(["string"]);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -763,8 +763,8 @@ public class ProxyTest : TestBase
             Username = "username",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Proxy>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Proxy>(element);
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";
@@ -881,8 +881,8 @@ public class ViewportTest : TestBase
     {
         var model = new Viewport { Height = 0, Width = 0 };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Viewport>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Viewport>(element);
         Assert.NotNull(deserialized);
 
         double expectedHeight = 0;
@@ -1147,8 +1147,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserbaseSessionCreateParams>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrowserbaseSessionCreateParams>(element);
         Assert.NotNull(deserialized);
 
         BrowserSettings expectedBrowserSettings = new()
@@ -1468,8 +1468,8 @@ public class BrowserSettingsTest : TestBase
             Viewport = new() { Height = 0, Width = 0 },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettings>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrowserSettings>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAdvancedStealth = true;
@@ -1661,8 +1661,8 @@ public class ContextTest : TestBase
     {
         var model = new Context { ID = "id", Persist = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Context>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Context>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -1833,8 +1833,8 @@ public class FingerprintTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Fingerprint>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Fingerprint>(element);
         Assert.NotNull(deserialized);
 
         List<ApiEnum<string, FingerprintBrowser>> expectedBrowsers = [FingerprintBrowser.Chrome];
@@ -2259,8 +2259,8 @@ public class ScreenTest : TestBase
             MinWidth = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Screen>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Screen>(element);
         Assert.NotNull(deserialized);
 
         double expectedMaxHeight = 0;
@@ -2379,8 +2379,8 @@ public class BrowserSettingsViewportTest : TestBase
     {
         var model = new BrowserSettingsViewport { Height = 0, Width = 0 };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettingsViewport>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrowserSettingsViewport>(element);
         Assert.NotNull(deserialized);
 
         double expectedHeight = 0;
@@ -2482,8 +2482,8 @@ public class ProxiesTest : TestBase
     public void BoolSerializationRoundtripWorks()
     {
         Proxies value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Proxies>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Proxies>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2507,8 +2507,8 @@ public class ProxiesTest : TestBase
                 ),
             ]
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Proxies>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Proxies>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2564,8 +2564,8 @@ public class ProxyConfigTest : TestBase
                 },
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2582,8 +2582,8 @@ public class ProxyConfigTest : TestBase
                 Username = "username",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2653,8 +2653,8 @@ public class BrowserbaseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browserbase>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Browserbase>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
@@ -2784,8 +2784,8 @@ public class GeolocationTest : TestBase
             State = "state",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Geolocation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Geolocation>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountry = "country";
@@ -2917,8 +2917,8 @@ public class ExternalTest : TestBase
             Username = "username",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<External>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<External>(element);
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";

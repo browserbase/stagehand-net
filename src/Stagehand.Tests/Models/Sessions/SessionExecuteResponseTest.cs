@@ -178,8 +178,8 @@ public class SessionExecuteResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionExecuteResponseData expectedData = new(
@@ -429,8 +429,8 @@ public class SessionExecuteResponseDataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseData>(element);
         Assert.NotNull(deserialized);
 
         SessionExecuteResponseDataResult expectedResult = new()
@@ -676,8 +676,8 @@ public class SessionExecuteResponseDataResultTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseDataResult>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseDataResult>(element);
         Assert.NotNull(deserialized);
 
         List<SessionExecuteResponseDataResultAction> expectedActions =
@@ -962,8 +962,10 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             TimeMs = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseDataResultAction>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExecuteResponseDataResultAction>(
+            element
+        );
         Assert.NotNull(deserialized);
 
         string expectedType = "click";
@@ -1143,8 +1145,8 @@ public class UsageTest : TestBase
             ReasoningTokens = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Usage>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Usage>(element);
         Assert.NotNull(deserialized);
 
         double expectedInferenceTimeMs = 2500;

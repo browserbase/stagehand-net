@@ -17,28 +17,28 @@ public record class ModelConfig
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public ModelConfig(string value, JsonElement? json = null)
+    public ModelConfig(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ModelConfig(ModelConfigObject value, JsonElement? json = null)
+    public ModelConfig(ModelConfigObject value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ModelConfig(JsonElement json)
+    public ModelConfig(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -200,14 +200,14 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -217,10 +217,10 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -228,7 +228,7 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(
@@ -241,16 +241,16 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ModelConfigObject, ModelConfigObjectFromRaw>))]
-public sealed record class ModelConfigObject : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ModelConfigObject, ModelConfigObjectFromRaw>))]
+public sealed record class ModelConfigObject : JsonModel
 {
     /// <summary>
     /// Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
     /// </summary>
     public required string ModelName
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "modelName"); }
-        init { ModelBase.Set(this._rawData, "modelName", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "modelName"); }
+        init { JsonModel.Set(this._rawData, "modelName", value); }
     }
 
     /// <summary>
@@ -258,7 +258,7 @@ public sealed record class ModelConfigObject : ModelBase
     /// </summary>
     public string? APIKey
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "apiKey"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "apiKey"); }
         init
         {
             if (value == null)
@@ -266,7 +266,7 @@ public sealed record class ModelConfigObject : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "apiKey", value);
+            JsonModel.Set(this._rawData, "apiKey", value);
         }
     }
 
@@ -275,7 +275,7 @@ public sealed record class ModelConfigObject : ModelBase
     /// </summary>
     public string? BaseURL
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "baseURL"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "baseURL"); }
         init
         {
             if (value == null)
@@ -283,7 +283,7 @@ public sealed record class ModelConfigObject : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "baseURL", value);
+            JsonModel.Set(this._rawData, "baseURL", value);
         }
     }
 
@@ -329,7 +329,7 @@ public sealed record class ModelConfigObject : ModelBase
     }
 }
 
-class ModelConfigObjectFromRaw : IFromRaw<ModelConfigObject>
+class ModelConfigObjectFromRaw : IFromRawJson<ModelConfigObject>
 {
     /// <inheritdoc/>
     public ModelConfigObject FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
