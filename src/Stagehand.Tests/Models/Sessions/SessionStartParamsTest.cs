@@ -677,21 +677,21 @@ public class LaunchOptionsTest : TestBase
 public class IgnoreDefaultArgsTest : TestBase
 {
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         IgnoreDefaultArgs value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void stringsValidation_Works()
+    public void StringsValidationWorks()
     {
         IgnoreDefaultArgs value = new(["string"]);
         value.Validate();
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         IgnoreDefaultArgs value = new(true);
         string json = JsonSerializer.Serialize(value);
@@ -701,7 +701,7 @@ public class IgnoreDefaultArgsTest : TestBase
     }
 
     [Fact]
-    public void stringsSerializationRoundtrip_Works()
+    public void StringsSerializationRoundtripWorks()
     {
         IgnoreDefaultArgs value = new(["string"]);
         string json = JsonSerializer.Serialize(value);
@@ -2450,34 +2450,36 @@ public class BrowserSettingsViewportTest : TestBase
 public class ProxiesTest : TestBase
 {
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         Proxies value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void proxy_config_listValidation_Works()
+    public void ProxyConfigListValidationWorks()
     {
         Proxies value = new(
             [
-                new Browserbase()
-                {
-                    DomainPattern = "domainPattern",
-                    Geolocation = new()
+                new ProxyConfig(
+                    new Browserbase()
                     {
-                        Country = "country",
-                        City = "city",
-                        State = "state",
-                    },
-                },
+                        DomainPattern = "domainPattern",
+                        Geolocation = new()
+                        {
+                            Country = "country",
+                            City = "city",
+                            State = "state",
+                        },
+                    }
+                ),
             ]
         );
         value.Validate();
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         Proxies value = new(true);
         string json = JsonSerializer.Serialize(value);
@@ -2487,20 +2489,22 @@ public class ProxiesTest : TestBase
     }
 
     [Fact]
-    public void proxy_config_listSerializationRoundtrip_Works()
+    public void ProxyConfigListSerializationRoundtripWorks()
     {
         Proxies value = new(
             [
-                new Browserbase()
-                {
-                    DomainPattern = "domainPattern",
-                    Geolocation = new()
+                new ProxyConfig(
+                    new Browserbase()
                     {
-                        Country = "country",
-                        City = "city",
-                        State = "state",
-                    },
-                },
+                        DomainPattern = "domainPattern",
+                        Geolocation = new()
+                        {
+                            Country = "country",
+                            City = "city",
+                            State = "state",
+                        },
+                    }
+                ),
             ]
         );
         string json = JsonSerializer.Serialize(value);
@@ -2513,7 +2517,7 @@ public class ProxiesTest : TestBase
 public class ProxyConfigTest : TestBase
 {
     [Fact]
-    public void browserbaseValidation_Works()
+    public void BrowserbaseValidationWorks()
     {
         ProxyConfig value = new(
             new Browserbase()
@@ -2531,7 +2535,7 @@ public class ProxyConfigTest : TestBase
     }
 
     [Fact]
-    public void externalValidation_Works()
+    public void ExternalValidationWorks()
     {
         ProxyConfig value = new(
             new External()
@@ -2546,7 +2550,7 @@ public class ProxyConfigTest : TestBase
     }
 
     [Fact]
-    public void browserbaseSerializationRoundtrip_Works()
+    public void BrowserbaseSerializationRoundtripWorks()
     {
         ProxyConfig value = new(
             new Browserbase()
@@ -2567,7 +2571,7 @@ public class ProxyConfigTest : TestBase
     }
 
     [Fact]
-    public void externalSerializationRoundtrip_Works()
+    public void ExternalSerializationRoundtripWorks()
     {
         ProxyConfig value = new(
             new External()

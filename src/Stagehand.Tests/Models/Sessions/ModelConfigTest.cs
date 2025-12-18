@@ -6,14 +6,14 @@ namespace Stagehand.Tests.Models.Sessions;
 public class ModelConfigTest : TestBase
 {
     [Fact]
-    public void nameValidation_Works()
+    public void NameValidationWorks()
     {
         ModelConfig value = new("openai/gpt-5-nano");
         value.Validate();
     }
 
     [Fact]
-    public void objectValidation_Works()
+    public void ObjectValidationWorks()
     {
         ModelConfig value = new(
             new ModelConfigObject()
@@ -27,7 +27,7 @@ public class ModelConfigTest : TestBase
     }
 
     [Fact]
-    public void nameSerializationRoundtrip_Works()
+    public void NameSerializationRoundtripWorks()
     {
         ModelConfig value = new("openai/gpt-5-nano");
         string json = JsonSerializer.Serialize(value);
@@ -37,7 +37,7 @@ public class ModelConfigTest : TestBase
     }
 
     [Fact]
-    public void objectSerializationRoundtrip_Works()
+    public void ObjectSerializationRoundtripWorks()
     {
         ModelConfig value = new(
             new ModelConfigObject()
