@@ -112,7 +112,7 @@ public class StreamEventTest : TestBase
 public class DataTest : TestBase
 {
     [Fact]
-    public void stream_event_system_data_outputValidation_Works()
+    public void StreamEventSystemDataOutputValidationWorks()
     {
         Data value = new(
             new StreamEventSystemDataOutput()
@@ -126,14 +126,14 @@ public class DataTest : TestBase
     }
 
     [Fact]
-    public void stream_event_log_data_outputValidation_Works()
+    public void StreamEventLogDataOutputValidationWorks()
     {
         Data value = new(new StreamEventLogDataOutput("message"));
         value.Validate();
     }
 
     [Fact]
-    public void stream_event_system_data_outputSerializationRoundtrip_Works()
+    public void StreamEventSystemDataOutputSerializationRoundtripWorks()
     {
         Data value = new(
             new StreamEventSystemDataOutput()
@@ -150,7 +150,7 @@ public class DataTest : TestBase
     }
 
     [Fact]
-    public void stream_event_log_data_outputSerializationRoundtrip_Works()
+    public void StreamEventLogDataOutputSerializationRoundtripWorks()
     {
         Data value = new(new StreamEventLogDataOutput("message"));
         string json = JsonSerializer.Serialize(value);

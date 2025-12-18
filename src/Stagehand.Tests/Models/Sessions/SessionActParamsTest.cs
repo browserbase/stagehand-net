@@ -9,14 +9,14 @@ namespace Stagehand.Tests.Models.Sessions;
 public class InputTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         Input value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void actionValidation_Works()
+    public void ActionValidationWorks()
     {
         Input value = new(
             new Action()
@@ -31,7 +31,7 @@ public class InputTest : TestBase
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         Input value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -41,7 +41,7 @@ public class InputTest : TestBase
     }
 
     [Fact]
-    public void actionSerializationRoundtrip_Works()
+    public void ActionSerializationRoundtripWorks()
     {
         Input value = new(
             new Action()

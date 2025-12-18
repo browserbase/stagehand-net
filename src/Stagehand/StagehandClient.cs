@@ -283,6 +283,8 @@ public sealed class StagehandClient : IStagehandClient
         return e is IOException || e is StagehandIOException;
     }
 
+    public void Dispose() => this.HttpClient.Dispose();
+
     public StagehandClient()
     {
         _options = new();
