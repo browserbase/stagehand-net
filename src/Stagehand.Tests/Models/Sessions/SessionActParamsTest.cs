@@ -34,8 +34,8 @@ public class InputTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         Input value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Input>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Input>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -52,8 +52,8 @@ public class InputTest : TestBase
                 Method = "click",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Input>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Input>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -112,8 +112,8 @@ public class OptionsTest : TestBase
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Options>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Options>(element);
         Assert.NotNull(deserialized);
 
         ModelConfig expectedModel = "openai/gpt-5-nano";

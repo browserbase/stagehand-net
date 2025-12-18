@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionObserveResponse, SessionObserveResponseFromRaw>))]
-public sealed record class SessionObserveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionObserveResponse, SessionObserveResponseFromRaw>))]
+public sealed record class SessionObserveResponse : JsonModel
 {
     public required SessionObserveResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionObserveResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionObserveResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionObserveResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class SessionObserveResponse : ModelBase
     }
 }
 
-class SessionObserveResponseFromRaw : IFromRaw<SessionObserveResponse>
+class SessionObserveResponseFromRaw : IFromRawJson<SessionObserveResponse>
 {
     /// <inheritdoc/>
     public SessionObserveResponse FromRawUnchecked(
@@ -68,14 +68,14 @@ class SessionObserveResponseFromRaw : IFromRaw<SessionObserveResponse>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionObserveResponseData, SessionObserveResponseDataFromRaw>)
+    typeof(JsonModelConverter<SessionObserveResponseData, SessionObserveResponseDataFromRaw>)
 )]
-public sealed record class SessionObserveResponseData : ModelBase
+public sealed record class SessionObserveResponseData : JsonModel
 {
     public required IReadOnlyList<Action> Result
     {
-        get { return ModelBase.GetNotNullClass<List<Action>>(this.RawData, "result"); }
-        init { ModelBase.Set(this._rawData, "result", value); }
+        get { return JsonModel.GetNotNullClass<List<Action>>(this.RawData, "result"); }
+        init { JsonModel.Set(this._rawData, "result", value); }
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public sealed record class SessionObserveResponseData : ModelBase
     /// </summary>
     public string? ActionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "actionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "actionId"); }
         init
         {
             if (value == null)
@@ -91,7 +91,7 @@ public sealed record class SessionObserveResponseData : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "actionId", value);
+            JsonModel.Set(this._rawData, "actionId", value);
         }
     }
 
@@ -139,7 +139,7 @@ public sealed record class SessionObserveResponseData : ModelBase
     }
 }
 
-class SessionObserveResponseDataFromRaw : IFromRaw<SessionObserveResponseData>
+class SessionObserveResponseDataFromRaw : IFromRawJson<SessionObserveResponseData>
 {
     /// <inheritdoc/>
     public SessionObserveResponseData FromRawUnchecked(

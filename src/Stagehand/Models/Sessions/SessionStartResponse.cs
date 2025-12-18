@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionStartResponse, SessionStartResponseFromRaw>))]
-public sealed record class SessionStartResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionStartResponse, SessionStartResponseFromRaw>))]
+public sealed record class SessionStartResponse : JsonModel
 {
     public required SessionStartResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionStartResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionStartResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionStartResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class SessionStartResponse : ModelBase
     }
 }
 
-class SessionStartResponseFromRaw : IFromRaw<SessionStartResponse>
+class SessionStartResponseFromRaw : IFromRawJson<SessionStartResponse>
 {
     /// <inheritdoc/>
     public SessionStartResponse FromRawUnchecked(
@@ -67,13 +67,15 @@ class SessionStartResponseFromRaw : IFromRaw<SessionStartResponse>
     ) => SessionStartResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<SessionStartResponseData, SessionStartResponseDataFromRaw>))]
-public sealed record class SessionStartResponseData : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<SessionStartResponseData, SessionStartResponseDataFromRaw>)
+)]
+public sealed record class SessionStartResponseData : JsonModel
 {
     public required bool Available
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "available"); }
-        init { ModelBase.Set(this._rawData, "available", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "available"); }
+        init { JsonModel.Set(this._rawData, "available", value); }
     }
 
     /// <summary>
@@ -81,8 +83,8 @@ public sealed record class SessionStartResponseData : ModelBase
     /// </summary>
     public required string ConnectURL
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "connectUrl"); }
-        init { ModelBase.Set(this._rawData, "connectUrl", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "connectUrl"); }
+        init { JsonModel.Set(this._rawData, "connectUrl", value); }
     }
 
     /// <summary>
@@ -90,8 +92,8 @@ public sealed record class SessionStartResponseData : ModelBase
     /// </summary>
     public required string SessionID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "sessionId"); }
-        init { ModelBase.Set(this._rawData, "sessionId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "sessionId"); }
+        init { JsonModel.Set(this._rawData, "sessionId", value); }
     }
 
     /// <inheritdoc/>
@@ -129,7 +131,7 @@ public sealed record class SessionStartResponseData : ModelBase
     }
 }
 
-class SessionStartResponseDataFromRaw : IFromRaw<SessionStartResponseData>
+class SessionStartResponseDataFromRaw : IFromRawJson<SessionStartResponseData>
 {
     /// <inheritdoc/>
     public SessionStartResponseData FromRawUnchecked(

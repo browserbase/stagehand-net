@@ -30,8 +30,8 @@ public class ModelConfigTest : TestBase
     public void NameSerializationRoundtripWorks()
     {
         ModelConfig value = new("openai/gpt-5-nano");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ModelConfig>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -47,8 +47,8 @@ public class ModelConfigTest : TestBase
                 BaseURL = "https://api.openai.com/v1",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ModelConfig>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -101,8 +101,8 @@ public class ModelConfigObjectTest : TestBase
             BaseURL = "https://api.openai.com/v1",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(element);
         Assert.NotNull(deserialized);
 
         string expectedModelName = "gpt-5-nano";

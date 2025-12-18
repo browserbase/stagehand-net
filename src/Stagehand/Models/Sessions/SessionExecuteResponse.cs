@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionExecuteResponse, SessionExecuteResponseFromRaw>))]
-public sealed record class SessionExecuteResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionExecuteResponse, SessionExecuteResponseFromRaw>))]
+public sealed record class SessionExecuteResponse : JsonModel
 {
     public required SessionExecuteResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionExecuteResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionExecuteResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionExecuteResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class SessionExecuteResponse : ModelBase
     }
 }
 
-class SessionExecuteResponseFromRaw : IFromRaw<SessionExecuteResponse>
+class SessionExecuteResponseFromRaw : IFromRawJson<SessionExecuteResponse>
 {
     /// <inheritdoc/>
     public SessionExecuteResponse FromRawUnchecked(
@@ -68,20 +68,20 @@ class SessionExecuteResponseFromRaw : IFromRaw<SessionExecuteResponse>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionExecuteResponseData, SessionExecuteResponseDataFromRaw>)
+    typeof(JsonModelConverter<SessionExecuteResponseData, SessionExecuteResponseDataFromRaw>)
 )]
-public sealed record class SessionExecuteResponseData : ModelBase
+public sealed record class SessionExecuteResponseData : JsonModel
 {
     public required SessionExecuteResponseDataResult Result
     {
         get
         {
-            return ModelBase.GetNotNullClass<SessionExecuteResponseDataResult>(
+            return JsonModel.GetNotNullClass<SessionExecuteResponseDataResult>(
                 this.RawData,
                 "result"
             );
         }
-        init { ModelBase.Set(this._rawData, "result", value); }
+        init { JsonModel.Set(this._rawData, "result", value); }
     }
 
     /// <inheritdoc/>
@@ -124,7 +124,7 @@ public sealed record class SessionExecuteResponseData : ModelBase
     }
 }
 
-class SessionExecuteResponseDataFromRaw : IFromRaw<SessionExecuteResponseData>
+class SessionExecuteResponseDataFromRaw : IFromRawJson<SessionExecuteResponseData>
 {
     /// <inheritdoc/>
     public SessionExecuteResponseData FromRawUnchecked(
@@ -133,23 +133,23 @@ class SessionExecuteResponseDataFromRaw : IFromRaw<SessionExecuteResponseData>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         SessionExecuteResponseDataResult,
         SessionExecuteResponseDataResultFromRaw
     >)
 )]
-public sealed record class SessionExecuteResponseDataResult : ModelBase
+public sealed record class SessionExecuteResponseDataResult : JsonModel
 {
     public required IReadOnlyList<SessionExecuteResponseDataResultAction> Actions
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<SessionExecuteResponseDataResultAction>>(
+            return JsonModel.GetNotNullClass<List<SessionExecuteResponseDataResultAction>>(
                 this.RawData,
                 "actions"
             );
         }
-        init { ModelBase.Set(this._rawData, "actions", value); }
+        init { JsonModel.Set(this._rawData, "actions", value); }
     }
 
     /// <summary>
@@ -157,8 +157,8 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
     /// </summary>
     public required bool Completed
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "completed"); }
-        init { ModelBase.Set(this._rawData, "completed", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "completed"); }
+        init { JsonModel.Set(this._rawData, "completed", value); }
     }
 
     /// <summary>
@@ -166,8 +166,8 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
     /// </summary>
     public required string Message
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     /// <summary>
@@ -175,15 +175,15 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Metadata
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "metadata"
             );
@@ -195,13 +195,13 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "metadata", value);
+            JsonModel.Set(this._rawData, "metadata", value);
         }
     }
 
     public Usage? Usage
     {
-        get { return ModelBase.GetNullableClass<Usage>(this.RawData, "usage"); }
+        get { return JsonModel.GetNullableClass<Usage>(this.RawData, "usage"); }
         init
         {
             if (value == null)
@@ -209,7 +209,7 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "usage", value);
+            JsonModel.Set(this._rawData, "usage", value);
         }
     }
 
@@ -256,7 +256,7 @@ public sealed record class SessionExecuteResponseDataResult : ModelBase
     }
 }
 
-class SessionExecuteResponseDataResultFromRaw : IFromRaw<SessionExecuteResponseDataResult>
+class SessionExecuteResponseDataResultFromRaw : IFromRawJson<SessionExecuteResponseDataResult>
 {
     /// <inheritdoc/>
     public SessionExecuteResponseDataResult FromRawUnchecked(
@@ -265,25 +265,25 @@ class SessionExecuteResponseDataResultFromRaw : IFromRaw<SessionExecuteResponseD
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         SessionExecuteResponseDataResultAction,
         SessionExecuteResponseDataResultActionFromRaw
     >)
 )]
-public sealed record class SessionExecuteResponseDataResultAction : ModelBase
+public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 {
     /// <summary>
     /// Type of action taken
     /// </summary>
     public required string Type
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     public string? Action
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "action"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "action"); }
         init
         {
             if (value == null)
@@ -291,13 +291,13 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "action", value);
+            JsonModel.Set(this._rawData, "action", value);
         }
     }
 
     public string? Instruction
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "instruction"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "instruction"); }
         init
         {
             if (value == null)
@@ -305,13 +305,13 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "instruction", value);
+            JsonModel.Set(this._rawData, "instruction", value);
         }
     }
 
     public string? PageText
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "pageText"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "pageText"); }
         init
         {
             if (value == null)
@@ -319,13 +319,13 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "pageText", value);
+            JsonModel.Set(this._rawData, "pageText", value);
         }
     }
 
     public string? PageURL
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "pageUrl"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "pageUrl"); }
         init
         {
             if (value == null)
@@ -333,7 +333,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "pageUrl", value);
+            JsonModel.Set(this._rawData, "pageUrl", value);
         }
     }
 
@@ -342,7 +342,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
     /// </summary>
     public string? Reasoning
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "reasoning"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "reasoning"); }
         init
         {
             if (value == null)
@@ -350,13 +350,13 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "reasoning", value);
+            JsonModel.Set(this._rawData, "reasoning", value);
         }
     }
 
     public bool? TaskCompleted
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "taskCompleted"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "taskCompleted"); }
         init
         {
             if (value == null)
@@ -364,7 +364,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "taskCompleted", value);
+            JsonModel.Set(this._rawData, "taskCompleted", value);
         }
     }
 
@@ -373,7 +373,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
     /// </summary>
     public double? TimeMs
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "timeMs"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeMs"); }
         init
         {
             if (value == null)
@@ -381,7 +381,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeMs", value);
+            JsonModel.Set(this._rawData, "timeMs", value);
         }
     }
 
@@ -435,7 +435,7 @@ public sealed record class SessionExecuteResponseDataResultAction : ModelBase
 }
 
 class SessionExecuteResponseDataResultActionFromRaw
-    : IFromRaw<SessionExecuteResponseDataResultAction>
+    : IFromRawJson<SessionExecuteResponseDataResultAction>
 {
     /// <inheritdoc/>
     public SessionExecuteResponseDataResultAction FromRawUnchecked(
@@ -443,30 +443,30 @@ class SessionExecuteResponseDataResultActionFromRaw
     ) => SessionExecuteResponseDataResultAction.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Usage, UsageFromRaw>))]
-public sealed record class Usage : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Usage, UsageFromRaw>))]
+public sealed record class Usage : JsonModel
 {
     public required double InferenceTimeMs
     {
-        get { return ModelBase.GetNotNullStruct<double>(this.RawData, "inference_time_ms"); }
-        init { ModelBase.Set(this._rawData, "inference_time_ms", value); }
+        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "inference_time_ms"); }
+        init { JsonModel.Set(this._rawData, "inference_time_ms", value); }
     }
 
     public required double InputTokens
     {
-        get { return ModelBase.GetNotNullStruct<double>(this.RawData, "input_tokens"); }
-        init { ModelBase.Set(this._rawData, "input_tokens", value); }
+        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "input_tokens"); }
+        init { JsonModel.Set(this._rawData, "input_tokens", value); }
     }
 
     public required double OutputTokens
     {
-        get { return ModelBase.GetNotNullStruct<double>(this.RawData, "output_tokens"); }
-        init { ModelBase.Set(this._rawData, "output_tokens", value); }
+        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "output_tokens"); }
+        init { JsonModel.Set(this._rawData, "output_tokens", value); }
     }
 
     public double? CachedInputTokens
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "cached_input_tokens"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "cached_input_tokens"); }
         init
         {
             if (value == null)
@@ -474,13 +474,13 @@ public sealed record class Usage : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "cached_input_tokens", value);
+            JsonModel.Set(this._rawData, "cached_input_tokens", value);
         }
     }
 
     public double? ReasoningTokens
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "reasoning_tokens"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "reasoning_tokens"); }
         init
         {
             if (value == null)
@@ -488,7 +488,7 @@ public sealed record class Usage : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "reasoning_tokens", value);
+            JsonModel.Set(this._rawData, "reasoning_tokens", value);
         }
     }
 
@@ -527,7 +527,7 @@ public sealed record class Usage : ModelBase
     }
 }
 
-class UsageFromRaw : IFromRaw<Usage>
+class UsageFromRaw : IFromRawJson<Usage>
 {
     /// <inheritdoc/>
     public Usage FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

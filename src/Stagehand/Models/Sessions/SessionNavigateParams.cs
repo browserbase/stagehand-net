@@ -29,8 +29,8 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public required string URL
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "url"); }
-        init { ModelBase.Set(this._rawBodyData, "url", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "url"); }
+        init { JsonModel.Set(this._rawBodyData, "url", value); }
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
         init
         {
             if (value == null)
@@ -46,7 +46,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "frameId", value);
+            JsonModel.Set(this._rawBodyData, "frameId", value);
         }
     }
 
@@ -54,7 +54,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<SessionNavigateParamsOptions>(
+            return JsonModel.GetNullableClass<SessionNavigateParamsOptions>(
                 this.RawBodyData,
                 "options"
             );
@@ -66,7 +66,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "options", value);
+            JsonModel.Set(this._rawBodyData, "options", value);
         }
     }
 
@@ -75,7 +75,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public bool? StreamResponse
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "streamResponse"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "streamResponse"); }
         init
         {
             if (value == null)
@@ -83,7 +83,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "streamResponse", value);
+            JsonModel.Set(this._rawBodyData, "streamResponse", value);
         }
     }
 
@@ -94,7 +94,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionNavigateParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionNavigateParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -106,7 +106,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-language", value);
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
         }
     }
 
@@ -115,7 +115,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public string? XSDKVersion
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
         {
             if (value == null)
@@ -123,7 +123,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
@@ -134,7 +134,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableStruct<System::DateTimeOffset>(
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
                 this.RawHeaderData,
                 "x-sent-at"
             );
@@ -146,7 +146,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
@@ -157,7 +157,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, SessionNavigateParamsXStreamResponse>
             >(this.RawHeaderData, "x-stream-response");
         }
@@ -168,7 +168,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -205,7 +205,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionNavigateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -230,9 +230,13 @@ public sealed record class SessionNavigateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -246,16 +250,16 @@ public sealed record class SessionNavigateParams : ParamsBase
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionNavigateParamsOptions, SessionNavigateParamsOptionsFromRaw>)
+    typeof(JsonModelConverter<SessionNavigateParamsOptions, SessionNavigateParamsOptionsFromRaw>)
 )]
-public sealed record class SessionNavigateParamsOptions : ModelBase
+public sealed record class SessionNavigateParamsOptions : JsonModel
 {
     /// <summary>
     /// Referer header to send with the request
     /// </summary>
     public string? Referer
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "referer"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "referer"); }
         init
         {
             if (value == null)
@@ -263,7 +267,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "referer", value);
+            JsonModel.Set(this._rawData, "referer", value);
         }
     }
 
@@ -272,7 +276,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
     /// </summary>
     public double? Timeout
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
         init
         {
             if (value == null)
@@ -280,7 +284,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeout", value);
+            JsonModel.Set(this._rawData, "timeout", value);
         }
     }
 
@@ -291,7 +295,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, WaitUntil>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, WaitUntil>>(
                 this.RawData,
                 "waitUntil"
             );
@@ -303,7 +307,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "waitUntil", value);
+            JsonModel.Set(this._rawData, "waitUntil", value);
         }
     }
 
@@ -342,7 +346,7 @@ public sealed record class SessionNavigateParamsOptions : ModelBase
     }
 }
 
-class SessionNavigateParamsOptionsFromRaw : IFromRaw<SessionNavigateParamsOptions>
+class SessionNavigateParamsOptionsFromRaw : IFromRawJson<SessionNavigateParamsOptions>
 {
     /// <inheritdoc/>
     public SessionNavigateParamsOptions FromRawUnchecked(

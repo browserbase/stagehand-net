@@ -122,8 +122,8 @@ public class SessionActResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionActResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionActResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionActResponseData expectedData = new()
@@ -286,8 +286,8 @@ public class SessionActResponseDataTest : TestBase
             ActionID = "actionId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionActResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionActResponseData>(element);
         Assert.NotNull(deserialized);
 
         Result expectedResult = new()
@@ -544,8 +544,8 @@ public class ResultTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Result>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Result>(element);
         Assert.NotNull(deserialized);
 
         string expectedActionDescription = "Clicked button with text 'Login'";

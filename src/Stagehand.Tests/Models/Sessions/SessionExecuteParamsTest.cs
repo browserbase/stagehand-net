@@ -52,8 +52,8 @@ public class AgentConfigTest : TestBase
             SystemPrompt = "systemPrompt",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AgentConfig>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AgentConfig>(element);
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
@@ -184,8 +184,8 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ExecuteOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptions>(element);
         Assert.NotNull(deserialized);
 
         string expectedInstruction =

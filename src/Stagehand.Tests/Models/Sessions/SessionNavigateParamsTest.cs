@@ -52,8 +52,8 @@ public class SessionNavigateParamsOptionsTest : TestBase
             WaitUntil = WaitUntil.Networkidle,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(element);
         Assert.NotNull(deserialized);
 
         string expectedReferer = "referer";

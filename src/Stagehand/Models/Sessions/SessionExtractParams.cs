@@ -29,7 +29,7 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
         init
         {
             if (value == null)
@@ -37,7 +37,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "frameId", value);
+            JsonModel.Set(this._rawBodyData, "frameId", value);
         }
     }
 
@@ -46,7 +46,7 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public string? Instruction
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "instruction"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "instruction"); }
         init
         {
             if (value == null)
@@ -54,7 +54,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "instruction", value);
+            JsonModel.Set(this._rawBodyData, "instruction", value);
         }
     }
 
@@ -62,7 +62,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<SessionExtractParamsOptions>(
+            return JsonModel.GetNullableClass<SessionExtractParamsOptions>(
                 this.RawBodyData,
                 "options"
             );
@@ -74,7 +74,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "options", value);
+            JsonModel.Set(this._rawBodyData, "options", value);
         }
     }
 
@@ -85,7 +85,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "schema"
             );
@@ -97,7 +97,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "schema", value);
+            JsonModel.Set(this._rawBodyData, "schema", value);
         }
     }
 
@@ -108,7 +108,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExtractParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExtractParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -120,7 +120,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-language", value);
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
         }
     }
 
@@ -129,7 +129,7 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public string? XSDKVersion
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
         {
             if (value == null)
@@ -137,7 +137,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sdk-version", value);
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
         }
     }
 
@@ -148,7 +148,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableStruct<System::DateTimeOffset>(
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
                 this.RawHeaderData,
                 "x-sent-at"
             );
@@ -160,7 +160,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-sent-at", value);
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
         }
     }
 
@@ -171,7 +171,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionExtractParamsXStreamResponse>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExtractParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -183,7 +183,7 @@ public sealed record class SessionExtractParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -220,7 +220,7 @@ public sealed record class SessionExtractParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionExtractParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -245,9 +245,13 @@ public sealed record class SessionExtractParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -261,16 +265,16 @@ public sealed record class SessionExtractParams : ParamsBase
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionExtractParamsOptions, SessionExtractParamsOptionsFromRaw>)
+    typeof(JsonModelConverter<SessionExtractParamsOptions, SessionExtractParamsOptionsFromRaw>)
 )]
-public sealed record class SessionExtractParamsOptions : ModelBase
+public sealed record class SessionExtractParamsOptions : JsonModel
 {
     /// <summary>
     /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
     /// </summary>
     public ModelConfig? Model
     {
-        get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
         init
         {
             if (value == null)
@@ -278,7 +282,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "model", value);
+            JsonModel.Set(this._rawData, "model", value);
         }
     }
 
@@ -287,7 +291,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
     /// </summary>
     public string? Selector
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "selector"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "selector"); }
         init
         {
             if (value == null)
@@ -295,7 +299,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "selector", value);
+            JsonModel.Set(this._rawData, "selector", value);
         }
     }
 
@@ -304,7 +308,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
     /// </summary>
     public double? Timeout
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
         init
         {
             if (value == null)
@@ -312,7 +316,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeout", value);
+            JsonModel.Set(this._rawData, "timeout", value);
         }
     }
 
@@ -351,7 +355,7 @@ public sealed record class SessionExtractParamsOptions : ModelBase
     }
 }
 
-class SessionExtractParamsOptionsFromRaw : IFromRaw<SessionExtractParamsOptions>
+class SessionExtractParamsOptionsFromRaw : IFromRawJson<SessionExtractParamsOptions>
 {
     /// <inheritdoc/>
     public SessionExtractParamsOptions FromRawUnchecked(

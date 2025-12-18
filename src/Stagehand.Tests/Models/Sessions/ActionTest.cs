@@ -61,8 +61,8 @@ public class ActionTest : TestBase
             Method = "click",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Action>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Action>(element);
         Assert.NotNull(deserialized);
 
         string expectedDescription = "Click the submit button";

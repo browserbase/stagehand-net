@@ -7,13 +7,13 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionActResponse, SessionActResponseFromRaw>))]
-public sealed record class SessionActResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionActResponse, SessionActResponseFromRaw>))]
+public sealed record class SessionActResponse : JsonModel
 {
     public required SessionActResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<SessionActResponseData>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<SessionActResponseData>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionActResponse : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -59,20 +59,20 @@ public sealed record class SessionActResponse : ModelBase
     }
 }
 
-class SessionActResponseFromRaw : IFromRaw<SessionActResponse>
+class SessionActResponseFromRaw : IFromRawJson<SessionActResponse>
 {
     /// <inheritdoc/>
     public SessionActResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         SessionActResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<SessionActResponseData, SessionActResponseDataFromRaw>))]
-public sealed record class SessionActResponseData : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionActResponseData, SessionActResponseDataFromRaw>))]
+public sealed record class SessionActResponseData : JsonModel
 {
     public required Result Result
     {
-        get { return ModelBase.GetNotNullClass<Result>(this.RawData, "result"); }
-        init { ModelBase.Set(this._rawData, "result", value); }
+        get { return JsonModel.GetNotNullClass<Result>(this.RawData, "result"); }
+        init { JsonModel.Set(this._rawData, "result", value); }
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public sealed record class SessionActResponseData : ModelBase
     /// </summary>
     public string? ActionID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "actionId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "actionId"); }
         init
         {
             if (value == null)
@@ -88,7 +88,7 @@ public sealed record class SessionActResponseData : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "actionId", value);
+            JsonModel.Set(this._rawData, "actionId", value);
         }
     }
 
@@ -133,7 +133,7 @@ public sealed record class SessionActResponseData : ModelBase
     }
 }
 
-class SessionActResponseDataFromRaw : IFromRaw<SessionActResponseData>
+class SessionActResponseDataFromRaw : IFromRawJson<SessionActResponseData>
 {
     /// <inheritdoc/>
     public SessionActResponseData FromRawUnchecked(
@@ -141,16 +141,16 @@ class SessionActResponseDataFromRaw : IFromRaw<SessionActResponseData>
     ) => SessionActResponseData.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
-public sealed record class Result : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : JsonModel
 {
     /// <summary>
     /// Description of the action that was performed
     /// </summary>
     public required string ActionDescription
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "actionDescription"); }
-        init { ModelBase.Set(this._rawData, "actionDescription", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "actionDescription"); }
+        init { JsonModel.Set(this._rawData, "actionDescription", value); }
     }
 
     /// <summary>
@@ -158,8 +158,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required IReadOnlyList<Action> Actions
     {
-        get { return ModelBase.GetNotNullClass<List<Action>>(this.RawData, "actions"); }
-        init { ModelBase.Set(this._rawData, "actions", value); }
+        get { return JsonModel.GetNotNullClass<List<Action>>(this.RawData, "actions"); }
+        init { JsonModel.Set(this._rawData, "actions", value); }
     }
 
     /// <summary>
@@ -167,8 +167,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string Message
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     /// <summary>
@@ -176,8 +176,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required bool Success
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { ModelBase.Set(this._rawData, "success", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -217,7 +217,7 @@ public sealed record class Result : ModelBase
     }
 }
 
-class ResultFromRaw : IFromRaw<Result>
+class ResultFromRaw : IFromRawJson<Result>
 {
     /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

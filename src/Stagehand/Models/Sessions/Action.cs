@@ -10,16 +10,16 @@ namespace Stagehand.Models.Sessions;
 /// <summary>
 /// Action object returned by observe and used by act
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Action, ActionFromRaw>))]
-public sealed record class Action : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Action, ActionFromRaw>))]
+public sealed record class Action : JsonModel
 {
     /// <summary>
     /// Human-readable description of the action
     /// </summary>
     public required string Description
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "description"); }
-        init { ModelBase.Set(this._rawData, "description", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
+        init { JsonModel.Set(this._rawData, "description", value); }
     }
 
     /// <summary>
@@ -27,8 +27,8 @@ public sealed record class Action : ModelBase
     /// </summary>
     public required string Selector
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "selector"); }
-        init { ModelBase.Set(this._rawData, "selector", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "selector"); }
+        init { JsonModel.Set(this._rawData, "selector", value); }
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public sealed record class Action : ModelBase
     /// </summary>
     public IReadOnlyList<string>? Arguments
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "arguments"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "arguments"); }
         init
         {
             if (value == null)
@@ -44,7 +44,7 @@ public sealed record class Action : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "arguments", value);
+            JsonModel.Set(this._rawData, "arguments", value);
         }
     }
 
@@ -53,7 +53,7 @@ public sealed record class Action : ModelBase
     /// </summary>
     public string? Method
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "method"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "method"); }
         init
         {
             if (value == null)
@@ -61,7 +61,7 @@ public sealed record class Action : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "method", value);
+            JsonModel.Set(this._rawData, "method", value);
         }
     }
 
@@ -99,7 +99,7 @@ public sealed record class Action : ModelBase
     }
 }
 
-class ActionFromRaw : IFromRaw<Action>
+class ActionFromRaw : IFromRawJson<Action>
 {
     /// <inheritdoc/>
     public Action FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

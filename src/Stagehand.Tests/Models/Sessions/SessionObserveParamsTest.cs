@@ -52,8 +52,8 @@ public class SessionObserveParamsOptionsTest : TestBase
             Timeout = 30000,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptions>(element);
         Assert.NotNull(deserialized);
 
         ModelConfig expectedModel = "openai/gpt-5-nano";

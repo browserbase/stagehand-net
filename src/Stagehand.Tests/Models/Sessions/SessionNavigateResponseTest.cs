@@ -61,8 +61,8 @@ public class SessionNavigateResponseTest : TestBase
             Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(element);
         Assert.NotNull(deserialized);
 
         SessionNavigateResponseData expectedData = new()
@@ -135,8 +135,8 @@ public class SessionNavigateResponseDataTest : TestBase
             ActionID = "actionId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponseData>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponseData>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");
