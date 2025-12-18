@@ -43,6 +43,7 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
     <InternalsVisibleTo Include="Stagehand.Tests" />
     <PackageReference Include="System.Text.Json" Version="9.0.9" />
+    <PackageReference Include="System.Net.ServerSentEvents" Version="10.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

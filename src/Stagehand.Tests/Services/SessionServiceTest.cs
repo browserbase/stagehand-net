@@ -16,6 +16,21 @@ public class SessionServiceTest : TestBase
     }
 
     [Fact(Skip = "Prism tests are disabled")]
+    public async Task ActStreaming_Works()
+    {
+        var stream = this.client.Sessions.ActStreaming(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new() { Input = "Click the login button" },
+            TestContext.Current.CancellationToken
+        );
+
+        await foreach (var response in stream)
+        {
+            response.Validate();
+        }
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
     public async Task End_Works()
     {
         var response = await this.client.Sessions.End(
@@ -53,6 +68,36 @@ public class SessionServiceTest : TestBase
     }
 
     [Fact(Skip = "Prism tests are disabled")]
+    public async Task ExecuteStreaming_Works()
+    {
+        var stream = this.client.Sessions.ExecuteStreaming(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new()
+            {
+                AgentConfig = new()
+                {
+                    Cua = true,
+                    Model = "openai/gpt-5-nano",
+                    SystemPrompt = "systemPrompt",
+                },
+                ExecuteOptions = new()
+                {
+                    Instruction =
+                        "Log in with username 'demo' and password 'test123', then navigate to settings",
+                    HighlightCursor = true,
+                    MaxSteps = 20,
+                },
+            },
+            TestContext.Current.CancellationToken
+        );
+
+        await foreach (var response in stream)
+        {
+            response.Validate();
+        }
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
     public async Task Extract_Works()
     {
         var response = await this.client.Sessions.Extract(
@@ -61,6 +106,21 @@ public class SessionServiceTest : TestBase
             TestContext.Current.CancellationToken
         );
         response.Validate();
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
+    public async Task ExtractStreaming_Works()
+    {
+        var stream = this.client.Sessions.ExtractStreaming(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+
+        await foreach (var response in stream)
+        {
+            response.Validate();
+        }
     }
 
     [Fact(Skip = "Prism tests are disabled")]
@@ -83,6 +143,21 @@ public class SessionServiceTest : TestBase
             TestContext.Current.CancellationToken
         );
         response.Validate();
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
+    public async Task ObserveStreaming_Works()
+    {
+        var stream = this.client.Sessions.ObserveStreaming(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+
+        await foreach (var response in stream)
+        {
+            response.Validate();
+        }
     }
 
     [Fact(Skip = "Prism tests are disabled")]

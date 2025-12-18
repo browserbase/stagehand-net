@@ -71,6 +71,23 @@ public sealed record class SessionNavigateParams : ParamsBase
     }
 
     /// <summary>
+    /// Whether to stream the response via SSE
+    /// </summary>
+    public bool? StreamResponse
+    {
+        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "streamResponse"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            ModelBase.Set(this._rawBodyData, "streamResponse", value);
+        }
+    }
+
+    /// <summary>
     /// Client SDK language
     /// </summary>
     public ApiEnum<string, SessionNavigateParamsXLanguage>? XLanguage

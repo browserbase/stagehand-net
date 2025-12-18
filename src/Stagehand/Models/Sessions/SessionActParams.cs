@@ -244,7 +244,7 @@ public record class Input
         this._json = json;
     }
 
-    public Input(ActionInput value, JsonElement? json = null)
+    public Input(Action value, JsonElement? json = null)
     {
         this.Value = value;
         this._json = json;
@@ -278,22 +278,22 @@ public record class Input
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="ActionInput"/>.
+    /// type <see cref="Action"/>.
     ///
     /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickAction(out var value)) {
-    ///     // `value` is of type `ActionInput`
+    ///     // `value` is of type `Action`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickAction([NotNullWhen(true)] out ActionInput? value)
+    public bool TryPickAction([NotNullWhen(true)] out Action? value)
     {
-        value = this.Value as ActionInput;
+        value = this.Value as Action;
         return value != null;
     }
 
@@ -312,19 +312,19 @@ public record class Input
     /// <code>
     /// instance.Switch(
     ///     (string value) => {...},
-    ///     (ActionInput value) => {...}
+    ///     (Action value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(System::Action<string> @string, System::Action<ActionInput> action)
+    public void Switch(System::Action<string> @string, System::Action<Action> action)
     {
         switch (this.Value)
         {
             case string value:
                 @string(value);
                 break;
-            case ActionInput value:
+            case Action value:
                 action(value);
                 break;
             default:
@@ -348,24 +348,24 @@ public record class Input
     /// <code>
     /// var result = instance.Match(
     ///     (string value) => {...},
-    ///     (ActionInput value) => {...}
+    ///     (Action value) => {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public T Match<T>(System::Func<string, T> @string, System::Func<ActionInput, T> action)
+    public T Match<T>(System::Func<string, T> @string, System::Func<Action, T> action)
     {
         return this.Value switch
         {
             string value => @string(value),
-            ActionInput value => action(value),
+            Action value => action(value),
             _ => throw new StagehandInvalidDataException("Data did not match any variant of Input"),
         };
     }
 
     public static implicit operator Input(string value) => new(value);
 
-    public static implicit operator Input(ActionInput value) => new(value);
+    public static implicit operator Input(Action value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -408,7 +408,7 @@ sealed class InputConverter : JsonConverter<Input>
         var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ActionInput>(json, options);
+            var deserialized = JsonSerializer.Deserialize<Action>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -440,105 +440,6 @@ sealed class InputConverter : JsonConverter<Input>
     {
         JsonSerializer.Serialize(writer, value.Json, options);
     }
-}
-
-/// <summary>
-/// Action object returned by observe and used by act
-/// </summary>
-[JsonConverter(typeof(ModelConverter<ActionInput, ActionInputFromRaw>))]
-public sealed record class ActionInput : ModelBase
-{
-    /// <summary>
-    /// Human-readable description of the action
-    /// </summary>
-    public required string Description
-    {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "description"); }
-        init { ModelBase.Set(this._rawData, "description", value); }
-    }
-
-    /// <summary>
-    /// CSS selector or XPath for the element
-    /// </summary>
-    public required string Selector
-    {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "selector"); }
-        init { ModelBase.Set(this._rawData, "selector", value); }
-    }
-
-    /// <summary>
-    /// Arguments to pass to the method
-    /// </summary>
-    public IReadOnlyList<string>? Arguments
-    {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "arguments"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "arguments", value);
-        }
-    }
-
-    /// <summary>
-    /// The method to execute (click, fill, etc.)
-    /// </summary>
-    public string? Method
-    {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "method"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "method", value);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        _ = this.Description;
-        _ = this.Selector;
-        _ = this.Arguments;
-        _ = this.Method;
-    }
-
-    public ActionInput() { }
-
-    public ActionInput(ActionInput actionInput)
-        : base(actionInput) { }
-
-    public ActionInput(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    ActionInput(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="ActionInputFromRaw.FromRawUnchecked"/>
-    public static ActionInput FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-}
-
-class ActionInputFromRaw : IFromRaw<ActionInput>
-{
-    /// <inheritdoc/>
-    public ActionInput FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        ActionInput.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ModelConverter<Options, OptionsFromRaw>))]

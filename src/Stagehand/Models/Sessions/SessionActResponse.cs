@@ -10,9 +10,9 @@ namespace Stagehand.Models.Sessions;
 [JsonConverter(typeof(ModelConverter<SessionActResponse, SessionActResponseFromRaw>))]
 public sealed record class SessionActResponse : ModelBase
 {
-    public required Data Data
+    public required SessionActResponseData Data
     {
-        get { return ModelBase.GetNotNullClass<Data>(this.RawData, "data"); }
+        get { return ModelBase.GetNotNullClass<SessionActResponseData>(this.RawData, "data"); }
         init { ModelBase.Set(this._rawData, "data", value); }
     }
 
@@ -66,8 +66,8 @@ class SessionActResponseFromRaw : IFromRaw<SessionActResponse>
         SessionActResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Data, DataFromRaw>))]
-public sealed record class Data : ModelBase
+[JsonConverter(typeof(ModelConverter<SessionActResponseData, SessionActResponseDataFromRaw>))]
+public sealed record class SessionActResponseData : ModelBase
 {
     public required Result Result
     {
@@ -99,43 +99,46 @@ public sealed record class Data : ModelBase
         _ = this.ActionID;
     }
 
-    public Data() { }
+    public SessionActResponseData() { }
 
-    public Data(Data data)
-        : base(data) { }
+    public SessionActResponseData(SessionActResponseData sessionActResponseData)
+        : base(sessionActResponseData) { }
 
-    public Data(IReadOnlyDictionary<string, JsonElement> rawData)
+    public SessionActResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Data(FrozenDictionary<string, JsonElement> rawData)
+    SessionActResponseData(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="DataFromRaw.FromRawUnchecked"/>
-    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="SessionActResponseDataFromRaw.FromRawUnchecked"/>
+    public static SessionActResponseData FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public Data(Result result)
+    public SessionActResponseData(Result result)
         : this()
     {
         this.Result = result;
     }
 }
 
-class DataFromRaw : IFromRaw<Data>
+class SessionActResponseDataFromRaw : IFromRaw<SessionActResponseData>
 {
     /// <inheritdoc/>
-    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Data.FromRawUnchecked(rawData);
+    public SessionActResponseData FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionActResponseData.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
