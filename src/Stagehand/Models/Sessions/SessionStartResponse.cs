@@ -77,7 +77,16 @@ public sealed record class SessionStartResponseData : ModelBase
     }
 
     /// <summary>
-    /// Unique session identifier
+    /// CDP WebSocket URL for connecting to the Browserbase cloud browser
+    /// </summary>
+    public required string ConnectURL
+    {
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "connectUrl"); }
+        init { ModelBase.Set(this._rawData, "connectUrl", value); }
+    }
+
+    /// <summary>
+    /// Unique Browserbase session identifier
     /// </summary>
     public required string SessionID
     {
@@ -89,6 +98,7 @@ public sealed record class SessionStartResponseData : ModelBase
     public override void Validate()
     {
         _ = this.Available;
+        _ = this.ConnectURL;
         _ = this.SessionID;
     }
 

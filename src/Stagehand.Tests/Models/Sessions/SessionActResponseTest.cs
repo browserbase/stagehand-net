@@ -34,7 +34,7 @@ public class SessionActResponseTest : TestBase
             Success = true,
         };
 
-        Data expectedData = new()
+        SessionActResponseData expectedData = new()
         {
             Result = new()
             {
@@ -126,7 +126,7 @@ public class SessionActResponseTest : TestBase
         var deserialized = JsonSerializer.Deserialize<SessionActResponse>(json);
         Assert.NotNull(deserialized);
 
-        Data expectedData = new()
+        SessionActResponseData expectedData = new()
         {
             Result = new()
             {
@@ -184,12 +184,12 @@ public class SessionActResponseTest : TestBase
     }
 }
 
-public class DataTest : TestBase
+public class SessionActResponseDataTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -235,7 +235,7 @@ public class DataTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -257,7 +257,7 @@ public class DataTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Data>(json);
+        var deserialized = JsonSerializer.Deserialize<SessionActResponseData>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -265,7 +265,7 @@ public class DataTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -287,7 +287,7 @@ public class DataTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Data>(json);
+        var deserialized = JsonSerializer.Deserialize<SessionActResponseData>(json);
         Assert.NotNull(deserialized);
 
         Result expectedResult = new()
@@ -315,7 +315,7 @@ public class DataTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -342,7 +342,7 @@ public class DataTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -369,7 +369,7 @@ public class DataTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -395,7 +395,7 @@ public class DataTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {
@@ -425,7 +425,7 @@ public class DataTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Data
+        var model = new SessionActResponseData
         {
             Result = new()
             {

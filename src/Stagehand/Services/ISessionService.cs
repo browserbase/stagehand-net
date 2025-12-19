@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Stagehand.Core;
@@ -37,6 +38,22 @@ public interface ISessionService
     );
 
     /// <summary>
+    /// Executes a browser action using natural language instructions or a predefined
+    /// Action object.
+    /// </summary>
+    IAsyncEnumerable<StreamEvent> ActStreaming(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ActStreaming(SessionActParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ActStreaming(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Terminates the browser session and releases all associated resources.
     /// </summary>
     Task<SessionEndResponse> End(
@@ -67,6 +84,21 @@ public interface ISessionService
     );
 
     /// <summary>
+    /// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
+    /// </summary>
+    IAsyncEnumerable<StreamEvent> ExecuteStreaming(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ExecuteStreaming(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Extracts structured data from the current page using AI-powered analysis.
     /// </summary>
     Task<SessionExtractResponse> Extract(
@@ -76,6 +108,21 @@ public interface ISessionService
 
     /// <inheritdoc cref="Extract(SessionExtractParams, CancellationToken)"/>
     Task<SessionExtractResponse> Extract(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Extracts structured data from the current page using AI-powered analysis.
+    /// </summary>
+    IAsyncEnumerable<StreamEvent> ExtractStreaming(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExtractStreaming(SessionExtractParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ExtractStreaming(
         string id,
         SessionExtractParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -107,6 +154,22 @@ public interface ISessionService
 
     /// <inheritdoc cref="Observe(SessionObserveParams, CancellationToken)"/>
     Task<SessionObserveResponse> Observe(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Identifies and returns available actions on the current page that match the
+    /// given instruction.
+    /// </summary>
+    IAsyncEnumerable<StreamEvent> ObserveStreaming(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ObserveStreaming(SessionObserveParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ObserveStreaming(
         string id,
         SessionObserveParams? parameters = null,
         CancellationToken cancellationToken = default

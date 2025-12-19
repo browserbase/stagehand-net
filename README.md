@@ -130,7 +130,7 @@ The SDK throws custom unchecked exception types:
 
 Additionally, all 4xx errors inherit from `Stagehand4xxException`.
 
-false
+- `StagehandSseException`: thrown for errors encountered during [SSE streaming](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) after a successful initial HTTP response.
 
 - `StagehandIOException`: I/O networking errors.
 

@@ -31,6 +31,8 @@ public abstract record class ModelBase
     {
         Converters =
         {
+            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, StreamEventType>(),
             new ApiEnumConverter<string, XLanguage>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXLanguage>(),
