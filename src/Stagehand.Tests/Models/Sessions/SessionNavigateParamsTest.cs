@@ -153,6 +153,8 @@ public class WaitUntilTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -211,6 +213,8 @@ public class SessionNavigateParamsXLanguageTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -268,6 +272,8 @@ public class SessionNavigateParamsXStreamResponseTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 

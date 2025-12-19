@@ -4,39 +4,9 @@
     <AssemblyTitle>Stagehand C#</AssemblyTitle>
     <AssemblyName>Stagehand</AssemblyName>
     <VersionPrefix>0.0.1</VersionPrefix>
-    <Authors>Stagehand</Authors>
-    <Company>Stagehand</Company>
     <Description>The official .NET library for the Stagehand API.</Description>
-    <PackageTags>sdk;api;http;library</PackageTags>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Copyright>Copyright 2025 Stagehand</Copyright>
-    <PackageProjectUrl>https://docs.stagehand.dev</PackageProjectUrl>
-    <RepositoryUrl>https://www.github.com/browserbase/stagehand-net</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
     <OutputType>Library</OutputType>
-
-    <!-- Documentation-->
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- Disable missing XML documentation warnings. -->
-    <NoWarn>$(NoWarn),1570,1573,1574,1591</NoWarn>
-
-    <!-- Source link -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <DebugType>embedded</DebugType>
-
-    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
-    <LangVersion>12</LangVersion>
-    <Configurations>Debug;Release</Configurations>
-    <BuildPackage>true</BuildPackage>
-    <Deterministic>true</Deterministic>
-    <Nullable>enable</Nullable>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <!-- Disable deprecation warnings since we may reference our own deprecated symbols. -->
-    <NoWarn>$(NoWarn),0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Stagehand.Tests" />

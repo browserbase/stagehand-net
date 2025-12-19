@@ -77,6 +77,7 @@ public class OptionsTest : TestBase
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedTimeout, model.Timeout);
+        Assert.NotNull(model.Variables);
         Assert.Equal(expectedVariables.Count, model.Variables.Count);
         foreach (var item in expectedVariables)
         {
@@ -122,6 +123,7 @@ public class OptionsTest : TestBase
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
+        Assert.NotNull(deserialized.Variables);
         Assert.Equal(expectedVariables.Count, deserialized.Variables.Count);
         foreach (var item in expectedVariables)
         {
@@ -219,6 +221,8 @@ public class XLanguageTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -276,6 +280,8 @@ public class XStreamResponseTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 

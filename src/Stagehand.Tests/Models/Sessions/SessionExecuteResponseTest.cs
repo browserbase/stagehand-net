@@ -588,6 +588,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
         Assert.Equal(expectedCompleted, model.Completed);
         Assert.Equal(expectedMessage, model.Message);
         Assert.Equal(expectedSuccess, model.Success);
+        Assert.NotNull(model.Metadata);
         Assert.Equal(expectedMetadata.Count, model.Metadata.Count);
         foreach (var item in expectedMetadata)
         {
@@ -718,6 +719,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
         Assert.Equal(expectedCompleted, deserialized.Completed);
         Assert.Equal(expectedMessage, deserialized.Message);
         Assert.Equal(expectedSuccess, deserialized.Success);
+        Assert.NotNull(deserialized.Metadata);
         Assert.Equal(expectedMetadata.Count, deserialized.Metadata.Count);
         foreach (var item in expectedMetadata)
         {
