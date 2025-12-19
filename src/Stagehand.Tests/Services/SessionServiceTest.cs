@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Services;
 
@@ -52,6 +53,7 @@ public class SessionServiceTest : TestBase
                 {
                     Cua = true,
                     Model = "openai/gpt-5-nano",
+                    Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },
                 ExecuteOptions = new()
@@ -78,6 +80,7 @@ public class SessionServiceTest : TestBase
                 {
                     Cua = true,
                     Model = "openai/gpt-5-nano",
+                    Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },
                 ExecuteOptions = new()

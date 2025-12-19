@@ -24,6 +24,7 @@ public class InputTest : TestBase
                 Description = "Click the submit button",
                 Selector = "[data-testid='submit-button']",
                 Arguments = ["Hello World"],
+                BackendNodeID = 0,
                 Method = "click",
             }
         );
@@ -49,6 +50,7 @@ public class InputTest : TestBase
                 Description = "Click the submit button",
                 Selector = "[data-testid='submit-button']",
                 Arguments = ["Hello World"],
+                BackendNodeID = 0,
                 Method = "click",
             }
         );

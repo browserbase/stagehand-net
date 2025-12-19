@@ -49,6 +49,23 @@ public sealed record class Action : JsonModel
     }
 
     /// <summary>
+    /// Backend node ID for the element
+    /// </summary>
+    public double? BackendNodeID
+    {
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "backendNodeId"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "backendNodeId", value);
+        }
+    }
+
+    /// <summary>
     /// The method to execute (click, fill, etc.)
     /// </summary>
     public string? Method
@@ -71,6 +88,7 @@ public sealed record class Action : JsonModel
         _ = this.Description;
         _ = this.Selector;
         _ = this.Arguments;
+        _ = this.BackendNodeID;
         _ = this.Method;
     }
 

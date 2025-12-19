@@ -20,12 +20,14 @@ public abstract record class ModelBase
     {
         Converters =
         {
+            new ApiEnumConverter<string, ModelConfigObjectProvider>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, StreamEventType>(),
             new ApiEnumConverter<string, XLanguage>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXLanguage>(),
             new ApiEnumConverter<string, SessionEndParamsXStreamResponse>(),
+            new ApiEnumConverter<string, Provider>(),
             new ApiEnumConverter<string, SessionExecuteParamsXLanguage>(),
             new ApiEnumConverter<string, SessionExecuteParamsXStreamResponse>(),
             new ApiEnumConverter<string, SessionExtractParamsXLanguage>(),
@@ -41,6 +43,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, HTTPVersion>(),
             new ApiEnumConverter<string, OperatingSystem>(),
             new ApiEnumConverter<string, Region>(),
+            new ApiEnumConverter<string, Verbose>(),
             new ApiEnumConverter<string, SessionStartParamsXLanguage>(),
             new ApiEnumConverter<string, SessionStartParamsXStreamResponse>(),
         },

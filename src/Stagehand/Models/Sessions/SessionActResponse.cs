@@ -156,9 +156,9 @@ public sealed record class Result : JsonModel
     /// <summary>
     /// List of actions that were executed
     /// </summary>
-    public required IReadOnlyList<Action> Actions
+    public required IReadOnlyList<ResultAction> Actions
     {
-        get { return JsonModel.GetNotNullClass<List<Action>>(this.RawData, "actions"); }
+        get { return JsonModel.GetNotNullClass<List<ResultAction>>(this.RawData, "actions"); }
         init { JsonModel.Set(this._rawData, "actions", value); }
     }
 
@@ -222,4 +222,121 @@ class ResultFromRaw : IFromRawJson<Result>
     /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Result.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Action object returned by observe and used by act
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<ResultAction, ResultActionFromRaw>))]
+public sealed record class ResultAction : JsonModel
+{
+    /// <summary>
+    /// Human-readable description of the action
+    /// </summary>
+    public required string Description
+    {
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
+        init { JsonModel.Set(this._rawData, "description", value); }
+    }
+
+    /// <summary>
+    /// CSS selector or XPath for the element
+    /// </summary>
+    public required string Selector
+    {
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "selector"); }
+        init { JsonModel.Set(this._rawData, "selector", value); }
+    }
+
+    /// <summary>
+    /// Arguments to pass to the method
+    /// </summary>
+    public IReadOnlyList<string>? Arguments
+    {
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "arguments"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "arguments", value);
+        }
+    }
+
+    /// <summary>
+    /// Backend node ID for the element
+    /// </summary>
+    public double? BackendNodeID
+    {
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "backendNodeId"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "backendNodeId", value);
+        }
+    }
+
+    /// <summary>
+    /// The method to execute (click, fill, etc.)
+    /// </summary>
+    public string? Method
+    {
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "method"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "method", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Description;
+        _ = this.Selector;
+        _ = this.Arguments;
+        _ = this.BackendNodeID;
+        _ = this.Method;
+    }
+
+    public ResultAction() { }
+
+    public ResultAction(ResultAction resultAction)
+        : base(resultAction) { }
+
+    public ResultAction(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ResultAction(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ResultActionFromRaw.FromRawUnchecked"/>
+    public static ResultAction FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ResultActionFromRaw : IFromRawJson<ResultAction>
+{
+    /// <inheritdoc/>
+    public ResultAction FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ResultAction.FromRawUnchecked(rawData);
 }

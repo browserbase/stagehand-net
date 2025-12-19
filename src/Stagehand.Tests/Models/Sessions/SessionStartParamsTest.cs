@@ -3081,6 +3081,66 @@ public class RegionTest : TestBase
     }
 }
 
+public class VerboseTest : TestBase
+{
+    [Theory]
+    [InlineData(Verbose.V0)]
+    [InlineData(Verbose.V1)]
+    [InlineData(Verbose.V2)]
+    public void Validation_Works(Verbose rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Verbose> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Verbose.V0)]
+    [InlineData(Verbose.V1)]
+    [InlineData(Verbose.V2)]
+    public void SerializationRoundtrip_Works(Verbose rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Verbose> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class SessionStartParamsXLanguageTest : TestBase
 {
     [Theory]

@@ -14,15 +14,18 @@ public class AgentConfigTest : TestBase
         {
             Cua = true,
             Model = "openai/gpt-5-nano",
+            Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
         ModelConfig expectedModel = "openai/gpt-5-nano";
+        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
         Assert.Equal(expectedModel, model.Model);
+        Assert.Equal(expectedProvider, model.Provider);
         Assert.Equal(expectedSystemPrompt, model.SystemPrompt);
     }
 
@@ -33,6 +36,7 @@ public class AgentConfigTest : TestBase
         {
             Cua = true,
             Model = "openai/gpt-5-nano",
+            Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -49,6 +53,7 @@ public class AgentConfigTest : TestBase
         {
             Cua = true,
             Model = "openai/gpt-5-nano",
+            Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -58,10 +63,12 @@ public class AgentConfigTest : TestBase
 
         bool expectedCua = true;
         ModelConfig expectedModel = "openai/gpt-5-nano";
+        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
         Assert.Equal(expectedModel, deserialized.Model);
+        Assert.Equal(expectedProvider, deserialized.Provider);
         Assert.Equal(expectedSystemPrompt, deserialized.SystemPrompt);
     }
 
@@ -72,6 +79,7 @@ public class AgentConfigTest : TestBase
         {
             Cua = true,
             Model = "openai/gpt-5-nano",
+            Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -87,6 +95,8 @@ public class AgentConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("cua"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
         Assert.Null(model.SystemPrompt);
         Assert.False(model.RawData.ContainsKey("systemPrompt"));
     }
@@ -107,6 +117,7 @@ public class AgentConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             Cua = null,
             Model = null,
+            Provider = null,
             SystemPrompt = null,
         };
 
@@ -114,6 +125,8 @@ public class AgentConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("cua"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
         Assert.Null(model.SystemPrompt);
         Assert.False(model.RawData.ContainsKey("systemPrompt"));
     }
@@ -126,10 +139,73 @@ public class AgentConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             Cua = null,
             Model = null,
+            Provider = null,
             SystemPrompt = null,
         };
 
         model.Validate();
+    }
+}
+
+public class ProviderTest : TestBase
+{
+    [Theory]
+    [InlineData(Provider.OpenAI)]
+    [InlineData(Provider.Anthropic)]
+    [InlineData(Provider.Google)]
+    [InlineData(Provider.Microsoft)]
+    public void Validation_Works(Provider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Provider> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Provider.OpenAI)]
+    [InlineData(Provider.Anthropic)]
+    [InlineData(Provider.Google)]
+    [InlineData(Provider.Microsoft)]
+    public void SerializationRoundtrip_Works(Provider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Provider> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
