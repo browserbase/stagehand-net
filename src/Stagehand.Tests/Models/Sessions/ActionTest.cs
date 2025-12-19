@@ -14,12 +14,14 @@ public class ActionTest : TestBase
             Description = "Click the submit button",
             Selector = "[data-testid='submit-button']",
             Arguments = ["Hello World"],
+            BackendNodeID = 0,
             Method = "click",
         };
 
         string expectedDescription = "Click the submit button";
         string expectedSelector = "[data-testid='submit-button']";
         List<string> expectedArguments = ["Hello World"];
+        double expectedBackendNodeID = 0;
         string expectedMethod = "click";
 
         Assert.Equal(expectedDescription, model.Description);
@@ -30,6 +32,7 @@ public class ActionTest : TestBase
         {
             Assert.Equal(expectedArguments[i], model.Arguments[i]);
         }
+        Assert.Equal(expectedBackendNodeID, model.BackendNodeID);
         Assert.Equal(expectedMethod, model.Method);
     }
 
@@ -41,6 +44,7 @@ public class ActionTest : TestBase
             Description = "Click the submit button",
             Selector = "[data-testid='submit-button']",
             Arguments = ["Hello World"],
+            BackendNodeID = 0,
             Method = "click",
         };
 
@@ -58,6 +62,7 @@ public class ActionTest : TestBase
             Description = "Click the submit button",
             Selector = "[data-testid='submit-button']",
             Arguments = ["Hello World"],
+            BackendNodeID = 0,
             Method = "click",
         };
 
@@ -68,6 +73,7 @@ public class ActionTest : TestBase
         string expectedDescription = "Click the submit button";
         string expectedSelector = "[data-testid='submit-button']";
         List<string> expectedArguments = ["Hello World"];
+        double expectedBackendNodeID = 0;
         string expectedMethod = "click";
 
         Assert.Equal(expectedDescription, deserialized.Description);
@@ -78,6 +84,7 @@ public class ActionTest : TestBase
         {
             Assert.Equal(expectedArguments[i], deserialized.Arguments[i]);
         }
+        Assert.Equal(expectedBackendNodeID, deserialized.BackendNodeID);
         Assert.Equal(expectedMethod, deserialized.Method);
     }
 
@@ -89,6 +96,7 @@ public class ActionTest : TestBase
             Description = "Click the submit button",
             Selector = "[data-testid='submit-button']",
             Arguments = ["Hello World"],
+            BackendNodeID = 0,
             Method = "click",
         };
 
@@ -106,6 +114,8 @@ public class ActionTest : TestBase
 
         Assert.Null(model.Arguments);
         Assert.False(model.RawData.ContainsKey("arguments"));
+        Assert.Null(model.BackendNodeID);
+        Assert.False(model.RawData.ContainsKey("backendNodeId"));
         Assert.Null(model.Method);
         Assert.False(model.RawData.ContainsKey("method"));
     }
@@ -132,11 +142,14 @@ public class ActionTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Arguments = null,
+            BackendNodeID = null,
             Method = null,
         };
 
         Assert.Null(model.Arguments);
         Assert.False(model.RawData.ContainsKey("arguments"));
+        Assert.Null(model.BackendNodeID);
+        Assert.False(model.RawData.ContainsKey("backendNodeId"));
         Assert.Null(model.Method);
         Assert.False(model.RawData.ContainsKey("method"));
     }
@@ -151,6 +164,7 @@ public class ActionTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Arguments = null,
+            BackendNodeID = null,
             Method = null,
         };
 

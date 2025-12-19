@@ -34,7 +34,7 @@ public sealed record class SessionStartParams : ParamsBase
     }
 
     /// <summary>
-    /// Timeout in ms for act operations
+    /// Timeout in ms for act operations (deprecated, v2 only)
     /// </summary>
     public double? ActTimeoutMs
     {
@@ -98,20 +98,6 @@ public sealed record class SessionStartParams : ParamsBase
             }
 
             JsonModel.Set(this._rawBodyData, "browserbaseSessionID", value);
-        }
-    }
-
-    public bool? DebugDom
-    {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "debugDom"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawBodyData, "debugDom", value);
         }
     }
 
@@ -183,9 +169,15 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Logging verbosity level (0=quiet, 1=normal, 2=debug)
     /// </summary>
-    public long? Verbose
+    public ApiEnum<string, Verbose>? Verbose
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawBodyData, "verbose"); }
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, Verbose>>(
+                this.RawBodyData,
+                "verbose"
+            );
+        }
         init
         {
             if (value == null)
@@ -197,6 +189,9 @@ public sealed record class SessionStartParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Wait for captcha solves (deprecated, v2 only)
+    /// </summary>
     public bool? WaitForCaptchaSolves
     {
         get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "waitForCaptchaSolves"); }
@@ -2969,6 +2964,52 @@ sealed class RegionConverter : JsonConverter<Region>
                 Region.UsEast1 => "us-east-1",
                 Region.EuCentral1 => "eu-central-1",
                 Region.ApSoutheast1 => "ap-southeast-1",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Logging verbosity level (0=quiet, 1=normal, 2=debug)
+/// </summary>
+[JsonConverter(typeof(VerboseConverter))]
+public enum Verbose
+{
+    V0,
+    V1,
+    V2,
+}
+
+sealed class VerboseConverter : JsonConverter<Verbose>
+{
+    public override Verbose Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "0" => Verbose.V0,
+            "1" => Verbose.V1,
+            "2" => Verbose.V2,
+            _ => (Verbose)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Verbose value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Verbose.V0 => "0",
+                Verbose.V1 => "1",
+                Verbose.V2 => "2",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

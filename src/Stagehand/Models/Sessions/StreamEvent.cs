@@ -10,7 +10,8 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Server-Sent Event emitted during streaming responses. Events are sent as `data: <JSON>\n\n`.
+/// Server-Sent Event emitted during streaming responses. Events are sent as `data:
+/// <JSON>\n\n`. Key order: data (with status first), type, id.
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<StreamEvent, StreamEventFromRaw>))]
 public sealed record class StreamEvent : JsonModel

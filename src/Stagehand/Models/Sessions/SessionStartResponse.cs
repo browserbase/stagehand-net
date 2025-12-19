@@ -79,15 +79,6 @@ public sealed record class SessionStartResponseData : JsonModel
     }
 
     /// <summary>
-    /// CDP WebSocket URL for connecting to the Browserbase cloud browser
-    /// </summary>
-    public required string ConnectURL
-    {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "connectUrl"); }
-        init { JsonModel.Set(this._rawData, "connectUrl", value); }
-    }
-
-    /// <summary>
     /// Unique Browserbase session identifier
     /// </summary>
     public required string SessionID
@@ -96,12 +87,22 @@ public sealed record class SessionStartResponseData : JsonModel
         init { JsonModel.Set(this._rawData, "sessionId", value); }
     }
 
+    /// <summary>
+    /// CDP WebSocket URL for connecting to the Browserbase cloud browser (present
+    /// when available)
+    /// </summary>
+    public string? CdpURL
+    {
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
+        init { JsonModel.Set(this._rawData, "cdpUrl", value); }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Available;
-        _ = this.ConnectURL;
         _ = this.SessionID;
+        _ = this.CdpURL;
     }
 
     public SessionStartResponseData() { }

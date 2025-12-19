@@ -257,6 +257,26 @@ public sealed record class AgentConfig : JsonModel
     }
 
     /// <summary>
+    /// AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+    /// </summary>
+    public ApiEnum<string, Provider>? Provider
+    {
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, Provider>>(this.RawData, "provider");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "provider", value);
+        }
+    }
+
+    /// <summary>
     /// Custom system prompt for the agent
     /// </summary>
     public string? SystemPrompt
@@ -278,6 +298,7 @@ public sealed record class AgentConfig : JsonModel
     {
         _ = this.Cua;
         this.Model?.Validate();
+        this.Provider?.Validate();
         _ = this.SystemPrompt;
     }
 
@@ -311,6 +332,55 @@ class AgentConfigFromRaw : IFromRawJson<AgentConfig>
     /// <inheritdoc/>
     public AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AgentConfig.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+/// </summary>
+[JsonConverter(typeof(ProviderConverter))]
+public enum Provider
+{
+    OpenAI,
+    Anthropic,
+    Google,
+    Microsoft,
+}
+
+sealed class ProviderConverter : JsonConverter<Provider>
+{
+    public override Provider Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "openai" => Provider.OpenAI,
+            "anthropic" => Provider.Anthropic,
+            "google" => Provider.Google,
+            "microsoft" => Provider.Microsoft,
+            _ => (Provider)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Provider value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Provider.OpenAI => "openai",
+                Provider.Anthropic => "anthropic",
+                Provider.Google => "google",
+                Provider.Microsoft => "microsoft",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 [JsonConverter(typeof(JsonModelConverter<ExecuteOptions, ExecuteOptionsFromRaw>))]

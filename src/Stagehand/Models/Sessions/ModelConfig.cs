@@ -287,12 +287,36 @@ public sealed record class ModelConfigObject : JsonModel
         }
     }
 
+    /// <summary>
+    /// AI provider for the model (or provide a baseURL endpoint instead)
+    /// </summary>
+    public ApiEnum<string, ModelConfigObjectProvider>? Provider
+    {
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, ModelConfigObjectProvider>>(
+                this.RawData,
+                "provider"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "provider", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ModelName;
         _ = this.APIKey;
         _ = this.BaseURL;
+        this.Provider?.Validate();
     }
 
     public ModelConfigObject() { }
@@ -334,4 +358,57 @@ class ModelConfigObjectFromRaw : IFromRawJson<ModelConfigObject>
     /// <inheritdoc/>
     public ModelConfigObject FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// AI provider for the model (or provide a baseURL endpoint instead)
+/// </summary>
+[JsonConverter(typeof(ModelConfigObjectProviderConverter))]
+public enum ModelConfigObjectProvider
+{
+    OpenAI,
+    Anthropic,
+    Google,
+    Microsoft,
+}
+
+sealed class ModelConfigObjectProviderConverter : JsonConverter<ModelConfigObjectProvider>
+{
+    public override ModelConfigObjectProvider Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "openai" => ModelConfigObjectProvider.OpenAI,
+            "anthropic" => ModelConfigObjectProvider.Anthropic,
+            "google" => ModelConfigObjectProvider.Google,
+            "microsoft" => ModelConfigObjectProvider.Microsoft,
+            _ => (ModelConfigObjectProvider)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        ModelConfigObjectProvider value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ModelConfigObjectProvider.OpenAI => "openai",
+                ModelConfigObjectProvider.Anthropic => "anthropic",
+                ModelConfigObjectProvider.Google => "google",
+                ModelConfigObjectProvider.Microsoft => "microsoft",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }

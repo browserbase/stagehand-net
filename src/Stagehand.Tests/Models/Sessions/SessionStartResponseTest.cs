@@ -13,8 +13,8 @@ public class SessionStartResponseTest : TestBase
             Data = new()
             {
                 Available = true,
-                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -22,8 +22,8 @@ public class SessionStartResponseTest : TestBase
         SessionStartResponseData expectedData = new()
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
         };
         bool expectedSuccess = true;
 
@@ -39,8 +39,8 @@ public class SessionStartResponseTest : TestBase
             Data = new()
             {
                 Available = true,
-                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -59,8 +59,8 @@ public class SessionStartResponseTest : TestBase
             Data = new()
             {
                 Available = true,
-                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -72,8 +72,8 @@ public class SessionStartResponseTest : TestBase
         SessionStartResponseData expectedData = new()
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
         };
         bool expectedSuccess = true;
 
@@ -89,8 +89,8 @@ public class SessionStartResponseTest : TestBase
             Data = new()
             {
                 Available = true,
-                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -107,17 +107,17 @@ public class SessionStartResponseDataTest : TestBase
         var model = new SessionStartResponseData
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         bool expectedAvailable = true;
-        string expectedConnectURL = "wss://connect.browserbase.com/?signingKey=abc123";
         string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        string expectedCdpURL = "wss://connect.browserbase.com/?signingKey=abc123";
 
         Assert.Equal(expectedAvailable, model.Available);
-        Assert.Equal(expectedConnectURL, model.ConnectURL);
         Assert.Equal(expectedSessionID, model.SessionID);
+        Assert.Equal(expectedCdpURL, model.CdpURL);
     }
 
     [Fact]
@@ -126,8 +126,8 @@ public class SessionStartResponseDataTest : TestBase
         var model = new SessionStartResponseData
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -142,8 +142,8 @@ public class SessionStartResponseDataTest : TestBase
         var model = new SessionStartResponseData
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         string element = JsonSerializer.Serialize(model);
@@ -151,12 +151,12 @@ public class SessionStartResponseDataTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedAvailable = true;
-        string expectedConnectURL = "wss://connect.browserbase.com/?signingKey=abc123";
         string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        string expectedCdpURL = "wss://connect.browserbase.com/?signingKey=abc123";
 
         Assert.Equal(expectedAvailable, deserialized.Available);
-        Assert.Equal(expectedConnectURL, deserialized.ConnectURL);
         Assert.Equal(expectedSessionID, deserialized.SessionID);
+        Assert.Equal(expectedCdpURL, deserialized.CdpURL);
     }
 
     [Fact]
@@ -165,8 +165,62 @@ public class SessionStartResponseDataTest : TestBase
         var model = new SessionStartResponseData
         {
             Available = true,
-            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+
+        Assert.Null(model.CdpURL);
+        Assert.False(model.RawData.ContainsKey("cdpUrl"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+
+            CdpURL = null,
+        };
+
+        Assert.Null(model.CdpURL);
+        Assert.True(model.RawData.ContainsKey("cdpUrl"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+
+            CdpURL = null,
         };
 
         model.Validate();
