@@ -111,6 +111,30 @@ To send a request to the Stagehand API, build an instance of some `Params` class
 
 For example, `client.Sessions.Act` should be called with an instance of `SessionActParams`, and it will return an instance of `Task<SessionActResponse>`.
 
+## Streaming
+
+The SDK defines methods that return response "chunk" streams, where each chunk can be individually processed as soon as it arrives instead of waiting on the full response. Streaming methods generally correspond to [SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) or [JSONL](https://jsonlines.org) responses.
+
+Some of these methods may have streaming and non-streaming variants, but a streaming method will always have a `Streaming` suffix in its name, even if it doesn't have a non-streaming variant.
+
+These streaming methods return [`IAsyncEnumerable`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iasyncenumerable-1):
+
+```csharp
+using System;
+using Stagehand.Models.Sessions;
+
+SessionActParams parameters = new()
+{
+    ID = "00000000-your-session-id-000000000000",
+    Input = "click the first link on the page",
+};
+
+await foreach (var response in client.Sessions.ActStreaming(parameters))
+{
+    Console.WriteLine(response);
+}
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
