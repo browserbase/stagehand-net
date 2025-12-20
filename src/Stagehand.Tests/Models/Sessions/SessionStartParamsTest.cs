@@ -1,17 +1,108 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Stagehand.Core;
 using Stagehand.Exceptions;
-using Stagehand.Models.Sessions;
+using Sessions = Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
 
-public class BrowserTest : TestBase
+public class SessionStartParamsTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Browser
+        var parameters = new Sessions::SessionStartParams
+        {
+            ModelName = "gpt-4o",
+            ActTimeoutMs = 0,
+            Browser = new()
+            {
+                CdpURL = "ws://localhost:9222",
+                LaunchOptions = new()
+                {
+                    AcceptDownloads = true,
+                    Args = ["string"],
+                    CdpURL = "cdpUrl",
+                    ChromiumSandbox = true,
+                    ConnectTimeoutMs = 0,
+                    DeviceScaleFactor = 0,
+                    Devtools = true,
+                    DownloadsPath = "downloadsPath",
+                    ExecutablePath = "executablePath",
+                    HasTouch = true,
+                    Headless = true,
+                    IgnoreDefaultArgs = true,
+                    IgnoreHTTPSErrors = true,
+                    Locale = "locale",
+                    PreserveUserDataDir = true,
+                    Proxy = new()
+                    {
+                        Server = "server",
+                        Bypass = "bypass",
+                        Password = "password",
+                        Username = "username",
+                    },
+                    UserDataDir = "userDataDir",
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                Type = Sessions::Type.Local,
+            },
+            BrowserbaseSessionCreateParams = new()
+            {
+                BrowserSettings = new()
+                {
+                    AdvancedStealth = true,
+                    BlockAds = true,
+                    Context = new() { ID = "id", Persist = true },
+                    ExtensionID = "extensionId",
+                    Fingerprint = new()
+                    {
+                        Browsers = [Sessions::FingerprintBrowser.Chrome],
+                        Devices = [Sessions::Device.Desktop],
+                        HTTPVersion = Sessions::HTTPVersion.V1,
+                        Locales = ["string"],
+                        OperatingSystems = [Sessions::OperatingSystem.Android],
+                        Screen = new()
+                        {
+                            MaxHeight = 0,
+                            MaxWidth = 0,
+                            MinHeight = 0,
+                            MinWidth = 0,
+                        },
+                    },
+                    LogSession = true,
+                    RecordSession = true,
+                    SolveCaptchas = true,
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                ExtensionID = "extensionId",
+                KeepAlive = true,
+                ProjectID = "projectId",
+                Proxies = true,
+                Region = Sessions::Region.UsWest2,
+                Timeout = 0,
+                UserMetadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            },
+            BrowserbaseSessionID = "browserbaseSessionID",
+            DomSettleTimeoutMs = 5000,
+            Experimental = true,
+            SelfHeal = true,
+            SystemPrompt = "systemPrompt",
+            Verbose = Sessions::Verbose.V1,
+            WaitForCaptchaSolves = true,
+            XLanguage = Sessions::SessionStartParamsXLanguage.Typescript,
+            XSDKVersion = "3.0.6",
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
+        };
+
+        string expectedModelName = "gpt-4o";
+        double expectedActTimeoutMs = 0;
+        Sessions::Browser expectedBrowser = new()
         {
             CdpURL = "ws://localhost:9222",
             LaunchOptions = new()
@@ -41,11 +132,211 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Type.Local,
+            Type = Sessions::Type.Local,
+        };
+        Sessions::BrowserbaseSessionCreateParams expectedBrowserbaseSessionCreateParams = new()
+        {
+            BrowserSettings = new()
+            {
+                AdvancedStealth = true,
+                BlockAds = true,
+                Context = new() { ID = "id", Persist = true },
+                ExtensionID = "extensionId",
+                Fingerprint = new()
+                {
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    Locales = ["string"],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
+                    Screen = new()
+                    {
+                        MaxHeight = 0,
+                        MaxWidth = 0,
+                        MinHeight = 0,
+                        MinWidth = 0,
+                    },
+                },
+                LogSession = true,
+                RecordSession = true,
+                SolveCaptchas = true,
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            ExtensionID = "extensionId",
+            KeepAlive = true,
+            ProjectID = "projectId",
+            Proxies = true,
+            Region = Sessions::Region.UsWest2,
+            Timeout = 0,
+            UserMetadata = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+        string expectedBrowserbaseSessionID = "browserbaseSessionID";
+        double expectedDomSettleTimeoutMs = 5000;
+        bool expectedExperimental = true;
+        bool expectedSelfHeal = true;
+        string expectedSystemPrompt = "systemPrompt";
+        ApiEnum<string, Sessions::Verbose> expectedVerbose = Sessions::Verbose.V1;
+        bool expectedWaitForCaptchaSolves = true;
+        ApiEnum<string, Sessions::SessionStartParamsXLanguage> expectedXLanguage =
+            Sessions::SessionStartParamsXLanguage.Typescript;
+        string expectedXSDKVersion = "3.0.6";
+        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
+        ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> expectedXStreamResponse =
+            Sessions::SessionStartParamsXStreamResponse.True;
+
+        Assert.Equal(expectedModelName, parameters.ModelName);
+        Assert.Equal(expectedActTimeoutMs, parameters.ActTimeoutMs);
+        Assert.Equal(expectedBrowser, parameters.Browser);
+        Assert.Equal(
+            expectedBrowserbaseSessionCreateParams,
+            parameters.BrowserbaseSessionCreateParams
+        );
+        Assert.Equal(expectedBrowserbaseSessionID, parameters.BrowserbaseSessionID);
+        Assert.Equal(expectedDomSettleTimeoutMs, parameters.DomSettleTimeoutMs);
+        Assert.Equal(expectedExperimental, parameters.Experimental);
+        Assert.Equal(expectedSelfHeal, parameters.SelfHeal);
+        Assert.Equal(expectedSystemPrompt, parameters.SystemPrompt);
+        Assert.Equal(expectedVerbose, parameters.Verbose);
+        Assert.Equal(expectedWaitForCaptchaSolves, parameters.WaitForCaptchaSolves);
+        Assert.Equal(expectedXLanguage, parameters.XLanguage);
+        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSentAt, parameters.XSentAt);
+        Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new Sessions::SessionStartParams { ModelName = "gpt-4o" };
+
+        Assert.Null(parameters.ActTimeoutMs);
+        Assert.False(parameters.RawBodyData.ContainsKey("actTimeoutMs"));
+        Assert.Null(parameters.Browser);
+        Assert.False(parameters.RawBodyData.ContainsKey("browser"));
+        Assert.Null(parameters.BrowserbaseSessionCreateParams);
+        Assert.False(parameters.RawBodyData.ContainsKey("browserbaseSessionCreateParams"));
+        Assert.Null(parameters.BrowserbaseSessionID);
+        Assert.False(parameters.RawBodyData.ContainsKey("browserbaseSessionID"));
+        Assert.Null(parameters.DomSettleTimeoutMs);
+        Assert.False(parameters.RawBodyData.ContainsKey("domSettleTimeoutMs"));
+        Assert.Null(parameters.Experimental);
+        Assert.False(parameters.RawBodyData.ContainsKey("experimental"));
+        Assert.Null(parameters.SelfHeal);
+        Assert.False(parameters.RawBodyData.ContainsKey("selfHeal"));
+        Assert.Null(parameters.SystemPrompt);
+        Assert.False(parameters.RawBodyData.ContainsKey("systemPrompt"));
+        Assert.Null(parameters.Verbose);
+        Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
+        Assert.Null(parameters.WaitForCaptchaSolves);
+        Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
+        Assert.Null(parameters.XLanguage);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
+        Assert.Null(parameters.XSDKVersion);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new Sessions::SessionStartParams
+        {
+            ModelName = "gpt-4o",
+
+            // Null should be interpreted as omitted for these properties
+            ActTimeoutMs = null,
+            Browser = null,
+            BrowserbaseSessionCreateParams = null,
+            BrowserbaseSessionID = null,
+            DomSettleTimeoutMs = null,
+            Experimental = null,
+            SelfHeal = null,
+            SystemPrompt = null,
+            Verbose = null,
+            WaitForCaptchaSolves = null,
+            XLanguage = null,
+            XSDKVersion = null,
+            XSentAt = null,
+            XStreamResponse = null,
+        };
+
+        Assert.Null(parameters.ActTimeoutMs);
+        Assert.False(parameters.RawBodyData.ContainsKey("actTimeoutMs"));
+        Assert.Null(parameters.Browser);
+        Assert.False(parameters.RawBodyData.ContainsKey("browser"));
+        Assert.Null(parameters.BrowserbaseSessionCreateParams);
+        Assert.False(parameters.RawBodyData.ContainsKey("browserbaseSessionCreateParams"));
+        Assert.Null(parameters.BrowserbaseSessionID);
+        Assert.False(parameters.RawBodyData.ContainsKey("browserbaseSessionID"));
+        Assert.Null(parameters.DomSettleTimeoutMs);
+        Assert.False(parameters.RawBodyData.ContainsKey("domSettleTimeoutMs"));
+        Assert.Null(parameters.Experimental);
+        Assert.False(parameters.RawBodyData.ContainsKey("experimental"));
+        Assert.Null(parameters.SelfHeal);
+        Assert.False(parameters.RawBodyData.ContainsKey("selfHeal"));
+        Assert.Null(parameters.SystemPrompt);
+        Assert.False(parameters.RawBodyData.ContainsKey("systemPrompt"));
+        Assert.Null(parameters.Verbose);
+        Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
+        Assert.Null(parameters.WaitForCaptchaSolves);
+        Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
+        Assert.Null(parameters.XLanguage);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
+        Assert.Null(parameters.XSDKVersion);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+}
+
+public class BrowserTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::Browser
+        {
+            CdpURL = "ws://localhost:9222",
+            LaunchOptions = new()
+            {
+                AcceptDownloads = true,
+                Args = ["string"],
+                CdpURL = "cdpUrl",
+                ChromiumSandbox = true,
+                ConnectTimeoutMs = 0,
+                DeviceScaleFactor = 0,
+                Devtools = true,
+                DownloadsPath = "downloadsPath",
+                ExecutablePath = "executablePath",
+                HasTouch = true,
+                Headless = true,
+                IgnoreDefaultArgs = true,
+                IgnoreHTTPSErrors = true,
+                Locale = "locale",
+                PreserveUserDataDir = true,
+                Proxy = new()
+                {
+                    Server = "server",
+                    Bypass = "bypass",
+                    Password = "password",
+                    Username = "username",
+                },
+                UserDataDir = "userDataDir",
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            Type = Sessions::Type.Local,
         };
 
         string expectedCdpURL = "ws://localhost:9222";
-        LaunchOptions expectedLaunchOptions = new()
+        Sessions::LaunchOptions expectedLaunchOptions = new()
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -72,7 +363,7 @@ public class BrowserTest : TestBase
             UserDataDir = "userDataDir",
             Viewport = new() { Height = 0, Width = 0 },
         };
-        ApiEnum<string, Type> expectedType = Type.Local;
+        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
 
         Assert.Equal(expectedCdpURL, model.CdpURL);
         Assert.Equal(expectedLaunchOptions, model.LaunchOptions);
@@ -82,7 +373,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Browser
+        var model = new Sessions::Browser
         {
             CdpURL = "ws://localhost:9222",
             LaunchOptions = new()
@@ -112,11 +403,11 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Type.Local,
+            Type = Sessions::Type.Local,
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browser>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Browser>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -124,7 +415,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Browser
+        var model = new Sessions::Browser
         {
             CdpURL = "ws://localhost:9222",
             LaunchOptions = new()
@@ -154,15 +445,15 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Type.Local,
+            Type = Sessions::Type.Local,
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browser>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Browser>(element);
         Assert.NotNull(deserialized);
 
         string expectedCdpURL = "ws://localhost:9222";
-        LaunchOptions expectedLaunchOptions = new()
+        Sessions::LaunchOptions expectedLaunchOptions = new()
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -189,7 +480,7 @@ public class BrowserTest : TestBase
             UserDataDir = "userDataDir",
             Viewport = new() { Height = 0, Width = 0 },
         };
-        ApiEnum<string, Type> expectedType = Type.Local;
+        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
 
         Assert.Equal(expectedCdpURL, deserialized.CdpURL);
         Assert.Equal(expectedLaunchOptions, deserialized.LaunchOptions);
@@ -199,7 +490,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Browser
+        var model = new Sessions::Browser
         {
             CdpURL = "ws://localhost:9222",
             LaunchOptions = new()
@@ -229,7 +520,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Type.Local,
+            Type = Sessions::Type.Local,
         };
 
         model.Validate();
@@ -238,7 +529,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Browser { };
+        var model = new Sessions::Browser { };
 
         Assert.Null(model.CdpURL);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
@@ -251,7 +542,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Browser { };
+        var model = new Sessions::Browser { };
 
         model.Validate();
     }
@@ -259,7 +550,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Browser
+        var model = new Sessions::Browser
         {
             // Null should be interpreted as omitted for these properties
             CdpURL = null,
@@ -278,7 +569,7 @@ public class BrowserTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Browser
+        var model = new Sessions::Browser
         {
             // Null should be interpreted as omitted for these properties
             CdpURL = null,
@@ -295,7 +586,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -334,11 +625,11 @@ public class LaunchOptionsTest : TestBase
         string expectedExecutablePath = "executablePath";
         bool expectedHasTouch = true;
         bool expectedHeadless = true;
-        IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
+        Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHTTPSErrors = true;
         string expectedLocale = "locale";
         bool expectedPreserveUserDataDir = true;
-        Proxy expectedProxy = new()
+        Sessions::Proxy expectedProxy = new()
         {
             Server = "server",
             Bypass = "bypass",
@@ -346,7 +637,7 @@ public class LaunchOptionsTest : TestBase
             Username = "username",
         };
         string expectedUserDataDir = "userDataDir";
-        Viewport expectedViewport = new() { Height = 0, Width = 0 };
+        Sessions::Viewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAcceptDownloads, model.AcceptDownloads);
         Assert.NotNull(model.Args);
@@ -376,7 +667,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -405,7 +696,7 @@ public class LaunchOptionsTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LaunchOptions>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::LaunchOptions>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -413,7 +704,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -442,7 +733,7 @@ public class LaunchOptionsTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LaunchOptions>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::LaunchOptions>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAcceptDownloads = true;
@@ -456,11 +747,11 @@ public class LaunchOptionsTest : TestBase
         string expectedExecutablePath = "executablePath";
         bool expectedHasTouch = true;
         bool expectedHeadless = true;
-        IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
+        Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHTTPSErrors = true;
         string expectedLocale = "locale";
         bool expectedPreserveUserDataDir = true;
-        Proxy expectedProxy = new()
+        Sessions::Proxy expectedProxy = new()
         {
             Server = "server",
             Bypass = "bypass",
@@ -468,7 +759,7 @@ public class LaunchOptionsTest : TestBase
             Username = "username",
         };
         string expectedUserDataDir = "userDataDir";
-        Viewport expectedViewport = new() { Height = 0, Width = 0 };
+        Sessions::Viewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAcceptDownloads, deserialized.AcceptDownloads);
         Assert.NotNull(deserialized.Args);
@@ -498,7 +789,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             AcceptDownloads = true,
             Args = ["string"],
@@ -532,7 +823,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new LaunchOptions { };
+        var model = new Sessions::LaunchOptions { };
 
         Assert.Null(model.AcceptDownloads);
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
@@ -575,7 +866,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new LaunchOptions { };
+        var model = new Sessions::LaunchOptions { };
 
         model.Validate();
     }
@@ -583,7 +874,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
@@ -647,7 +938,7 @@ public class LaunchOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new LaunchOptions
+        var model = new Sessions::LaunchOptions
         {
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
@@ -679,23 +970,23 @@ public class IgnoreDefaultArgsTest : TestBase
     [Fact]
     public void BoolValidationWorks()
     {
-        IgnoreDefaultArgs value = new(true);
+        Sessions::IgnoreDefaultArgs value = new(true);
         value.Validate();
     }
 
     [Fact]
     public void StringsValidationWorks()
     {
-        IgnoreDefaultArgs value = new(["string"]);
+        Sessions::IgnoreDefaultArgs value = new(["string"]);
         value.Validate();
     }
 
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        IgnoreDefaultArgs value = new(true);
+        Sessions::IgnoreDefaultArgs value = new(true);
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::IgnoreDefaultArgs>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -703,9 +994,9 @@ public class IgnoreDefaultArgsTest : TestBase
     [Fact]
     public void StringsSerializationRoundtripWorks()
     {
-        IgnoreDefaultArgs value = new(["string"]);
+        Sessions::IgnoreDefaultArgs value = new(["string"]);
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<IgnoreDefaultArgs>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::IgnoreDefaultArgs>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -716,7 +1007,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
             Bypass = "bypass",
@@ -738,7 +1029,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
             Bypass = "bypass",
@@ -747,7 +1038,7 @@ public class ProxyTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Proxy>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Proxy>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -755,7 +1046,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
             Bypass = "bypass",
@@ -764,7 +1055,7 @@ public class ProxyTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Proxy>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Proxy>(element);
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";
@@ -781,7 +1072,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
             Bypass = "bypass",
@@ -795,7 +1086,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Proxy { Server = "server" };
+        var model = new Sessions::Proxy { Server = "server" };
 
         Assert.Null(model.Bypass);
         Assert.False(model.RawData.ContainsKey("bypass"));
@@ -808,7 +1099,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Proxy { Server = "server" };
+        var model = new Sessions::Proxy { Server = "server" };
 
         model.Validate();
     }
@@ -816,7 +1107,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
 
@@ -837,7 +1128,7 @@ public class ProxyTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Proxy
+        var model = new Sessions::Proxy
         {
             Server = "server",
 
@@ -856,7 +1147,7 @@ public class ViewportTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Viewport { Height = 0, Width = 0 };
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         double expectedHeight = 0;
         double expectedWidth = 0;
@@ -868,10 +1159,10 @@ public class ViewportTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Viewport { Height = 0, Width = 0 };
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Viewport>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Viewport>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -879,10 +1170,10 @@ public class ViewportTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Viewport { Height = 0, Width = 0 };
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Viewport>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Viewport>(element);
         Assert.NotNull(deserialized);
 
         double expectedHeight = 0;
@@ -895,7 +1186,7 @@ public class ViewportTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Viewport { Height = 0, Width = 0 };
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         model.Validate();
     }
@@ -904,19 +1195,19 @@ public class ViewportTest : TestBase
 public class TypeTest : TestBase
 {
     [Theory]
-    [InlineData(Type.Local)]
-    [InlineData(Type.Browserbase)]
-    public void Validation_Works(Type rawValue)
+    [InlineData(Sessions::Type.Local)]
+    [InlineData(Sessions::Type.Browserbase)]
+    public void Validation_Works(Sessions::Type rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Type> value = rawValue;
+        ApiEnum<string, Sessions::Type> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -926,15 +1217,15 @@ public class TypeTest : TestBase
     }
 
     [Theory]
-    [InlineData(Type.Local)]
-    [InlineData(Type.Browserbase)]
-    public void SerializationRoundtrip_Works(Type rawValue)
+    [InlineData(Sessions::Type.Local)]
+    [InlineData(Sessions::Type.Browserbase)]
+    public void SerializationRoundtrip_Works(Sessions::Type rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Type> value = rawValue;
+        ApiEnum<string, Sessions::Type> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -945,12 +1236,12 @@ public class TypeTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -964,7 +1255,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             BrowserSettings = new()
             {
@@ -974,11 +1265,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 ExtensionID = "extensionId",
                 Fingerprint = new()
                 {
-                    Browsers = [FingerprintBrowser.Chrome],
-                    Devices = [Device.Desktop],
-                    HTTPVersion = HTTPVersion.V1,
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HTTPVersion = Sessions::HTTPVersion.V1,
                     Locales = ["string"],
-                    OperatingSystems = [OperatingSystem.Android],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
                     {
                         MaxHeight = 0,
@@ -996,7 +1287,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             KeepAlive = true,
             ProjectID = "projectId",
             Proxies = true,
-            Region = Region.UsWest2,
+            Region = Sessions::Region.UsWest2,
             Timeout = 0,
             UserMetadata = new Dictionary<string, JsonElement>()
             {
@@ -1004,7 +1295,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             },
         };
 
-        BrowserSettings expectedBrowserSettings = new()
+        Sessions::BrowserSettings expectedBrowserSettings = new()
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1012,11 +1303,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1033,8 +1324,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         string expectedExtensionID = "extensionId";
         bool expectedKeepAlive = true;
         string expectedProjectID = "projectId";
-        Proxies expectedProxies = true;
-        ApiEnum<string, Region> expectedRegion = Region.UsWest2;
+        Sessions::Proxies expectedProxies = true;
+        ApiEnum<string, Sessions::Region> expectedRegion = Sessions::Region.UsWest2;
         double expectedTimeout = 0;
         Dictionary<string, JsonElement> expectedUserMetadata = new()
         {
@@ -1061,7 +1352,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             BrowserSettings = new()
             {
@@ -1071,11 +1362,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 ExtensionID = "extensionId",
                 Fingerprint = new()
                 {
-                    Browsers = [FingerprintBrowser.Chrome],
-                    Devices = [Device.Desktop],
-                    HTTPVersion = HTTPVersion.V1,
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HTTPVersion = Sessions::HTTPVersion.V1,
                     Locales = ["string"],
-                    OperatingSystems = [OperatingSystem.Android],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
                     {
                         MaxHeight = 0,
@@ -1093,7 +1384,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             KeepAlive = true,
             ProjectID = "projectId",
             Proxies = true,
-            Region = Region.UsWest2,
+            Region = Sessions::Region.UsWest2,
             Timeout = 0,
             UserMetadata = new Dictionary<string, JsonElement>()
             {
@@ -1102,7 +1393,9 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserbaseSessionCreateParams>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserbaseSessionCreateParams>(
+            json
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1110,7 +1403,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             BrowserSettings = new()
             {
@@ -1120,11 +1413,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 ExtensionID = "extensionId",
                 Fingerprint = new()
                 {
-                    Browsers = [FingerprintBrowser.Chrome],
-                    Devices = [Device.Desktop],
-                    HTTPVersion = HTTPVersion.V1,
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HTTPVersion = Sessions::HTTPVersion.V1,
                     Locales = ["string"],
-                    OperatingSystems = [OperatingSystem.Android],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
                     {
                         MaxHeight = 0,
@@ -1142,7 +1435,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             KeepAlive = true,
             ProjectID = "projectId",
             Proxies = true,
-            Region = Region.UsWest2,
+            Region = Sessions::Region.UsWest2,
             Timeout = 0,
             UserMetadata = new Dictionary<string, JsonElement>()
             {
@@ -1151,10 +1444,12 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserbaseSessionCreateParams>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserbaseSessionCreateParams>(
+            element
+        );
         Assert.NotNull(deserialized);
 
-        BrowserSettings expectedBrowserSettings = new()
+        Sessions::BrowserSettings expectedBrowserSettings = new()
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1162,11 +1457,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1183,8 +1478,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         string expectedExtensionID = "extensionId";
         bool expectedKeepAlive = true;
         string expectedProjectID = "projectId";
-        Proxies expectedProxies = true;
-        ApiEnum<string, Region> expectedRegion = Region.UsWest2;
+        Sessions::Proxies expectedProxies = true;
+        ApiEnum<string, Sessions::Region> expectedRegion = Sessions::Region.UsWest2;
         double expectedTimeout = 0;
         Dictionary<string, JsonElement> expectedUserMetadata = new()
         {
@@ -1211,7 +1506,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             BrowserSettings = new()
             {
@@ -1221,11 +1516,11 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 ExtensionID = "extensionId",
                 Fingerprint = new()
                 {
-                    Browsers = [FingerprintBrowser.Chrome],
-                    Devices = [Device.Desktop],
-                    HTTPVersion = HTTPVersion.V1,
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HTTPVersion = Sessions::HTTPVersion.V1,
                     Locales = ["string"],
-                    OperatingSystems = [OperatingSystem.Android],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
                     {
                         MaxHeight = 0,
@@ -1243,7 +1538,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             KeepAlive = true,
             ProjectID = "projectId",
             Proxies = true,
-            Region = Region.UsWest2,
+            Region = Sessions::Region.UsWest2,
             Timeout = 0,
             UserMetadata = new Dictionary<string, JsonElement>()
             {
@@ -1257,7 +1552,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new BrowserbaseSessionCreateParams { };
+        var model = new Sessions::BrowserbaseSessionCreateParams { };
 
         Assert.Null(model.BrowserSettings);
         Assert.False(model.RawData.ContainsKey("browserSettings"));
@@ -1280,7 +1575,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new BrowserbaseSessionCreateParams { };
+        var model = new Sessions::BrowserbaseSessionCreateParams { };
 
         model.Validate();
     }
@@ -1288,7 +1583,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             // Null should be interpreted as omitted for these properties
             BrowserSettings = null,
@@ -1322,7 +1617,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new BrowserbaseSessionCreateParams
+        var model = new Sessions::BrowserbaseSessionCreateParams
         {
             // Null should be interpreted as omitted for these properties
             BrowserSettings = null,
@@ -1344,7 +1639,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1352,11 +1647,11 @@ public class BrowserSettingsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1373,15 +1668,15 @@ public class BrowserSettingsTest : TestBase
 
         bool expectedAdvancedStealth = true;
         bool expectedBlockAds = true;
-        Context expectedContext = new() { ID = "id", Persist = true };
+        Sessions::Context expectedContext = new() { ID = "id", Persist = true };
         string expectedExtensionID = "extensionId";
-        Fingerprint expectedFingerprint = new()
+        Sessions::Fingerprint expectedFingerprint = new()
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1393,7 +1688,7 @@ public class BrowserSettingsTest : TestBase
         bool expectedLogSession = true;
         bool expectedRecordSession = true;
         bool expectedSolveCaptchas = true;
-        BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
+        Sessions::BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAdvancedStealth, model.AdvancedStealth);
         Assert.Equal(expectedBlockAds, model.BlockAds);
@@ -1409,7 +1704,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1417,11 +1712,11 @@ public class BrowserSettingsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1437,7 +1732,7 @@ public class BrowserSettingsTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettings>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserSettings>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -1445,7 +1740,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1453,11 +1748,11 @@ public class BrowserSettingsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1473,20 +1768,20 @@ public class BrowserSettingsTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettings>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserSettings>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAdvancedStealth = true;
         bool expectedBlockAds = true;
-        Context expectedContext = new() { ID = "id", Persist = true };
+        Sessions::Context expectedContext = new() { ID = "id", Persist = true };
         string expectedExtensionID = "extensionId";
-        Fingerprint expectedFingerprint = new()
+        Sessions::Fingerprint expectedFingerprint = new()
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1498,7 +1793,7 @@ public class BrowserSettingsTest : TestBase
         bool expectedLogSession = true;
         bool expectedRecordSession = true;
         bool expectedSolveCaptchas = true;
-        BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
+        Sessions::BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAdvancedStealth, deserialized.AdvancedStealth);
         Assert.Equal(expectedBlockAds, deserialized.BlockAds);
@@ -1514,7 +1809,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             AdvancedStealth = true,
             BlockAds = true,
@@ -1522,11 +1817,11 @@ public class BrowserSettingsTest : TestBase
             ExtensionID = "extensionId",
             Fingerprint = new()
             {
-                Browsers = [FingerprintBrowser.Chrome],
-                Devices = [Device.Desktop],
-                HTTPVersion = HTTPVersion.V1,
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HTTPVersion = Sessions::HTTPVersion.V1,
                 Locales = ["string"],
-                OperatingSystems = [OperatingSystem.Android],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
                 {
                     MaxHeight = 0,
@@ -1547,7 +1842,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new BrowserSettings { };
+        var model = new Sessions::BrowserSettings { };
 
         Assert.Null(model.AdvancedStealth);
         Assert.False(model.RawData.ContainsKey("advancedStealth"));
@@ -1572,7 +1867,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new BrowserSettings { };
+        var model = new Sessions::BrowserSettings { };
 
         model.Validate();
     }
@@ -1580,7 +1875,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             // Null should be interpreted as omitted for these properties
             AdvancedStealth = null,
@@ -1617,7 +1912,7 @@ public class BrowserSettingsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new BrowserSettings
+        var model = new Sessions::BrowserSettings
         {
             // Null should be interpreted as omitted for these properties
             AdvancedStealth = null,
@@ -1640,7 +1935,7 @@ public class ContextTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Context { ID = "id", Persist = true };
+        var model = new Sessions::Context { ID = "id", Persist = true };
 
         string expectedID = "id";
         bool expectedPersist = true;
@@ -1652,10 +1947,10 @@ public class ContextTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Context { ID = "id", Persist = true };
+        var model = new Sessions::Context { ID = "id", Persist = true };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Context>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Context>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -1663,10 +1958,10 @@ public class ContextTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Context { ID = "id", Persist = true };
+        var model = new Sessions::Context { ID = "id", Persist = true };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Context>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Context>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -1679,7 +1974,7 @@ public class ContextTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Context { ID = "id", Persist = true };
+        var model = new Sessions::Context { ID = "id", Persist = true };
 
         model.Validate();
     }
@@ -1687,7 +1982,7 @@ public class ContextTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Context { ID = "id" };
+        var model = new Sessions::Context { ID = "id" };
 
         Assert.Null(model.Persist);
         Assert.False(model.RawData.ContainsKey("persist"));
@@ -1696,7 +1991,7 @@ public class ContextTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Context { ID = "id" };
+        var model = new Sessions::Context { ID = "id" };
 
         model.Validate();
     }
@@ -1704,7 +1999,7 @@ public class ContextTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Context
+        var model = new Sessions::Context
         {
             ID = "id",
 
@@ -1719,7 +2014,7 @@ public class ContextTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Context
+        var model = new Sessions::Context
         {
             ID = "id",
 
@@ -1736,13 +2031,13 @@ public class FingerprintTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1752,12 +2047,18 @@ public class FingerprintTest : TestBase
             },
         };
 
-        List<ApiEnum<string, FingerprintBrowser>> expectedBrowsers = [FingerprintBrowser.Chrome];
-        List<ApiEnum<string, Device>> expectedDevices = [Device.Desktop];
-        ApiEnum<string, HTTPVersion> expectedHTTPVersion = HTTPVersion.V1;
+        List<ApiEnum<string, Sessions::FingerprintBrowser>> expectedBrowsers =
+        [
+            Sessions::FingerprintBrowser.Chrome,
+        ];
+        List<ApiEnum<string, Sessions::Device>> expectedDevices = [Sessions::Device.Desktop];
+        ApiEnum<string, Sessions::HTTPVersion> expectedHTTPVersion = Sessions::HTTPVersion.V1;
         List<string> expectedLocales = ["string"];
-        List<ApiEnum<string, OperatingSystem>> expectedOperatingSystems = [OperatingSystem.Android];
-        Screen expectedScreen = new()
+        List<ApiEnum<string, Sessions::OperatingSystem>> expectedOperatingSystems =
+        [
+            Sessions::OperatingSystem.Android,
+        ];
+        Sessions::Screen expectedScreen = new()
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -1796,13 +2097,13 @@ public class FingerprintTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1813,7 +2114,7 @@ public class FingerprintTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Fingerprint>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Fingerprint>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -1821,13 +2122,13 @@ public class FingerprintTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1838,15 +2139,21 @@ public class FingerprintTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Fingerprint>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Fingerprint>(element);
         Assert.NotNull(deserialized);
 
-        List<ApiEnum<string, FingerprintBrowser>> expectedBrowsers = [FingerprintBrowser.Chrome];
-        List<ApiEnum<string, Device>> expectedDevices = [Device.Desktop];
-        ApiEnum<string, HTTPVersion> expectedHTTPVersion = HTTPVersion.V1;
+        List<ApiEnum<string, Sessions::FingerprintBrowser>> expectedBrowsers =
+        [
+            Sessions::FingerprintBrowser.Chrome,
+        ];
+        List<ApiEnum<string, Sessions::Device>> expectedDevices = [Sessions::Device.Desktop];
+        ApiEnum<string, Sessions::HTTPVersion> expectedHTTPVersion = Sessions::HTTPVersion.V1;
         List<string> expectedLocales = ["string"];
-        List<ApiEnum<string, OperatingSystem>> expectedOperatingSystems = [OperatingSystem.Android];
-        Screen expectedScreen = new()
+        List<ApiEnum<string, Sessions::OperatingSystem>> expectedOperatingSystems =
+        [
+            Sessions::OperatingSystem.Android,
+        ];
+        Sessions::Screen expectedScreen = new()
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -1885,13 +2192,13 @@ public class FingerprintTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
-            Browsers = [FingerprintBrowser.Chrome],
-            Devices = [Device.Desktop],
-            HTTPVersion = HTTPVersion.V1,
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HTTPVersion = Sessions::HTTPVersion.V1,
             Locales = ["string"],
-            OperatingSystems = [OperatingSystem.Android],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
             {
                 MaxHeight = 0,
@@ -1907,7 +2214,7 @@ public class FingerprintTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Fingerprint { };
+        var model = new Sessions::Fingerprint { };
 
         Assert.Null(model.Browsers);
         Assert.False(model.RawData.ContainsKey("browsers"));
@@ -1926,7 +2233,7 @@ public class FingerprintTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Fingerprint { };
+        var model = new Sessions::Fingerprint { };
 
         model.Validate();
     }
@@ -1934,7 +2241,7 @@ public class FingerprintTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
             // Null should be interpreted as omitted for these properties
             Browsers = null,
@@ -1962,7 +2269,7 @@ public class FingerprintTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Fingerprint
+        var model = new Sessions::Fingerprint
         {
             // Null should be interpreted as omitted for these properties
             Browsers = null,
@@ -1980,21 +2287,21 @@ public class FingerprintTest : TestBase
 public class FingerprintBrowserTest : TestBase
 {
     [Theory]
-    [InlineData(FingerprintBrowser.Chrome)]
-    [InlineData(FingerprintBrowser.Edge)]
-    [InlineData(FingerprintBrowser.Firefox)]
-    [InlineData(FingerprintBrowser.Safari)]
-    public void Validation_Works(FingerprintBrowser rawValue)
+    [InlineData(Sessions::FingerprintBrowser.Chrome)]
+    [InlineData(Sessions::FingerprintBrowser.Edge)]
+    [InlineData(Sessions::FingerprintBrowser.Firefox)]
+    [InlineData(Sessions::FingerprintBrowser.Safari)]
+    public void Validation_Works(Sessions::FingerprintBrowser rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, FingerprintBrowser> value = rawValue;
+        ApiEnum<string, Sessions::FingerprintBrowser> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, FingerprintBrowser>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::FingerprintBrowser>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -2004,20 +2311,19 @@ public class FingerprintBrowserTest : TestBase
     }
 
     [Theory]
-    [InlineData(FingerprintBrowser.Chrome)]
-    [InlineData(FingerprintBrowser.Edge)]
-    [InlineData(FingerprintBrowser.Firefox)]
-    [InlineData(FingerprintBrowser.Safari)]
-    public void SerializationRoundtrip_Works(FingerprintBrowser rawValue)
+    [InlineData(Sessions::FingerprintBrowser.Chrome)]
+    [InlineData(Sessions::FingerprintBrowser.Edge)]
+    [InlineData(Sessions::FingerprintBrowser.Firefox)]
+    [InlineData(Sessions::FingerprintBrowser.Safari)]
+    public void SerializationRoundtrip_Works(Sessions::FingerprintBrowser rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, FingerprintBrowser> value = rawValue;
+        ApiEnum<string, Sessions::FingerprintBrowser> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, FingerprintBrowser>>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::FingerprintBrowser>
+        >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -2025,15 +2331,14 @@ public class FingerprintBrowserTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, FingerprintBrowser>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::FingerprintBrowser>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, FingerprintBrowser>>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::FingerprintBrowser>
+        >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -2042,19 +2347,19 @@ public class FingerprintBrowserTest : TestBase
 public class DeviceTest : TestBase
 {
     [Theory]
-    [InlineData(Device.Desktop)]
-    [InlineData(Device.Mobile)]
-    public void Validation_Works(Device rawValue)
+    [InlineData(Sessions::Device.Desktop)]
+    [InlineData(Sessions::Device.Mobile)]
+    public void Validation_Works(Sessions::Device rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Device> value = rawValue;
+        ApiEnum<string, Sessions::Device> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Device>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -2064,15 +2369,15 @@ public class DeviceTest : TestBase
     }
 
     [Theory]
-    [InlineData(Device.Desktop)]
-    [InlineData(Device.Mobile)]
-    public void SerializationRoundtrip_Works(Device rawValue)
+    [InlineData(Sessions::Device.Desktop)]
+    [InlineData(Sessions::Device.Mobile)]
+    public void SerializationRoundtrip_Works(Sessions::Device rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Device> value = rawValue;
+        ApiEnum<string, Sessions::Device> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Device>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2083,12 +2388,12 @@ public class DeviceTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Device>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Device>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2100,19 +2405,19 @@ public class DeviceTest : TestBase
 public class HTTPVersionTest : TestBase
 {
     [Theory]
-    [InlineData(HTTPVersion.V1)]
-    [InlineData(HTTPVersion.V2)]
-    public void Validation_Works(HTTPVersion rawValue)
+    [InlineData(Sessions::HTTPVersion.V1)]
+    [InlineData(Sessions::HTTPVersion.V2)]
+    public void Validation_Works(Sessions::HTTPVersion rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, HTTPVersion> value = rawValue;
+        ApiEnum<string, Sessions::HTTPVersion> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, HTTPVersion>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -2122,15 +2427,15 @@ public class HTTPVersionTest : TestBase
     }
 
     [Theory]
-    [InlineData(HTTPVersion.V1)]
-    [InlineData(HTTPVersion.V2)]
-    public void SerializationRoundtrip_Works(HTTPVersion rawValue)
+    [InlineData(Sessions::HTTPVersion.V1)]
+    [InlineData(Sessions::HTTPVersion.V2)]
+    public void SerializationRoundtrip_Works(Sessions::HTTPVersion rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, HTTPVersion> value = rawValue;
+        ApiEnum<string, Sessions::HTTPVersion> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, HTTPVersion>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2141,12 +2446,12 @@ public class HTTPVersionTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, HTTPVersion>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, HTTPVersion>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2158,22 +2463,22 @@ public class HTTPVersionTest : TestBase
 public class OperatingSystemTest : TestBase
 {
     [Theory]
-    [InlineData(OperatingSystem.Android)]
-    [InlineData(OperatingSystem.Ios)]
-    [InlineData(OperatingSystem.Linux)]
-    [InlineData(OperatingSystem.Macos)]
-    [InlineData(OperatingSystem.Windows)]
-    public void Validation_Works(OperatingSystem rawValue)
+    [InlineData(Sessions::OperatingSystem.Android)]
+    [InlineData(Sessions::OperatingSystem.Ios)]
+    [InlineData(Sessions::OperatingSystem.Linux)]
+    [InlineData(Sessions::OperatingSystem.Macos)]
+    [InlineData(Sessions::OperatingSystem.Windows)]
+    public void Validation_Works(Sessions::OperatingSystem rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, OperatingSystem> value = rawValue;
+        ApiEnum<string, Sessions::OperatingSystem> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, OperatingSystem>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -2183,18 +2488,18 @@ public class OperatingSystemTest : TestBase
     }
 
     [Theory]
-    [InlineData(OperatingSystem.Android)]
-    [InlineData(OperatingSystem.Ios)]
-    [InlineData(OperatingSystem.Linux)]
-    [InlineData(OperatingSystem.Macos)]
-    [InlineData(OperatingSystem.Windows)]
-    public void SerializationRoundtrip_Works(OperatingSystem rawValue)
+    [InlineData(Sessions::OperatingSystem.Android)]
+    [InlineData(Sessions::OperatingSystem.Ios)]
+    [InlineData(Sessions::OperatingSystem.Linux)]
+    [InlineData(Sessions::OperatingSystem.Macos)]
+    [InlineData(Sessions::OperatingSystem.Windows)]
+    public void SerializationRoundtrip_Works(Sessions::OperatingSystem rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, OperatingSystem> value = rawValue;
+        ApiEnum<string, Sessions::OperatingSystem> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, OperatingSystem>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2205,12 +2510,12 @@ public class OperatingSystemTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, OperatingSystem>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, OperatingSystem>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2224,7 +2529,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -2246,7 +2551,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -2255,7 +2560,7 @@ public class ScreenTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Screen>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Screen>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2263,7 +2568,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -2272,7 +2577,7 @@ public class ScreenTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Screen>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Screen>(element);
         Assert.NotNull(deserialized);
 
         double expectedMaxHeight = 0;
@@ -2289,7 +2594,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             MaxHeight = 0,
             MaxWidth = 0,
@@ -2303,7 +2608,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Screen { };
+        var model = new Sessions::Screen { };
 
         Assert.Null(model.MaxHeight);
         Assert.False(model.RawData.ContainsKey("maxHeight"));
@@ -2318,7 +2623,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Screen { };
+        var model = new Sessions::Screen { };
 
         model.Validate();
     }
@@ -2326,7 +2631,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             // Null should be interpreted as omitted for these properties
             MaxHeight = null,
@@ -2348,7 +2653,7 @@ public class ScreenTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Screen
+        var model = new Sessions::Screen
         {
             // Null should be interpreted as omitted for these properties
             MaxHeight = null,
@@ -2366,7 +2671,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new BrowserSettingsViewport { Height = 0, Width = 0 };
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
 
         double expectedHeight = 0;
         double expectedWidth = 0;
@@ -2378,10 +2683,10 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new BrowserSettingsViewport { Height = 0, Width = 0 };
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettingsViewport>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserSettingsViewport>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2389,10 +2694,10 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new BrowserSettingsViewport { Height = 0, Width = 0 };
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrowserSettingsViewport>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::BrowserSettingsViewport>(element);
         Assert.NotNull(deserialized);
 
         double expectedHeight = 0;
@@ -2405,7 +2710,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new BrowserSettingsViewport { Height = 0, Width = 0 };
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
 
         model.Validate();
     }
@@ -2413,7 +2718,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new BrowserSettingsViewport { };
+        var model = new Sessions::BrowserSettingsViewport { };
 
         Assert.Null(model.Height);
         Assert.False(model.RawData.ContainsKey("height"));
@@ -2424,7 +2729,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new BrowserSettingsViewport { };
+        var model = new Sessions::BrowserSettingsViewport { };
 
         model.Validate();
     }
@@ -2432,7 +2737,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new BrowserSettingsViewport
+        var model = new Sessions::BrowserSettingsViewport
         {
             // Null should be interpreted as omitted for these properties
             Height = null,
@@ -2448,7 +2753,7 @@ public class BrowserSettingsViewportTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new BrowserSettingsViewport
+        var model = new Sessions::BrowserSettingsViewport
         {
             // Null should be interpreted as omitted for these properties
             Height = null,
@@ -2464,17 +2769,17 @@ public class ProxiesTest : TestBase
     [Fact]
     public void BoolValidationWorks()
     {
-        Proxies value = new(true);
+        Sessions::Proxies value = new(true);
         value.Validate();
     }
 
     [Fact]
     public void ProxyConfigListValidationWorks()
     {
-        Proxies value = new(
+        Sessions::Proxies value = new(
             [
-                new ProxyConfig(
-                    new Browserbase()
+                new Sessions::ProxyConfig(
+                    new Sessions::Browserbase()
                     {
                         DomainPattern = "domainPattern",
                         Geolocation = new()
@@ -2493,9 +2798,9 @@ public class ProxiesTest : TestBase
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        Proxies value = new(true);
+        Sessions::Proxies value = new(true);
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Proxies>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Proxies>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2503,10 +2808,10 @@ public class ProxiesTest : TestBase
     [Fact]
     public void ProxyConfigListSerializationRoundtripWorks()
     {
-        Proxies value = new(
+        Sessions::Proxies value = new(
             [
-                new ProxyConfig(
-                    new Browserbase()
+                new Sessions::ProxyConfig(
+                    new Sessions::Browserbase()
                     {
                         DomainPattern = "domainPattern",
                         Geolocation = new()
@@ -2520,7 +2825,7 @@ public class ProxiesTest : TestBase
             ]
         );
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Proxies>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Proxies>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2531,8 +2836,8 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void BrowserbaseValidationWorks()
     {
-        ProxyConfig value = new(
-            new Browserbase()
+        Sessions::ProxyConfig value = new(
+            new Sessions::Browserbase()
             {
                 DomainPattern = "domainPattern",
                 Geolocation = new()
@@ -2549,8 +2854,8 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void ExternalValidationWorks()
     {
-        ProxyConfig value = new(
-            new External()
+        Sessions::ProxyConfig value = new(
+            new Sessions::External()
             {
                 Server = "server",
                 DomainPattern = "domainPattern",
@@ -2564,8 +2869,8 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void BrowserbaseSerializationRoundtripWorks()
     {
-        ProxyConfig value = new(
-            new Browserbase()
+        Sessions::ProxyConfig value = new(
+            new Sessions::Browserbase()
             {
                 DomainPattern = "domainPattern",
                 Geolocation = new()
@@ -2577,7 +2882,7 @@ public class ProxyConfigTest : TestBase
             }
         );
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::ProxyConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2585,8 +2890,8 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void ExternalSerializationRoundtripWorks()
     {
-        ProxyConfig value = new(
-            new External()
+        Sessions::ProxyConfig value = new(
+            new Sessions::External()
             {
                 Server = "server",
                 DomainPattern = "domainPattern",
@@ -2595,7 +2900,7 @@ public class ProxyConfigTest : TestBase
             }
         );
         string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ProxyConfig>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::ProxyConfig>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2606,7 +2911,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2619,7 +2924,7 @@ public class BrowserbaseTest : TestBase
 
         JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
         string expectedDomainPattern = "domainPattern";
-        Geolocation expectedGeolocation = new()
+        Sessions::Geolocation expectedGeolocation = new()
         {
             Country = "country",
             City = "city",
@@ -2634,7 +2939,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2646,7 +2951,7 @@ public class BrowserbaseTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browserbase>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Browserbase>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2654,7 +2959,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2666,12 +2971,12 @@ public class BrowserbaseTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Browserbase>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Browserbase>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
         string expectedDomainPattern = "domainPattern";
-        Geolocation expectedGeolocation = new()
+        Sessions::Geolocation expectedGeolocation = new()
         {
             Country = "country",
             City = "city",
@@ -2686,7 +2991,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             DomainPattern = "domainPattern",
             Geolocation = new()
@@ -2703,7 +3008,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Browserbase { };
+        var model = new Sessions::Browserbase { };
 
         Assert.Null(model.DomainPattern);
         Assert.False(model.RawData.ContainsKey("domainPattern"));
@@ -2714,7 +3019,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Browserbase { };
+        var model = new Sessions::Browserbase { };
 
         model.Validate();
     }
@@ -2722,7 +3027,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             // Null should be interpreted as omitted for these properties
             DomainPattern = null,
@@ -2738,7 +3043,7 @@ public class BrowserbaseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Browserbase
+        var model = new Sessions::Browserbase
         {
             // Null should be interpreted as omitted for these properties
             DomainPattern = null,
@@ -2754,7 +3059,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
             City = "city",
@@ -2773,7 +3078,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
             City = "city",
@@ -2781,7 +3086,7 @@ public class GeolocationTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Geolocation>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Geolocation>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2789,7 +3094,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
             City = "city",
@@ -2797,7 +3102,7 @@ public class GeolocationTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Geolocation>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Geolocation>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountry = "country";
@@ -2812,7 +3117,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
             City = "city",
@@ -2825,7 +3130,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Geolocation { Country = "country" };
+        var model = new Sessions::Geolocation { Country = "country" };
 
         Assert.Null(model.City);
         Assert.False(model.RawData.ContainsKey("city"));
@@ -2836,7 +3141,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Geolocation { Country = "country" };
+        var model = new Sessions::Geolocation { Country = "country" };
 
         model.Validate();
     }
@@ -2844,7 +3149,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
 
@@ -2862,7 +3167,7 @@ public class GeolocationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Geolocation
+        var model = new Sessions::Geolocation
         {
             Country = "country",
 
@@ -2880,7 +3185,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2904,7 +3209,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2913,7 +3218,7 @@ public class ExternalTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<External>(json);
+        var deserialized = JsonSerializer.Deserialize<Sessions::External>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -2921,7 +3226,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2930,7 +3235,7 @@ public class ExternalTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<External>(element);
+        var deserialized = JsonSerializer.Deserialize<Sessions::External>(element);
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";
@@ -2949,7 +3254,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
             DomainPattern = "domainPattern",
@@ -2963,7 +3268,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new External { Server = "server" };
+        var model = new Sessions::External { Server = "server" };
 
         Assert.Null(model.DomainPattern);
         Assert.False(model.RawData.ContainsKey("domainPattern"));
@@ -2976,7 +3281,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new External { Server = "server" };
+        var model = new Sessions::External { Server = "server" };
 
         model.Validate();
     }
@@ -2984,7 +3289,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
 
@@ -3005,7 +3310,7 @@ public class ExternalTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new External
+        var model = new Sessions::External
         {
             Server = "server",
 
@@ -3022,21 +3327,21 @@ public class ExternalTest : TestBase
 public class RegionTest : TestBase
 {
     [Theory]
-    [InlineData(Region.UsWest2)]
-    [InlineData(Region.UsEast1)]
-    [InlineData(Region.EuCentral1)]
-    [InlineData(Region.ApSoutheast1)]
-    public void Validation_Works(Region rawValue)
+    [InlineData(Sessions::Region.UsWest2)]
+    [InlineData(Sessions::Region.UsEast1)]
+    [InlineData(Sessions::Region.EuCentral1)]
+    [InlineData(Sessions::Region.ApSoutheast1)]
+    public void Validation_Works(Sessions::Region rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Region> value = rawValue;
+        ApiEnum<string, Sessions::Region> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -3046,17 +3351,17 @@ public class RegionTest : TestBase
     }
 
     [Theory]
-    [InlineData(Region.UsWest2)]
-    [InlineData(Region.UsEast1)]
-    [InlineData(Region.EuCentral1)]
-    [InlineData(Region.ApSoutheast1)]
-    public void SerializationRoundtrip_Works(Region rawValue)
+    [InlineData(Sessions::Region.UsWest2)]
+    [InlineData(Sessions::Region.UsEast1)]
+    [InlineData(Sessions::Region.EuCentral1)]
+    [InlineData(Sessions::Region.ApSoutheast1)]
+    public void SerializationRoundtrip_Works(Sessions::Region rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Region> value = rawValue;
+        ApiEnum<string, Sessions::Region> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -3067,12 +3372,12 @@ public class RegionTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Region>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -3084,20 +3389,20 @@ public class RegionTest : TestBase
 public class VerboseTest : TestBase
 {
     [Theory]
-    [InlineData(Verbose.V0)]
-    [InlineData(Verbose.V1)]
-    [InlineData(Verbose.V2)]
-    public void Validation_Works(Verbose rawValue)
+    [InlineData(Sessions::Verbose.V0)]
+    [InlineData(Sessions::Verbose.V1)]
+    [InlineData(Sessions::Verbose.V2)]
+    public void Validation_Works(Sessions::Verbose rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Verbose> value = rawValue;
+        ApiEnum<string, Sessions::Verbose> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -3107,16 +3412,16 @@ public class VerboseTest : TestBase
     }
 
     [Theory]
-    [InlineData(Verbose.V0)]
-    [InlineData(Verbose.V1)]
-    [InlineData(Verbose.V2)]
-    public void SerializationRoundtrip_Works(Verbose rawValue)
+    [InlineData(Sessions::Verbose.V0)]
+    [InlineData(Sessions::Verbose.V1)]
+    [InlineData(Sessions::Verbose.V2)]
+    public void SerializationRoundtrip_Works(Sessions::Verbose rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Verbose> value = rawValue;
+        ApiEnum<string, Sessions::Verbose> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -3127,12 +3432,12 @@ public class VerboseTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Verbose>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -3144,20 +3449,22 @@ public class VerboseTest : TestBase
 public class SessionStartParamsXLanguageTest : TestBase
 {
     [Theory]
-    [InlineData(SessionStartParamsXLanguage.Typescript)]
-    [InlineData(SessionStartParamsXLanguage.Python)]
-    [InlineData(SessionStartParamsXLanguage.Playground)]
-    public void Validation_Works(SessionStartParamsXLanguage rawValue)
+    [InlineData(Sessions::SessionStartParamsXLanguage.Typescript)]
+    [InlineData(Sessions::SessionStartParamsXLanguage.Python)]
+    [InlineData(Sessions::SessionStartParamsXLanguage.Playground)]
+    public void Validation_Works(Sessions::SessionStartParamsXLanguage rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionStartParamsXLanguage> value = rawValue;
+        ApiEnum<string, Sessions::SessionStartParamsXLanguage> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXLanguage>>(
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
+        >(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -3167,75 +3474,17 @@ public class SessionStartParamsXLanguageTest : TestBase
     }
 
     [Theory]
-    [InlineData(SessionStartParamsXLanguage.Typescript)]
-    [InlineData(SessionStartParamsXLanguage.Python)]
-    [InlineData(SessionStartParamsXLanguage.Playground)]
-    public void SerializationRoundtrip_Works(SessionStartParamsXLanguage rawValue)
+    [InlineData(Sessions::SessionStartParamsXLanguage.Typescript)]
+    [InlineData(Sessions::SessionStartParamsXLanguage.Python)]
+    [InlineData(Sessions::SessionStartParamsXLanguage.Playground)]
+    public void SerializationRoundtrip_Works(Sessions::SessionStartParamsXLanguage rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionStartParamsXLanguage> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXLanguage>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXLanguage>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXLanguage>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class SessionStartParamsXStreamResponseTest : TestBase
-{
-    [Theory]
-    [InlineData(SessionStartParamsXStreamResponse.True)]
-    [InlineData(SessionStartParamsXStreamResponse.False)]
-    public void Validation_Works(SessionStartParamsXStreamResponse rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionStartParamsXStreamResponse> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXStreamResponse>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(SessionStartParamsXStreamResponse.True)]
-    [InlineData(SessionStartParamsXStreamResponse.False)]
-    public void SerializationRoundtrip_Works(SessionStartParamsXStreamResponse rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionStartParamsXStreamResponse> value = rawValue;
+        ApiEnum<string, Sessions::SessionStartParamsXLanguage> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionStartParamsXStreamResponse>
+            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
@@ -3244,13 +3493,75 @@ public class SessionStartParamsXStreamResponseTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionStartParamsXStreamResponse>>(
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
+        >(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionStartParamsXStreamResponse>
+            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class SessionStartParamsXStreamResponseTest : TestBase
+{
+    [Theory]
+    [InlineData(Sessions::SessionStartParamsXStreamResponse.True)]
+    [InlineData(Sessions::SessionStartParamsXStreamResponse.False)]
+    public void Validation_Works(Sessions::SessionStartParamsXStreamResponse rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
+        >(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Sessions::SessionStartParamsXStreamResponse.True)]
+    [InlineData(Sessions::SessionStartParamsXStreamResponse.False)]
+    public void SerializationRoundtrip_Works(Sessions::SessionStartParamsXStreamResponse rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
+        >(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);

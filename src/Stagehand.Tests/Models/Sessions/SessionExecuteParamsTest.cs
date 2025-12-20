@@ -1,9 +1,148 @@
+using System;
 using System.Text.Json;
 using Stagehand.Core;
 using Stagehand.Exceptions;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
+
+public class SessionExecuteParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-5-nano",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+            FrameID = "frameId",
+            XLanguage = SessionExecuteParamsXLanguage.Typescript,
+            XSDKVersion = "3.0.6",
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
+        };
+
+        string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        AgentConfig expectedAgentConfig = new()
+        {
+            Cua = true,
+            Model = "openai/gpt-5-nano",
+            Provider = Provider.OpenAI,
+            SystemPrompt = "systemPrompt",
+        };
+        ExecuteOptions expectedExecuteOptions = new()
+        {
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
+            HighlightCursor = true,
+            MaxSteps = 20,
+        };
+        string expectedFrameID = "frameId";
+        ApiEnum<string, SessionExecuteParamsXLanguage> expectedXLanguage =
+            SessionExecuteParamsXLanguage.Typescript;
+        string expectedXSDKVersion = "3.0.6";
+        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
+        ApiEnum<string, SessionExecuteParamsXStreamResponse> expectedXStreamResponse =
+            SessionExecuteParamsXStreamResponse.True;
+
+        Assert.Equal(expectedID, parameters.ID);
+        Assert.Equal(expectedAgentConfig, parameters.AgentConfig);
+        Assert.Equal(expectedExecuteOptions, parameters.ExecuteOptions);
+        Assert.Equal(expectedFrameID, parameters.FrameID);
+        Assert.Equal(expectedXLanguage, parameters.XLanguage);
+        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSentAt, parameters.XSentAt);
+        Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-5-nano",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+        Assert.Null(parameters.XLanguage);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
+        Assert.Null(parameters.XSDKVersion);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-5-nano",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+
+            // Null should be interpreted as omitted for these properties
+            FrameID = null,
+            XLanguage = null,
+            XSDKVersion = null,
+            XSentAt = null,
+            XStreamResponse = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+        Assert.Null(parameters.XLanguage);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
+        Assert.Null(parameters.XSDKVersion);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+}
 
 public class AgentConfigTest : TestBase
 {
