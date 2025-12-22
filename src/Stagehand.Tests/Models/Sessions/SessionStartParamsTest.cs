@@ -178,7 +178,7 @@ public class SessionStartParamsTest : TestBase
         bool expectedExperimental = true;
         bool expectedSelfHeal = true;
         string expectedSystemPrompt = "systemPrompt";
-        ApiEnum<string, Sessions::Verbose> expectedVerbose = Sessions::Verbose.V1;
+        ApiEnum<double, Sessions::Verbose> expectedVerbose = Sessions::Verbose.V1;
         bool expectedWaitForCaptchaSolves = true;
         ApiEnum<string, Sessions::SessionStartParamsXLanguage> expectedXLanguage =
             Sessions::SessionStartParamsXLanguage.Typescript;
@@ -3395,14 +3395,14 @@ public class VerboseTest : TestBase
     public void Validation_Works(Sessions::Verbose rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::Verbose> value = rawValue;
+        ApiEnum<double, Sessions::Verbose> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -3418,10 +3418,10 @@ public class VerboseTest : TestBase
     public void SerializationRoundtrip_Works(Sessions::Verbose rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::Verbose> value = rawValue;
+        ApiEnum<double, Sessions::Verbose> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -3432,12 +3432,12 @@ public class VerboseTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Verbose>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
             json,
             ModelBase.SerializerOptions
         );

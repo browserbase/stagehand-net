@@ -169,11 +169,11 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Logging verbosity level (0=quiet, 1=normal, 2=debug)
     /// </summary>
-    public ApiEnum<string, Verbose>? Verbose
+    public ApiEnum<double, Verbose>? Verbose
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, Verbose>>(
+            return JsonModel.GetNullableClass<ApiEnum<double, Verbose>>(
                 this.RawBodyData,
                 "verbose"
             );
@@ -2992,11 +2992,11 @@ sealed class VerboseConverter : JsonConverter<Verbose>
         JsonSerializerOptions options
     )
     {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        return JsonSerializer.Deserialize<double>(ref reader, options) switch
         {
-            "0" => Verbose.V0,
-            "1" => Verbose.V1,
-            "2" => Verbose.V2,
+            0 => Verbose.V0,
+            1 => Verbose.V1,
+            2 => Verbose.V2,
             _ => (Verbose)(-1),
         };
     }
@@ -3007,9 +3007,9 @@ sealed class VerboseConverter : JsonConverter<Verbose>
             writer,
             value switch
             {
-                Verbose.V0 => "0",
-                Verbose.V1 => "1",
-                Verbose.V2 => "2",
+                Verbose.V0 => 0,
+                Verbose.V1 => 1,
+                Verbose.V2 => 2,
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
