@@ -4,7 +4,7 @@
     <Company>Stagehand</Company>
     <PackageTags>sdk;api;http;library</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Copyright>Copyright 2025 Stagehand</Copyright>
+    <Copyright>Copyright 2026 Stagehand</Copyright>
     <PackageProjectUrl>https://docs.stagehand.dev</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/browserbase/stagehand-net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
