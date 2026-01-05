@@ -74,12 +74,12 @@ Or using a combination of the two approaches.
 
 See this table for the available options:
 
-| Property               | Environment variable     | Required | Default value                                |
-| ---------------------- | ------------------------ | -------- | -------------------------------------------- |
-| `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                            |
-| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                            |
-| `ModelAPIKey`          | `MODEL_API_KEY`          | true     | -                                            |
-| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com/v1"` |
+| Property               | Environment variable     | Required | Default value                             |
+| ---------------------- | ------------------------ | -------- | ----------------------------------------- |
+| `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
+| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                         |
+| `ModelAPIKey`          | `MODEL_API_KEY`          | true     | -                                         |
+| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
 
 ### Modifying configuration
 
