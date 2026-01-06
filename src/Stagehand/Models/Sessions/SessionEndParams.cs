@@ -24,6 +24,20 @@ public sealed record class SessionEndParams : ParamsBase
 
     public string? ID { get; init; }
 
+    public JsonElement? _ForceBody
+    {
+        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawBodyData, "_forceBody"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawBodyData, "_forceBody", value);
+        }
+    }
+
     /// <summary>
     /// Client SDK language
     /// </summary>
