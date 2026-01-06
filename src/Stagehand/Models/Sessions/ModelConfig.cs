@@ -103,7 +103,7 @@ public record class ModelConfig
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(System::Action<string> @modelName, System::Action<ModelConfigObject> object1)
+    public void Switch(System::Action<string> @modelName, System::Action<ModelConfigObject> object_)
     {
         switch (this.Value)
         {
@@ -111,7 +111,7 @@ public record class ModelConfig
                 @modelName(value);
                 break;
             case ModelConfigObject value:
-                object1(value);
+                object_(value);
                 break;
             default:
                 throw new StagehandInvalidDataException(
@@ -143,13 +143,13 @@ public record class ModelConfig
     /// </summary>
     public T Match<T>(
         System::Func<string, T> @modelName,
-        System::Func<ModelConfigObject, T> object1
+        System::Func<ModelConfigObject, T> object_
     )
     {
         return this.Value switch
         {
             string value => @modelName(value),
-            ModelConfigObject value => object1(value),
+            ModelConfigObject value => object_(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of ModelConfig"
             ),
@@ -178,7 +178,7 @@ public record class ModelConfig
                 "Data did not match any variant of ModelConfig"
             );
         }
-        this.Switch((_) => { }, (object1) => object1.Validate());
+        this.Switch((_) => { }, (object_) => object_.Validate());
     }
 
     public virtual bool Equals(ModelConfig? other)
