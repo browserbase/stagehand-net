@@ -14,6 +14,7 @@ public class SessionEndParamsTest : TestBase
         var parameters = new SessionEndParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            _ForceBody = JsonSerializer.Deserialize<JsonElement>("{}"),
             XLanguage = SessionEndParamsXLanguage.Typescript,
             XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
@@ -21,6 +22,7 @@ public class SessionEndParamsTest : TestBase
         };
 
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        JsonElement expected_ForceBody = JsonSerializer.Deserialize<JsonElement>("{}");
         ApiEnum<string, SessionEndParamsXLanguage> expectedXLanguage =
             SessionEndParamsXLanguage.Typescript;
         string expectedXSdkVersion = "3.0.6";
@@ -29,6 +31,8 @@ public class SessionEndParamsTest : TestBase
             SessionEndParamsXStreamResponse.True;
 
         Assert.Equal(expectedID, parameters.ID);
+        Assert.NotNull(parameters._ForceBody);
+        Assert.True(JsonElement.DeepEquals(expected_ForceBody, parameters._ForceBody.Value));
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
         Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
@@ -40,6 +44,8 @@ public class SessionEndParamsTest : TestBase
     {
         var parameters = new SessionEndParams { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
 
+        Assert.Null(parameters._ForceBody);
+        Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
         Assert.Null(parameters.XSdkVersion);
@@ -58,12 +64,15 @@ public class SessionEndParamsTest : TestBase
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
 
             // Null should be interpreted as omitted for these properties
+            _ForceBody = null,
             XLanguage = null,
             XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
 
+        Assert.Null(parameters._ForceBody);
+        Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
         Assert.Null(parameters.XSdkVersion);
