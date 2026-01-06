@@ -28,7 +28,7 @@ public class SessionExtractParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             XLanguage = SessionExtractParamsXLanguage.Typescript,
-            XSDKVersion = "3.0.6",
+            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExtractParamsXStreamResponse.True,
         };
@@ -48,7 +48,7 @@ public class SessionExtractParamsTest : TestBase
         };
         ApiEnum<string, SessionExtractParamsXLanguage> expectedXLanguage =
             SessionExtractParamsXLanguage.Typescript;
-        string expectedXSDKVersion = "3.0.6";
+        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionExtractParamsXStreamResponse> expectedXStreamResponse =
             SessionExtractParamsXStreamResponse.True;
@@ -66,7 +66,7 @@ public class SessionExtractParamsTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, parameters.Schema[item.Key]));
         }
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -86,7 +86,7 @@ public class SessionExtractParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -107,7 +107,7 @@ public class SessionExtractParamsTest : TestBase
             Options = null,
             Schema = null,
             XLanguage = null,
-            XSDKVersion = null,
+            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -122,7 +122,7 @@ public class SessionExtractParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -138,9 +138,9 @@ public class SessionExtractParamsTest : TestBase
         var url = parameters.Url(
             new()
             {
-                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseApiKey = "My Browserbase API Key",
                 BrowserbaseProjectID = "My Browserbase Project ID",
-                ModelAPIKey = "My Model API Key",
+                ModelApiKey = "My Model API Key",
             }
         );
 

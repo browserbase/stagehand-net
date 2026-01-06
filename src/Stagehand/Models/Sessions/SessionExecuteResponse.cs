@@ -323,7 +323,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
         }
     }
 
-    public string? PageURL
+    public string? PageUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "pageUrl"); }
         init
@@ -392,7 +392,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
         _ = this.Action;
         _ = this.Instruction;
         _ = this.PageText;
-        _ = this.PageURL;
+        _ = this.PageUrl;
         _ = this.Reasoning;
         _ = this.TaskCompleted;
         _ = this.TimeMs;

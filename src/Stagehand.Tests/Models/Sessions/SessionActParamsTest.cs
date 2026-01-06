@@ -24,7 +24,7 @@ public class SessionActParamsTest : TestBase
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
             XLanguage = Sessions::XLanguage.Typescript,
-            XSDKVersion = "3.0.6",
+            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -39,7 +39,7 @@ public class SessionActParamsTest : TestBase
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
         ApiEnum<string, Sessions::XLanguage> expectedXLanguage = Sessions::XLanguage.Typescript;
-        string expectedXSDKVersion = "3.0.6";
+        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::XStreamResponse> expectedXStreamResponse =
             Sessions::XStreamResponse.True;
@@ -49,7 +49,7 @@ public class SessionActParamsTest : TestBase
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedOptions, parameters.Options);
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -69,7 +69,7 @@ public class SessionActParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -89,7 +89,7 @@ public class SessionActParamsTest : TestBase
             FrameID = null,
             Options = null,
             XLanguage = null,
-            XSDKVersion = null,
+            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -100,7 +100,7 @@ public class SessionActParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -120,9 +120,9 @@ public class SessionActParamsTest : TestBase
         var url = parameters.Url(
             new()
             {
-                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseApiKey = "My Browserbase API Key",
                 BrowserbaseProjectID = "My Browserbase Project ID",
-                ModelAPIKey = "My Model API Key",
+                ModelApiKey = "My Model API Key",
             }
         );
 

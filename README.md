@@ -226,9 +226,9 @@ using Stagehand;
 
 StagehandClient client = new()
 {
-    BrowserbaseAPIKey = "My Browserbase API Key",
+    BrowserbaseApiKey = "My Browserbase API Key",
     BrowserbaseProjectID = "My Browserbase Project ID",
-    ModelAPIKey = "My Model API Key",
+    ModelApiKey = "My Model API Key",
 };
 ```
 
@@ -238,9 +238,9 @@ See this table for the available options:
 
 | Property               | Environment variable     | Required | Default value                             |
 | ---------------------- | ------------------------ | -------- | ----------------------------------------- |
-| `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
+| `BrowserbaseApiKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
 | `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                         |
-| `ModelAPIKey`          | `MODEL_API_KEY`          | true     | -                                         |
+| `ModelApiKey`          | `MODEL_API_KEY`          | true     | -                                         |
 | `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
 
 ### Modifying configuration

@@ -127,7 +127,7 @@ public sealed record class SessionExtractParams : ParamsBase
     /// <summary>
     /// Version of the Stagehand SDK
     /// </summary>
-    public string? XSDKVersion
+    public string? XSdkVersion
     {
         get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init

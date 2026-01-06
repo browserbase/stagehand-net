@@ -256,7 +256,7 @@ public sealed record class ModelConfigObject : JsonModel
     /// <summary>
     /// API key for the model provider
     /// </summary>
-    public string? APIKey
+    public string? ApiKey
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "apiKey"); }
         init
@@ -273,7 +273,7 @@ public sealed record class ModelConfigObject : JsonModel
     /// <summary>
     /// Base URL for the model provider
     /// </summary>
-    public string? BaseURL
+    public string? BaseUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "baseURL"); }
         init
@@ -314,8 +314,8 @@ public sealed record class ModelConfigObject : JsonModel
     public override void Validate()
     {
         _ = this.ModelName;
-        _ = this.APIKey;
-        _ = this.BaseURL;
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
         this.Provider?.Validate();
     }
 

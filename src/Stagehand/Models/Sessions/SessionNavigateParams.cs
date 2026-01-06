@@ -27,7 +27,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// <summary>
     /// URL to navigate to
     /// </summary>
-    public required string URL
+    public required string UrlValue
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "url"); }
         init { JsonModel.Set(this._rawBodyData, "url", value); }
@@ -113,7 +113,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// <summary>
     /// Version of the Stagehand SDK
     /// </summary>
-    public string? XSDKVersion
+    public string? XSdkVersion
     {
         get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init

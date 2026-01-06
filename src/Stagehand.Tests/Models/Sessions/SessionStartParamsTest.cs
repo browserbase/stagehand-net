@@ -18,12 +18,12 @@ public class SessionStartParamsTest : TestBase
             ActTimeoutMs = 0,
             Browser = new()
             {
-                CdpURL = "ws://localhost:9222",
+                CdpUrl = "ws://localhost:9222",
                 LaunchOptions = new()
                 {
                     AcceptDownloads = true,
                     Args = ["string"],
-                    CdpURL = "cdpUrl",
+                    CdpUrl = "cdpUrl",
                     ChromiumSandbox = true,
                     ConnectTimeoutMs = 0,
                     DeviceScaleFactor = 0,
@@ -33,7 +33,7 @@ public class SessionStartParamsTest : TestBase
                     HasTouch = true,
                     Headless = true,
                     IgnoreDefaultArgs = true,
-                    IgnoreHTTPSErrors = true,
+                    IgnoreHttpsErrors = true,
                     Locale = "locale",
                     PreserveUserDataDir = true,
                     Proxy = new()
@@ -60,7 +60,7 @@ public class SessionStartParamsTest : TestBase
                     {
                         Browsers = [Sessions::FingerprintBrowser.Chrome],
                         Devices = [Sessions::Device.Desktop],
-                        HTTPVersion = Sessions::HTTPVersion.V1,
+                        HttpVersion = Sessions::HttpVersion.V1,
                         Locales = ["string"],
                         OperatingSystems = [Sessions::OperatingSystem.Android],
                         Screen = new()
@@ -95,7 +95,7 @@ public class SessionStartParamsTest : TestBase
             Verbose = Sessions::Verbose.V1,
             WaitForCaptchaSolves = true,
             XLanguage = Sessions::SessionStartParamsXLanguage.Typescript,
-            XSDKVersion = "3.0.6",
+            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
@@ -104,12 +104,12 @@ public class SessionStartParamsTest : TestBase
         double expectedActTimeoutMs = 0;
         Sessions::Browser expectedBrowser = new()
         {
-            CdpURL = "ws://localhost:9222",
+            CdpUrl = "ws://localhost:9222",
             LaunchOptions = new()
             {
                 AcceptDownloads = true,
                 Args = ["string"],
-                CdpURL = "cdpUrl",
+                CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
                 DeviceScaleFactor = 0,
@@ -119,7 +119,7 @@ public class SessionStartParamsTest : TestBase
                 HasTouch = true,
                 Headless = true,
                 IgnoreDefaultArgs = true,
-                IgnoreHTTPSErrors = true,
+                IgnoreHttpsErrors = true,
                 Locale = "locale",
                 PreserveUserDataDir = true,
                 Proxy = new()
@@ -146,7 +146,7 @@ public class SessionStartParamsTest : TestBase
                 {
                     Browsers = [Sessions::FingerprintBrowser.Chrome],
                     Devices = [Sessions::Device.Desktop],
-                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    HttpVersion = Sessions::HttpVersion.V1,
                     Locales = ["string"],
                     OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
@@ -182,7 +182,7 @@ public class SessionStartParamsTest : TestBase
         bool expectedWaitForCaptchaSolves = true;
         ApiEnum<string, Sessions::SessionStartParamsXLanguage> expectedXLanguage =
             Sessions::SessionStartParamsXLanguage.Typescript;
-        string expectedXSDKVersion = "3.0.6";
+        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> expectedXStreamResponse =
             Sessions::SessionStartParamsXStreamResponse.True;
@@ -202,7 +202,7 @@ public class SessionStartParamsTest : TestBase
         Assert.Equal(expectedVerbose, parameters.Verbose);
         Assert.Equal(expectedWaitForCaptchaSolves, parameters.WaitForCaptchaSolves);
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -234,7 +234,7 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -261,7 +261,7 @@ public class SessionStartParamsTest : TestBase
             Verbose = null,
             WaitForCaptchaSolves = null,
             XLanguage = null,
-            XSDKVersion = null,
+            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -288,7 +288,7 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -304,9 +304,9 @@ public class SessionStartParamsTest : TestBase
         var url = parameters.Url(
             new()
             {
-                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseApiKey = "My Browserbase API Key",
                 BrowserbaseProjectID = "My Browserbase Project ID",
-                ModelAPIKey = "My Model API Key",
+                ModelApiKey = "My Model API Key",
             }
         );
 
@@ -321,12 +321,12 @@ public class BrowserTest : TestBase
     {
         var model = new Sessions::Browser
         {
-            CdpURL = "ws://localhost:9222",
+            CdpUrl = "ws://localhost:9222",
             LaunchOptions = new()
             {
                 AcceptDownloads = true,
                 Args = ["string"],
-                CdpURL = "cdpUrl",
+                CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
                 DeviceScaleFactor = 0,
@@ -336,7 +336,7 @@ public class BrowserTest : TestBase
                 HasTouch = true,
                 Headless = true,
                 IgnoreDefaultArgs = true,
-                IgnoreHTTPSErrors = true,
+                IgnoreHttpsErrors = true,
                 Locale = "locale",
                 PreserveUserDataDir = true,
                 Proxy = new()
@@ -352,12 +352,12 @@ public class BrowserTest : TestBase
             Type = Sessions::Type.Local,
         };
 
-        string expectedCdpURL = "ws://localhost:9222";
+        string expectedCdpUrl = "ws://localhost:9222";
         Sessions::LaunchOptions expectedLaunchOptions = new()
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -367,7 +367,7 @@ public class BrowserTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -382,7 +382,7 @@ public class BrowserTest : TestBase
         };
         ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
 
-        Assert.Equal(expectedCdpURL, model.CdpURL);
+        Assert.Equal(expectedCdpUrl, model.CdpUrl);
         Assert.Equal(expectedLaunchOptions, model.LaunchOptions);
         Assert.Equal(expectedType, model.Type);
     }
@@ -392,12 +392,12 @@ public class BrowserTest : TestBase
     {
         var model = new Sessions::Browser
         {
-            CdpURL = "ws://localhost:9222",
+            CdpUrl = "ws://localhost:9222",
             LaunchOptions = new()
             {
                 AcceptDownloads = true,
                 Args = ["string"],
-                CdpURL = "cdpUrl",
+                CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
                 DeviceScaleFactor = 0,
@@ -407,7 +407,7 @@ public class BrowserTest : TestBase
                 HasTouch = true,
                 Headless = true,
                 IgnoreDefaultArgs = true,
-                IgnoreHTTPSErrors = true,
+                IgnoreHttpsErrors = true,
                 Locale = "locale",
                 PreserveUserDataDir = true,
                 Proxy = new()
@@ -434,12 +434,12 @@ public class BrowserTest : TestBase
     {
         var model = new Sessions::Browser
         {
-            CdpURL = "ws://localhost:9222",
+            CdpUrl = "ws://localhost:9222",
             LaunchOptions = new()
             {
                 AcceptDownloads = true,
                 Args = ["string"],
-                CdpURL = "cdpUrl",
+                CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
                 DeviceScaleFactor = 0,
@@ -449,7 +449,7 @@ public class BrowserTest : TestBase
                 HasTouch = true,
                 Headless = true,
                 IgnoreDefaultArgs = true,
-                IgnoreHTTPSErrors = true,
+                IgnoreHttpsErrors = true,
                 Locale = "locale",
                 PreserveUserDataDir = true,
                 Proxy = new()
@@ -469,12 +469,12 @@ public class BrowserTest : TestBase
         var deserialized = JsonSerializer.Deserialize<Sessions::Browser>(element);
         Assert.NotNull(deserialized);
 
-        string expectedCdpURL = "ws://localhost:9222";
+        string expectedCdpUrl = "ws://localhost:9222";
         Sessions::LaunchOptions expectedLaunchOptions = new()
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -484,7 +484,7 @@ public class BrowserTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -499,7 +499,7 @@ public class BrowserTest : TestBase
         };
         ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
 
-        Assert.Equal(expectedCdpURL, deserialized.CdpURL);
+        Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
         Assert.Equal(expectedLaunchOptions, deserialized.LaunchOptions);
         Assert.Equal(expectedType, deserialized.Type);
     }
@@ -509,12 +509,12 @@ public class BrowserTest : TestBase
     {
         var model = new Sessions::Browser
         {
-            CdpURL = "ws://localhost:9222",
+            CdpUrl = "ws://localhost:9222",
             LaunchOptions = new()
             {
                 AcceptDownloads = true,
                 Args = ["string"],
-                CdpURL = "cdpUrl",
+                CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
                 DeviceScaleFactor = 0,
@@ -524,7 +524,7 @@ public class BrowserTest : TestBase
                 HasTouch = true,
                 Headless = true,
                 IgnoreDefaultArgs = true,
-                IgnoreHTTPSErrors = true,
+                IgnoreHttpsErrors = true,
                 Locale = "locale",
                 PreserveUserDataDir = true,
                 Proxy = new()
@@ -548,7 +548,7 @@ public class BrowserTest : TestBase
     {
         var model = new Sessions::Browser { };
 
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.LaunchOptions);
         Assert.False(model.RawData.ContainsKey("launchOptions"));
@@ -570,12 +570,12 @@ public class BrowserTest : TestBase
         var model = new Sessions::Browser
         {
             // Null should be interpreted as omitted for these properties
-            CdpURL = null,
+            CdpUrl = null,
             LaunchOptions = null,
             Type = null,
         };
 
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.LaunchOptions);
         Assert.False(model.RawData.ContainsKey("launchOptions"));
@@ -589,7 +589,7 @@ public class BrowserTest : TestBase
         var model = new Sessions::Browser
         {
             // Null should be interpreted as omitted for these properties
-            CdpURL = null,
+            CdpUrl = null,
             LaunchOptions = null,
             Type = null,
         };
@@ -607,7 +607,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -617,7 +617,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -633,7 +633,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
-        string expectedCdpURL = "cdpUrl";
+        string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
         double expectedDeviceScaleFactor = 0;
@@ -643,7 +643,7 @@ public class LaunchOptionsTest : TestBase
         bool expectedHasTouch = true;
         bool expectedHeadless = true;
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
-        bool expectedIgnoreHTTPSErrors = true;
+        bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
@@ -663,7 +663,7 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], model.Args[i]);
         }
-        Assert.Equal(expectedCdpURL, model.CdpURL);
+        Assert.Equal(expectedCdpUrl, model.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, model.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, model.ConnectTimeoutMs);
         Assert.Equal(expectedDeviceScaleFactor, model.DeviceScaleFactor);
@@ -673,7 +673,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedHasTouch, model.HasTouch);
         Assert.Equal(expectedHeadless, model.Headless);
         Assert.Equal(expectedIgnoreDefaultArgs, model.IgnoreDefaultArgs);
-        Assert.Equal(expectedIgnoreHTTPSErrors, model.IgnoreHTTPSErrors);
+        Assert.Equal(expectedIgnoreHttpsErrors, model.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, model.Locale);
         Assert.Equal(expectedPreserveUserDataDir, model.PreserveUserDataDir);
         Assert.Equal(expectedProxy, model.Proxy);
@@ -688,7 +688,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -698,7 +698,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -725,7 +725,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -735,7 +735,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -755,7 +755,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
-        string expectedCdpURL = "cdpUrl";
+        string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
         double expectedDeviceScaleFactor = 0;
@@ -765,7 +765,7 @@ public class LaunchOptionsTest : TestBase
         bool expectedHasTouch = true;
         bool expectedHeadless = true;
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
-        bool expectedIgnoreHTTPSErrors = true;
+        bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
@@ -785,7 +785,7 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], deserialized.Args[i]);
         }
-        Assert.Equal(expectedCdpURL, deserialized.CdpURL);
+        Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, deserialized.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, deserialized.ConnectTimeoutMs);
         Assert.Equal(expectedDeviceScaleFactor, deserialized.DeviceScaleFactor);
@@ -795,7 +795,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedHasTouch, deserialized.HasTouch);
         Assert.Equal(expectedHeadless, deserialized.Headless);
         Assert.Equal(expectedIgnoreDefaultArgs, deserialized.IgnoreDefaultArgs);
-        Assert.Equal(expectedIgnoreHTTPSErrors, deserialized.IgnoreHTTPSErrors);
+        Assert.Equal(expectedIgnoreHttpsErrors, deserialized.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, deserialized.Locale);
         Assert.Equal(expectedPreserveUserDataDir, deserialized.PreserveUserDataDir);
         Assert.Equal(expectedProxy, deserialized.Proxy);
@@ -810,7 +810,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
-            CdpURL = "cdpUrl",
+            CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
             DeviceScaleFactor = 0,
@@ -820,7 +820,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = true,
             Headless = true,
             IgnoreDefaultArgs = true,
-            IgnoreHTTPSErrors = true,
+            IgnoreHttpsErrors = true,
             Locale = "locale",
             PreserveUserDataDir = true,
             Proxy = new()
@@ -846,7 +846,7 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
         Assert.False(model.RawData.ContainsKey("chromiumSandbox"));
@@ -866,7 +866,7 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("headless"));
         Assert.Null(model.IgnoreDefaultArgs);
         Assert.False(model.RawData.ContainsKey("ignoreDefaultArgs"));
-        Assert.Null(model.IgnoreHTTPSErrors);
+        Assert.Null(model.IgnoreHttpsErrors);
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
@@ -896,7 +896,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
-            CdpURL = null,
+            CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
             DeviceScaleFactor = null,
@@ -906,7 +906,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = null,
             Headless = null,
             IgnoreDefaultArgs = null,
-            IgnoreHTTPSErrors = null,
+            IgnoreHttpsErrors = null,
             Locale = null,
             PreserveUserDataDir = null,
             Proxy = null,
@@ -918,7 +918,7 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
         Assert.False(model.RawData.ContainsKey("chromiumSandbox"));
@@ -938,7 +938,7 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("headless"));
         Assert.Null(model.IgnoreDefaultArgs);
         Assert.False(model.RawData.ContainsKey("ignoreDefaultArgs"));
-        Assert.Null(model.IgnoreHTTPSErrors);
+        Assert.Null(model.IgnoreHttpsErrors);
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
@@ -960,7 +960,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
-            CdpURL = null,
+            CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
             DeviceScaleFactor = null,
@@ -970,7 +970,7 @@ public class LaunchOptionsTest : TestBase
             HasTouch = null,
             Headless = null,
             IgnoreDefaultArgs = null,
-            IgnoreHTTPSErrors = null,
+            IgnoreHttpsErrors = null,
             Locale = null,
             PreserveUserDataDir = null,
             Proxy = null,
@@ -1284,7 +1284,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 {
                     Browsers = [Sessions::FingerprintBrowser.Chrome],
                     Devices = [Sessions::Device.Desktop],
-                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    HttpVersion = Sessions::HttpVersion.V1,
                     Locales = ["string"],
                     OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
@@ -1322,7 +1322,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -1381,7 +1381,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 {
                     Browsers = [Sessions::FingerprintBrowser.Chrome],
                     Devices = [Sessions::Device.Desktop],
-                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    HttpVersion = Sessions::HttpVersion.V1,
                     Locales = ["string"],
                     OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
@@ -1432,7 +1432,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 {
                     Browsers = [Sessions::FingerprintBrowser.Chrome],
                     Devices = [Sessions::Device.Desktop],
-                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    HttpVersion = Sessions::HttpVersion.V1,
                     Locales = ["string"],
                     OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
@@ -1476,7 +1476,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -1535,7 +1535,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 {
                     Browsers = [Sessions::FingerprintBrowser.Chrome],
                     Devices = [Sessions::Device.Desktop],
-                    HTTPVersion = Sessions::HTTPVersion.V1,
+                    HttpVersion = Sessions::HttpVersion.V1,
                     Locales = ["string"],
                     OperatingSystems = [Sessions::OperatingSystem.Android],
                     Screen = new()
@@ -1666,7 +1666,7 @@ public class BrowserSettingsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -1691,7 +1691,7 @@ public class BrowserSettingsTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -1731,7 +1731,7 @@ public class BrowserSettingsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -1767,7 +1767,7 @@ public class BrowserSettingsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -1796,7 +1796,7 @@ public class BrowserSettingsTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -1836,7 +1836,7 @@ public class BrowserSettingsTest : TestBase
             {
                 Browsers = [Sessions::FingerprintBrowser.Chrome],
                 Devices = [Sessions::Device.Desktop],
-                HTTPVersion = Sessions::HTTPVersion.V1,
+                HttpVersion = Sessions::HttpVersion.V1,
                 Locales = ["string"],
                 OperatingSystems = [Sessions::OperatingSystem.Android],
                 Screen = new()
@@ -2052,7 +2052,7 @@ public class FingerprintTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -2069,7 +2069,7 @@ public class FingerprintTest : TestBase
             Sessions::FingerprintBrowser.Chrome,
         ];
         List<ApiEnum<string, Sessions::Device>> expectedDevices = [Sessions::Device.Desktop];
-        ApiEnum<string, Sessions::HTTPVersion> expectedHTTPVersion = Sessions::HTTPVersion.V1;
+        ApiEnum<string, Sessions::HttpVersion> expectedHttpVersion = Sessions::HttpVersion.V1;
         List<string> expectedLocales = ["string"];
         List<ApiEnum<string, Sessions::OperatingSystem>> expectedOperatingSystems =
         [
@@ -2095,7 +2095,7 @@ public class FingerprintTest : TestBase
         {
             Assert.Equal(expectedDevices[i], model.Devices[i]);
         }
-        Assert.Equal(expectedHTTPVersion, model.HTTPVersion);
+        Assert.Equal(expectedHttpVersion, model.HttpVersion);
         Assert.NotNull(model.Locales);
         Assert.Equal(expectedLocales.Count, model.Locales.Count);
         for (int i = 0; i < expectedLocales.Count; i++)
@@ -2118,7 +2118,7 @@ public class FingerprintTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -2143,7 +2143,7 @@ public class FingerprintTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -2164,7 +2164,7 @@ public class FingerprintTest : TestBase
             Sessions::FingerprintBrowser.Chrome,
         ];
         List<ApiEnum<string, Sessions::Device>> expectedDevices = [Sessions::Device.Desktop];
-        ApiEnum<string, Sessions::HTTPVersion> expectedHTTPVersion = Sessions::HTTPVersion.V1;
+        ApiEnum<string, Sessions::HttpVersion> expectedHttpVersion = Sessions::HttpVersion.V1;
         List<string> expectedLocales = ["string"];
         List<ApiEnum<string, Sessions::OperatingSystem>> expectedOperatingSystems =
         [
@@ -2190,7 +2190,7 @@ public class FingerprintTest : TestBase
         {
             Assert.Equal(expectedDevices[i], deserialized.Devices[i]);
         }
-        Assert.Equal(expectedHTTPVersion, deserialized.HTTPVersion);
+        Assert.Equal(expectedHttpVersion, deserialized.HttpVersion);
         Assert.NotNull(deserialized.Locales);
         Assert.Equal(expectedLocales.Count, deserialized.Locales.Count);
         for (int i = 0; i < expectedLocales.Count; i++)
@@ -2213,7 +2213,7 @@ public class FingerprintTest : TestBase
         {
             Browsers = [Sessions::FingerprintBrowser.Chrome],
             Devices = [Sessions::Device.Desktop],
-            HTTPVersion = Sessions::HTTPVersion.V1,
+            HttpVersion = Sessions::HttpVersion.V1,
             Locales = ["string"],
             OperatingSystems = [Sessions::OperatingSystem.Android],
             Screen = new()
@@ -2237,7 +2237,7 @@ public class FingerprintTest : TestBase
         Assert.False(model.RawData.ContainsKey("browsers"));
         Assert.Null(model.Devices);
         Assert.False(model.RawData.ContainsKey("devices"));
-        Assert.Null(model.HTTPVersion);
+        Assert.Null(model.HttpVersion);
         Assert.False(model.RawData.ContainsKey("httpVersion"));
         Assert.Null(model.Locales);
         Assert.False(model.RawData.ContainsKey("locales"));
@@ -2263,7 +2263,7 @@ public class FingerprintTest : TestBase
             // Null should be interpreted as omitted for these properties
             Browsers = null,
             Devices = null,
-            HTTPVersion = null,
+            HttpVersion = null,
             Locales = null,
             OperatingSystems = null,
             Screen = null,
@@ -2273,7 +2273,7 @@ public class FingerprintTest : TestBase
         Assert.False(model.RawData.ContainsKey("browsers"));
         Assert.Null(model.Devices);
         Assert.False(model.RawData.ContainsKey("devices"));
-        Assert.Null(model.HTTPVersion);
+        Assert.Null(model.HttpVersion);
         Assert.False(model.RawData.ContainsKey("httpVersion"));
         Assert.Null(model.Locales);
         Assert.False(model.RawData.ContainsKey("locales"));
@@ -2291,7 +2291,7 @@ public class FingerprintTest : TestBase
             // Null should be interpreted as omitted for these properties
             Browsers = null,
             Devices = null,
-            HTTPVersion = null,
+            HttpVersion = null,
             Locales = null,
             OperatingSystems = null,
             Screen = null,
@@ -2419,22 +2419,22 @@ public class DeviceTest : TestBase
     }
 }
 
-public class HTTPVersionTest : TestBase
+public class HttpVersionTest : TestBase
 {
     [Theory]
-    [InlineData(Sessions::HTTPVersion.V1)]
-    [InlineData(Sessions::HTTPVersion.V2)]
-    public void Validation_Works(Sessions::HTTPVersion rawValue)
+    [InlineData(Sessions::HttpVersion.V1)]
+    [InlineData(Sessions::HttpVersion.V2)]
+    public void Validation_Works(Sessions::HttpVersion rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::HTTPVersion> value = rawValue;
+        ApiEnum<string, Sessions::HttpVersion> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
@@ -2444,15 +2444,15 @@ public class HTTPVersionTest : TestBase
     }
 
     [Theory]
-    [InlineData(Sessions::HTTPVersion.V1)]
-    [InlineData(Sessions::HTTPVersion.V2)]
-    public void SerializationRoundtrip_Works(Sessions::HTTPVersion rawValue)
+    [InlineData(Sessions::HttpVersion.V1)]
+    [InlineData(Sessions::HttpVersion.V2)]
+    public void SerializationRoundtrip_Works(Sessions::HttpVersion rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::HTTPVersion> value = rawValue;
+        ApiEnum<string, Sessions::HttpVersion> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -2463,12 +2463,12 @@ public class HTTPVersionTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HTTPVersion>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
             json,
             ModelBase.SerializerOptions
         );

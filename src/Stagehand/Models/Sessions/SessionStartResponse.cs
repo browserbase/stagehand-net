@@ -91,7 +91,7 @@ public sealed record class SessionStartResponseData : JsonModel
     /// CDP WebSocket URL for connecting to the Browserbase cloud browser (present
     /// when available)
     /// </summary>
-    public string? CdpURL
+    public string? CdpUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
         init { JsonModel.Set(this._rawData, "cdpUrl", value); }
@@ -102,7 +102,7 @@ public sealed record class SessionStartResponseData : JsonModel
     {
         _ = this.Available;
         _ = this.SessionID;
-        _ = this.CdpURL;
+        _ = this.CdpUrl;
     }
 
     public SessionStartResponseData() { }

@@ -21,8 +21,8 @@ public class ModelConfigTest : TestBase
             new ModelConfigObject()
             {
                 ModelName = "gpt-5-nano",
-                APIKey = "sk-some-openai-api-key",
-                BaseURL = "https://api.openai.com/v1",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Provider = ModelConfigObjectProvider.OpenAI,
             }
         );
@@ -46,8 +46,8 @@ public class ModelConfigTest : TestBase
             new ModelConfigObject()
             {
                 ModelName = "gpt-5-nano",
-                APIKey = "sk-some-openai-api-key",
-                BaseURL = "https://api.openai.com/v1",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Provider = ModelConfigObjectProvider.OpenAI,
             }
         );
@@ -66,20 +66,20 @@ public class ModelConfigObjectTest : TestBase
         var model = new ModelConfigObject
         {
             ModelName = "gpt-5-nano",
-            APIKey = "sk-some-openai-api-key",
-            BaseURL = "https://api.openai.com/v1",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
         string expectedModelName = "gpt-5-nano";
-        string expectedAPIKey = "sk-some-openai-api-key";
-        string expectedBaseURL = "https://api.openai.com/v1";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
             ModelConfigObjectProvider.OpenAI;
 
         Assert.Equal(expectedModelName, model.ModelName);
-        Assert.Equal(expectedAPIKey, model.APIKey);
-        Assert.Equal(expectedBaseURL, model.BaseURL);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -89,8 +89,8 @@ public class ModelConfigObjectTest : TestBase
         var model = new ModelConfigObject
         {
             ModelName = "gpt-5-nano",
-            APIKey = "sk-some-openai-api-key",
-            BaseURL = "https://api.openai.com/v1",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
@@ -106,8 +106,8 @@ public class ModelConfigObjectTest : TestBase
         var model = new ModelConfigObject
         {
             ModelName = "gpt-5-nano",
-            APIKey = "sk-some-openai-api-key",
-            BaseURL = "https://api.openai.com/v1",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
@@ -116,14 +116,14 @@ public class ModelConfigObjectTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedModelName = "gpt-5-nano";
-        string expectedAPIKey = "sk-some-openai-api-key";
-        string expectedBaseURL = "https://api.openai.com/v1";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
             ModelConfigObjectProvider.OpenAI;
 
         Assert.Equal(expectedModelName, deserialized.ModelName);
-        Assert.Equal(expectedAPIKey, deserialized.APIKey);
-        Assert.Equal(expectedBaseURL, deserialized.BaseURL);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -133,8 +133,8 @@ public class ModelConfigObjectTest : TestBase
         var model = new ModelConfigObject
         {
             ModelName = "gpt-5-nano",
-            APIKey = "sk-some-openai-api-key",
-            BaseURL = "https://api.openai.com/v1",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
@@ -146,9 +146,9 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject { ModelName = "gpt-5-nano" };
 
-        Assert.Null(model.APIKey);
+        Assert.Null(model.ApiKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
-        Assert.Null(model.BaseURL);
+        Assert.Null(model.BaseUrl);
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
@@ -170,14 +170,14 @@ public class ModelConfigObjectTest : TestBase
             ModelName = "gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
-            APIKey = null,
-            BaseURL = null,
+            ApiKey = null,
+            BaseUrl = null,
             Provider = null,
         };
 
-        Assert.Null(model.APIKey);
+        Assert.Null(model.ApiKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
-        Assert.Null(model.BaseURL);
+        Assert.Null(model.BaseUrl);
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
@@ -191,8 +191,8 @@ public class ModelConfigObjectTest : TestBase
             ModelName = "gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
-            APIKey = null,
-            BaseURL = null,
+            ApiKey = null,
+            BaseUrl = null,
             Provider = null,
         };
 

@@ -22,7 +22,7 @@ public class SessionExecuteResponseTest : TestBase
                             Action = "action",
                             Instruction = "instruction",
                             PageText = "pageText",
-                            PageURL = "pageUrl",
+                            PageUrl = "pageUrl",
                             Reasoning = "reasoning",
                             TaskCompleted = true,
                             TimeMs = 0,
@@ -59,7 +59,7 @@ public class SessionExecuteResponseTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -104,7 +104,7 @@ public class SessionExecuteResponseTest : TestBase
                             Action = "action",
                             Instruction = "instruction",
                             PageText = "pageText",
-                            PageURL = "pageUrl",
+                            PageUrl = "pageUrl",
                             Reasoning = "reasoning",
                             TaskCompleted = true,
                             TimeMs = 0,
@@ -152,7 +152,7 @@ public class SessionExecuteResponseTest : TestBase
                             Action = "action",
                             Instruction = "instruction",
                             PageText = "pageText",
-                            PageURL = "pageUrl",
+                            PageUrl = "pageUrl",
                             Reasoning = "reasoning",
                             TaskCompleted = true,
                             TimeMs = 0,
@@ -193,7 +193,7 @@ public class SessionExecuteResponseTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -238,7 +238,7 @@ public class SessionExecuteResponseTest : TestBase
                             Action = "action",
                             Instruction = "instruction",
                             PageText = "pageText",
-                            PageURL = "pageUrl",
+                            PageUrl = "pageUrl",
                             Reasoning = "reasoning",
                             TaskCompleted = true,
                             TimeMs = 0,
@@ -285,7 +285,7 @@ public class SessionExecuteResponseDataTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -319,7 +319,7 @@ public class SessionExecuteResponseDataTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -360,7 +360,7 @@ public class SessionExecuteResponseDataTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -405,7 +405,7 @@ public class SessionExecuteResponseDataTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -443,7 +443,7 @@ public class SessionExecuteResponseDataTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -484,7 +484,7 @@ public class SessionExecuteResponseDataTest : TestBase
                         Action = "action",
                         Instruction = "instruction",
                         PageText = "pageText",
-                        PageURL = "pageUrl",
+                        PageUrl = "pageUrl",
                         Reasoning = "reasoning",
                         TaskCompleted = true,
                         TimeMs = 0,
@@ -527,7 +527,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -558,7 +558,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                 Action = "action",
                 Instruction = "instruction",
                 PageText = "pageText",
-                PageURL = "pageUrl",
+                PageUrl = "pageUrl",
                 Reasoning = "reasoning",
                 TaskCompleted = true,
                 TimeMs = 0,
@@ -612,7 +612,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -654,7 +654,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -689,7 +689,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                 Action = "action",
                 Instruction = "instruction",
                 PageText = "pageText",
-                PageURL = "pageUrl",
+                PageUrl = "pageUrl",
                 Reasoning = "reasoning",
                 TaskCompleted = true,
                 TimeMs = 0,
@@ -743,7 +743,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -782,7 +782,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -812,7 +812,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -839,7 +839,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -873,7 +873,7 @@ public class SessionExecuteResponseDataResultTest : TestBase
                     Action = "action",
                     Instruction = "instruction",
                     PageText = "pageText",
-                    PageURL = "pageUrl",
+                    PageUrl = "pageUrl",
                     Reasoning = "reasoning",
                     TaskCompleted = true,
                     TimeMs = 0,
@@ -903,7 +903,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = "action",
             Instruction = "instruction",
             PageText = "pageText",
-            PageURL = "pageUrl",
+            PageUrl = "pageUrl",
             Reasoning = "reasoning",
             TaskCompleted = true,
             TimeMs = 0,
@@ -913,7 +913,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         string expectedAction = "action";
         string expectedInstruction = "instruction";
         string expectedPageText = "pageText";
-        string expectedPageURL = "pageUrl";
+        string expectedPageUrl = "pageUrl";
         string expectedReasoning = "reasoning";
         bool expectedTaskCompleted = true;
         double expectedTimeMs = 0;
@@ -922,7 +922,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         Assert.Equal(expectedAction, model.Action);
         Assert.Equal(expectedInstruction, model.Instruction);
         Assert.Equal(expectedPageText, model.PageText);
-        Assert.Equal(expectedPageURL, model.PageURL);
+        Assert.Equal(expectedPageUrl, model.PageUrl);
         Assert.Equal(expectedReasoning, model.Reasoning);
         Assert.Equal(expectedTaskCompleted, model.TaskCompleted);
         Assert.Equal(expectedTimeMs, model.TimeMs);
@@ -937,7 +937,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = "action",
             Instruction = "instruction",
             PageText = "pageText",
-            PageURL = "pageUrl",
+            PageUrl = "pageUrl",
             Reasoning = "reasoning",
             TaskCompleted = true,
             TimeMs = 0,
@@ -958,7 +958,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = "action",
             Instruction = "instruction",
             PageText = "pageText",
-            PageURL = "pageUrl",
+            PageUrl = "pageUrl",
             Reasoning = "reasoning",
             TaskCompleted = true,
             TimeMs = 0,
@@ -974,7 +974,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         string expectedAction = "action";
         string expectedInstruction = "instruction";
         string expectedPageText = "pageText";
-        string expectedPageURL = "pageUrl";
+        string expectedPageUrl = "pageUrl";
         string expectedReasoning = "reasoning";
         bool expectedTaskCompleted = true;
         double expectedTimeMs = 0;
@@ -983,7 +983,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         Assert.Equal(expectedAction, deserialized.Action);
         Assert.Equal(expectedInstruction, deserialized.Instruction);
         Assert.Equal(expectedPageText, deserialized.PageText);
-        Assert.Equal(expectedPageURL, deserialized.PageURL);
+        Assert.Equal(expectedPageUrl, deserialized.PageUrl);
         Assert.Equal(expectedReasoning, deserialized.Reasoning);
         Assert.Equal(expectedTaskCompleted, deserialized.TaskCompleted);
         Assert.Equal(expectedTimeMs, deserialized.TimeMs);
@@ -998,7 +998,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = "action",
             Instruction = "instruction",
             PageText = "pageText",
-            PageURL = "pageUrl",
+            PageUrl = "pageUrl",
             Reasoning = "reasoning",
             TaskCompleted = true,
             TimeMs = 0,
@@ -1018,7 +1018,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         Assert.False(model.RawData.ContainsKey("instruction"));
         Assert.Null(model.PageText);
         Assert.False(model.RawData.ContainsKey("pageText"));
-        Assert.Null(model.PageURL);
+        Assert.Null(model.PageUrl);
         Assert.False(model.RawData.ContainsKey("pageUrl"));
         Assert.Null(model.Reasoning);
         Assert.False(model.RawData.ContainsKey("reasoning"));
@@ -1047,7 +1047,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = null,
             Instruction = null,
             PageText = null,
-            PageURL = null,
+            PageUrl = null,
             Reasoning = null,
             TaskCompleted = null,
             TimeMs = null,
@@ -1059,7 +1059,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
         Assert.False(model.RawData.ContainsKey("instruction"));
         Assert.Null(model.PageText);
         Assert.False(model.RawData.ContainsKey("pageText"));
-        Assert.Null(model.PageURL);
+        Assert.Null(model.PageUrl);
         Assert.False(model.RawData.ContainsKey("pageUrl"));
         Assert.Null(model.Reasoning);
         Assert.False(model.RawData.ContainsKey("reasoning"));
@@ -1080,7 +1080,7 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
             Action = null,
             Instruction = null,
             PageText = null,
-            PageURL = null,
+            PageUrl = null,
             Reasoning = null,
             TaskCompleted = null,
             TimeMs = null,
