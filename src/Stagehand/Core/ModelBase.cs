@@ -40,7 +40,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, FingerprintBrowser>(),
             new ApiEnumConverter<string, Device>(),
-            new ApiEnumConverter<string, HTTPVersion>(),
+            new ApiEnumConverter<string, HttpVersion>(),
             new ApiEnumConverter<string, OperatingSystem>(),
             new ApiEnumConverter<string, Region>(),
             new ApiEnumConverter<double, Verbose>(),

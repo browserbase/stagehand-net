@@ -76,7 +76,7 @@ public interface IStagehandClient : IDisposable
     /// <summary>
     /// Your [Browserbase API Key](https://www.browserbase.com/settings)
     /// </summary>
-    string BrowserbaseAPIKey { get; init; }
+    string BrowserbaseApiKey { get; init; }
 
     /// <summary>
     /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
@@ -86,7 +86,7 @@ public interface IStagehandClient : IDisposable
     /// <summary>
     /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     /// </summary>
-    string ModelAPIKey { get; init; }
+    string ModelApiKey { get; init; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.

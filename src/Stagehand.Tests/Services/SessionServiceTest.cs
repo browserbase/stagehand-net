@@ -131,7 +131,7 @@ public class SessionServiceTest : TestBase
     {
         var response = await this.client.Sessions.Navigate(
             "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            new() { URL = "https://example.com" },
+            new() { UrlValue = "https://example.com" },
             TestContext.Current.CancellationToken
         );
         response.Validate();

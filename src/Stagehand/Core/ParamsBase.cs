@@ -196,17 +196,17 @@ public abstract record class ParamsBase
             request.Headers.Add(header.Key, header.Value);
         }
 
-        if (options.BrowserbaseAPIKey != null)
+        if (options.BrowserbaseApiKey != null)
         {
-            request.Headers.Add("x-bb-api-key", options.BrowserbaseAPIKey);
+            request.Headers.Add("x-bb-api-key", options.BrowserbaseApiKey);
         }
         if (options.BrowserbaseProjectID != null)
         {
             request.Headers.Add("x-bb-project-id", options.BrowserbaseProjectID);
         }
-        if (options.ModelAPIKey != null)
+        if (options.ModelApiKey != null)
         {
-            request.Headers.Add("x-model-api-key", options.ModelAPIKey);
+            request.Headers.Add("x-model-api-key", options.ModelApiKey);
         }
         request.Headers.Add(
             "X-Stainless-Timeout",

@@ -14,7 +14,7 @@ public class SessionStartResponseTest : TestBase
             {
                 Available = true,
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -23,7 +23,7 @@ public class SessionStartResponseTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
         bool expectedSuccess = true;
 
@@ -40,7 +40,7 @@ public class SessionStartResponseTest : TestBase
             {
                 Available = true,
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -60,7 +60,7 @@ public class SessionStartResponseTest : TestBase
             {
                 Available = true,
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -73,7 +73,7 @@ public class SessionStartResponseTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
         bool expectedSuccess = true;
 
@@ -90,7 +90,7 @@ public class SessionStartResponseTest : TestBase
             {
                 Available = true,
                 SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-                CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
             },
             Success = true,
         };
@@ -108,16 +108,16 @@ public class SessionStartResponseDataTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         bool expectedAvailable = true;
         string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
-        string expectedCdpURL = "wss://connect.browserbase.com/?signingKey=abc123";
+        string expectedCdpUrl = "wss://connect.browserbase.com/?signingKey=abc123";
 
         Assert.Equal(expectedAvailable, model.Available);
         Assert.Equal(expectedSessionID, model.SessionID);
-        Assert.Equal(expectedCdpURL, model.CdpURL);
+        Assert.Equal(expectedCdpUrl, model.CdpUrl);
     }
 
     [Fact]
@@ -127,7 +127,7 @@ public class SessionStartResponseDataTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -143,7 +143,7 @@ public class SessionStartResponseDataTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         string element = JsonSerializer.Serialize(model);
@@ -152,11 +152,11 @@ public class SessionStartResponseDataTest : TestBase
 
         bool expectedAvailable = true;
         string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
-        string expectedCdpURL = "wss://connect.browserbase.com/?signingKey=abc123";
+        string expectedCdpUrl = "wss://connect.browserbase.com/?signingKey=abc123";
 
         Assert.Equal(expectedAvailable, deserialized.Available);
         Assert.Equal(expectedSessionID, deserialized.SessionID);
-        Assert.Equal(expectedCdpURL, deserialized.CdpURL);
+        Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
     }
 
     [Fact]
@@ -166,7 +166,7 @@ public class SessionStartResponseDataTest : TestBase
         {
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            CdpURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
         };
 
         model.Validate();
@@ -181,7 +181,7 @@ public class SessionStartResponseDataTest : TestBase
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
         };
 
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
     }
 
@@ -205,10 +205,10 @@ public class SessionStartResponseDataTest : TestBase
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
 
-            CdpURL = null,
+            CdpUrl = null,
         };
 
-        Assert.Null(model.CdpURL);
+        Assert.Null(model.CdpUrl);
         Assert.True(model.RawData.ContainsKey("cdpUrl"));
     }
 
@@ -220,7 +220,7 @@ public class SessionStartResponseDataTest : TestBase
             Available = true,
             SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
 
-            CdpURL = null,
+            CdpUrl = null,
         };
 
         model.Validate();

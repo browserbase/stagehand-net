@@ -63,10 +63,10 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string BrowserbaseAPIKey
+    public string BrowserbaseApiKey
     {
-        get { return this._options.BrowserbaseAPIKey; }
-        init { this._options.BrowserbaseAPIKey = value; }
+        get { return this._options.BrowserbaseApiKey; }
+        init { this._options.BrowserbaseApiKey = value; }
     }
 
     /// <inheritdoc/>
@@ -77,10 +77,10 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string ModelAPIKey
+    public string ModelApiKey
     {
-        get { return this._options.ModelAPIKey; }
-        init { this._options.ModelAPIKey = value; }
+        get { return this._options.ModelApiKey; }
+        init { this._options.ModelApiKey = value; }
     }
 
     /// <inheritdoc/>

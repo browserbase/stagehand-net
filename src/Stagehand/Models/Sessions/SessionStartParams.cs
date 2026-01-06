@@ -232,7 +232,7 @@ public sealed record class SessionStartParams : ParamsBase
     /// <summary>
     /// Version of the Stagehand SDK
     /// </summary>
-    public string? XSDKVersion
+    public string? XSdkVersion
     {
         get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
@@ -374,7 +374,7 @@ public sealed record class Browser : JsonModel
     /// <summary>
     /// Chrome DevTools Protocol URL for connecting to existing browser
     /// </summary>
-    public string? CdpURL
+    public string? CdpUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
         init
@@ -427,7 +427,7 @@ public sealed record class Browser : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.CdpURL;
+        _ = this.CdpUrl;
         this.LaunchOptions?.Validate();
         this.Type?.Validate();
     }
@@ -495,7 +495,7 @@ public sealed record class LaunchOptions : JsonModel
         }
     }
 
-    public string? CdpURL
+    public string? CdpUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
         init
@@ -638,7 +638,7 @@ public sealed record class LaunchOptions : JsonModel
         }
     }
 
-    public bool? IgnoreHTTPSErrors
+    public bool? IgnoreHttpsErrors
     {
         get { return JsonModel.GetNullableStruct<bool>(this.RawData, "ignoreHTTPSErrors"); }
         init
@@ -727,7 +727,7 @@ public sealed record class LaunchOptions : JsonModel
     {
         _ = this.AcceptDownloads;
         _ = this.Args;
-        _ = this.CdpURL;
+        _ = this.CdpUrl;
         _ = this.ChromiumSandbox;
         _ = this.ConnectTimeoutMs;
         _ = this.DeviceScaleFactor;
@@ -737,7 +737,7 @@ public sealed record class LaunchOptions : JsonModel
         _ = this.HasTouch;
         _ = this.Headless;
         this.IgnoreDefaultArgs?.Validate();
-        _ = this.IgnoreHTTPSErrors;
+        _ = this.IgnoreHttpsErrors;
         _ = this.Locale;
         _ = this.PreserveUserDataDir;
         this.Proxy?.Validate();
@@ -1664,11 +1664,11 @@ public sealed record class Fingerprint : JsonModel
         }
     }
 
-    public ApiEnum<string, HTTPVersion>? HTTPVersion
+    public ApiEnum<string, HttpVersion>? HttpVersion
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, HTTPVersion>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, HttpVersion>>(
                 this.RawData,
                 "httpVersion"
             );
@@ -1743,7 +1743,7 @@ public sealed record class Fingerprint : JsonModel
         {
             item.Validate();
         }
-        this.HTTPVersion?.Validate();
+        this.HttpVersion?.Validate();
         _ = this.Locales;
         foreach (var item in this.OperatingSystems ?? [])
         {
@@ -1874,16 +1874,16 @@ sealed class DeviceConverter : JsonConverter<Device>
     }
 }
 
-[JsonConverter(typeof(HTTPVersionConverter))]
-public enum HTTPVersion
+[JsonConverter(typeof(HttpVersionConverter))]
+public enum HttpVersion
 {
     V1,
     V2,
 }
 
-sealed class HTTPVersionConverter : JsonConverter<HTTPVersion>
+sealed class HttpVersionConverter : JsonConverter<HttpVersion>
 {
-    public override HTTPVersion Read(
+    public override HttpVersion Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1891,15 +1891,15 @@ sealed class HTTPVersionConverter : JsonConverter<HTTPVersion>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "1" => HTTPVersion.V1,
-            "2" => HTTPVersion.V2,
-            _ => (HTTPVersion)(-1),
+            "1" => HttpVersion.V1,
+            "2" => HttpVersion.V2,
+            _ => (HttpVersion)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        HTTPVersion value,
+        HttpVersion value,
         JsonSerializerOptions options
     )
     {
@@ -1907,8 +1907,8 @@ sealed class HTTPVersionConverter : JsonConverter<HTTPVersion>
             writer,
             value switch
             {
-                HTTPVersion.V1 => "1",
-                HTTPVersion.V2 => "2",
+                HttpVersion.V1 => "1",
+                HttpVersion.V2 => "2",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

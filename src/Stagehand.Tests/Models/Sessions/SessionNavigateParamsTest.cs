@@ -14,7 +14,7 @@ public class SessionNavigateParamsTest : TestBase
         var parameters = new SessionNavigateParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            URL = "https://example.com",
+            UrlValue = "https://example.com",
             FrameID = "frameId",
             Options = new()
             {
@@ -24,13 +24,13 @@ public class SessionNavigateParamsTest : TestBase
             },
             StreamResponse = true,
             XLanguage = SessionNavigateParamsXLanguage.Typescript,
-            XSDKVersion = "3.0.6",
+            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionNavigateParamsXStreamResponse.True,
         };
 
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
-        string expectedURL = "https://example.com";
+        string expectedUrlValue = "https://example.com";
         string expectedFrameID = "frameId";
         SessionNavigateParamsOptions expectedOptions = new()
         {
@@ -41,18 +41,18 @@ public class SessionNavigateParamsTest : TestBase
         bool expectedStreamResponse = true;
         ApiEnum<string, SessionNavigateParamsXLanguage> expectedXLanguage =
             SessionNavigateParamsXLanguage.Typescript;
-        string expectedXSDKVersion = "3.0.6";
+        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionNavigateParamsXStreamResponse> expectedXStreamResponse =
             SessionNavigateParamsXStreamResponse.True;
 
         Assert.Equal(expectedID, parameters.ID);
-        Assert.Equal(expectedURL, parameters.URL);
+        Assert.Equal(expectedUrlValue, parameters.UrlValue);
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedOptions, parameters.Options);
         Assert.Equal(expectedStreamResponse, parameters.StreamResponse);
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -63,7 +63,7 @@ public class SessionNavigateParamsTest : TestBase
         var parameters = new SessionNavigateParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            URL = "https://example.com",
+            UrlValue = "https://example.com",
         };
 
         Assert.Null(parameters.FrameID);
@@ -74,7 +74,7 @@ public class SessionNavigateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -88,14 +88,14 @@ public class SessionNavigateParamsTest : TestBase
         var parameters = new SessionNavigateParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            URL = "https://example.com",
+            UrlValue = "https://example.com",
 
             // Null should be interpreted as omitted for these properties
             FrameID = null,
             Options = null,
             StreamResponse = null,
             XLanguage = null,
-            XSDKVersion = null,
+            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -108,7 +108,7 @@ public class SessionNavigateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -122,15 +122,15 @@ public class SessionNavigateParamsTest : TestBase
         SessionNavigateParams parameters = new()
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            URL = "https://example.com",
+            UrlValue = "https://example.com",
         };
 
         var url = parameters.Url(
             new()
             {
-                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseApiKey = "My Browserbase API Key",
                 BrowserbaseProjectID = "My Browserbase Project ID",
-                ModelAPIKey = "My Model API Key",
+                ModelApiKey = "My Model API Key",
             }
         );
 

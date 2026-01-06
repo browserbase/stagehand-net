@@ -15,7 +15,7 @@ public class SessionEndParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             XLanguage = SessionEndParamsXLanguage.Typescript,
-            XSDKVersion = "3.0.6",
+            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionEndParamsXStreamResponse.True,
         };
@@ -23,14 +23,14 @@ public class SessionEndParamsTest : TestBase
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
         ApiEnum<string, SessionEndParamsXLanguage> expectedXLanguage =
             SessionEndParamsXLanguage.Typescript;
-        string expectedXSDKVersion = "3.0.6";
+        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionEndParamsXStreamResponse> expectedXStreamResponse =
             SessionEndParamsXStreamResponse.True;
 
         Assert.Equal(expectedID, parameters.ID);
         Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSDKVersion, parameters.XSDKVersion);
+        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -42,7 +42,7 @@ public class SessionEndParamsTest : TestBase
 
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -59,14 +59,14 @@ public class SessionEndParamsTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             XLanguage = null,
-            XSDKVersion = null,
+            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
 
         Assert.Null(parameters.XLanguage);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSDKVersion);
+        Assert.Null(parameters.XSdkVersion);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
@@ -82,9 +82,9 @@ public class SessionEndParamsTest : TestBase
         var url = parameters.Url(
             new()
             {
-                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseApiKey = "My Browserbase API Key",
                 BrowserbaseProjectID = "My Browserbase Project ID",
-                ModelAPIKey = "My Model API Key",
+                ModelApiKey = "My Model API Key",
             }
         );
 

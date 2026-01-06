@@ -50,7 +50,7 @@ public sealed record class SessionEndParams : ParamsBase
     /// <summary>
     /// Version of the Stagehand SDK
     /// </summary>
-    public string? XSDKVersion
+    public string? XSdkVersion
     {
         get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
         init
