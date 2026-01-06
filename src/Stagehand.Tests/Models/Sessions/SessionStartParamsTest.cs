@@ -295,6 +295,23 @@ public class SessionStartParamsTest : TestBase
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
+
+    [Fact]
+    public void Url_Works()
+    {
+        Sessions::SessionStartParams parameters = new() { ModelName = "gpt-4o" };
+
+        var url = parameters.Url(
+            new()
+            {
+                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelAPIKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(new Uri("https://api.stagehand.browserbase.com/v1/sessions/start"), url);
+    }
 }
 
 public class BrowserTest : TestBase

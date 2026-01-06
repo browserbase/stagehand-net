@@ -129,6 +129,28 @@ public class SessionExtractParamsTest : TestBase
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SessionExtractParams parameters = new() { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
+
+        var url = parameters.Url(
+            new()
+            {
+                BrowserbaseAPIKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelAPIKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(
+            new Uri(
+                "https://api.stagehand.browserbase.com/v1/sessions/c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123/extract"
+            ),
+            url
+        );
+    }
 }
 
 public class SessionExtractParamsOptionsTest : TestBase
