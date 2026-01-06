@@ -48,7 +48,22 @@ static class Sse
             switch (item.EventType)
             {
                 case null:
-                    yield return JsonSerializer.Deserialize<T>(item.Data)
+                    T? message;
+                    try
+                    {
+                        message = JsonSerializer.Deserialize<T>(
+                            item.Data,
+                            ModelBase.SerializerOptions
+                        );
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new StagehandInvalidDataException(
+                            $"Message must be of type {typeof(T).FullName}",
+                            e
+                        );
+                    }
+                    yield return message
                         ?? throw new StagehandInvalidDataException("Message cannot be null");
                     break;
             }
