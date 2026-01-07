@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Text.Json;
 using Stagehand.Core;
 using Stagehand.Exceptions;
@@ -180,6 +181,49 @@ public class SessionExecuteParamsTest : TestBase
             ),
             url
         );
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        SessionExecuteParams parameters = new()
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-5-nano",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+            XLanguage = SessionExecuteParamsXLanguage.Typescript,
+            XSdkVersion = "3.0.6",
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
+        };
+
+        parameters.AddHeadersToRequest(
+            requestMessage,
+            new()
+            {
+                BrowserbaseApiKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelApiKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(["typescript"], requestMessage.Headers.GetValues("x-language"));
+        Assert.Equal(["3.0.6"], requestMessage.Headers.GetValues("x-sdk-version"));
+        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
+        Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
 
