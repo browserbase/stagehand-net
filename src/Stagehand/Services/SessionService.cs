@@ -15,17 +15,27 @@ namespace Stagehand.Services;
 /// <inheritdoc/>
 public sealed class SessionService : ISessionService
 {
+    readonly Lazy<ISessionServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ISessionServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IStagehandClient _client;
+
     /// <inheritdoc/>
     public ISessionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SessionService(this._client.WithOptions(modifier));
     }
 
-    readonly IStagehandClient _client;
-
     public SessionService(IStagehandClient client)
     {
         _client = client;
+
+        _withRawResponse = new(() => new SessionServiceWithRawResponse(client.WithRawResponse));
     }
 
     /// <inheritdoc/>
@@ -34,37 +44,20 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionActParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.Act(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionActResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionActResponse> Act(
+    public Task<SessionActResponse> Act(
         string id,
         SessionActParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Act(parameters with { ID = id }, cancellationToken);
+        return this.Act(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -73,36 +66,12 @@ public sealed class SessionService : ISessionService
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
-        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
-        parameters = SessionActParams.FromRawUnchecked(
-            parameters.RawHeaderData,
-            parameters.RawQueryData,
-            rawBodyData
-        );
-
-        HttpRequest<SessionActParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.ActStreaming(parameters, cancellationToken)
             .ConfigureAwait(false);
-        await foreach (
-            var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, cancellationToken)
-        )
+        await foreach (var item in response.Enumerate(cancellationToken))
         {
-            if (this._client.ResponseValidation)
-            {
-                deserializedItem.Validate();
-            }
-            yield return deserializedItem;
+            yield return item;
         }
     }
 
@@ -127,31 +96,14 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionEndParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.End(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionEndResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionEndResponse> End(
+    public Task<SessionEndResponse> End(
         string id,
         SessionEndParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -159,7 +111,7 @@ public sealed class SessionService : ISessionService
     {
         parameters ??= new();
 
-        return await this.End(parameters with { ID = id }, cancellationToken);
+        return this.End(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -168,37 +120,20 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionExecuteParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.Execute(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionExecuteResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionExecuteResponse> Execute(
+    public Task<SessionExecuteResponse> Execute(
         string id,
         SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Execute(parameters with { ID = id }, cancellationToken);
+        return this.Execute(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -207,36 +142,12 @@ public sealed class SessionService : ISessionService
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
-        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
-        parameters = SessionExecuteParams.FromRawUnchecked(
-            parameters.RawHeaderData,
-            parameters.RawQueryData,
-            rawBodyData
-        );
-
-        HttpRequest<SessionExecuteParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.ExecuteStreaming(parameters, cancellationToken)
             .ConfigureAwait(false);
-        await foreach (
-            var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, cancellationToken)
-        )
+        await foreach (var item in response.Enumerate(cancellationToken))
         {
-            if (this._client.ResponseValidation)
-            {
-                deserializedItem.Validate();
-            }
-            yield return deserializedItem;
+            yield return item;
         }
     }
 
@@ -261,31 +172,14 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionExtractParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.Extract(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionExtractResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionExtractResponse> Extract(
+    public Task<SessionExtractResponse> Extract(
         string id,
         SessionExtractParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -293,7 +187,7 @@ public sealed class SessionService : ISessionService
     {
         parameters ??= new();
 
-        return await this.Extract(parameters with { ID = id }, cancellationToken);
+        return this.Extract(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -302,36 +196,12 @@ public sealed class SessionService : ISessionService
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
-        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
-        parameters = SessionExtractParams.FromRawUnchecked(
-            parameters.RawHeaderData,
-            parameters.RawQueryData,
-            rawBodyData
-        );
-
-        HttpRequest<SessionExtractParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.ExtractStreaming(parameters, cancellationToken)
             .ConfigureAwait(false);
-        await foreach (
-            var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, cancellationToken)
-        )
+        await foreach (var item in response.Enumerate(cancellationToken))
         {
-            if (this._client.ResponseValidation)
-            {
-                deserializedItem.Validate();
-            }
-            yield return deserializedItem;
+            yield return item;
         }
     }
 
@@ -358,37 +228,20 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionNavigateParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.Navigate(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionNavigateResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionNavigateResponse> Navigate(
+    public Task<SessionNavigateResponse> Navigate(
         string id,
         SessionNavigateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Navigate(parameters with { ID = id }, cancellationToken);
+        return this.Navigate(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -397,31 +250,14 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        HttpRequest<SessionObserveParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.Observe(parameters, cancellationToken)
             .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionObserveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public async Task<SessionObserveResponse> Observe(
+    public Task<SessionObserveResponse> Observe(
         string id,
         SessionObserveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -429,7 +265,7 @@ public sealed class SessionService : ISessionService
     {
         parameters ??= new();
 
-        return await this.Observe(parameters with { ID = id }, cancellationToken);
+        return this.Observe(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -438,36 +274,12 @@ public sealed class SessionService : ISessionService
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
-        if (parameters.ID == null)
-        {
-            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
-        }
-
-        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
-        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
-        parameters = SessionObserveParams.FromRawUnchecked(
-            parameters.RawHeaderData,
-            parameters.RawQueryData,
-            rawBodyData
-        );
-
-        HttpRequest<SessionObserveParams> request = new()
-        {
-            Method = HttpMethod.Post,
-            Params = parameters,
-        };
         using var response = await this
-            ._client.Execute(request, cancellationToken)
+            .WithRawResponse.ObserveStreaming(parameters, cancellationToken)
             .ConfigureAwait(false);
-        await foreach (
-            var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, cancellationToken)
-        )
+        await foreach (var item in response.Enumerate(cancellationToken))
         {
-            if (this._client.ResponseValidation)
-            {
-                deserializedItem.Validate();
-            }
-            yield return deserializedItem;
+            yield return item;
         }
     }
 
@@ -494,21 +306,538 @@ public sealed class SessionService : ISessionService
         CancellationToken cancellationToken = default
     )
     {
+        using var response = await this
+            .WithRawResponse.Start(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawResponse
+{
+    readonly IStagehandClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ISessionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new SessionServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public SessionServiceWithRawResponse(IStagehandClientWithRawResponse client)
+    {
+        _client = client;
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionActResponse>> Act(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionActParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionActResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionActResponse>> Act(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Act(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
+        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
+        parameters = SessionActParams.FromRawUnchecked(
+            parameters.RawHeaderData,
+            parameters.RawQueryData,
+            rawBodyData
+        );
+
+        HttpRequest<SessionActParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+
+        async IAsyncEnumerable<StreamEvent> Enumerate(
+            [EnumeratorCancellation] CancellationToken token
+        )
+        {
+            await foreach (
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+            )
+            {
+                if (this._client.ResponseValidation)
+                {
+                    deserializedItem.Validate();
+                }
+                yield return deserializedItem;
+            }
+        }
+        return new(response, Enumerate);
+    }
+
+    /// <inheritdoc/>
+    public Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.ActStreaming(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionEndResponse>> End(
+        SessionEndParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionEndParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionEndResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionEndResponse>> End(
+        string id,
+        SessionEndParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.End(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionExecuteResponse>> Execute(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionExecuteParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionExecuteResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionExecuteResponse>> Execute(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Execute(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
+        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
+        parameters = SessionExecuteParams.FromRawUnchecked(
+            parameters.RawHeaderData,
+            parameters.RawQueryData,
+            rawBodyData
+        );
+
+        HttpRequest<SessionExecuteParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+
+        async IAsyncEnumerable<StreamEvent> Enumerate(
+            [EnumeratorCancellation] CancellationToken token
+        )
+        {
+            await foreach (
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+            )
+            {
+                if (this._client.ResponseValidation)
+                {
+                    deserializedItem.Validate();
+                }
+                yield return deserializedItem;
+            }
+        }
+        return new(response, Enumerate);
+    }
+
+    /// <inheritdoc/>
+    public Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.ExecuteStreaming(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionExtractResponse>> Extract(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionExtractParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionExtractResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionExtractResponse>> Extract(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Extract(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
+        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
+        parameters = SessionExtractParams.FromRawUnchecked(
+            parameters.RawHeaderData,
+            parameters.RawQueryData,
+            rawBodyData
+        );
+
+        HttpRequest<SessionExtractParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+
+        async IAsyncEnumerable<StreamEvent> Enumerate(
+            [EnumeratorCancellation] CancellationToken token
+        )
+        {
+            await foreach (
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+            )
+            {
+                if (this._client.ResponseValidation)
+                {
+                    deserializedItem.Validate();
+                }
+                yield return deserializedItem;
+            }
+        }
+        return new(response, Enumerate);
+    }
+
+    /// <inheritdoc/>
+    public Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ExtractStreaming(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionNavigateParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionNavigateResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        string id,
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Navigate(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionObserveResponse>> Observe(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionObserveParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionObserveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionObserveResponse>> Observe(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Observe(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        var rawBodyData = Enumerable.ToDictionary(parameters.RawBodyData, e => e.Key, e => e.Value);
+        rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
+        parameters = SessionObserveParams.FromRawUnchecked(
+            parameters.RawHeaderData,
+            parameters.RawQueryData,
+            rawBodyData
+        );
+
+        HttpRequest<SessionObserveParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+
+        async IAsyncEnumerable<StreamEvent> Enumerate(
+            [EnumeratorCancellation] CancellationToken token
+        )
+        {
+            await foreach (
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+            )
+            {
+                if (this._client.ResponseValidation)
+                {
+                    deserializedItem.Validate();
+                }
+                yield return deserializedItem;
+            }
+        }
+        return new(response, Enumerate);
+    }
+
+    /// <inheritdoc/>
+    public Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ObserveStreaming(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionStartResponse>> Start(
+        SessionStartParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
         HttpRequest<SessionStartParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<SessionStartResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionStartResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 }

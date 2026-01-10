@@ -15,6 +15,12 @@ namespace Stagehand.Services;
 public interface ISessionService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISessionServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -180,6 +186,189 @@ public interface ISessionService
     /// session ID used for all subsequent operations.
     /// </summary>
     Task<SessionStartResponse> Start(
+        SessionStartParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISessionService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISessionServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISessionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/act`, but is otherwise the
+    /// same as <see cref="ISessionService.Act(SessionActParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionActResponse>> Act(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Act(SessionActParams, CancellationToken)"/>
+    Task<HttpResponse<SessionActResponse>> Act(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/act`, but is otherwise the
+    /// same as <see cref="ISessionService.ActStreaming(SessionActParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ActStreaming(SessionActParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/end`, but is otherwise the
+    /// same as <see cref="ISessionService.End(SessionEndParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionEndResponse>> End(
+        SessionEndParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="End(SessionEndParams, CancellationToken)"/>
+    Task<HttpResponse<SessionEndResponse>> End(
+        string id,
+        SessionEndParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/agentExecute`, but is otherwise the
+    /// same as <see cref="ISessionService.Execute(SessionExecuteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionExecuteResponse>> Execute(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Execute(SessionExecuteParams, CancellationToken)"/>
+    Task<HttpResponse<SessionExecuteResponse>> Execute(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/agentExecute`, but is otherwise the
+    /// same as <see cref="ISessionService.ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/extract`, but is otherwise the
+    /// same as <see cref="ISessionService.Extract(SessionExtractParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionExtractResponse>> Extract(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Extract(SessionExtractParams, CancellationToken)"/>
+    Task<HttpResponse<SessionExtractResponse>> Extract(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/extract`, but is otherwise the
+    /// same as <see cref="ISessionService.ExtractStreaming(SessionExtractParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExtractStreaming(SessionExtractParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/navigate`, but is otherwise the
+    /// same as <see cref="ISessionService.Navigate(SessionNavigateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Navigate(SessionNavigateParams, CancellationToken)"/>
+    Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        string id,
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/observe`, but is otherwise the
+    /// same as <see cref="ISessionService.Observe(SessionObserveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionObserveResponse>> Observe(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Observe(SessionObserveParams, CancellationToken)"/>
+    Task<HttpResponse<SessionObserveResponse>> Observe(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/observe`, but is otherwise the
+    /// same as <see cref="ISessionService.ObserveStreaming(SessionObserveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ObserveStreaming(SessionObserveParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/start`, but is otherwise the
+    /// same as <see cref="ISessionService.Start(SessionStartParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionStartResponse>> Start(
         SessionStartParams parameters,
         CancellationToken cancellationToken = default
     );
