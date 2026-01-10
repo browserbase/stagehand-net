@@ -95,8 +95,6 @@ public class SessionStartParamsTest : TestBase
             SystemPrompt = "systemPrompt",
             Verbose = Sessions::Verbose.V1,
             WaitForCaptchaSolves = true,
-            XLanguage = Sessions::SessionStartParamsXLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
@@ -181,9 +179,6 @@ public class SessionStartParamsTest : TestBase
         string expectedSystemPrompt = "systemPrompt";
         ApiEnum<double, Sessions::Verbose> expectedVerbose = Sessions::Verbose.V1;
         bool expectedWaitForCaptchaSolves = true;
-        ApiEnum<string, Sessions::SessionStartParamsXLanguage> expectedXLanguage =
-            Sessions::SessionStartParamsXLanguage.Typescript;
-        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> expectedXStreamResponse =
             Sessions::SessionStartParamsXStreamResponse.True;
@@ -202,8 +197,6 @@ public class SessionStartParamsTest : TestBase
         Assert.Equal(expectedSystemPrompt, parameters.SystemPrompt);
         Assert.Equal(expectedVerbose, parameters.Verbose);
         Assert.Equal(expectedWaitForCaptchaSolves, parameters.WaitForCaptchaSolves);
-        Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -233,10 +226,6 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
         Assert.Null(parameters.WaitForCaptchaSolves);
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -261,8 +250,6 @@ public class SessionStartParamsTest : TestBase
             SystemPrompt = null,
             Verbose = null,
             WaitForCaptchaSolves = null,
-            XLanguage = null,
-            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -287,10 +274,6 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
         Assert.Null(parameters.WaitForCaptchaSolves);
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -321,8 +304,6 @@ public class SessionStartParamsTest : TestBase
         Sessions::SessionStartParams parameters = new()
         {
             ModelName = "gpt-4o",
-            XLanguage = Sessions::SessionStartParamsXLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
@@ -337,8 +318,6 @@ public class SessionStartParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["typescript"], requestMessage.Headers.GetValues("x-language"));
-        Assert.Equal(["3.0.6"], requestMessage.Headers.GetValues("x-sdk-version"));
         Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
@@ -3488,68 +3467,6 @@ public class VerboseTest : TestBase
             json,
             ModelBase.SerializerOptions
         );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class SessionStartParamsXLanguageTest : TestBase
-{
-    [Theory]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Typescript)]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Python)]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Playground)]
-    public void Validation_Works(Sessions::SessionStartParamsXLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::SessionStartParamsXLanguage> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Typescript)]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Python)]
-    [InlineData(Sessions::SessionStartParamsXLanguage.Playground)]
-    public void SerializationRoundtrip_Works(Sessions::SessionStartParamsXLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::SessionStartParamsXLanguage> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, Sessions::SessionStartParamsXLanguage>
-        >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }

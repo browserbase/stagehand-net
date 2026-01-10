@@ -28,8 +28,6 @@ public class SessionExtractParamsTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            XLanguage = SessionExtractParamsXLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExtractParamsXStreamResponse.True,
         };
@@ -47,9 +45,6 @@ public class SessionExtractParamsTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        ApiEnum<string, SessionExtractParamsXLanguage> expectedXLanguage =
-            SessionExtractParamsXLanguage.Typescript;
-        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionExtractParamsXStreamResponse> expectedXStreamResponse =
             SessionExtractParamsXStreamResponse.True;
@@ -66,8 +61,6 @@ public class SessionExtractParamsTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, parameters.Schema[item.Key]));
         }
-        Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -85,10 +78,6 @@ public class SessionExtractParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.Schema);
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -107,8 +96,6 @@ public class SessionExtractParamsTest : TestBase
             Instruction = null,
             Options = null,
             Schema = null,
-            XLanguage = null,
-            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -121,10 +108,6 @@ public class SessionExtractParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.Schema);
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -160,8 +143,6 @@ public class SessionExtractParamsTest : TestBase
         SessionExtractParams parameters = new()
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            XLanguage = SessionExtractParamsXLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExtractParamsXStreamResponse.True,
         };
@@ -176,8 +157,6 @@ public class SessionExtractParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["typescript"], requestMessage.Headers.GetValues("x-language"));
-        Assert.Equal(["3.0.6"], requestMessage.Headers.GetValues("x-sdk-version"));
         Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
@@ -308,64 +287,6 @@ public class SessionExtractParamsOptionsTest : TestBase
         };
 
         model.Validate();
-    }
-}
-
-public class SessionExtractParamsXLanguageTest : TestBase
-{
-    [Theory]
-    [InlineData(SessionExtractParamsXLanguage.Typescript)]
-    [InlineData(SessionExtractParamsXLanguage.Python)]
-    [InlineData(SessionExtractParamsXLanguage.Playground)]
-    public void Validation_Works(SessionExtractParamsXLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionExtractParamsXLanguage> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExtractParamsXLanguage>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(SessionExtractParamsXLanguage.Typescript)]
-    [InlineData(SessionExtractParamsXLanguage.Python)]
-    [InlineData(SessionExtractParamsXLanguage.Playground)]
-    public void SerializationRoundtrip_Works(SessionExtractParamsXLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionExtractParamsXLanguage> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExtractParamsXLanguage>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExtractParamsXLanguage>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExtractParamsXLanguage>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
     }
 }
 

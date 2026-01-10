@@ -39,46 +39,6 @@ public sealed record class SessionEndParams : ParamsBase
     }
 
     /// <summary>
-    /// Client SDK language
-    /// </summary>
-    public ApiEnum<string, SessionEndParamsXLanguage>? XLanguage
-    {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXLanguage>>(
-                this.RawHeaderData,
-                "x-language"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-language", value);
-        }
-    }
-
-    /// <summary>
-    /// Version of the Stagehand SDK
-    /// </summary>
-    public string? XSdkVersion
-    {
-        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
-        }
-    }
-
-    /// <summary>
     /// ISO timestamp when request was sent
     /// </summary>
     public System::DateTimeOffset? XSentAt
@@ -197,56 +157,6 @@ public sealed record class SessionEndParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
-    }
-}
-
-/// <summary>
-/// Client SDK language
-/// </summary>
-[JsonConverter(typeof(SessionEndParamsXLanguageConverter))]
-public enum SessionEndParamsXLanguage
-{
-    Typescript,
-    Python,
-    Playground,
-}
-
-sealed class SessionEndParamsXLanguageConverter : JsonConverter<SessionEndParamsXLanguage>
-{
-    public override SessionEndParamsXLanguage Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "typescript" => SessionEndParamsXLanguage.Typescript,
-            "python" => SessionEndParamsXLanguage.Python,
-            "playground" => SessionEndParamsXLanguage.Playground,
-            _ => (SessionEndParamsXLanguage)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        SessionEndParamsXLanguage value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                SessionEndParamsXLanguage.Typescript => "typescript",
-                SessionEndParamsXLanguage.Python => "python",
-                SessionEndParamsXLanguage.Playground => "playground",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
     }
 }
 

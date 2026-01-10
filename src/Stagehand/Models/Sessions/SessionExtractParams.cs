@@ -102,46 +102,6 @@ public sealed record class SessionExtractParams : ParamsBase
     }
 
     /// <summary>
-    /// Client SDK language
-    /// </summary>
-    public ApiEnum<string, SessionExtractParamsXLanguage>? XLanguage
-    {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionExtractParamsXLanguage>>(
-                this.RawHeaderData,
-                "x-language"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-language", value);
-        }
-    }
-
-    /// <summary>
-    /// Version of the Stagehand SDK
-    /// </summary>
-    public string? XSdkVersion
-    {
-        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
-        }
-    }
-
-    /// <summary>
     /// ISO timestamp when request was sent
     /// </summary>
     public System::DateTimeOffset? XSentAt
@@ -361,56 +321,6 @@ class SessionExtractParamsOptionsFromRaw : IFromRawJson<SessionExtractParamsOpti
     public SessionExtractParamsOptions FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SessionExtractParamsOptions.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Client SDK language
-/// </summary>
-[JsonConverter(typeof(SessionExtractParamsXLanguageConverter))]
-public enum SessionExtractParamsXLanguage
-{
-    Typescript,
-    Python,
-    Playground,
-}
-
-sealed class SessionExtractParamsXLanguageConverter : JsonConverter<SessionExtractParamsXLanguage>
-{
-    public override SessionExtractParamsXLanguage Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "typescript" => SessionExtractParamsXLanguage.Typescript,
-            "python" => SessionExtractParamsXLanguage.Python,
-            "playground" => SessionExtractParamsXLanguage.Playground,
-            _ => (SessionExtractParamsXLanguage)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        SessionExtractParamsXLanguage value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                SessionExtractParamsXLanguage.Typescript => "typescript",
-                SessionExtractParamsXLanguage.Python => "python",
-                SessionExtractParamsXLanguage.Playground => "playground",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }
 
 /// <summary>
