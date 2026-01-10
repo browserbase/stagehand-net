@@ -835,7 +835,7 @@ public record class IgnoreDefaultArgs : ModelBase
             case bool value:
                 @bool(value);
                 break;
-            case List<string> value:
+            case IReadOnlyList<string> value:
                 strings(value);
                 break;
             default:
@@ -2208,7 +2208,7 @@ public record class Proxies : ModelBase
             case bool value:
                 @bool(value);
                 break;
-            case List<ProxyConfig> value:
+            case IReadOnlyList<ProxyConfig> value:
                 proxyConfigList(value);
                 break;
             default:
