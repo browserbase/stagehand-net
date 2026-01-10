@@ -738,7 +738,7 @@ class LaunchOptionsFromRaw : IFromRawJson<LaunchOptions>
 }
 
 [JsonConverter(typeof(IgnoreDefaultArgsConverter))]
-public record class IgnoreDefaultArgs
+public record class IgnoreDefaultArgs : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -893,7 +893,7 @@ public record class IgnoreDefaultArgs
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -2108,7 +2108,7 @@ class BrowserSettingsViewportFromRaw : IFromRawJson<BrowserSettingsViewport>
 }
 
 [JsonConverter(typeof(ProxiesConverter))]
-public record class Proxies
+public record class Proxies : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -2269,7 +2269,7 @@ public record class Proxies
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -2332,7 +2332,7 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
 }
 
 [JsonConverter(typeof(ProxyConfigConverter))]
-public record class ProxyConfig
+public record class ProxyConfig : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -2502,7 +2502,7 @@ public record class ProxyConfig
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

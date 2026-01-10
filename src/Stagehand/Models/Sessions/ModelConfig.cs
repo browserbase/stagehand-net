@@ -13,7 +13,7 @@ namespace Stagehand.Models.Sessions;
 /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
 /// </summary>
 [JsonConverter(typeof(ModelConfigConverter))]
-public record class ModelConfig
+public record class ModelConfig : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -170,7 +170,7 @@ public record class ModelConfig
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
