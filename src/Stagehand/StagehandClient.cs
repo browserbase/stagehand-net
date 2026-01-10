@@ -14,6 +14,104 @@ namespace Stagehand;
 /// <inheritdoc/>
 public sealed class StagehandClient : IStagehandClient
 {
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BrowserbaseApiKey
+    {
+        get { return this._options.BrowserbaseApiKey; }
+        init { this._options.BrowserbaseApiKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BrowserbaseProjectID
+    {
+        get { return this._options.BrowserbaseProjectID; }
+        init { this._options.BrowserbaseProjectID = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ModelApiKey
+    {
+        get { return this._options.ModelApiKey; }
+        init { this._options.ModelApiKey = value; }
+    }
+
+    readonly Lazy<IStagehandClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IStagehandClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    /// <inheritdoc/>
+    public IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new StagehandClient(modifier(this._options));
+    }
+
+    readonly Lazy<ISessionService> _sessions;
+    public ISessionService Sessions
+    {
+        get { return _sessions.Value; }
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public StagehandClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new StagehandClientWithRawResponse(this._options));
+        _sessions = new(() => new SessionService(this));
+    }
+
+    public StagehandClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class StagehandClientWithRawResponse : IStagehandClientWithRawResponse
+{
 #if NET
     static readonly Random Random = Random.Shared;
 #else
@@ -84,13 +182,13 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public IStagehandClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new StagehandClient(modifier(this._options));
+        return new StagehandClientWithRawResponse(modifier(this._options));
     }
 
-    readonly Lazy<ISessionService> _sessions;
-    public ISessionService Sessions
+    readonly Lazy<ISessionServiceWithRawResponse> _sessions;
+    public ISessionServiceWithRawResponse Sessions
     {
         get { return _sessions.Value; }
     }
@@ -285,14 +383,14 @@ public sealed class StagehandClient : IStagehandClient
 
     public void Dispose() => this.HttpClient.Dispose();
 
-    public StagehandClient()
+    public StagehandClientWithRawResponse()
     {
         _options = new();
 
-        _sessions = new(() => new SessionService(this));
+        _sessions = new(() => new SessionServiceWithRawResponse(this));
     }
 
-    public StagehandClient(ClientOptions options)
+    public StagehandClientWithRawResponse(ClientOptions options)
         : this()
     {
         _options = options;
