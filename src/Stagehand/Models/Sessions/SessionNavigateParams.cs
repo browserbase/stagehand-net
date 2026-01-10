@@ -88,46 +88,6 @@ public sealed record class SessionNavigateParams : ParamsBase
     }
 
     /// <summary>
-    /// Client SDK language
-    /// </summary>
-    public ApiEnum<string, SessionNavigateParamsXLanguage>? XLanguage
-    {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionNavigateParamsXLanguage>>(
-                this.RawHeaderData,
-                "x-language"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-language", value);
-        }
-    }
-
-    /// <summary>
-    /// Version of the Stagehand SDK
-    /// </summary>
-    public string? XSdkVersion
-    {
-        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
-        }
-    }
-
-    /// <summary>
     /// ISO timestamp when request was sent
     /// </summary>
     public System::DateTimeOffset? XSentAt
@@ -395,56 +355,6 @@ sealed class WaitUntilConverter : JsonConverter<WaitUntil>
                 WaitUntil.Load => "load",
                 WaitUntil.Domcontentloaded => "domcontentloaded",
                 WaitUntil.Networkidle => "networkidle",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-/// <summary>
-/// Client SDK language
-/// </summary>
-[JsonConverter(typeof(SessionNavigateParamsXLanguageConverter))]
-public enum SessionNavigateParamsXLanguage
-{
-    Typescript,
-    Python,
-    Playground,
-}
-
-sealed class SessionNavigateParamsXLanguageConverter : JsonConverter<SessionNavigateParamsXLanguage>
-{
-    public override SessionNavigateParamsXLanguage Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "typescript" => SessionNavigateParamsXLanguage.Typescript,
-            "python" => SessionNavigateParamsXLanguage.Python,
-            "playground" => SessionNavigateParamsXLanguage.Playground,
-            _ => (SessionNavigateParamsXLanguage)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        SessionNavigateParamsXLanguage value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                SessionNavigateParamsXLanguage.Typescript => "typescript",
-                SessionNavigateParamsXLanguage.Python => "python",
-                SessionNavigateParamsXLanguage.Playground => "playground",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

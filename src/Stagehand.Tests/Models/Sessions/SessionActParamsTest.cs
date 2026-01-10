@@ -24,8 +24,6 @@ public class SessionActParamsTest : TestBase
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
-            XLanguage = Sessions::XLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -39,8 +37,6 @@ public class SessionActParamsTest : TestBase
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
-        ApiEnum<string, Sessions::XLanguage> expectedXLanguage = Sessions::XLanguage.Typescript;
-        string expectedXSdkVersion = "3.0.6";
         DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::XStreamResponse> expectedXStreamResponse =
             Sessions::XStreamResponse.True;
@@ -49,8 +45,6 @@ public class SessionActParamsTest : TestBase
         Assert.Equal(expectedInput, parameters.Input);
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedOptions, parameters.Options);
-        Assert.Equal(expectedXLanguage, parameters.XLanguage);
-        Assert.Equal(expectedXSdkVersion, parameters.XSdkVersion);
         Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
@@ -68,10 +62,6 @@ public class SessionActParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -89,8 +79,6 @@ public class SessionActParamsTest : TestBase
             // Null should be interpreted as omitted for these properties
             FrameID = null,
             Options = null,
-            XLanguage = null,
-            XSdkVersion = null,
             XSentAt = null,
             XStreamResponse = null,
         };
@@ -99,10 +87,6 @@ public class SessionActParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XLanguage);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-language"));
-        Assert.Null(parameters.XSdkVersion);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sdk-version"));
         Assert.Null(parameters.XSentAt);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
@@ -143,8 +127,6 @@ public class SessionActParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             Input = "Click the login button",
-            XLanguage = Sessions::XLanguage.Typescript,
-            XSdkVersion = "3.0.6",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -159,8 +141,6 @@ public class SessionActParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["typescript"], requestMessage.Headers.GetValues("x-language"));
-        Assert.Equal(["3.0.6"], requestMessage.Headers.GetValues("x-sdk-version"));
         Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
@@ -360,66 +340,6 @@ public class OptionsTest : TestBase
         };
 
         model.Validate();
-    }
-}
-
-public class XLanguageTest : TestBase
-{
-    [Theory]
-    [InlineData(Sessions::XLanguage.Typescript)]
-    [InlineData(Sessions::XLanguage.Python)]
-    [InlineData(Sessions::XLanguage.Playground)]
-    public void Validation_Works(Sessions::XLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::XLanguage> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::XLanguage>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Sessions::XLanguage.Typescript)]
-    [InlineData(Sessions::XLanguage.Python)]
-    [InlineData(Sessions::XLanguage.Playground)]
-    public void SerializationRoundtrip_Works(Sessions::XLanguage rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::XLanguage> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::XLanguage>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::XLanguage>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::XLanguage>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
 
