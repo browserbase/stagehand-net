@@ -912,6 +912,9 @@ public record class IgnoreDefaultArgs
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
@@ -2283,6 +2286,9 @@ public record class Proxies
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class ProxiesConverter : JsonConverter<Proxies>
@@ -2516,6 +2522,9 @@ public record class ProxyConfig
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
