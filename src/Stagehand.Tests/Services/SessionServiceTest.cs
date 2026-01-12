@@ -167,7 +167,7 @@ public class SessionServiceTest : TestBase
     public async Task Start_Works()
     {
         var response = await this.client.Sessions.Start(
-            new() { ModelName = "gpt-4o" },
+            new() { ModelName = "openai/gpt-4o" },
             TestContext.Current.CancellationToken
         );
         response.Validate();

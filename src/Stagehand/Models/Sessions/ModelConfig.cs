@@ -248,7 +248,7 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
 public sealed record class ModelConfigObject : JsonModel
 {
     /// <summary>
-    /// Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+    /// Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
     /// </summary>
     public required string ModelName
     {

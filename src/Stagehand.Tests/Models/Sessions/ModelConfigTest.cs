@@ -20,7 +20,7 @@ public class ModelConfigTest : TestBase
         ModelConfig value = new(
             new ModelConfigObject()
             {
-                ModelName = "gpt-5-nano",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Provider = ModelConfigObjectProvider.OpenAI,
@@ -45,7 +45,7 @@ public class ModelConfigTest : TestBase
         ModelConfig value = new(
             new ModelConfigObject()
             {
-                ModelName = "gpt-5-nano",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Provider = ModelConfigObjectProvider.OpenAI,
@@ -65,13 +65,13 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
-        string expectedModelName = "gpt-5-nano";
+        string expectedModelName = "openai/gpt-5-nano";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
@@ -88,7 +88,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -105,7 +105,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -115,7 +115,7 @@ public class ModelConfigObjectTest : TestBase
         var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(element);
         Assert.NotNull(deserialized);
 
-        string expectedModelName = "gpt-5-nano";
+        string expectedModelName = "openai/gpt-5-nano";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
@@ -132,7 +132,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -144,7 +144,7 @@ public class ModelConfigObjectTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ModelConfigObject { ModelName = "gpt-5-nano" };
+        var model = new ModelConfigObject { ModelName = "openai/gpt-5-nano" };
 
         Assert.Null(model.ApiKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
@@ -157,7 +157,7 @@ public class ModelConfigObjectTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ModelConfigObject { ModelName = "gpt-5-nano" };
+        var model = new ModelConfigObject { ModelName = "openai/gpt-5-nano" };
 
         model.Validate();
     }
@@ -167,7 +167,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
@@ -188,7 +188,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "gpt-5-nano",
+            ModelName = "openai/gpt-5-nano",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
