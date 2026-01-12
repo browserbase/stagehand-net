@@ -15,7 +15,7 @@ public class SessionStartParamsTest : TestBase
     {
         var parameters = new Sessions::SessionStartParams
         {
-            ModelName = "gpt-4o",
+            ModelName = "openai/gpt-4o",
             ActTimeoutMs = 0,
             Browser = new()
             {
@@ -99,7 +99,7 @@ public class SessionStartParamsTest : TestBase
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
 
-        string expectedModelName = "gpt-4o";
+        string expectedModelName = "openai/gpt-4o";
         double expectedActTimeoutMs = 0;
         Sessions::Browser expectedBrowser = new()
         {
@@ -204,7 +204,7 @@ public class SessionStartParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new Sessions::SessionStartParams { ModelName = "gpt-4o" };
+        var parameters = new Sessions::SessionStartParams { ModelName = "openai/gpt-4o" };
 
         Assert.Null(parameters.ActTimeoutMs);
         Assert.False(parameters.RawBodyData.ContainsKey("actTimeoutMs"));
@@ -237,7 +237,7 @@ public class SessionStartParamsTest : TestBase
     {
         var parameters = new Sessions::SessionStartParams
         {
-            ModelName = "gpt-4o",
+            ModelName = "openai/gpt-4o",
 
             // Null should be interpreted as omitted for these properties
             ActTimeoutMs = null,
@@ -283,7 +283,7 @@ public class SessionStartParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        Sessions::SessionStartParams parameters = new() { ModelName = "gpt-4o" };
+        Sessions::SessionStartParams parameters = new() { ModelName = "openai/gpt-4o" };
 
         var url = parameters.Url(
             new()
@@ -303,7 +303,7 @@ public class SessionStartParamsTest : TestBase
         HttpRequestMessage requestMessage = new();
         Sessions::SessionStartParams parameters = new()
         {
-            ModelName = "gpt-4o",
+            ModelName = "openai/gpt-4o",
             XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
