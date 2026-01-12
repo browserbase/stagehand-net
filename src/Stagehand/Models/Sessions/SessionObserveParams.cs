@@ -129,6 +129,8 @@ public sealed record class SessionObserveParams : ParamsBase
     public SessionObserveParams(SessionObserveParams sessionObserveParams)
         : base(sessionObserveParams)
     {
+        this.ID = sessionObserveParams.ID;
+
         this._rawBodyData = [.. sessionObserveParams._rawBodyData];
     }
 

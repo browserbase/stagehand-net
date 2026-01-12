@@ -137,6 +137,8 @@ public sealed record class SessionNavigateParams : ParamsBase
     public SessionNavigateParams(SessionNavigateParams sessionNavigateParams)
         : base(sessionNavigateParams)
     {
+        this.ID = sessionNavigateParams.ID;
+
         this._rawBodyData = [.. sessionNavigateParams._rawBodyData];
     }
 

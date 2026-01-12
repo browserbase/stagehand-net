@@ -116,6 +116,8 @@ public sealed record class SessionActParams : ParamsBase
     public SessionActParams(SessionActParams sessionActParams)
         : base(sessionActParams)
     {
+        this.ID = sessionActParams.ID;
+
         this._rawBodyData = [.. sessionActParams._rawBodyData];
     }
 
