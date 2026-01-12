@@ -152,6 +152,8 @@ public sealed record class SessionExtractParams : ParamsBase
     public SessionExtractParams(SessionExtractParams sessionExtractParams)
         : base(sessionExtractParams)
     {
+        this.ID = sessionExtractParams.ID;
+
         this._rawBodyData = [.. sessionExtractParams._rawBodyData];
     }
 

@@ -107,6 +107,8 @@ public sealed record class SessionExecuteParams : ParamsBase
     public SessionExecuteParams(SessionExecuteParams sessionExecuteParams)
         : base(sessionExecuteParams)
     {
+        this.ID = sessionExecuteParams.ID;
+
         this._rawBodyData = [.. sessionExecuteParams._rawBodyData];
     }
 

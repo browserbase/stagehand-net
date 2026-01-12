@@ -89,6 +89,8 @@ public sealed record class SessionEndParams : ParamsBase
     public SessionEndParams(SessionEndParams sessionEndParams)
         : base(sessionEndParams)
     {
+        this.ID = sessionEndParams.ID;
+
         this._rawBodyData = [.. sessionEndParams._rawBodyData];
     }
 
