@@ -29,7 +29,11 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public required string UrlValue
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("url"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("url");
+        }
         init { this._rawBodyData.Set("url", value); }
     }
 
@@ -38,7 +42,11 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("frameId");
+        }
         init
         {
             if (value == null)
@@ -52,7 +60,11 @@ public sealed record class SessionNavigateParams : ParamsBase
 
     public SessionNavigateParamsOptions? Options
     {
-        get { return this._rawBodyData.GetNullableClass<SessionNavigateParamsOptions>("options"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<SessionNavigateParamsOptions>("options");
+        }
         init
         {
             if (value == null)
@@ -69,7 +81,11 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public bool? StreamResponse
     {
-        get { return this._rawBodyData.GetNullableStruct<bool>("streamResponse"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<bool>("streamResponse");
+        }
         init
         {
             if (value == null)
@@ -86,7 +102,11 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
         init
         {
             if (value == null)
@@ -105,6 +125,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
+            this._rawHeaderData.Freeze();
             return this._rawHeaderData.GetNullableClass<
                 ApiEnum<string, SessionNavigateParamsXStreamResponse>
             >("x-stream-response");
@@ -209,7 +230,11 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public string? Referer
     {
-        get { return this._rawData.GetNullableClass<string>("referer"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("referer");
+        }
         init
         {
             if (value == null)
@@ -226,7 +251,11 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return this._rawData.GetNullableStruct<double>("timeout"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("timeout");
+        }
         init
         {
             if (value == null)
@@ -243,7 +272,11 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public ApiEnum<string, WaitUntil>? WaitUntil
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, WaitUntil>>("waitUntil"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, WaitUntil>>("waitUntil");
+        }
         init
         {
             if (value == null)

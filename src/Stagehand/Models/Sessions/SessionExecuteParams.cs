@@ -26,13 +26,21 @@ public sealed record class SessionExecuteParams : ParamsBase
 
     public required AgentConfig AgentConfig
     {
-        get { return this._rawBodyData.GetNotNullClass<AgentConfig>("agentConfig"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<AgentConfig>("agentConfig");
+        }
         init { this._rawBodyData.Set("agentConfig", value); }
     }
 
     public required ExecuteOptions ExecuteOptions
     {
-        get { return this._rawBodyData.GetNotNullClass<ExecuteOptions>("executeOptions"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<ExecuteOptions>("executeOptions");
+        }
         init { this._rawBodyData.Set("executeOptions", value); }
     }
 
@@ -41,7 +49,11 @@ public sealed record class SessionExecuteParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("frameId");
+        }
         init
         {
             if (value == null)
@@ -58,7 +70,11 @@ public sealed record class SessionExecuteParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
         init
         {
             if (value == null)
@@ -77,6 +93,7 @@ public sealed record class SessionExecuteParams : ParamsBase
     {
         get
         {
+            this._rawHeaderData.Freeze();
             return this._rawHeaderData.GetNullableClass<
                 ApiEnum<string, SessionExecuteParamsXStreamResponse>
             >("x-stream-response");
@@ -179,7 +196,11 @@ public sealed record class AgentConfig : JsonModel
     /// </summary>
     public bool? Cua
     {
-        get { return this._rawData.GetNullableStruct<bool>("cua"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("cua");
+        }
         init
         {
             if (value == null)
@@ -196,7 +217,11 @@ public sealed record class AgentConfig : JsonModel
     /// </summary>
     public ModelConfig? Model
     {
-        get { return this._rawData.GetNullableClass<ModelConfig>("model"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ModelConfig>("model");
+        }
         init
         {
             if (value == null)
@@ -213,7 +238,11 @@ public sealed record class AgentConfig : JsonModel
     /// </summary>
     public ApiEnum<string, Provider>? Provider
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Provider>>("provider"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Provider>>("provider");
+        }
         init
         {
             if (value == null)
@@ -230,7 +259,11 @@ public sealed record class AgentConfig : JsonModel
     /// </summary>
     public string? SystemPrompt
     {
-        get { return this._rawData.GetNullableClass<string>("systemPrompt"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("systemPrompt");
+        }
         init
         {
             if (value == null)
@@ -340,7 +373,11 @@ public sealed record class ExecuteOptions : JsonModel
     /// </summary>
     public required string Instruction
     {
-        get { return this._rawData.GetNotNullClass<string>("instruction"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("instruction");
+        }
         init { this._rawData.Set("instruction", value); }
     }
 
@@ -349,7 +386,11 @@ public sealed record class ExecuteOptions : JsonModel
     /// </summary>
     public bool? HighlightCursor
     {
-        get { return this._rawData.GetNullableStruct<bool>("highlightCursor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("highlightCursor");
+        }
         init
         {
             if (value == null)
@@ -366,7 +407,11 @@ public sealed record class ExecuteOptions : JsonModel
     /// </summary>
     public double? MaxSteps
     {
-        get { return this._rawData.GetNullableStruct<double>("maxSteps"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("maxSteps");
+        }
         init
         {
             if (value == null)

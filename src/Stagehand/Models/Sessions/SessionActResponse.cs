@@ -13,7 +13,11 @@ public sealed record class SessionActResponse : JsonModel
 {
     public required SessionActResponseData Data
     {
-        get { return this._rawData.GetNotNullClass<SessionActResponseData>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionActResponseData>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -22,7 +26,11 @@ public sealed record class SessionActResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -72,7 +80,11 @@ public sealed record class SessionActResponseData : JsonModel
 {
     public required Result Result
     {
-        get { return this._rawData.GetNotNullClass<Result>("result"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Result>("result");
+        }
         init { this._rawData.Set("result", value); }
     }
 
@@ -81,7 +93,11 @@ public sealed record class SessionActResponseData : JsonModel
     /// </summary>
     public string? ActionID
     {
-        get { return this._rawData.GetNullableClass<string>("actionId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("actionId");
+        }
         init
         {
             if (value == null)
@@ -150,7 +166,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string ActionDescription
     {
-        get { return this._rawData.GetNotNullClass<string>("actionDescription"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("actionDescription");
+        }
         init { this._rawData.Set("actionDescription", value); }
     }
 
@@ -159,7 +179,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required IReadOnlyList<ResultAction> Actions
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<ResultAction>>("actions"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<ResultAction>>("actions");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<ResultAction>>(
@@ -174,7 +198,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string Message
     {
-        get { return this._rawData.GetNotNullClass<string>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 
@@ -183,7 +211,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -242,7 +274,11 @@ public sealed record class ResultAction : JsonModel
     /// </summary>
     public required string Description
     {
-        get { return this._rawData.GetNotNullClass<string>("description"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("description");
+        }
         init { this._rawData.Set("description", value); }
     }
 
@@ -251,7 +287,11 @@ public sealed record class ResultAction : JsonModel
     /// </summary>
     public required string Selector
     {
-        get { return this._rawData.GetNotNullClass<string>("selector"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("selector");
+        }
         init { this._rawData.Set("selector", value); }
     }
 
@@ -260,7 +300,11 @@ public sealed record class ResultAction : JsonModel
     /// </summary>
     public IReadOnlyList<string>? Arguments
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("arguments"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("arguments");
+        }
         init
         {
             if (value == null)
@@ -280,7 +324,11 @@ public sealed record class ResultAction : JsonModel
     /// </summary>
     public double? BackendNodeID
     {
-        get { return this._rawData.GetNullableStruct<double>("backendNodeId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("backendNodeId");
+        }
         init
         {
             if (value == null)
@@ -297,7 +345,11 @@ public sealed record class ResultAction : JsonModel
     /// </summary>
     public string? Method
     {
-        get { return this._rawData.GetNullableClass<string>("method"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("method");
+        }
         init
         {
             if (value == null)

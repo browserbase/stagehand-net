@@ -30,7 +30,11 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public required Input Input
     {
-        get { return this._rawBodyData.GetNotNullClass<Input>("input"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Input>("input");
+        }
         init { this._rawBodyData.Set("input", value); }
     }
 
@@ -39,7 +43,11 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("frameId");
+        }
         init
         {
             if (value == null)
@@ -53,7 +61,11 @@ public sealed record class SessionActParams : ParamsBase
 
     public Options? Options
     {
-        get { return this._rawBodyData.GetNullableClass<Options>("options"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Options>("options");
+        }
         init
         {
             if (value == null)
@@ -70,7 +82,11 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
         init
         {
             if (value == null)
@@ -89,6 +105,7 @@ public sealed record class SessionActParams : ParamsBase
     {
         get
         {
+            this._rawHeaderData.Freeze();
             return this._rawHeaderData.GetNullableClass<ApiEnum<string, XStreamResponse>>(
                 "x-stream-response"
             );
@@ -412,7 +429,11 @@ public sealed record class Options : JsonModel
     /// </summary>
     public ModelConfig? Model
     {
-        get { return this._rawData.GetNullableClass<ModelConfig>("model"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ModelConfig>("model");
+        }
         init
         {
             if (value == null)
@@ -429,7 +450,11 @@ public sealed record class Options : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return this._rawData.GetNullableStruct<double>("timeout"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("timeout");
+        }
         init
         {
             if (value == null)
@@ -448,6 +473,7 @@ public sealed record class Options : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("variables");
         }
         init

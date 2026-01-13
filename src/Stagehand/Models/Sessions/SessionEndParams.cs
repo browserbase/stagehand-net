@@ -26,7 +26,11 @@ public sealed record class SessionEndParams : ParamsBase
 
     public JsonElement? _ForceBody
     {
-        get { return this._rawBodyData.GetNullableStruct<JsonElement>("_forceBody"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<JsonElement>("_forceBody");
+        }
         init
         {
             if (value == null)
@@ -43,7 +47,11 @@ public sealed record class SessionEndParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
         init
         {
             if (value == null)
@@ -62,6 +70,7 @@ public sealed record class SessionEndParams : ParamsBase
     {
         get
         {
+            this._rawHeaderData.Freeze();
             return this._rawHeaderData.GetNullableClass<
                 ApiEnum<string, SessionEndParamsXStreamResponse>
             >("x-stream-response");

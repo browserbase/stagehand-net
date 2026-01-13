@@ -12,7 +12,11 @@ public sealed record class SessionStartResponse : JsonModel
 {
     public required SessionStartResponseData Data
     {
-        get { return this._rawData.GetNotNullClass<SessionStartResponseData>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionStartResponseData>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -21,7 +25,11 @@ public sealed record class SessionStartResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -74,7 +82,11 @@ public sealed record class SessionStartResponseData : JsonModel
 {
     public required bool Available
     {
-        get { return this._rawData.GetNotNullStruct<bool>("available"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("available");
+        }
         init { this._rawData.Set("available", value); }
     }
 
@@ -83,7 +95,11 @@ public sealed record class SessionStartResponseData : JsonModel
     /// </summary>
     public required string SessionID
     {
-        get { return this._rawData.GetNotNullClass<string>("sessionId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("sessionId");
+        }
         init { this._rawData.Set("sessionId", value); }
     }
 
@@ -93,7 +109,11 @@ public sealed record class SessionStartResponseData : JsonModel
     /// </summary>
     public string? CdpUrl
     {
-        get { return this._rawData.GetNullableClass<string>("cdpUrl"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cdpUrl");
+        }
         init { this._rawData.Set("cdpUrl", value); }
     }
 

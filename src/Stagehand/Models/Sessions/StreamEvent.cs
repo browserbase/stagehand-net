@@ -21,13 +21,21 @@ public sealed record class StreamEvent : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required Data Data
     {
-        get { return this._rawData.GetNotNullClass<Data>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Data>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -36,7 +44,11 @@ public sealed record class StreamEvent : JsonModel
     /// </summary>
     public required ApiEnum<string, StreamEventType> Type
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, StreamEventType>>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, StreamEventType>>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 
@@ -329,7 +341,11 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -338,7 +354,11 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public string? Error
     {
-        get { return this._rawData.GetNullableClass<string>("error"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("error");
+        }
         init
         {
             if (value == null)
@@ -355,7 +375,11 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public JsonElement? Result
     {
-        get { return this._rawData.GetNullableStruct<JsonElement>("result"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("result");
+        }
         init
         {
             if (value == null)
@@ -479,13 +503,21 @@ public sealed record class StreamEventLogDataOutput : JsonModel
     /// </summary>
     public required string Message
     {
-        get { return this._rawData.GetNotNullClass<string>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 
     public JsonElement Status
     {
-        get { return this._rawData.GetNotNullStruct<JsonElement>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
