@@ -388,7 +388,6 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             (e) => e.Key,
             (e) => e.Value
         );
-        ;
         rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
         parameters = SessionActParams.FromRawUnchecked(
             parameters.RawHeaderData,
@@ -535,7 +534,6 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             (e) => e.Key,
             (e) => e.Value
         );
-        ;
         rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
         parameters = SessionExecuteParams.FromRawUnchecked(
             parameters.RawHeaderData,
@@ -639,7 +637,6 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             (e) => e.Key,
             (e) => e.Value
         );
-        ;
         rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
         parameters = SessionExtractParams.FromRawUnchecked(
             parameters.RawHeaderData,
@@ -788,7 +785,6 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             (e) => e.Key,
             (e) => e.Value
         );
-        ;
         rawBodyData["streamResponse"] = JsonSerializer.Deserialize<JsonElement>("true");
         parameters = SessionObserveParams.FromRawUnchecked(
             parameters.RawHeaderData,
