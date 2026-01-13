@@ -114,35 +114,31 @@ public class DataTest : TestBase
     [Fact]
     public void StreamEventSystemDataOutputValidationWorks()
     {
-        Data value = new(
-            new StreamEventSystemDataOutput()
-            {
-                Status = Status.Starting,
-                Error = "error",
-                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
-            }
-        );
+        Data value = new StreamEventSystemDataOutput()
+        {
+            Status = Status.Starting,
+            Error = "error",
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
         value.Validate();
     }
 
     [Fact]
     public void StreamEventLogDataOutputValidationWorks()
     {
-        Data value = new(new StreamEventLogDataOutput("message"));
+        Data value = new StreamEventLogDataOutput("message");
         value.Validate();
     }
 
     [Fact]
     public void StreamEventSystemDataOutputSerializationRoundtripWorks()
     {
-        Data value = new(
-            new StreamEventSystemDataOutput()
-            {
-                Status = Status.Starting,
-                Error = "error",
-                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
-            }
-        );
+        Data value = new StreamEventSystemDataOutput()
+        {
+            Status = Status.Starting,
+            Error = "error",
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Data>(element);
 
@@ -152,7 +148,7 @@ public class DataTest : TestBase
     [Fact]
     public void StreamEventLogDataOutputSerializationRoundtripWorks()
     {
-        Data value = new(new StreamEventLogDataOutput("message"));
+        Data value = new StreamEventLogDataOutput("message");
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Data>(element);
 

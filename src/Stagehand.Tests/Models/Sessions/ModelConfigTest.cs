@@ -10,29 +10,27 @@ public class ModelConfigTest : TestBase
     [Fact]
     public void NameValidationWorks()
     {
-        ModelConfig value = new("openai/gpt-5-nano");
+        ModelConfig value = "openai/gpt-5-nano";
         value.Validate();
     }
 
     [Fact]
     public void ObjectValidationWorks()
     {
-        ModelConfig value = new(
-            new ModelConfigObject()
-            {
-                ModelName = "openai/gpt-5-nano",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                Provider = ModelConfigObjectProvider.OpenAI,
-            }
-        );
+        ModelConfig value = new ModelConfigObject()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigObjectProvider.OpenAI,
+        };
         value.Validate();
     }
 
     [Fact]
     public void NameSerializationRoundtripWorks()
     {
-        ModelConfig value = new("openai/gpt-5-nano");
+        ModelConfig value = "openai/gpt-5-nano";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
 
@@ -42,15 +40,13 @@ public class ModelConfigTest : TestBase
     [Fact]
     public void ObjectSerializationRoundtripWorks()
     {
-        ModelConfig value = new(
-            new ModelConfigObject()
-            {
-                ModelName = "openai/gpt-5-nano",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                Provider = ModelConfigObjectProvider.OpenAI,
-            }
-        );
+        ModelConfig value = new ModelConfigObject()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigObjectProvider.OpenAI,
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
 

@@ -151,30 +151,28 @@ public class InputTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        Sessions::Input value = new("string");
+        Sessions::Input value = "string";
         value.Validate();
     }
 
     [Fact]
     public void ActionValidationWorks()
     {
-        Sessions::Input value = new(
-            new Sessions::Action()
-            {
-                Description = "Click the submit button",
-                Selector = "[data-testid='submit-button']",
-                Arguments = ["Hello World"],
-                BackendNodeID = 0,
-                Method = "click",
-            }
-        );
+        Sessions::Input value = new Sessions::Action()
+        {
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
+            BackendNodeID = 0,
+            Method = "click",
+        };
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        Sessions::Input value = new("string");
+        Sessions::Input value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::Input>(element);
 
@@ -184,16 +182,14 @@ public class InputTest : TestBase
     [Fact]
     public void ActionSerializationRoundtripWorks()
     {
-        Sessions::Input value = new(
-            new Sessions::Action()
-            {
-                Description = "Click the submit button",
-                Selector = "[data-testid='submit-button']",
-                Arguments = ["Hello World"],
-                BackendNodeID = 0,
-                Method = "click",
-            }
-        );
+        Sessions::Input value = new Sessions::Action()
+        {
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
+            BackendNodeID = 0,
+            Method = "click",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::Input>(element);
 
