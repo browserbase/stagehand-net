@@ -21,14 +21,14 @@ public sealed record class StreamEvent : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required Data Data
     {
-        get { return JsonModel.GetNotNullClass<Data>(this.RawData, "data"); }
-        init { JsonModel.Set(this._rawData, "data", value); }
+        get { return this._rawData.GetNotNullClass<Data>("data"); }
+        init { this._rawData.Set("data", value); }
     }
 
     /// <summary>
@@ -36,14 +36,8 @@ public sealed record class StreamEvent : JsonModel
     /// </summary>
     public required ApiEnum<string, StreamEventType> Type
     {
-        get
-        {
-            return JsonModel.GetNotNullClass<ApiEnum<string, StreamEventType>>(
-                this.RawData,
-                "type"
-            );
-        }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, StreamEventType>>("type"); }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <inheritdoc/>
@@ -61,14 +55,14 @@ public sealed record class StreamEvent : JsonModel
 
     public StreamEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     StreamEvent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -335,8 +329,8 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <summary>
@@ -344,7 +338,7 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public string? Error
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "error"); }
+        get { return this._rawData.GetNullableClass<string>("error"); }
         init
         {
             if (value == null)
@@ -352,7 +346,7 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "error", value);
+            this._rawData.Set("error", value);
         }
     }
 
@@ -361,7 +355,7 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
     /// </summary>
     public JsonElement? Result
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "result"); }
+        get { return this._rawData.GetNullableStruct<JsonElement>("result"); }
         init
         {
             if (value == null)
@@ -369,7 +363,7 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "result", value);
+            this._rawData.Set("result", value);
         }
     }
 
@@ -388,14 +382,14 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
 
     public StreamEventSystemDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     StreamEventSystemDataOutput(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -485,14 +479,14 @@ public sealed record class StreamEventLogDataOutput : JsonModel
     /// </summary>
     public required string Message
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
-        init { JsonModel.Set(this._rawData, "message", value); }
+        get { return this._rawData.GetNotNullClass<string>("message"); }
+        init { this._rawData.Set("message", value); }
     }
 
     public JsonElement Status
     {
-        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNotNullStruct<JsonElement>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <inheritdoc/>
@@ -520,7 +514,7 @@ public sealed record class StreamEventLogDataOutput : JsonModel
 
     public StreamEventLogDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
 
         this.Status = JsonSerializer.Deserialize<JsonElement>("\"running\"");
     }
@@ -529,7 +523,7 @@ public sealed record class StreamEventLogDataOutput : JsonModel
     [SetsRequiredMembers]
     StreamEventLogDataOutput(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

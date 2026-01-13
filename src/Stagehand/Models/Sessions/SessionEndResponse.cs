@@ -15,8 +15,8 @@ public sealed record class SessionEndResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { JsonModel.Set(this._rawData, "success", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        init { this._rawData.Set("success", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +32,14 @@ public sealed record class SessionEndResponse : JsonModel
 
     public SessionEndResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionEndResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

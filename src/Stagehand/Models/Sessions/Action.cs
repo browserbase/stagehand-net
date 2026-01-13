@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -18,8 +19,8 @@ public sealed record class Action : JsonModel
     /// </summary>
     public required string Description
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
-        init { JsonModel.Set(this._rawData, "description", value); }
+        get { return this._rawData.GetNotNullClass<string>("description"); }
+        init { this._rawData.Set("description", value); }
     }
 
     /// <summary>
@@ -27,8 +28,8 @@ public sealed record class Action : JsonModel
     /// </summary>
     public required string Selector
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "selector"); }
-        init { JsonModel.Set(this._rawData, "selector", value); }
+        get { return this._rawData.GetNotNullClass<string>("selector"); }
+        init { this._rawData.Set("selector", value); }
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public sealed record class Action : JsonModel
     /// </summary>
     public IReadOnlyList<string>? Arguments
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "arguments"); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("arguments"); }
         init
         {
             if (value == null)
@@ -44,7 +45,10 @@ public sealed record class Action : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "arguments", value);
+            this._rawData.Set<ImmutableArray<string>?>(
+                "arguments",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -53,7 +57,7 @@ public sealed record class Action : JsonModel
     /// </summary>
     public double? BackendNodeID
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "backendNodeId"); }
+        get { return this._rawData.GetNullableStruct<double>("backendNodeId"); }
         init
         {
             if (value == null)
@@ -61,7 +65,7 @@ public sealed record class Action : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "backendNodeId", value);
+            this._rawData.Set("backendNodeId", value);
         }
     }
 
@@ -70,7 +74,7 @@ public sealed record class Action : JsonModel
     /// </summary>
     public string? Method
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "method"); }
+        get { return this._rawData.GetNullableClass<string>("method"); }
         init
         {
             if (value == null)
@@ -78,7 +82,7 @@ public sealed record class Action : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "method", value);
+            this._rawData.Set("method", value);
         }
     }
 
@@ -99,14 +103,14 @@ public sealed record class Action : JsonModel
 
     public Action(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Action(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

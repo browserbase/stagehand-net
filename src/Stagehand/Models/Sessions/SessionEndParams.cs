@@ -16,7 +16,7 @@ namespace Stagehand.Models.Sessions;
 /// </summary>
 public sealed record class SessionEndParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -26,7 +26,7 @@ public sealed record class SessionEndParams : ParamsBase
 
     public JsonElement? _ForceBody
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawBodyData, "_forceBody"); }
+        get { return this._rawBodyData.GetNullableStruct<JsonElement>("_forceBody"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "_forceBody", value);
+            this._rawBodyData.Set("_forceBody", value);
         }
     }
 
@@ -43,13 +43,7 @@ public sealed record class SessionEndParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get
-        {
-            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
-                this.RawHeaderData,
-                "x-sent-at"
-            );
-        }
+        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
         init
         {
             if (value == null)
@@ -57,7 +51,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 
@@ -68,10 +62,9 @@ public sealed record class SessionEndParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXStreamResponse>>(
-                this.RawHeaderData,
-                "x-stream-response"
-            );
+            return this._rawHeaderData.GetNullableClass<
+                ApiEnum<string, SessionEndParamsXStreamResponse>
+            >("x-stream-response");
         }
         init
         {
@@ -80,7 +73,7 @@ public sealed record class SessionEndParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
+            this._rawHeaderData.Set("x-stream-response", value);
         }
     }
 
@@ -91,7 +84,7 @@ public sealed record class SessionEndParams : ParamsBase
     {
         this.ID = sessionEndParams.ID;
 
-        this._rawBodyData = [.. sessionEndParams._rawBodyData];
+        this._rawBodyData = new(sessionEndParams._rawBodyData);
     }
 
     public SessionEndParams(
@@ -100,9 +93,9 @@ public sealed record class SessionEndParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -113,9 +106,9 @@ public sealed record class SessionEndParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

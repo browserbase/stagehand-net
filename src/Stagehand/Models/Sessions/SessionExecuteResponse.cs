@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,8 +13,8 @@ public sealed record class SessionExecuteResponse : JsonModel
 {
     public required SessionExecuteResponseData Data
     {
-        get { return JsonModel.GetNotNullClass<SessionExecuteResponseData>(this.RawData, "data"); }
-        init { JsonModel.Set(this._rawData, "data", value); }
+        get { return this._rawData.GetNotNullClass<SessionExecuteResponseData>("data"); }
+        init { this._rawData.Set("data", value); }
     }
 
     /// <summary>
@@ -21,8 +22,8 @@ public sealed record class SessionExecuteResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { JsonModel.Set(this._rawData, "success", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        init { this._rawData.Set("success", value); }
     }
 
     /// <inheritdoc/>
@@ -39,14 +40,14 @@ public sealed record class SessionExecuteResponse : JsonModel
 
     public SessionExecuteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionExecuteResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -74,14 +75,8 @@ public sealed record class SessionExecuteResponseData : JsonModel
 {
     public required SessionExecuteResponseDataResult Result
     {
-        get
-        {
-            return JsonModel.GetNotNullClass<SessionExecuteResponseDataResult>(
-                this.RawData,
-                "result"
-            );
-        }
-        init { JsonModel.Set(this._rawData, "result", value); }
+        get { return this._rawData.GetNotNullClass<SessionExecuteResponseDataResult>("result"); }
+        init { this._rawData.Set("result", value); }
     }
 
     /// <inheritdoc/>
@@ -97,14 +92,14 @@ public sealed record class SessionExecuteResponseData : JsonModel
 
     public SessionExecuteResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionExecuteResponseData(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -144,12 +139,17 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<List<SessionExecuteResponseDataResultAction>>(
-                this.RawData,
-                "actions"
+            return this._rawData.GetNotNullStruct<
+                ImmutableArray<SessionExecuteResponseDataResultAction>
+            >("actions");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<SessionExecuteResponseDataResultAction>>(
+                "actions",
+                ImmutableArray.ToImmutableArray(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "actions", value); }
     }
 
     /// <summary>
@@ -157,8 +157,8 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required bool Completed
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "completed"); }
-        init { JsonModel.Set(this._rawData, "completed", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("completed"); }
+        init { this._rawData.Set("completed", value); }
     }
 
     /// <summary>
@@ -166,8 +166,8 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required string Message
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
-        init { JsonModel.Set(this._rawData, "message", value); }
+        get { return this._rawData.GetNotNullClass<string>("message"); }
+        init { this._rawData.Set("message", value); }
     }
 
     /// <summary>
@@ -175,16 +175,15 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { JsonModel.Set(this._rawData, "success", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        init { this._rawData.Set("success", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Metadata
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "metadata"
             );
         }
@@ -195,13 +194,16 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "metadata", value);
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "metadata",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
         }
     }
 
     public Usage? Usage
     {
-        get { return JsonModel.GetNullableClass<Usage>(this.RawData, "usage"); }
+        get { return this._rawData.GetNullableClass<Usage>("usage"); }
         init
         {
             if (value == null)
@@ -209,7 +211,7 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "usage", value);
+            this._rawData.Set("usage", value);
         }
     }
 
@@ -236,14 +238,14 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
 
     public SessionExecuteResponseDataResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionExecuteResponseDataResult(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -277,13 +279,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public required string Type
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "type"); }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        get { return this._rawData.GetNotNullClass<string>("type"); }
+        init { this._rawData.Set("type", value); }
     }
 
     public string? Action
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "action"); }
+        get { return this._rawData.GetNullableClass<string>("action"); }
         init
         {
             if (value == null)
@@ -291,13 +293,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "action", value);
+            this._rawData.Set("action", value);
         }
     }
 
     public string? Instruction
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "instruction"); }
+        get { return this._rawData.GetNullableClass<string>("instruction"); }
         init
         {
             if (value == null)
@@ -305,13 +307,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "instruction", value);
+            this._rawData.Set("instruction", value);
         }
     }
 
     public string? PageText
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "pageText"); }
+        get { return this._rawData.GetNullableClass<string>("pageText"); }
         init
         {
             if (value == null)
@@ -319,13 +321,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "pageText", value);
+            this._rawData.Set("pageText", value);
         }
     }
 
     public string? PageUrl
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "pageUrl"); }
+        get { return this._rawData.GetNullableClass<string>("pageUrl"); }
         init
         {
             if (value == null)
@@ -333,7 +335,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "pageUrl", value);
+            this._rawData.Set("pageUrl", value);
         }
     }
 
@@ -342,7 +344,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public string? Reasoning
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "reasoning"); }
+        get { return this._rawData.GetNullableClass<string>("reasoning"); }
         init
         {
             if (value == null)
@@ -350,13 +352,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "reasoning", value);
+            this._rawData.Set("reasoning", value);
         }
     }
 
     public bool? TaskCompleted
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "taskCompleted"); }
+        get { return this._rawData.GetNullableStruct<bool>("taskCompleted"); }
         init
         {
             if (value == null)
@@ -364,7 +366,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "taskCompleted", value);
+            this._rawData.Set("taskCompleted", value);
         }
     }
 
@@ -373,7 +375,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public double? TimeMs
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeMs"); }
+        get { return this._rawData.GetNullableStruct<double>("timeMs"); }
         init
         {
             if (value == null)
@@ -381,7 +383,7 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "timeMs", value);
+            this._rawData.Set("timeMs", value);
         }
     }
 
@@ -407,14 +409,14 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public SessionExecuteResponseDataResultAction(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionExecuteResponseDataResultAction(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -448,25 +450,25 @@ public sealed record class Usage : JsonModel
 {
     public required double InferenceTimeMs
     {
-        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "inference_time_ms"); }
-        init { JsonModel.Set(this._rawData, "inference_time_ms", value); }
+        get { return this._rawData.GetNotNullStruct<double>("inference_time_ms"); }
+        init { this._rawData.Set("inference_time_ms", value); }
     }
 
     public required double InputTokens
     {
-        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "input_tokens"); }
-        init { JsonModel.Set(this._rawData, "input_tokens", value); }
+        get { return this._rawData.GetNotNullStruct<double>("input_tokens"); }
+        init { this._rawData.Set("input_tokens", value); }
     }
 
     public required double OutputTokens
     {
-        get { return JsonModel.GetNotNullStruct<double>(this.RawData, "output_tokens"); }
-        init { JsonModel.Set(this._rawData, "output_tokens", value); }
+        get { return this._rawData.GetNotNullStruct<double>("output_tokens"); }
+        init { this._rawData.Set("output_tokens", value); }
     }
 
     public double? CachedInputTokens
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "cached_input_tokens"); }
+        get { return this._rawData.GetNullableStruct<double>("cached_input_tokens"); }
         init
         {
             if (value == null)
@@ -474,13 +476,13 @@ public sealed record class Usage : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "cached_input_tokens", value);
+            this._rawData.Set("cached_input_tokens", value);
         }
     }
 
     public double? ReasoningTokens
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "reasoning_tokens"); }
+        get { return this._rawData.GetNullableStruct<double>("reasoning_tokens"); }
         init
         {
             if (value == null)
@@ -488,7 +490,7 @@ public sealed record class Usage : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "reasoning_tokens", value);
+            this._rawData.Set("reasoning_tokens", value);
         }
     }
 
@@ -509,14 +511,14 @@ public sealed record class Usage : JsonModel
 
     public Usage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Usage(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
