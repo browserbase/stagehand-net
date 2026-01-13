@@ -996,7 +996,7 @@ public class IgnoreDefaultArgsTest : TestBase
     [Fact]
     public void BoolValidationWorks()
     {
-        Sessions::IgnoreDefaultArgs value = new(true);
+        Sessions::IgnoreDefaultArgs value = true;
         value.Validate();
     }
 
@@ -1010,7 +1010,7 @@ public class IgnoreDefaultArgsTest : TestBase
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        Sessions::IgnoreDefaultArgs value = new(true);
+        Sessions::IgnoreDefaultArgs value = true;
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::IgnoreDefaultArgs>(element);
 
@@ -2795,7 +2795,7 @@ public class ProxiesTest : TestBase
     [Fact]
     public void BoolValidationWorks()
     {
-        Sessions::Proxies value = new(true);
+        Sessions::Proxies value = true;
         value.Validate();
     }
 
@@ -2824,7 +2824,7 @@ public class ProxiesTest : TestBase
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        Sessions::Proxies value = new(true);
+        Sessions::Proxies value = true;
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::Proxies>(element);
 
@@ -2862,51 +2862,45 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void BrowserbaseValidationWorks()
     {
-        Sessions::ProxyConfig value = new(
-            new Sessions::Browserbase()
+        Sessions::ProxyConfig value = new Sessions::Browserbase()
+        {
+            DomainPattern = "domainPattern",
+            Geolocation = new()
             {
-                DomainPattern = "domainPattern",
-                Geolocation = new()
-                {
-                    Country = "country",
-                    City = "city",
-                    State = "state",
-                },
-            }
-        );
+                Country = "country",
+                City = "city",
+                State = "state",
+            },
+        };
         value.Validate();
     }
 
     [Fact]
     public void ExternalValidationWorks()
     {
-        Sessions::ProxyConfig value = new(
-            new Sessions::External()
-            {
-                Server = "server",
-                DomainPattern = "domainPattern",
-                Password = "password",
-                Username = "username",
-            }
-        );
+        Sessions::ProxyConfig value = new Sessions::External()
+        {
+            Server = "server",
+            DomainPattern = "domainPattern",
+            Password = "password",
+            Username = "username",
+        };
         value.Validate();
     }
 
     [Fact]
     public void BrowserbaseSerializationRoundtripWorks()
     {
-        Sessions::ProxyConfig value = new(
-            new Sessions::Browserbase()
+        Sessions::ProxyConfig value = new Sessions::Browserbase()
+        {
+            DomainPattern = "domainPattern",
+            Geolocation = new()
             {
-                DomainPattern = "domainPattern",
-                Geolocation = new()
-                {
-                    Country = "country",
-                    City = "city",
-                    State = "state",
-                },
-            }
-        );
+                Country = "country",
+                City = "city",
+                State = "state",
+            },
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::ProxyConfig>(element);
 
@@ -2916,15 +2910,13 @@ public class ProxyConfigTest : TestBase
     [Fact]
     public void ExternalSerializationRoundtripWorks()
     {
-        Sessions::ProxyConfig value = new(
-            new Sessions::External()
-            {
-                Server = "server",
-                DomainPattern = "domainPattern",
-                Password = "password",
-                Username = "username",
-            }
-        );
+        Sessions::ProxyConfig value = new Sessions::External()
+        {
+            Server = "server",
+            DomainPattern = "domainPattern",
+            Password = "password",
+            Username = "username",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Sessions::ProxyConfig>(element);
 
