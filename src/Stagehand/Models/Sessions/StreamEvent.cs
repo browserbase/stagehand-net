@@ -525,12 +525,7 @@ public sealed record class StreamEventLogDataOutput : JsonModel
     public override void Validate()
     {
         _ = this.Message;
-        if (
-            !JsonElement.DeepEquals(
-                this.Status,
-                JsonSerializer.Deserialize<JsonElement>("\"running\"")
-            )
-        )
+        if (!JsonElement.DeepEquals(this.Status, JsonSerializer.SerializeToElement("running")))
         {
             throw new StagehandInvalidDataException("Invalid value given for constant");
         }
@@ -538,7 +533,7 @@ public sealed record class StreamEventLogDataOutput : JsonModel
 
     public StreamEventLogDataOutput()
     {
-        this.Status = JsonSerializer.Deserialize<JsonElement>("\"running\"");
+        this.Status = JsonSerializer.SerializeToElement("running");
     }
 
     public StreamEventLogDataOutput(StreamEventLogDataOutput streamEventLogDataOutput)
@@ -548,7 +543,7 @@ public sealed record class StreamEventLogDataOutput : JsonModel
     {
         this._rawData = new(rawData);
 
-        this.Status = JsonSerializer.Deserialize<JsonElement>("\"running\"");
+        this.Status = JsonSerializer.SerializeToElement("running");
     }
 
 #pragma warning disable CS8618
