@@ -16,7 +16,7 @@ namespace Stagehand.Models.Sessions;
 /// </summary>
 public sealed record class SessionNavigateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -29,8 +29,8 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public required string UrlValue
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "url"); }
-        init { JsonModel.Set(this._rawBodyData, "url", value); }
+        get { return this._rawBodyData.GetNotNullClass<string>("url"); }
+        init { this._rawBodyData.Set("url", value); }
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
         init
         {
             if (value == null)
@@ -46,19 +46,13 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "frameId", value);
+            this._rawBodyData.Set("frameId", value);
         }
     }
 
     public SessionNavigateParamsOptions? Options
     {
-        get
-        {
-            return JsonModel.GetNullableClass<SessionNavigateParamsOptions>(
-                this.RawBodyData,
-                "options"
-            );
-        }
+        get { return this._rawBodyData.GetNullableClass<SessionNavigateParamsOptions>("options"); }
         init
         {
             if (value == null)
@@ -66,7 +60,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "options", value);
+            this._rawBodyData.Set("options", value);
         }
     }
 
@@ -75,7 +69,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public bool? StreamResponse
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "streamResponse"); }
+        get { return this._rawBodyData.GetNullableStruct<bool>("streamResponse"); }
         init
         {
             if (value == null)
@@ -83,7 +77,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "streamResponse", value);
+            this._rawBodyData.Set("streamResponse", value);
         }
     }
 
@@ -92,13 +86,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get
-        {
-            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
-                this.RawHeaderData,
-                "x-sent-at"
-            );
-        }
+        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
         init
         {
             if (value == null)
@@ -106,7 +94,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 
@@ -117,9 +105,9 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<
+            return this._rawHeaderData.GetNullableClass<
                 ApiEnum<string, SessionNavigateParamsXStreamResponse>
-            >(this.RawHeaderData, "x-stream-response");
+            >("x-stream-response");
         }
         init
         {
@@ -128,7 +116,7 @@ public sealed record class SessionNavigateParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
+            this._rawHeaderData.Set("x-stream-response", value);
         }
     }
 
@@ -139,7 +127,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         this.ID = sessionNavigateParams.ID;
 
-        this._rawBodyData = [.. sessionNavigateParams._rawBodyData];
+        this._rawBodyData = new(sessionNavigateParams._rawBodyData);
     }
 
     public SessionNavigateParams(
@@ -148,9 +136,9 @@ public sealed record class SessionNavigateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -161,9 +149,9 @@ public sealed record class SessionNavigateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -221,7 +209,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public string? Referer
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "referer"); }
+        get { return this._rawData.GetNullableClass<string>("referer"); }
         init
         {
             if (value == null)
@@ -229,7 +217,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "referer", value);
+            this._rawData.Set("referer", value);
         }
     }
 
@@ -238,7 +226,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return this._rawData.GetNullableStruct<double>("timeout"); }
         init
         {
             if (value == null)
@@ -246,7 +234,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "timeout", value);
+            this._rawData.Set("timeout", value);
         }
     }
 
@@ -255,13 +243,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
     /// </summary>
     public ApiEnum<string, WaitUntil>? WaitUntil
     {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, WaitUntil>>(
-                this.RawData,
-                "waitUntil"
-            );
-        }
+        get { return this._rawData.GetNullableClass<ApiEnum<string, WaitUntil>>("waitUntil"); }
         init
         {
             if (value == null)
@@ -269,7 +251,7 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "waitUntil", value);
+            this._rawData.Set("waitUntil", value);
         }
     }
 
@@ -288,14 +270,14 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
 
     public SessionNavigateParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionNavigateParamsOptions(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

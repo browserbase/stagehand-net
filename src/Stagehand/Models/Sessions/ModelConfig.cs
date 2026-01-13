@@ -252,8 +252,8 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public required string ModelName
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "modelName"); }
-        init { JsonModel.Set(this._rawData, "modelName", value); }
+        get { return this._rawData.GetNotNullClass<string>("modelName"); }
+        init { this._rawData.Set("modelName", value); }
     }
 
     /// <summary>
@@ -261,7 +261,7 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public string? ApiKey
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "apiKey"); }
+        get { return this._rawData.GetNullableClass<string>("apiKey"); }
         init
         {
             if (value == null)
@@ -269,7 +269,7 @@ public sealed record class ModelConfigObject : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "apiKey", value);
+            this._rawData.Set("apiKey", value);
         }
     }
 
@@ -278,7 +278,7 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public string? BaseUrl
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "baseURL"); }
+        get { return this._rawData.GetNullableClass<string>("baseURL"); }
         init
         {
             if (value == null)
@@ -286,7 +286,7 @@ public sealed record class ModelConfigObject : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "baseURL", value);
+            this._rawData.Set("baseURL", value);
         }
     }
 
@@ -297,8 +297,7 @@ public sealed record class ModelConfigObject : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, ModelConfigObjectProvider>>(
-                this.RawData,
+            return this._rawData.GetNullableClass<ApiEnum<string, ModelConfigObjectProvider>>(
                 "provider"
             );
         }
@@ -309,7 +308,7 @@ public sealed record class ModelConfigObject : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "provider", value);
+            this._rawData.Set("provider", value);
         }
     }
 
@@ -329,14 +328,14 @@ public sealed record class ModelConfigObject : JsonModel
 
     public ModelConfigObject(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

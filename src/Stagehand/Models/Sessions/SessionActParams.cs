@@ -17,7 +17,7 @@ namespace Stagehand.Models.Sessions;
 /// </summary>
 public sealed record class SessionActParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -30,8 +30,8 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public required Input Input
     {
-        get { return JsonModel.GetNotNullClass<Input>(this.RawBodyData, "input"); }
-        init { JsonModel.Set(this._rawBodyData, "input", value); }
+        get { return this._rawBodyData.GetNotNullClass<Input>("input"); }
+        init { this._rawBodyData.Set("input", value); }
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
         init
         {
             if (value == null)
@@ -47,13 +47,13 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "frameId", value);
+            this._rawBodyData.Set("frameId", value);
         }
     }
 
     public Options? Options
     {
-        get { return JsonModel.GetNullableClass<Options>(this.RawBodyData, "options"); }
+        get { return this._rawBodyData.GetNullableClass<Options>("options"); }
         init
         {
             if (value == null)
@@ -61,7 +61,7 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "options", value);
+            this._rawBodyData.Set("options", value);
         }
     }
 
@@ -70,13 +70,7 @@ public sealed record class SessionActParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get
-        {
-            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
-                this.RawHeaderData,
-                "x-sent-at"
-            );
-        }
+        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
         init
         {
             if (value == null)
@@ -84,7 +78,7 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 
@@ -95,8 +89,7 @@ public sealed record class SessionActParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, XStreamResponse>>(
-                this.RawHeaderData,
+            return this._rawHeaderData.GetNullableClass<ApiEnum<string, XStreamResponse>>(
                 "x-stream-response"
             );
         }
@@ -107,7 +100,7 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
+            this._rawHeaderData.Set("x-stream-response", value);
         }
     }
 
@@ -118,7 +111,7 @@ public sealed record class SessionActParams : ParamsBase
     {
         this.ID = sessionActParams.ID;
 
-        this._rawBodyData = [.. sessionActParams._rawBodyData];
+        this._rawBodyData = new(sessionActParams._rawBodyData);
     }
 
     public SessionActParams(
@@ -127,9 +120,9 @@ public sealed record class SessionActParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -140,9 +133,9 @@ public sealed record class SessionActParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -419,7 +412,7 @@ public sealed record class Options : JsonModel
     /// </summary>
     public ModelConfig? Model
     {
-        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get { return this._rawData.GetNullableClass<ModelConfig>("model"); }
         init
         {
             if (value == null)
@@ -427,7 +420,7 @@ public sealed record class Options : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "model", value);
+            this._rawData.Set("model", value);
         }
     }
 
@@ -436,7 +429,7 @@ public sealed record class Options : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return this._rawData.GetNullableStruct<double>("timeout"); }
         init
         {
             if (value == null)
@@ -444,7 +437,7 @@ public sealed record class Options : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "timeout", value);
+            this._rawData.Set("timeout", value);
         }
     }
 
@@ -455,10 +448,7 @@ public sealed record class Options : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, string>>(
-                this.RawData,
-                "variables"
-            );
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("variables");
         }
         init
         {
@@ -467,7 +457,10 @@ public sealed record class Options : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "variables", value);
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "variables",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
         }
     }
 
@@ -486,14 +479,14 @@ public sealed record class Options : JsonModel
 
     public Options(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Options(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

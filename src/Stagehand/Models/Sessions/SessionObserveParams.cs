@@ -16,7 +16,7 @@ namespace Stagehand.Models.Sessions;
 /// </summary>
 public sealed record class SessionObserveParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -29,7 +29,7 @@ public sealed record class SessionObserveParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
         init
         {
             if (value == null)
@@ -37,7 +37,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "frameId", value);
+            this._rawBodyData.Set("frameId", value);
         }
     }
 
@@ -46,7 +46,7 @@ public sealed record class SessionObserveParams : ParamsBase
     /// </summary>
     public string? Instruction
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "instruction"); }
+        get { return this._rawBodyData.GetNullableClass<string>("instruction"); }
         init
         {
             if (value == null)
@@ -54,19 +54,13 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "instruction", value);
+            this._rawBodyData.Set("instruction", value);
         }
     }
 
     public SessionObserveParamsOptions? Options
     {
-        get
-        {
-            return JsonModel.GetNullableClass<SessionObserveParamsOptions>(
-                this.RawBodyData,
-                "options"
-            );
-        }
+        get { return this._rawBodyData.GetNullableClass<SessionObserveParamsOptions>("options"); }
         init
         {
             if (value == null)
@@ -74,7 +68,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "options", value);
+            this._rawBodyData.Set("options", value);
         }
     }
 
@@ -83,13 +77,7 @@ public sealed record class SessionObserveParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get
-        {
-            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
-                this.RawHeaderData,
-                "x-sent-at"
-            );
-        }
+        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
         init
         {
             if (value == null)
@@ -97,7 +85,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 
@@ -108,10 +96,9 @@ public sealed record class SessionObserveParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionObserveParamsXStreamResponse>>(
-                this.RawHeaderData,
-                "x-stream-response"
-            );
+            return this._rawHeaderData.GetNullableClass<
+                ApiEnum<string, SessionObserveParamsXStreamResponse>
+            >("x-stream-response");
         }
         init
         {
@@ -120,7 +107,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
+            this._rawHeaderData.Set("x-stream-response", value);
         }
     }
 
@@ -131,7 +118,7 @@ public sealed record class SessionObserveParams : ParamsBase
     {
         this.ID = sessionObserveParams.ID;
 
-        this._rawBodyData = [.. sessionObserveParams._rawBodyData];
+        this._rawBodyData = new(sessionObserveParams._rawBodyData);
     }
 
     public SessionObserveParams(
@@ -140,9 +127,9 @@ public sealed record class SessionObserveParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -153,9 +140,9 @@ public sealed record class SessionObserveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -213,7 +200,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
     /// </summary>
     public ModelConfig? Model
     {
-        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get { return this._rawData.GetNullableClass<ModelConfig>("model"); }
         init
         {
             if (value == null)
@@ -221,7 +208,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "model", value);
+            this._rawData.Set("model", value);
         }
     }
 
@@ -230,7 +217,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
     /// </summary>
     public string? Selector
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "selector"); }
+        get { return this._rawData.GetNullableClass<string>("selector"); }
         init
         {
             if (value == null)
@@ -238,7 +225,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "selector", value);
+            this._rawData.Set("selector", value);
         }
     }
 
@@ -247,7 +234,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return this._rawData.GetNullableStruct<double>("timeout"); }
         init
         {
             if (value == null)
@@ -255,7 +242,7 @@ public sealed record class SessionObserveParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "timeout", value);
+            this._rawData.Set("timeout", value);
         }
     }
 
@@ -274,14 +261,14 @@ public sealed record class SessionObserveParamsOptions : JsonModel
 
     public SessionObserveParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionObserveParamsOptions(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

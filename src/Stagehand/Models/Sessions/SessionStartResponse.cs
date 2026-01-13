@@ -12,8 +12,8 @@ public sealed record class SessionStartResponse : JsonModel
 {
     public required SessionStartResponseData Data
     {
-        get { return JsonModel.GetNotNullClass<SessionStartResponseData>(this.RawData, "data"); }
-        init { JsonModel.Set(this._rawData, "data", value); }
+        get { return this._rawData.GetNotNullClass<SessionStartResponseData>("data"); }
+        init { this._rawData.Set("data", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class SessionStartResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
-        init { JsonModel.Set(this._rawData, "success", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        init { this._rawData.Set("success", value); }
     }
 
     /// <inheritdoc/>
@@ -39,14 +39,14 @@ public sealed record class SessionStartResponse : JsonModel
 
     public SessionStartResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionStartResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -74,8 +74,8 @@ public sealed record class SessionStartResponseData : JsonModel
 {
     public required bool Available
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "available"); }
-        init { JsonModel.Set(this._rawData, "available", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("available"); }
+        init { this._rawData.Set("available", value); }
     }
 
     /// <summary>
@@ -83,8 +83,8 @@ public sealed record class SessionStartResponseData : JsonModel
     /// </summary>
     public required string SessionID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "sessionId"); }
-        init { JsonModel.Set(this._rawData, "sessionId", value); }
+        get { return this._rawData.GetNotNullClass<string>("sessionId"); }
+        init { this._rawData.Set("sessionId", value); }
     }
 
     /// <summary>
@@ -93,8 +93,8 @@ public sealed record class SessionStartResponseData : JsonModel
     /// </summary>
     public string? CdpUrl
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "cdpUrl"); }
-        init { JsonModel.Set(this._rawData, "cdpUrl", value); }
+        get { return this._rawData.GetNullableClass<string>("cdpUrl"); }
+        init { this._rawData.Set("cdpUrl", value); }
     }
 
     /// <inheritdoc/>
@@ -112,14 +112,14 @@ public sealed record class SessionStartResponseData : JsonModel
 
     public SessionStartResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionStartResponseData(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
