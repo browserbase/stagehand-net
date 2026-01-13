@@ -307,7 +307,7 @@ public class StatusTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -339,7 +339,7 @@ public class StatusTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -360,7 +360,7 @@ public class StreamEventLogDataOutputTest : TestBase
         var model = new StreamEventLogDataOutput { Message = "message" };
 
         string expectedMessage = "message";
-        JsonElement expectedStatus = JsonSerializer.Deserialize<JsonElement>("\"running\"");
+        JsonElement expectedStatus = JsonSerializer.SerializeToElement("running");
 
         Assert.Equal(expectedMessage, model.Message);
         Assert.True(JsonElement.DeepEquals(expectedStatus, model.Status));
@@ -387,7 +387,7 @@ public class StreamEventLogDataOutputTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedMessage = "message";
-        JsonElement expectedStatus = JsonSerializer.Deserialize<JsonElement>("\"running\"");
+        JsonElement expectedStatus = JsonSerializer.SerializeToElement("running");
 
         Assert.Equal(expectedMessage, deserialized.Message);
         Assert.True(JsonElement.DeepEquals(expectedStatus, deserialized.Status));
@@ -418,7 +418,7 @@ public class StreamEventTypeTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, StreamEventType>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -447,7 +447,7 @@ public class StreamEventTypeTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, StreamEventType>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

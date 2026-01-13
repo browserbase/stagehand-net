@@ -1234,7 +1234,7 @@ public class TypeTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -1263,7 +1263,7 @@ public class TypeTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2328,7 +2328,7 @@ public class FingerprintBrowserTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::FingerprintBrowser>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2358,7 +2358,7 @@ public class FingerprintBrowserTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::FingerprintBrowser>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2386,7 +2386,7 @@ public class DeviceTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2415,7 +2415,7 @@ public class DeviceTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Device>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2444,7 +2444,7 @@ public class HttpVersionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2473,7 +2473,7 @@ public class HttpVersionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::HttpVersion>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2505,7 +2505,7 @@ public class OperatingSystemTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2537,7 +2537,7 @@ public class OperatingSystemTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::OperatingSystem>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2948,7 +2948,7 @@ public class BrowserbaseTest : TestBase
             },
         };
 
-        JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
+        JsonElement expectedType = JsonSerializer.SerializeToElement("browserbase");
         string expectedDomainPattern = "domainPattern";
         Sessions::Geolocation expectedGeolocation = new()
         {
@@ -3000,7 +3000,7 @@ public class BrowserbaseTest : TestBase
         var deserialized = JsonSerializer.Deserialize<Sessions::Browserbase>(element);
         Assert.NotNull(deserialized);
 
-        JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
+        JsonElement expectedType = JsonSerializer.SerializeToElement("browserbase");
         string expectedDomainPattern = "domainPattern";
         Sessions::Geolocation expectedGeolocation = new()
         {
@@ -3220,7 +3220,7 @@ public class ExternalTest : TestBase
         };
 
         string expectedServer = "server";
-        JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"external\"");
+        JsonElement expectedType = JsonSerializer.SerializeToElement("external");
         string expectedDomainPattern = "domainPattern";
         string expectedPassword = "password";
         string expectedUsername = "username";
@@ -3265,7 +3265,7 @@ public class ExternalTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedServer = "server";
-        JsonElement expectedType = JsonSerializer.Deserialize<JsonElement>("\"external\"");
+        JsonElement expectedType = JsonSerializer.SerializeToElement("external");
         string expectedDomainPattern = "domainPattern";
         string expectedPassword = "password";
         string expectedUsername = "username";
@@ -3368,7 +3368,7 @@ public class RegionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -3399,7 +3399,7 @@ public class RegionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Region>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -3429,7 +3429,7 @@ public class VerboseTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -3459,7 +3459,7 @@ public class VerboseTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<double, Sessions::Verbose>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -3489,10 +3489,7 @@ public class SessionStartParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
@@ -3519,10 +3516,7 @@ public class SessionStartParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, Sessions::SessionStartParamsXStreamResponse>

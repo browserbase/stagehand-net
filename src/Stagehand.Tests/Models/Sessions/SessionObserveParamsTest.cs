@@ -285,10 +285,7 @@ public class SessionObserveParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, SessionObserveParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
@@ -315,10 +312,7 @@ public class SessionObserveParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, SessionObserveParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, SessionObserveParamsXStreamResponse>

@@ -2909,12 +2909,7 @@ public sealed record class Browserbase : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        if (
-            !JsonElement.DeepEquals(
-                this.Type,
-                JsonSerializer.Deserialize<JsonElement>("\"browserbase\"")
-            )
-        )
+        if (!JsonElement.DeepEquals(this.Type, JsonSerializer.SerializeToElement("browserbase")))
         {
             throw new StagehandInvalidDataException("Invalid value given for constant");
         }
@@ -2924,7 +2919,7 @@ public sealed record class Browserbase : JsonModel
 
     public Browserbase()
     {
-        this.Type = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
+        this.Type = JsonSerializer.SerializeToElement("browserbase");
     }
 
     public Browserbase(Browserbase browserbase)
@@ -2934,7 +2929,7 @@ public sealed record class Browserbase : JsonModel
     {
         this._rawData = new(rawData);
 
-        this.Type = JsonSerializer.Deserialize<JsonElement>("\"browserbase\"");
+        this.Type = JsonSerializer.SerializeToElement("browserbase");
     }
 
 #pragma warning disable CS8618
@@ -3136,12 +3131,7 @@ public sealed record class External : JsonModel
     public override void Validate()
     {
         _ = this.Server;
-        if (
-            !JsonElement.DeepEquals(
-                this.Type,
-                JsonSerializer.Deserialize<JsonElement>("\"external\"")
-            )
-        )
+        if (!JsonElement.DeepEquals(this.Type, JsonSerializer.SerializeToElement("external")))
         {
             throw new StagehandInvalidDataException("Invalid value given for constant");
         }
@@ -3152,7 +3142,7 @@ public sealed record class External : JsonModel
 
     public External()
     {
-        this.Type = JsonSerializer.Deserialize<JsonElement>("\"external\"");
+        this.Type = JsonSerializer.SerializeToElement("external");
     }
 
     public External(External external)
@@ -3162,7 +3152,7 @@ public sealed record class External : JsonModel
     {
         this._rawData = new(rawData);
 
-        this.Type = JsonSerializer.Deserialize<JsonElement>("\"external\"");
+        this.Type = JsonSerializer.SerializeToElement("external");
     }
 
 #pragma warning disable CS8618
