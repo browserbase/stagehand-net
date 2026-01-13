@@ -13,7 +13,11 @@ public sealed record class SessionExecuteResponse : JsonModel
 {
     public required SessionExecuteResponseData Data
     {
-        get { return this._rawData.GetNotNullClass<SessionExecuteResponseData>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionExecuteResponseData>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -22,7 +26,11 @@ public sealed record class SessionExecuteResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -75,7 +83,11 @@ public sealed record class SessionExecuteResponseData : JsonModel
 {
     public required SessionExecuteResponseDataResult Result
     {
-        get { return this._rawData.GetNotNullClass<SessionExecuteResponseDataResult>("result"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionExecuteResponseDataResult>("result");
+        }
         init { this._rawData.Set("result", value); }
     }
 
@@ -139,6 +151,7 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullStruct<
                 ImmutableArray<SessionExecuteResponseDataResultAction>
             >("actions");
@@ -157,7 +170,11 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required bool Completed
     {
-        get { return this._rawData.GetNotNullStruct<bool>("completed"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("completed");
+        }
         init { this._rawData.Set("completed", value); }
     }
 
@@ -166,7 +183,11 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required string Message
     {
-        get { return this._rawData.GetNotNullClass<string>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 
@@ -175,7 +196,11 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -183,6 +208,7 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "metadata"
             );
@@ -203,7 +229,11 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
 
     public Usage? Usage
     {
-        get { return this._rawData.GetNullableClass<Usage>("usage"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Usage>("usage");
+        }
         init
         {
             if (value == null)
@@ -279,13 +309,21 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public required string Type
     {
-        get { return this._rawData.GetNotNullClass<string>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 
     public string? Action
     {
-        get { return this._rawData.GetNullableClass<string>("action"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("action");
+        }
         init
         {
             if (value == null)
@@ -299,7 +337,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public string? Instruction
     {
-        get { return this._rawData.GetNullableClass<string>("instruction"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("instruction");
+        }
         init
         {
             if (value == null)
@@ -313,7 +355,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public string? PageText
     {
-        get { return this._rawData.GetNullableClass<string>("pageText"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("pageText");
+        }
         init
         {
             if (value == null)
@@ -327,7 +373,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public string? PageUrl
     {
-        get { return this._rawData.GetNullableClass<string>("pageUrl"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("pageUrl");
+        }
         init
         {
             if (value == null)
@@ -344,7 +394,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public string? Reasoning
     {
-        get { return this._rawData.GetNullableClass<string>("reasoning"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("reasoning");
+        }
         init
         {
             if (value == null)
@@ -358,7 +412,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public bool? TaskCompleted
     {
-        get { return this._rawData.GetNullableStruct<bool>("taskCompleted"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("taskCompleted");
+        }
         init
         {
             if (value == null)
@@ -375,7 +433,11 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
     /// </summary>
     public double? TimeMs
     {
-        get { return this._rawData.GetNullableStruct<double>("timeMs"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("timeMs");
+        }
         init
         {
             if (value == null)
@@ -450,25 +512,41 @@ public sealed record class Usage : JsonModel
 {
     public required double InferenceTimeMs
     {
-        get { return this._rawData.GetNotNullStruct<double>("inference_time_ms"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("inference_time_ms");
+        }
         init { this._rawData.Set("inference_time_ms", value); }
     }
 
     public required double InputTokens
     {
-        get { return this._rawData.GetNotNullStruct<double>("input_tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("input_tokens");
+        }
         init { this._rawData.Set("input_tokens", value); }
     }
 
     public required double OutputTokens
     {
-        get { return this._rawData.GetNotNullStruct<double>("output_tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("output_tokens");
+        }
         init { this._rawData.Set("output_tokens", value); }
     }
 
     public double? CachedInputTokens
     {
-        get { return this._rawData.GetNullableStruct<double>("cached_input_tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("cached_input_tokens");
+        }
         init
         {
             if (value == null)
@@ -482,7 +560,11 @@ public sealed record class Usage : JsonModel
 
     public double? ReasoningTokens
     {
-        get { return this._rawData.GetNullableStruct<double>("reasoning_tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("reasoning_tokens");
+        }
         init
         {
             if (value == null)

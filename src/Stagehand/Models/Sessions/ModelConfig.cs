@@ -252,7 +252,11 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public required string ModelName
     {
-        get { return this._rawData.GetNotNullClass<string>("modelName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
         init { this._rawData.Set("modelName", value); }
     }
 
@@ -261,7 +265,11 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public string? ApiKey
     {
-        get { return this._rawData.GetNullableClass<string>("apiKey"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
         init
         {
             if (value == null)
@@ -278,7 +286,11 @@ public sealed record class ModelConfigObject : JsonModel
     /// </summary>
     public string? BaseUrl
     {
-        get { return this._rawData.GetNullableClass<string>("baseURL"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
         init
         {
             if (value == null)
@@ -297,6 +309,7 @@ public sealed record class ModelConfigObject : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<ApiEnum<string, ModelConfigObjectProvider>>(
                 "provider"
             );

@@ -29,7 +29,11 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public string? FrameID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("frameId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("frameId");
+        }
         init
         {
             if (value == null)
@@ -46,7 +50,11 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public string? Instruction
     {
-        get { return this._rawBodyData.GetNullableClass<string>("instruction"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("instruction");
+        }
         init
         {
             if (value == null)
@@ -60,7 +68,11 @@ public sealed record class SessionExtractParams : ParamsBase
 
     public SessionExtractParamsOptions? Options
     {
-        get { return this._rawBodyData.GetNullableClass<SessionExtractParamsOptions>("options"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<SessionExtractParamsOptions>("options");
+        }
         init
         {
             if (value == null)
@@ -79,6 +91,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "schema"
             );
@@ -102,7 +115,11 @@ public sealed record class SessionExtractParams : ParamsBase
     /// </summary>
     public System::DateTimeOffset? XSentAt
     {
-        get { return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
         init
         {
             if (value == null)
@@ -121,6 +138,7 @@ public sealed record class SessionExtractParams : ParamsBase
     {
         get
         {
+            this._rawHeaderData.Freeze();
             return this._rawHeaderData.GetNullableClass<
                 ApiEnum<string, SessionExtractParamsXStreamResponse>
             >("x-stream-response");
@@ -225,7 +243,11 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     /// </summary>
     public ModelConfig? Model
     {
-        get { return this._rawData.GetNullableClass<ModelConfig>("model"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ModelConfig>("model");
+        }
         init
         {
             if (value == null)
@@ -242,7 +264,11 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     /// </summary>
     public string? Selector
     {
-        get { return this._rawData.GetNullableClass<string>("selector"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("selector");
+        }
         init
         {
             if (value == null)
@@ -259,7 +285,11 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     /// </summary>
     public double? Timeout
     {
-        get { return this._rawData.GetNullableStruct<double>("timeout"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("timeout");
+        }
         init
         {
             if (value == null)

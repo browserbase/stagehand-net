@@ -12,7 +12,11 @@ public sealed record class SessionNavigateResponse : JsonModel
 {
     public required SessionNavigateResponseData Data
     {
-        get { return this._rawData.GetNotNullClass<SessionNavigateResponseData>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionNavigateResponseData>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -21,7 +25,11 @@ public sealed record class SessionNavigateResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -77,7 +85,11 @@ public sealed record class SessionNavigateResponseData : JsonModel
     /// </summary>
     public required JsonElement Result
     {
-        get { return this._rawData.GetNotNullStruct<JsonElement>("result"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("result");
+        }
         init { this._rawData.Set("result", value); }
     }
 
@@ -86,7 +98,11 @@ public sealed record class SessionNavigateResponseData : JsonModel
     /// </summary>
     public string? ActionID
     {
-        get { return this._rawData.GetNullableClass<string>("actionId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("actionId");
+        }
         init
         {
             if (value == null)

@@ -15,7 +15,11 @@ public sealed record class SessionEndResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 

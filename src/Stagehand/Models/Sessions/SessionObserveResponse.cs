@@ -13,7 +13,11 @@ public sealed record class SessionObserveResponse : JsonModel
 {
     public required SessionObserveResponseData Data
     {
-        get { return this._rawData.GetNotNullClass<SessionObserveResponseData>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveResponseData>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -22,7 +26,11 @@ public sealed record class SessionObserveResponse : JsonModel
     /// </summary>
     public required bool Success
     {
-        get { return this._rawData.GetNotNullStruct<bool>("success"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
+        }
         init { this._rawData.Set("success", value); }
     }
 
@@ -77,6 +85,7 @@ public sealed record class SessionObserveResponseData : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullStruct<ImmutableArray<SessionObserveResponseDataResult>>(
                 "result"
             );
@@ -95,7 +104,11 @@ public sealed record class SessionObserveResponseData : JsonModel
     /// </summary>
     public string? ActionID
     {
-        get { return this._rawData.GetNullableClass<string>("actionId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("actionId");
+        }
         init
         {
             if (value == null)
@@ -175,7 +188,11 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
     /// </summary>
     public required string Description
     {
-        get { return this._rawData.GetNotNullClass<string>("description"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("description");
+        }
         init { this._rawData.Set("description", value); }
     }
 
@@ -184,7 +201,11 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
     /// </summary>
     public required string Selector
     {
-        get { return this._rawData.GetNotNullClass<string>("selector"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("selector");
+        }
         init { this._rawData.Set("selector", value); }
     }
 
@@ -193,7 +214,11 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
     /// </summary>
     public IReadOnlyList<string>? Arguments
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("arguments"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("arguments");
+        }
         init
         {
             if (value == null)
@@ -213,7 +238,11 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
     /// </summary>
     public double? BackendNodeID
     {
-        get { return this._rawData.GetNullableStruct<double>("backendNodeId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("backendNodeId");
+        }
         init
         {
             if (value == null)
@@ -230,7 +259,11 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
     /// </summary>
     public string? Method
     {
-        get { return this._rawData.GetNullableClass<string>("method"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("method");
+        }
         init
         {
             if (value == null)
