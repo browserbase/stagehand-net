@@ -1050,7 +1050,7 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ImmutableArray<string>>(element, options);
+            var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
             if (deserialized != null)
             {
                 return new(deserialized, element);
@@ -2562,10 +2562,7 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ImmutableArray<ProxyConfig>>(
-                element,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(element, options);
             if (deserialized != null)
             {
                 return new(deserialized, element);
