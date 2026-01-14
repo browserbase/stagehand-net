@@ -407,7 +407,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         )
         {
             await foreach (
-                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.RawMessage, token)
             )
             {
                 if (this._client.ResponseValidation)
@@ -553,7 +553,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         )
         {
             await foreach (
-                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.RawMessage, token)
             )
             {
                 if (this._client.ResponseValidation)
@@ -656,7 +656,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         )
         {
             await foreach (
-                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.RawMessage, token)
             )
             {
                 if (this._client.ResponseValidation)
@@ -804,7 +804,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         )
         {
             await foreach (
-                var deserializedItem in Sse.Enumerate<StreamEvent>(response.Message, token)
+                var deserializedItem in Sse.Enumerate<StreamEvent>(response.RawMessage, token)
             )
             {
                 if (this._client.ResponseValidation)
