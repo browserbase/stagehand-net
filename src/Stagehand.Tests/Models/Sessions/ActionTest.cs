@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Stagehand.Core;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -48,8 +49,8 @@ public class ActionTest : TestBase
             Method = "click",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Action>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Action>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -66,8 +67,8 @@ public class ActionTest : TestBase
             Method = "click",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Action>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Action>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedDescription = "Click the submit button";

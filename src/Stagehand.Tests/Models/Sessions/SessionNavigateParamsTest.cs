@@ -184,8 +184,11 @@ public class SessionNavigateParamsOptionsTest : TestBase
             WaitUntil = WaitUntil.Networkidle,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -200,8 +203,11 @@ public class SessionNavigateParamsOptionsTest : TestBase
             WaitUntil = WaitUntil.Networkidle,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedReferer = "referer";

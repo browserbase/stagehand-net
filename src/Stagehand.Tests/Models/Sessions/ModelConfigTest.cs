@@ -31,8 +31,11 @@ public class ModelConfigTest : TestBase
     public void NameSerializationRoundtripWorks()
     {
         ModelConfig value = "openai/gpt-5-nano";
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ModelConfig>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -47,8 +50,11 @@ public class ModelConfigTest : TestBase
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ModelConfig>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ModelConfig>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -90,8 +96,11 @@ public class ModelConfigObjectTest : TestBase
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -107,8 +116,11 @@ public class ModelConfigObjectTest : TestBase
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedModelName = "openai/gpt-5-nano";
