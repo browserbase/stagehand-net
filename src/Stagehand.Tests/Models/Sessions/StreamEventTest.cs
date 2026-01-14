@@ -51,8 +51,11 @@ public class StreamEventTest : TestBase
             Type = StreamEventType.System,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEvent>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEvent>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -72,8 +75,11 @@ public class StreamEventTest : TestBase
             Type = StreamEventType.System,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEvent>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEvent>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
@@ -139,8 +145,8 @@ public class DataTest : TestBase
             Error = "error",
             Result = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Data>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -149,8 +155,8 @@ public class DataTest : TestBase
     public void StreamEventLogDataOutputSerializationRoundtripWorks()
     {
         Data value = new StreamEventLogDataOutput("message");
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Data>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -188,8 +194,11 @@ public class StreamEventSystemDataOutputTest : TestBase
             Result = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -204,8 +213,11 @@ public class StreamEventSystemDataOutputTest : TestBase
             Result = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.Starting;
@@ -367,8 +379,11 @@ public class StreamEventLogDataOutputTest : TestBase
     {
         var model = new StreamEventLogDataOutput { Message = "message" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -378,8 +393,11 @@ public class StreamEventLogDataOutputTest : TestBase
     {
         var model = new StreamEventLogDataOutput { Message = "message" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedMessage = "message";

@@ -173,8 +173,11 @@ public class InputTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         Sessions::Input value = "string";
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Sessions::Input>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Input>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -190,8 +193,11 @@ public class InputTest : TestBase
             BackendNodeID = 0,
             Method = "click",
         };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Sessions::Input>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Input>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -235,8 +241,11 @@ public class OptionsTest : TestBase
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Sessions::Options>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Options>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -251,8 +260,11 @@ public class OptionsTest : TestBase
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Sessions::Options>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Options>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Sessions::ModelConfig expectedModel = "openai/gpt-5-nano";
