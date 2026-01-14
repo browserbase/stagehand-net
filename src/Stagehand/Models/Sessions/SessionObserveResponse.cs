@@ -157,7 +157,7 @@ public sealed record class SessionObserveResponseData : JsonModel
     }
 
     [SetsRequiredMembers]
-    public SessionObserveResponseData(List<SessionObserveResponseDataResult> result)
+    public SessionObserveResponseData(IReadOnlyList<SessionObserveResponseDataResult> result)
         : this()
     {
         this.Result = result;
