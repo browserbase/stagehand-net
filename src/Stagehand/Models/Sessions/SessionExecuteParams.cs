@@ -12,9 +12,9 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Navigates the browser to the specified URL.
+/// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
 /// </summary>
-public sealed record class SessionNavigateParams : ParamsBase
+public sealed record class SessionExecuteParams : ParamsBase
 {
     readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -24,17 +24,23 @@ public sealed record class SessionNavigateParams : ParamsBase
 
     public string? ID { get; init; }
 
-    /// <summary>
-    /// URL to navigate to
-    /// </summary>
-    public required string URL
+    public required AgentConfig AgentConfig
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "url"); }
-        init { JsonModel.Set(this._rawBodyData, "url", value); }
+        get { return JsonModel.GetNotNullClass<AgentConfig>(this.RawBodyData, "agentConfig"); }
+        init { JsonModel.Set(this._rawBodyData, "agentConfig", value); }
+    }
+
+    public required ExecuteOptions ExecuteOptions
+    {
+        get
+        {
+            return JsonModel.GetNotNullClass<ExecuteOptions>(this.RawBodyData, "executeOptions");
+        }
+        init { JsonModel.Set(this._rawBodyData, "executeOptions", value); }
     }
 
     /// <summary>
-    /// Target frame ID for the navigation
+    /// Target frame ID for the agent
     /// </summary>
     public string? FrameID
     {
@@ -50,51 +56,14 @@ public sealed record class SessionNavigateParams : ParamsBase
         }
     }
 
-    public SessionNavigateParamsOptions? Options
-    {
-        get
-        {
-            return JsonModel.GetNullableClass<SessionNavigateParamsOptions>(
-                this.RawBodyData,
-                "options"
-            );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawBodyData, "options", value);
-        }
-    }
-
-    /// <summary>
-    /// Whether to stream the response via SSE
-    /// </summary>
-    public bool? StreamResponse
-    {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "streamResponse"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            JsonModel.Set(this._rawBodyData, "streamResponse", value);
-        }
-    }
-
     /// <summary>
     /// Client SDK language
     /// </summary>
-    public ApiEnum<string, SessionNavigateParamsXLanguage>? XLanguage
+    public ApiEnum<string, SessionExecuteParamsXLanguage>? XLanguage
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, SessionNavigateParamsXLanguage>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExecuteParamsXLanguage>>(
                 this.RawHeaderData,
                 "x-language"
             );
@@ -153,13 +122,14 @@ public sealed record class SessionNavigateParams : ParamsBase
     /// <summary>
     /// Whether to stream the response via SSE
     /// </summary>
-    public ApiEnum<string, SessionNavigateParamsXStreamResponse>? XStreamResponse
+    public ApiEnum<string, SessionExecuteParamsXStreamResponse>? XStreamResponse
     {
         get
         {
-            return JsonModel.GetNullableClass<
-                ApiEnum<string, SessionNavigateParamsXStreamResponse>
-            >(this.RawHeaderData, "x-stream-response");
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionExecuteParamsXStreamResponse>>(
+                this.RawHeaderData,
+                "x-stream-response"
+            );
         }
         init
         {
@@ -172,15 +142,15 @@ public sealed record class SessionNavigateParams : ParamsBase
         }
     }
 
-    public SessionNavigateParams() { }
+    public SessionExecuteParams() { }
 
-    public SessionNavigateParams(SessionNavigateParams sessionNavigateParams)
-        : base(sessionNavigateParams)
+    public SessionExecuteParams(SessionExecuteParams sessionExecuteParams)
+        : base(sessionExecuteParams)
     {
-        this._rawBodyData = [.. sessionNavigateParams._rawBodyData];
+        this._rawBodyData = [.. sessionExecuteParams._rawBodyData];
     }
 
-    public SessionNavigateParams(
+    public SessionExecuteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -193,7 +163,7 @@ public sealed record class SessionNavigateParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionNavigateParams(
+    SessionExecuteParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData
@@ -206,7 +176,7 @@ public sealed record class SessionNavigateParams : ParamsBase
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
-    public static SessionNavigateParams FromRawUnchecked(
+    public static SessionExecuteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -223,7 +193,7 @@ public sealed record class SessionNavigateParams : ParamsBase
     {
         return new System::UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/v1/sessions/{0}/navigate", this.ID)
+                + string.Format("/v1/sessions/{0}/agentExecute", this.ID)
         )
         {
             Query = this.QueryString(options),
@@ -249,17 +219,15 @@ public sealed record class SessionNavigateParams : ParamsBase
     }
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<SessionNavigateParamsOptions, SessionNavigateParamsOptionsFromRaw>)
-)]
-public sealed record class SessionNavigateParamsOptions : JsonModel
+[JsonConverter(typeof(JsonModelConverter<AgentConfig, AgentConfigFromRaw>))]
+public sealed record class AgentConfig : JsonModel
 {
     /// <summary>
-    /// Referer header to send with the request
+    /// Enable Computer Use Agent mode
     /// </summary>
-    public string? Referer
+    public bool? Cua
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "referer"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "cua"); }
         init
         {
             if (value == null)
@@ -267,16 +235,16 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "referer", value);
+            JsonModel.Set(this._rawData, "cua", value);
         }
     }
 
     /// <summary>
-    /// Timeout in ms for the navigation
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
     /// </summary>
-    public double? Timeout
+    public ModelConfig? Model
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
+        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
         init
         {
             if (value == null)
@@ -284,22 +252,16 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "timeout", value);
+            JsonModel.Set(this._rawData, "model", value);
         }
     }
 
     /// <summary>
-    /// When to consider navigation complete
+    /// Custom system prompt for the agent
     /// </summary>
-    public ApiEnum<string, WaitUntil>? WaitUntil
+    public string? SystemPrompt
     {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, WaitUntil>>(
-                this.RawData,
-                "waitUntil"
-            );
-        }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "systemPrompt"); }
         init
         {
             if (value == null)
@@ -307,117 +269,157 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "waitUntil", value);
+            JsonModel.Set(this._rawData, "systemPrompt", value);
         }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.Referer;
-        _ = this.Timeout;
-        this.WaitUntil?.Validate();
+        _ = this.Cua;
+        this.Model?.Validate();
+        _ = this.SystemPrompt;
     }
 
-    public SessionNavigateParamsOptions() { }
+    public AgentConfig() { }
 
-    public SessionNavigateParamsOptions(SessionNavigateParamsOptions sessionNavigateParamsOptions)
-        : base(sessionNavigateParamsOptions) { }
+    public AgentConfig(AgentConfig agentConfig)
+        : base(agentConfig) { }
 
-    public SessionNavigateParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
+    public AgentConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionNavigateParamsOptions(FrozenDictionary<string, JsonElement> rawData)
+    AgentConfig(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="SessionNavigateParamsOptionsFromRaw.FromRawUnchecked"/>
-    public static SessionNavigateParamsOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="AgentConfigFromRaw.FromRawUnchecked"/>
+    public static AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class SessionNavigateParamsOptionsFromRaw : IFromRawJson<SessionNavigateParamsOptions>
+class AgentConfigFromRaw : IFromRawJson<AgentConfig>
 {
     /// <inheritdoc/>
-    public SessionNavigateParamsOptions FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => SessionNavigateParamsOptions.FromRawUnchecked(rawData);
+    public AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AgentConfig.FromRawUnchecked(rawData);
 }
 
-/// <summary>
-/// When to consider navigation complete
-/// </summary>
-[JsonConverter(typeof(WaitUntilConverter))]
-public enum WaitUntil
+[JsonConverter(typeof(JsonModelConverter<ExecuteOptions, ExecuteOptionsFromRaw>))]
+public sealed record class ExecuteOptions : JsonModel
 {
-    Load,
-    Domcontentloaded,
-    Networkidle,
-}
-
-sealed class WaitUntilConverter : JsonConverter<WaitUntil>
-{
-    public override WaitUntil Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
+    /// <summary>
+    /// Natural language instruction for the agent
+    /// </summary>
+    public required string Instruction
     {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "instruction"); }
+        init { JsonModel.Set(this._rawData, "instruction", value); }
+    }
+
+    /// <summary>
+    /// Whether to visually highlight the cursor during execution
+    /// </summary>
+    public bool? HighlightCursor
+    {
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "highlightCursor"); }
+        init
         {
-            "load" => WaitUntil.Load,
-            "domcontentloaded" => WaitUntil.Domcontentloaded,
-            "networkidle" => WaitUntil.Networkidle,
-            _ => (WaitUntil)(-1),
-        };
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "highlightCursor", value);
+        }
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        WaitUntil value,
-        JsonSerializerOptions options
-    )
+    /// <summary>
+    /// Maximum number of steps the agent can take
+    /// </summary>
+    public double? MaxSteps
     {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "maxSteps"); }
+        init
+        {
+            if (value == null)
             {
-                WaitUntil.Load => "load",
-                WaitUntil.Domcontentloaded => "domcontentloaded",
-                WaitUntil.Networkidle => "networkidle",
-                _ => throw new StagehandInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "maxSteps", value);
+        }
     }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Instruction;
+        _ = this.HighlightCursor;
+        _ = this.MaxSteps;
+    }
+
+    public ExecuteOptions() { }
+
+    public ExecuteOptions(ExecuteOptions executeOptions)
+        : base(executeOptions) { }
+
+    public ExecuteOptions(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecuteOptions(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = [.. rawData];
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecuteOptionsFromRaw.FromRawUnchecked"/>
+    public static ExecuteOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ExecuteOptions(string instruction)
+        : this()
+    {
+        this.Instruction = instruction;
+    }
+}
+
+class ExecuteOptionsFromRaw : IFromRawJson<ExecuteOptions>
+{
+    /// <inheritdoc/>
+    public ExecuteOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ExecuteOptions.FromRawUnchecked(rawData);
 }
 
 /// <summary>
 /// Client SDK language
 /// </summary>
-[JsonConverter(typeof(SessionNavigateParamsXLanguageConverter))]
-public enum SessionNavigateParamsXLanguage
+[JsonConverter(typeof(SessionExecuteParamsXLanguageConverter))]
+public enum SessionExecuteParamsXLanguage
 {
     Typescript,
     Python,
     Playground,
 }
 
-sealed class SessionNavigateParamsXLanguageConverter : JsonConverter<SessionNavigateParamsXLanguage>
+sealed class SessionExecuteParamsXLanguageConverter : JsonConverter<SessionExecuteParamsXLanguage>
 {
-    public override SessionNavigateParamsXLanguage Read(
+    public override SessionExecuteParamsXLanguage Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -425,16 +427,16 @@ sealed class SessionNavigateParamsXLanguageConverter : JsonConverter<SessionNavi
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "typescript" => SessionNavigateParamsXLanguage.Typescript,
-            "python" => SessionNavigateParamsXLanguage.Python,
-            "playground" => SessionNavigateParamsXLanguage.Playground,
-            _ => (SessionNavigateParamsXLanguage)(-1),
+            "typescript" => SessionExecuteParamsXLanguage.Typescript,
+            "python" => SessionExecuteParamsXLanguage.Python,
+            "playground" => SessionExecuteParamsXLanguage.Playground,
+            _ => (SessionExecuteParamsXLanguage)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        SessionNavigateParamsXLanguage value,
+        SessionExecuteParamsXLanguage value,
         JsonSerializerOptions options
     )
     {
@@ -442,9 +444,9 @@ sealed class SessionNavigateParamsXLanguageConverter : JsonConverter<SessionNavi
             writer,
             value switch
             {
-                SessionNavigateParamsXLanguage.Typescript => "typescript",
-                SessionNavigateParamsXLanguage.Python => "python",
-                SessionNavigateParamsXLanguage.Playground => "playground",
+                SessionExecuteParamsXLanguage.Typescript => "typescript",
+                SessionExecuteParamsXLanguage.Python => "python",
+                SessionExecuteParamsXLanguage.Playground => "playground",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -457,17 +459,17 @@ sealed class SessionNavigateParamsXLanguageConverter : JsonConverter<SessionNavi
 /// <summary>
 /// Whether to stream the response via SSE
 /// </summary>
-[JsonConverter(typeof(SessionNavigateParamsXStreamResponseConverter))]
-public enum SessionNavigateParamsXStreamResponse
+[JsonConverter(typeof(SessionExecuteParamsXStreamResponseConverter))]
+public enum SessionExecuteParamsXStreamResponse
 {
     True,
     False,
 }
 
-sealed class SessionNavigateParamsXStreamResponseConverter
-    : JsonConverter<SessionNavigateParamsXStreamResponse>
+sealed class SessionExecuteParamsXStreamResponseConverter
+    : JsonConverter<SessionExecuteParamsXStreamResponse>
 {
-    public override SessionNavigateParamsXStreamResponse Read(
+    public override SessionExecuteParamsXStreamResponse Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -475,15 +477,15 @@ sealed class SessionNavigateParamsXStreamResponseConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "true" => SessionNavigateParamsXStreamResponse.True,
-            "false" => SessionNavigateParamsXStreamResponse.False,
-            _ => (SessionNavigateParamsXStreamResponse)(-1),
+            "true" => SessionExecuteParamsXStreamResponse.True,
+            "false" => SessionExecuteParamsXStreamResponse.False,
+            _ => (SessionExecuteParamsXStreamResponse)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        SessionNavigateParamsXStreamResponse value,
+        SessionExecuteParamsXStreamResponse value,
         JsonSerializerOptions options
     )
     {
@@ -491,8 +493,8 @@ sealed class SessionNavigateParamsXStreamResponseConverter
             writer,
             value switch
             {
-                SessionNavigateParamsXStreamResponse.True => "true",
-                SessionNavigateParamsXStreamResponse.False => "false",
+                SessionExecuteParamsXStreamResponse.True => "true",
+                SessionExecuteParamsXStreamResponse.False => "false",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

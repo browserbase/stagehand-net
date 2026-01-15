@@ -9,53 +9,51 @@ namespace Stagehand.Tests.Models.Sessions;
 public class InputTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         Input value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void actionValidation_Works()
+    public void ActionValidationWorks()
     {
         Input value = new(
             new Action()
             {
-                Arguments = ["string"],
-                Description = "description",
-                Method = "method",
-                Selector = "selector",
-                BackendNodeID = 0,
+                Description = "Click the submit button",
+                Selector = "[data-testid='submit-button']",
+                Arguments = ["Hello World"],
+                Method = "click",
             }
         );
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         Input value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Input>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Input>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void actionSerializationRoundtrip_Works()
+    public void ActionSerializationRoundtripWorks()
     {
         Input value = new(
             new Action()
             {
-                Arguments = ["string"],
-                Description = "description",
-                Method = "method",
-                Selector = "selector",
-                BackendNodeID = 0,
+                Description = "Click the submit button",
+                Selector = "[data-testid='submit-button']",
+                Arguments = ["Hello World"],
+                Method = "click",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Input>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Input>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -68,26 +66,14 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Timeout = 0,
-            Variables = new Dictionary<string, string>() { { "foo", "string" } },
+            Model = "openai/gpt-5-nano",
+            Timeout = 30000,
+            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        ModelConfig expectedModel = new()
-        {
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
-            Model = "model",
-            Provider = ModelConfigProvider.OpenAI,
-        };
-        long expectedTimeout = 0;
-        Dictionary<string, string> expectedVariables = new() { { "foo", "string" } };
+        ModelConfig expectedModel = "openai/gpt-5-nano";
+        double expectedTimeout = 30000;
+        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedTimeout, model.Timeout);
@@ -105,15 +91,9 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Timeout = 0,
-            Variables = new Dictionary<string, string>() { { "foo", "string" } },
+            Model = "openai/gpt-5-nano",
+            Timeout = 30000,
+            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -127,30 +107,18 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Timeout = 0,
-            Variables = new Dictionary<string, string>() { { "foo", "string" } },
+            Model = "openai/gpt-5-nano",
+            Timeout = 30000,
+            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Options>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Options>(element);
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = new()
-        {
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
-            Model = "model",
-            Provider = ModelConfigProvider.OpenAI,
-        };
-        long expectedTimeout = 0;
-        Dictionary<string, string> expectedVariables = new() { { "foo", "string" } };
+        ModelConfig expectedModel = "openai/gpt-5-nano";
+        double expectedTimeout = 30000;
+        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
@@ -168,15 +136,9 @@ public class OptionsTest : TestBase
     {
         var model = new Options
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Timeout = 0,
-            Variables = new Dictionary<string, string>() { { "foo", "string" } },
+            Model = "openai/gpt-5-nano",
+            Timeout = 30000,
+            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
         model.Validate();
@@ -234,6 +196,64 @@ public class OptionsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class XLanguageTest : TestBase
+{
+    [Theory]
+    [InlineData(XLanguage.Typescript)]
+    [InlineData(XLanguage.Python)]
+    [InlineData(XLanguage.Playground)]
+    public void Validation_Works(XLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, XLanguage> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, XLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(XLanguage.Typescript)]
+    [InlineData(XLanguage.Python)]
+    [InlineData(XLanguage.Playground)]
+    public void SerializationRoundtrip_Works(XLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, XLanguage> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, XLanguage>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, XLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, XLanguage>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

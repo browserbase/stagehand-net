@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using Stagehand.Models.Sessions;
 
@@ -7,69 +6,44 @@ namespace Stagehand.Tests.Models.Sessions;
 public class SessionExtractResponseTest : TestBase
 {
     [Fact]
-    public void ExtractionValidation_Works()
-    {
-        SessionExtractResponse value = new(new Extraction() { ExtractionValue = "extraction" });
-        value.Validate();
-    }
-
-    [Fact]
-    public void customValidation_Works()
-    {
-        SessionExtractResponse value = new(
-            new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            }
-        );
-        value.Validate();
-    }
-
-    [Fact]
-    public void ExtractionSerializationRoundtrip_Works()
-    {
-        SessionExtractResponse value = new(new Extraction() { ExtractionValue = "extraction" });
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(json);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void customSerializationRoundtrip_Works()
-    {
-        SessionExtractResponse value = new(
-            new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            }
-        );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(json);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class ExtractionTest : TestBase
-{
-    [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Extraction { ExtractionValue = "extraction" };
+        var model = new SessionExtractResponse
+        {
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
 
-        string expectedExtractionValue = "extraction";
+        SessionExtractResponseData expectedData = new()
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedExtractionValue, model.ExtractionValue);
+        Assert.Equal(expectedData, model.Data);
+        Assert.Equal(expectedSuccess, model.Success);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Extraction { ExtractionValue = "extraction" };
+        var model = new SessionExtractResponse
+        {
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Extraction>(json);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -77,21 +51,109 @@ public class ExtractionTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Extraction { ExtractionValue = "extraction" };
+        var model = new SessionExtractResponse
+        {
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Extraction>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponse>(element);
         Assert.NotNull(deserialized);
 
-        string expectedExtractionValue = "extraction";
+        SessionExtractResponseData expectedData = new()
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedExtractionValue, deserialized.ExtractionValue);
+        Assert.Equal(expectedData, deserialized.Data);
+        Assert.Equal(expectedSuccess, deserialized.Success);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new Extraction { ExtractionValue = "extraction" };
+        var model = new SessionExtractResponse
+        {
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
+
+        model.Validate();
+    }
+}
+
+public class SessionExtractResponseDataTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");
+        string expectedActionID = "actionId";
+
+        Assert.True(JsonElement.DeepEquals(expectedResult, model.Result));
+        Assert.Equal(expectedActionID, model.ActionID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponseData>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractResponseData>(element);
+        Assert.NotNull(deserialized);
+
+        JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");
+        string expectedActionID = "actionId";
+
+        Assert.True(JsonElement.DeepEquals(expectedResult, deserialized.Result));
+        Assert.Equal(expectedActionID, deserialized.ActionID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
 
         model.Validate();
     }
@@ -99,16 +161,22 @@ public class ExtractionTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Extraction { };
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
-        Assert.Null(model.ExtractionValue);
-        Assert.False(model.RawData.ContainsKey("extraction"));
+        Assert.Null(model.ActionID);
+        Assert.False(model.RawData.ContainsKey("actionId"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Extraction { };
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
         model.Validate();
     }
@@ -116,23 +184,27 @@ public class ExtractionTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new Extraction
+        var model = new SessionExtractResponseData
         {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+
             // Null should be interpreted as omitted for these properties
-            ExtractionValue = null,
+            ActionID = null,
         };
 
-        Assert.Null(model.ExtractionValue);
-        Assert.False(model.RawData.ContainsKey("extraction"));
+        Assert.Null(model.ActionID);
+        Assert.False(model.RawData.ContainsKey("actionId"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Extraction
+        var model = new SessionExtractResponseData
         {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+
             // Null should be interpreted as omitted for these properties
-            ExtractionValue = null,
+            ActionID = null,
         };
 
         model.Validate();

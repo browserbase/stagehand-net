@@ -13,19 +13,16 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
-            Provider = Provider.OpenAI,
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        Model expectedModel = "string";
-        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
         Assert.Equal(expectedModel, model.Model);
-        Assert.Equal(expectedProvider, model.Provider);
         Assert.Equal(expectedSystemPrompt, model.SystemPrompt);
     }
 
@@ -35,8 +32,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
-            Provider = Provider.OpenAI,
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
@@ -52,23 +48,20 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
-            Provider = Provider.OpenAI,
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AgentConfig>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AgentConfig>(element);
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        Model expectedModel = "string";
-        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
+        ModelConfig expectedModel = "openai/gpt-5-nano";
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
         Assert.Equal(expectedModel, deserialized.Model);
-        Assert.Equal(expectedProvider, deserialized.Provider);
         Assert.Equal(expectedSystemPrompt, deserialized.SystemPrompt);
     }
 
@@ -78,8 +71,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "string",
-            Provider = Provider.OpenAI,
+            Model = "openai/gpt-5-nano",
             SystemPrompt = "systemPrompt",
         };
 
@@ -95,8 +87,6 @@ public class AgentConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("cua"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
-        Assert.Null(model.Provider);
-        Assert.False(model.RawData.ContainsKey("provider"));
         Assert.Null(model.SystemPrompt);
         Assert.False(model.RawData.ContainsKey("systemPrompt"));
     }
@@ -117,7 +107,6 @@ public class AgentConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             Cua = null,
             Model = null,
-            Provider = null,
             SystemPrompt = null,
         };
 
@@ -125,8 +114,6 @@ public class AgentConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("cua"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
-        Assert.Null(model.Provider);
-        Assert.False(model.RawData.ContainsKey("provider"));
         Assert.Null(model.SystemPrompt);
         Assert.False(model.RawData.ContainsKey("systemPrompt"));
     }
@@ -139,122 +126,10 @@ public class AgentConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             Cua = null,
             Model = null,
-            Provider = null,
             SystemPrompt = null,
         };
 
         model.Validate();
-    }
-}
-
-public class ModelTest : TestBase
-{
-    [Fact]
-    public void stringValidation_Works()
-    {
-        Model value = new("string");
-        value.Validate();
-    }
-
-    [Fact]
-    public void configValidation_Works()
-    {
-        Model value = new(
-            new ModelConfig()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            }
-        );
-        value.Validate();
-    }
-
-    [Fact]
-    public void stringSerializationRoundtrip_Works()
-    {
-        Model value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Model>(json);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void configSerializationRoundtrip_Works()
-    {
-        Model value = new(
-            new ModelConfig()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            }
-        );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Model>(json);
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class ProviderTest : TestBase
-{
-    [Theory]
-    [InlineData(Provider.OpenAI)]
-    [InlineData(Provider.Anthropic)]
-    [InlineData(Provider.Google)]
-    public void Validation_Works(Provider rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Provider> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Provider.OpenAI)]
-    [InlineData(Provider.Anthropic)]
-    [InlineData(Provider.Google)]
-    public void SerializationRoundtrip_Works(Provider rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Provider> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
 
@@ -265,14 +140,16 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
-            MaxSteps = 0,
+            MaxSteps = 20,
         };
 
-        string expectedInstruction = "instruction";
+        string expectedInstruction =
+            "Log in with username 'demo' and password 'test123', then navigate to settings";
         bool expectedHighlightCursor = true;
-        long expectedMaxSteps = 0;
+        double expectedMaxSteps = 20;
 
         Assert.Equal(expectedInstruction, model.Instruction);
         Assert.Equal(expectedHighlightCursor, model.HighlightCursor);
@@ -284,9 +161,10 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
-            MaxSteps = 0,
+            MaxSteps = 20,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -300,18 +178,20 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
-            MaxSteps = 0,
+            MaxSteps = 20,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ExecuteOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptions>(element);
         Assert.NotNull(deserialized);
 
-        string expectedInstruction = "instruction";
+        string expectedInstruction =
+            "Log in with username 'demo' and password 'test123', then navigate to settings";
         bool expectedHighlightCursor = true;
-        long expectedMaxSteps = 0;
+        double expectedMaxSteps = 20;
 
         Assert.Equal(expectedInstruction, deserialized.Instruction);
         Assert.Equal(expectedHighlightCursor, deserialized.HighlightCursor);
@@ -323,9 +203,10 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
-            MaxSteps = 0,
+            MaxSteps = 20,
         };
 
         model.Validate();
@@ -334,7 +215,11 @@ public class ExecuteOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ExecuteOptions { Instruction = "instruction" };
+        var model = new ExecuteOptions
+        {
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
+        };
 
         Assert.Null(model.HighlightCursor);
         Assert.False(model.RawData.ContainsKey("highlightCursor"));
@@ -345,7 +230,11 @@ public class ExecuteOptionsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ExecuteOptions { Instruction = "instruction" };
+        var model = new ExecuteOptions
+        {
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
+        };
 
         model.Validate();
     }
@@ -355,7 +244,8 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
 
             // Null should be interpreted as omitted for these properties
             HighlightCursor = null,
@@ -373,7 +263,8 @@ public class ExecuteOptionsTest : TestBase
     {
         var model = new ExecuteOptions
         {
-            Instruction = "instruction",
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
 
             // Null should be interpreted as omitted for these properties
             HighlightCursor = null,
@@ -384,15 +275,71 @@ public class ExecuteOptionsTest : TestBase
     }
 }
 
-public class SessionExecuteAgentParamsXStreamResponseTest : TestBase
+public class SessionExecuteParamsXLanguageTest : TestBase
 {
     [Theory]
-    [InlineData(SessionExecuteAgentParamsXStreamResponse.True)]
-    [InlineData(SessionExecuteAgentParamsXStreamResponse.False)]
-    public void Validation_Works(SessionExecuteAgentParamsXStreamResponse rawValue)
+    [InlineData(SessionExecuteParamsXLanguage.Typescript)]
+    [InlineData(SessionExecuteParamsXLanguage.Python)]
+    [InlineData(SessionExecuteParamsXLanguage.Playground)]
+    public void Validation_Works(SessionExecuteParamsXLanguage rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionExecuteAgentParamsXStreamResponse> value = rawValue;
+        ApiEnum<string, SessionExecuteParamsXLanguage> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExecuteParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(SessionExecuteParamsXLanguage.Typescript)]
+    [InlineData(SessionExecuteParamsXLanguage.Python)]
+    [InlineData(SessionExecuteParamsXLanguage.Playground)]
+    public void SerializationRoundtrip_Works(SessionExecuteParamsXLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionExecuteParamsXLanguage> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionExecuteParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExecuteParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionExecuteParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class SessionExecuteParamsXStreamResponseTest : TestBase
+{
+    [Theory]
+    [InlineData(SessionExecuteParamsXStreamResponse.True)]
+    [InlineData(SessionExecuteParamsXStreamResponse.False)]
+    public void Validation_Works(SessionExecuteParamsXStreamResponse rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionExecuteParamsXStreamResponse> value = rawValue;
         value.Validate();
     }
 
@@ -400,7 +347,7 @@ public class SessionExecuteAgentParamsXStreamResponseTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExecuteAgentParamsXStreamResponse>
+            ApiEnum<string, SessionExecuteParamsXStreamResponse>
         >(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
@@ -409,16 +356,16 @@ public class SessionExecuteAgentParamsXStreamResponseTest : TestBase
     }
 
     [Theory]
-    [InlineData(SessionExecuteAgentParamsXStreamResponse.True)]
-    [InlineData(SessionExecuteAgentParamsXStreamResponse.False)]
-    public void SerializationRoundtrip_Works(SessionExecuteAgentParamsXStreamResponse rawValue)
+    [InlineData(SessionExecuteParamsXStreamResponse.True)]
+    [InlineData(SessionExecuteParamsXStreamResponse.False)]
+    public void SerializationRoundtrip_Works(SessionExecuteParamsXStreamResponse rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, SessionExecuteAgentParamsXStreamResponse> value = rawValue;
+        ApiEnum<string, SessionExecuteParamsXStreamResponse> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExecuteAgentParamsXStreamResponse>
+            ApiEnum<string, SessionExecuteParamsXStreamResponse>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
@@ -428,14 +375,14 @@ public class SessionExecuteAgentParamsXStreamResponseTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExecuteAgentParamsXStreamResponse>
+            ApiEnum<string, SessionExecuteParamsXStreamResponse>
         >(
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, SessionExecuteAgentParamsXStreamResponse>
+            ApiEnum<string, SessionExecuteParamsXStreamResponse>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);

@@ -184,7 +184,7 @@ public abstract record class ParamsBase
 
     internal abstract void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options);
 
-    internal virtual StringContent? BodyContent()
+    internal virtual HttpContent? BodyContent()
     {
         return null;
     }

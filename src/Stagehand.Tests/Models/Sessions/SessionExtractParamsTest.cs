@@ -12,26 +12,14 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Selector = "selector",
-            Timeout = 0,
+            Model = "openai/gpt-5-nano",
+            Selector = "#main-content",
+            Timeout = 30000,
         };
 
-        ModelConfig expectedModel = new()
-        {
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
-            Model = "model",
-            Provider = ModelConfigProvider.OpenAI,
-        };
-        string expectedSelector = "selector";
-        long expectedTimeout = 0;
+        ModelConfig expectedModel = "openai/gpt-5-nano";
+        string expectedSelector = "#main-content";
+        double expectedTimeout = 30000;
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedSelector, model.Selector);
@@ -43,15 +31,9 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Selector = "selector",
-            Timeout = 0,
+            Model = "openai/gpt-5-nano",
+            Selector = "#main-content",
+            Timeout = 30000,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -65,30 +47,18 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Selector = "selector",
-            Timeout = 0,
+            Model = "openai/gpt-5-nano",
+            Selector = "#main-content",
+            Timeout = 30000,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptions>(element);
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = new()
-        {
-            APIKey = "apiKey",
-            BaseURL = "https://example.com",
-            Model = "model",
-            Provider = ModelConfigProvider.OpenAI,
-        };
-        string expectedSelector = "selector";
-        long expectedTimeout = 0;
+        ModelConfig expectedModel = "openai/gpt-5-nano";
+        string expectedSelector = "#main-content";
+        double expectedTimeout = 30000;
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedSelector, deserialized.Selector);
@@ -100,15 +70,9 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
-            {
-                APIKey = "apiKey",
-                BaseURL = "https://example.com",
-                Model = "model",
-                Provider = ModelConfigProvider.OpenAI,
-            },
-            Selector = "selector",
-            Timeout = 0,
+            Model = "openai/gpt-5-nano",
+            Selector = "#main-content",
+            Timeout = 30000,
         };
 
         model.Validate();
@@ -166,6 +130,62 @@ public class SessionExtractParamsOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class SessionExtractParamsXLanguageTest : TestBase
+{
+    [Theory]
+    [InlineData(SessionExtractParamsXLanguage.Typescript)]
+    [InlineData(SessionExtractParamsXLanguage.Python)]
+    [InlineData(SessionExtractParamsXLanguage.Playground)]
+    public void Validation_Works(SessionExtractParamsXLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionExtractParamsXLanguage> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExtractParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(SessionExtractParamsXLanguage.Typescript)]
+    [InlineData(SessionExtractParamsXLanguage.Python)]
+    [InlineData(SessionExtractParamsXLanguage.Playground)]
+    public void SerializationRoundtrip_Works(SessionExtractParamsXLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionExtractParamsXLanguage> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionExtractParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionExtractParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionExtractParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 

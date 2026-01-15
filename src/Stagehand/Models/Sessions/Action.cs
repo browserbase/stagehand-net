@@ -7,51 +7,36 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<Action, ActionFromRaw>))]
-public sealed record class Action : ModelBase
+/// <summary>
+/// Action object returned by observe and used by act
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Action, ActionFromRaw>))]
+public sealed record class Action : JsonModel
 {
-    /// <summary>
-    /// Arguments for the method
-    /// </summary>
-    public required IReadOnlyList<string> Arguments
-    {
-        get { return ModelBase.GetNotNullClass<List<string>>(this.RawData, "arguments"); }
-        init { ModelBase.Set(this._rawData, "arguments", value); }
-    }
-
     /// <summary>
     /// Human-readable description of the action
     /// </summary>
     public required string Description
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "description"); }
-        init { ModelBase.Set(this._rawData, "description", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
+        init { JsonModel.Set(this._rawData, "description", value); }
     }
 
     /// <summary>
-    /// Method to execute (e.g., "click", "fill")
-    /// </summary>
-    public required string Method
-    {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "method"); }
-        init { ModelBase.Set(this._rawData, "method", value); }
-    }
-
-    /// <summary>
-    /// CSS or XPath selector for the element
+    /// CSS selector or XPath for the element
     /// </summary>
     public required string Selector
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "selector"); }
-        init { ModelBase.Set(this._rawData, "selector", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "selector"); }
+        init { JsonModel.Set(this._rawData, "selector", value); }
     }
 
     /// <summary>
-    /// CDP backend node ID
+    /// Arguments to pass to the method
     /// </summary>
-    public long? BackendNodeID
+    public IReadOnlyList<string>? Arguments
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "backendNodeId"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "arguments"); }
         init
         {
             if (value == null)
@@ -59,18 +44,34 @@ public sealed record class Action : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "backendNodeId", value);
+            JsonModel.Set(this._rawData, "arguments", value);
+        }
+    }
+
+    /// <summary>
+    /// The method to execute (click, fill, etc.)
+    /// </summary>
+    public string? Method
+    {
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "method"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawData, "method", value);
         }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.Arguments;
         _ = this.Description;
-        _ = this.Method;
         _ = this.Selector;
-        _ = this.BackendNodeID;
+        _ = this.Arguments;
+        _ = this.Method;
     }
 
     public Action() { }
@@ -98,7 +99,7 @@ public sealed record class Action : ModelBase
     }
 }
 
-class ActionFromRaw : IFromRaw<Action>
+class ActionFromRaw : IFromRawJson<Action>
 {
     /// <inheritdoc/>
     public Action FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

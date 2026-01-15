@@ -7,12 +7,12 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(JsonModelConverter<SessionExtractResponse, SessionExtractResponseFromRaw>))]
-public sealed record class SessionExtractResponse : JsonModel
+[JsonConverter(typeof(JsonModelConverter<SessionObserveResponse, SessionObserveResponseFromRaw>))]
+public sealed record class SessionObserveResponse : JsonModel
 {
-    public required SessionExtractResponseData Data
+    public required SessionObserveResponseData Data
     {
-        get { return JsonModel.GetNotNullClass<SessionExtractResponseData>(this.RawData, "data"); }
+        get { return JsonModel.GetNotNullClass<SessionObserveResponseData>(this.RawData, "data"); }
         init { JsonModel.Set(this._rawData, "data", value); }
     }
 
@@ -32,26 +32,26 @@ public sealed record class SessionExtractResponse : JsonModel
         _ = this.Success;
     }
 
-    public SessionExtractResponse() { }
+    public SessionObserveResponse() { }
 
-    public SessionExtractResponse(SessionExtractResponse sessionExtractResponse)
-        : base(sessionExtractResponse) { }
+    public SessionObserveResponse(SessionObserveResponse sessionObserveResponse)
+        : base(sessionObserveResponse) { }
 
-    public SessionExtractResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    public SessionObserveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionExtractResponse(FrozenDictionary<string, JsonElement> rawData)
+    SessionObserveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="SessionExtractResponseFromRaw.FromRawUnchecked"/>
-    public static SessionExtractResponse FromRawUnchecked(
+    /// <inheritdoc cref="SessionObserveResponseFromRaw.FromRawUnchecked"/>
+    public static SessionObserveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -59,25 +59,22 @@ public sealed record class SessionExtractResponse : JsonModel
     }
 }
 
-class SessionExtractResponseFromRaw : IFromRawJson<SessionExtractResponse>
+class SessionObserveResponseFromRaw : IFromRawJson<SessionObserveResponse>
 {
     /// <inheritdoc/>
-    public SessionExtractResponse FromRawUnchecked(
+    public SessionObserveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => SessionExtractResponse.FromRawUnchecked(rawData);
+    ) => SessionObserveResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(
-    typeof(JsonModelConverter<SessionExtractResponseData, SessionExtractResponseDataFromRaw>)
+    typeof(JsonModelConverter<SessionObserveResponseData, SessionObserveResponseDataFromRaw>)
 )]
-public sealed record class SessionExtractResponseData : JsonModel
+public sealed record class SessionObserveResponseData : JsonModel
 {
-    /// <summary>
-    /// Extracted data matching the requested schema
-    /// </summary>
-    public required JsonElement Result
+    public required IReadOnlyList<Action> Result
     {
-        get { return JsonModel.GetNotNullStruct<JsonElement>(this.RawData, "result"); }
+        get { return JsonModel.GetNotNullClass<List<Action>>(this.RawData, "result"); }
         init { JsonModel.Set(this._rawData, "result", value); }
     }
 
@@ -101,30 +98,33 @@ public sealed record class SessionExtractResponseData : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.Result;
+        foreach (var item in this.Result)
+        {
+            item.Validate();
+        }
         _ = this.ActionID;
     }
 
-    public SessionExtractResponseData() { }
+    public SessionObserveResponseData() { }
 
-    public SessionExtractResponseData(SessionExtractResponseData sessionExtractResponseData)
-        : base(sessionExtractResponseData) { }
+    public SessionObserveResponseData(SessionObserveResponseData sessionObserveResponseData)
+        : base(sessionObserveResponseData) { }
 
-    public SessionExtractResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
+    public SessionObserveResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SessionExtractResponseData(FrozenDictionary<string, JsonElement> rawData)
+    SessionObserveResponseData(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="SessionExtractResponseDataFromRaw.FromRawUnchecked"/>
-    public static SessionExtractResponseData FromRawUnchecked(
+    /// <inheritdoc cref="SessionObserveResponseDataFromRaw.FromRawUnchecked"/>
+    public static SessionObserveResponseData FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -132,17 +132,17 @@ public sealed record class SessionExtractResponseData : JsonModel
     }
 
     [SetsRequiredMembers]
-    public SessionExtractResponseData(JsonElement result)
+    public SessionObserveResponseData(List<Action> result)
         : this()
     {
         this.Result = result;
     }
 }
 
-class SessionExtractResponseDataFromRaw : IFromRawJson<SessionExtractResponseData>
+class SessionObserveResponseDataFromRaw : IFromRawJson<SessionObserveResponseData>
 {
     /// <inheritdoc/>
-    public SessionExtractResponseData FromRawUnchecked(
+    public SessionObserveResponseData FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => SessionExtractResponseData.FromRawUnchecked(rawData);
+    ) => SessionObserveResponseData.FromRawUnchecked(rawData);
 }

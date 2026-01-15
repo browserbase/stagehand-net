@@ -10,15 +10,25 @@ public class SessionStartResponseTest : TestBase
     {
         var model = new SessionStartResponse
         {
-            Available = true,
-            SessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            Data = new()
+            {
+                Available = true,
+                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            },
+            Success = true,
         };
 
-        bool expectedAvailable = true;
-        string expectedSessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e";
+        SessionStartResponseData expectedData = new()
+        {
+            Available = true,
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedAvailable, model.Available);
-        Assert.Equal(expectedSessionID, model.SessionID);
+        Assert.Equal(expectedData, model.Data);
+        Assert.Equal(expectedSuccess, model.Success);
     }
 
     [Fact]
@@ -26,8 +36,13 @@ public class SessionStartResponseTest : TestBase
     {
         var model = new SessionStartResponse
         {
-            Available = true,
-            SessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            Data = new()
+            {
+                Available = true,
+                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            },
+            Success = true,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -41,19 +56,29 @@ public class SessionStartResponseTest : TestBase
     {
         var model = new SessionStartResponse
         {
-            Available = true,
-            SessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            Data = new()
+            {
+                Available = true,
+                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            },
+            Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionStartResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionStartResponse>(element);
         Assert.NotNull(deserialized);
 
-        bool expectedAvailable = true;
-        string expectedSessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e";
+        SessionStartResponseData expectedData = new()
+        {
+            Available = true,
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedAvailable, deserialized.Available);
-        Assert.Equal(expectedSessionID, deserialized.SessionID);
+        Assert.Equal(expectedData, deserialized.Data);
+        Assert.Equal(expectedSuccess, deserialized.Success);
     }
 
     [Fact]
@@ -61,8 +86,87 @@ public class SessionStartResponseTest : TestBase
     {
         var model = new SessionStartResponse
         {
+            Data = new()
+            {
+                Available = true,
+                ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+                SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            },
+            Success = true,
+        };
+
+        model.Validate();
+    }
+}
+
+public class SessionStartResponseDataTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SessionStartResponseData
+        {
             Available = true,
-            SessionID = "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+
+        bool expectedAvailable = true;
+        string expectedConnectURL = "wss://connect.browserbase.com/?signingKey=abc123";
+        string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+
+        Assert.Equal(expectedAvailable, model.Available);
+        Assert.Equal(expectedConnectURL, model.ConnectURL);
+        Assert.Equal(expectedSessionID, model.SessionID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionStartResponseData>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+        };
+
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionStartResponseData>(element);
+        Assert.NotNull(deserialized);
+
+        bool expectedAvailable = true;
+        string expectedConnectURL = "wss://connect.browserbase.com/?signingKey=abc123";
+        string expectedSessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+
+        Assert.Equal(expectedAvailable, deserialized.Available);
+        Assert.Equal(expectedConnectURL, deserialized.ConnectURL);
+        Assert.Equal(expectedSessionID, deserialized.SessionID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            ConnectURL = "wss://connect.browserbase.com/?signingKey=abc123",
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
         };
 
         model.Validate();

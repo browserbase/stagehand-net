@@ -1,19 +1,107 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Stagehand.Core;
+using Stagehand.Exceptions;
+using System = System;
 
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Closes the browser and cleans up all resources associated with the session.
+/// Terminates the browser session and releases all associated resources.
 /// </summary>
 public sealed record class SessionEndParams : ParamsBase
 {
-    public string? SessionID { get; init; }
+    public string? ID { get; init; }
+
+    /// <summary>
+    /// Client SDK language
+    /// </summary>
+    public ApiEnum<string, SessionEndParamsXLanguage>? XLanguage
+    {
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXLanguage>>(
+                this.RawHeaderData,
+                "x-language"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
+        }
+    }
+
+    /// <summary>
+    /// Version of the Stagehand SDK
+    /// </summary>
+    public string? XSDKVersion
+    {
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
+        }
+    }
+
+    /// <summary>
+    /// ISO timestamp when request was sent
+    /// </summary>
+    public System::DateTimeOffset? XSentAt
+    {
+        get
+        {
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
+                this.RawHeaderData,
+                "x-sent-at"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to stream the response via SSE
+    /// </summary>
+    public ApiEnum<string, SessionEndParamsXStreamResponse>? XStreamResponse
+    {
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionEndParamsXStreamResponse>>(
+                this.RawHeaderData,
+                "x-stream-response"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
+        }
+    }
 
     public SessionEndParams() { }
 
@@ -41,7 +129,7 @@ public sealed record class SessionEndParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionEndParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -53,11 +141,10 @@ public sealed record class SessionEndParams : ParamsBase
         );
     }
 
-    public override Uri Url(ClientOptions options)
+    public override System::Uri Url(ClientOptions options)
     {
-        return new UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/sessions/{0}/end", this.SessionID)
+        return new System::UriBuilder(
+            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/v1/sessions/{0}/end", this.ID)
         )
         {
             Query = this.QueryString(options),
@@ -71,5 +158,103 @@ public sealed record class SessionEndParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+}
+
+/// <summary>
+/// Client SDK language
+/// </summary>
+[JsonConverter(typeof(SessionEndParamsXLanguageConverter))]
+public enum SessionEndParamsXLanguage
+{
+    Typescript,
+    Python,
+    Playground,
+}
+
+sealed class SessionEndParamsXLanguageConverter : JsonConverter<SessionEndParamsXLanguage>
+{
+    public override SessionEndParamsXLanguage Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "typescript" => SessionEndParamsXLanguage.Typescript,
+            "python" => SessionEndParamsXLanguage.Python,
+            "playground" => SessionEndParamsXLanguage.Playground,
+            _ => (SessionEndParamsXLanguage)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionEndParamsXLanguage value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionEndParamsXLanguage.Typescript => "typescript",
+                SessionEndParamsXLanguage.Python => "python",
+                SessionEndParamsXLanguage.Playground => "playground",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Whether to stream the response via SSE
+/// </summary>
+[JsonConverter(typeof(SessionEndParamsXStreamResponseConverter))]
+public enum SessionEndParamsXStreamResponse
+{
+    True,
+    False,
+}
+
+sealed class SessionEndParamsXStreamResponseConverter
+    : JsonConverter<SessionEndParamsXStreamResponse>
+{
+    public override SessionEndParamsXStreamResponse Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "true" => SessionEndParamsXStreamResponse.True,
+            "false" => SessionEndParamsXStreamResponse.False,
+            _ => (SessionEndParamsXStreamResponse)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionEndParamsXStreamResponse value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionEndParamsXStreamResponse.True => "true",
+                SessionEndParamsXStreamResponse.False => "false",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

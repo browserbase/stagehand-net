@@ -7,21 +7,16 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionEndResponse, SessionEndResponseFromRaw>))]
-public sealed record class SessionEndResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionEndResponse, SessionEndResponseFromRaw>))]
+public sealed record class SessionEndResponse : JsonModel
 {
-    public bool? Success
+    /// <summary>
+    /// Indicates whether the request was successful
+    /// </summary>
+    public required bool Success
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "success"); }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "success", value);
-        }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "success"); }
+        init { JsonModel.Set(this._rawData, "success", value); }
     }
 
     /// <inheritdoc/>
@@ -55,9 +50,16 @@ public sealed record class SessionEndResponse : ModelBase
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public SessionEndResponse(bool success)
+        : this()
+    {
+        this.Success = success;
+    }
 }
 
-class SessionEndResponseFromRaw : IFromRaw<SessionEndResponse>
+class SessionEndResponseFromRaw : IFromRawJson<SessionEndResponse>
 {
     /// <inheritdoc/>
     public SessionEndResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

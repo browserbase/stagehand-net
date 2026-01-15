@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,12 +7,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Stagehand.Core;
 using Stagehand.Exceptions;
+using System = System;
 
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Returns a list of candidate actions that can be performed on the page, optionally
-/// filtered by natural language instruction.
+/// Identifies and returns available actions on the current page that match the given instruction.
 /// </summary>
 public sealed record class SessionObserveParams : ParamsBase
 {
@@ -23,14 +22,14 @@ public sealed record class SessionObserveParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public string? SessionID { get; init; }
+    public string? ID { get; init; }
 
     /// <summary>
-    /// Frame ID to observe
+    /// Target frame ID for the observation
     /// </summary>
     public string? FrameID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "frameId"); }
         init
         {
             if (value == null)
@@ -38,16 +37,16 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "frameId", value);
+            JsonModel.Set(this._rawBodyData, "frameId", value);
         }
     }
 
     /// <summary>
-    /// Natural language instruction to filter actions
+    /// Natural language instruction for what actions to find
     /// </summary>
     public string? Instruction
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "instruction"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "instruction"); }
         init
         {
             if (value == null)
@@ -55,7 +54,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "instruction", value);
+            JsonModel.Set(this._rawBodyData, "instruction", value);
         }
     }
 
@@ -63,7 +62,7 @@ public sealed record class SessionObserveParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<SessionObserveParamsOptions>(
+            return JsonModel.GetNullableClass<SessionObserveParamsOptions>(
                 this.RawBodyData,
                 "options"
             );
@@ -75,15 +74,81 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "options", value);
+            JsonModel.Set(this._rawBodyData, "options", value);
         }
     }
 
+    /// <summary>
+    /// Client SDK language
+    /// </summary>
+    public ApiEnum<string, SessionObserveParamsXLanguage>? XLanguage
+    {
+        get
+        {
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionObserveParamsXLanguage>>(
+                this.RawHeaderData,
+                "x-language"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-language", value);
+        }
+    }
+
+    /// <summary>
+    /// Version of the Stagehand SDK
+    /// </summary>
+    public string? XSDKVersion
+    {
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "x-sdk-version"); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-sdk-version", value);
+        }
+    }
+
+    /// <summary>
+    /// ISO timestamp when request was sent
+    /// </summary>
+    public System::DateTimeOffset? XSentAt
+    {
+        get
+        {
+            return JsonModel.GetNullableStruct<System::DateTimeOffset>(
+                this.RawHeaderData,
+                "x-sent-at"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            JsonModel.Set(this._rawHeaderData, "x-sent-at", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to stream the response via SSE
+    /// </summary>
     public ApiEnum<string, SessionObserveParamsXStreamResponse>? XStreamResponse
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SessionObserveParamsXStreamResponse>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SessionObserveParamsXStreamResponse>>(
                 this.RawHeaderData,
                 "x-stream-response"
             );
@@ -95,7 +160,7 @@ public sealed record class SessionObserveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            JsonModel.Set(this._rawHeaderData, "x-stream-response", value);
         }
     }
 
@@ -132,7 +197,7 @@ public sealed record class SessionObserveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionObserveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -146,20 +211,24 @@ public sealed record class SessionObserveParams : ParamsBase
         );
     }
 
-    public override Uri Url(ClientOptions options)
+    public override System::Uri Url(ClientOptions options)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/sessions/{0}/observe", this.SessionID)
+                + string.Format("/v1/sessions/{0}/observe", this.ID)
         )
         {
             Query = this.QueryString(options),
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -173,13 +242,16 @@ public sealed record class SessionObserveParams : ParamsBase
 }
 
 [JsonConverter(
-    typeof(ModelConverter<SessionObserveParamsOptions, SessionObserveParamsOptionsFromRaw>)
+    typeof(JsonModelConverter<SessionObserveParamsOptions, SessionObserveParamsOptionsFromRaw>)
 )]
-public sealed record class SessionObserveParamsOptions : ModelBase
+public sealed record class SessionObserveParamsOptions : JsonModel
 {
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// </summary>
     public ModelConfig? Model
     {
-        get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get { return JsonModel.GetNullableClass<ModelConfig>(this.RawData, "model"); }
         init
         {
             if (value == null)
@@ -187,16 +259,16 @@ public sealed record class SessionObserveParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "model", value);
+            JsonModel.Set(this._rawData, "model", value);
         }
     }
 
     /// <summary>
-    /// Observe only elements matching this selector
+    /// CSS selector to scope observation to a specific element
     /// </summary>
     public string? Selector
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "selector"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "selector"); }
         init
         {
             if (value == null)
@@ -204,13 +276,16 @@ public sealed record class SessionObserveParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "selector", value);
+            JsonModel.Set(this._rawData, "selector", value);
         }
     }
 
-    public long? Timeout
+    /// <summary>
+    /// Timeout in ms for the observation
+    /// </summary>
+    public double? Timeout
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "timeout"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "timeout"); }
         init
         {
             if (value == null)
@@ -218,7 +293,7 @@ public sealed record class SessionObserveParamsOptions : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeout", value);
+            JsonModel.Set(this._rawData, "timeout", value);
         }
     }
 
@@ -257,7 +332,7 @@ public sealed record class SessionObserveParamsOptions : ModelBase
     }
 }
 
-class SessionObserveParamsOptionsFromRaw : IFromRaw<SessionObserveParamsOptions>
+class SessionObserveParamsOptionsFromRaw : IFromRawJson<SessionObserveParamsOptions>
 {
     /// <inheritdoc/>
     public SessionObserveParamsOptions FromRawUnchecked(
@@ -265,6 +340,59 @@ class SessionObserveParamsOptionsFromRaw : IFromRaw<SessionObserveParamsOptions>
     ) => SessionObserveParamsOptions.FromRawUnchecked(rawData);
 }
 
+/// <summary>
+/// Client SDK language
+/// </summary>
+[JsonConverter(typeof(SessionObserveParamsXLanguageConverter))]
+public enum SessionObserveParamsXLanguage
+{
+    Typescript,
+    Python,
+    Playground,
+}
+
+sealed class SessionObserveParamsXLanguageConverter : JsonConverter<SessionObserveParamsXLanguage>
+{
+    public override SessionObserveParamsXLanguage Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "typescript" => SessionObserveParamsXLanguage.Typescript,
+            "python" => SessionObserveParamsXLanguage.Python,
+            "playground" => SessionObserveParamsXLanguage.Playground,
+            _ => (SessionObserveParamsXLanguage)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionObserveParamsXLanguage value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionObserveParamsXLanguage.Typescript => "typescript",
+                SessionObserveParamsXLanguage.Python => "python",
+                SessionObserveParamsXLanguage.Playground => "playground",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Whether to stream the response via SSE
+/// </summary>
 [JsonConverter(typeof(SessionObserveParamsXStreamResponseConverter))]
 public enum SessionObserveParamsXStreamResponse
 {
@@ -277,7 +405,7 @@ sealed class SessionObserveParamsXStreamResponseConverter
 {
     public override SessionObserveParamsXStreamResponse Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {

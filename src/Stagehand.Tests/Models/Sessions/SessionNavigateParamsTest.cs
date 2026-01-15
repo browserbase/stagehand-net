@@ -10,17 +10,31 @@ public class SessionNavigateParamsOptionsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
-        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Load;
+        string expectedReferer = "referer";
+        double expectedTimeout = 30000;
+        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Networkidle;
 
+        Assert.Equal(expectedReferer, model.Referer);
+        Assert.Equal(expectedTimeout, model.Timeout);
         Assert.Equal(expectedWaitUntil, model.WaitUntil);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
@@ -31,21 +45,35 @@ public class SessionNavigateParamsOptionsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(element);
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Load;
+        string expectedReferer = "referer";
+        double expectedTimeout = 30000;
+        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Networkidle;
 
+        Assert.Equal(expectedReferer, deserialized.Referer);
+        Assert.Equal(expectedTimeout, deserialized.Timeout);
         Assert.Equal(expectedWaitUntil, deserialized.WaitUntil);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
         model.Validate();
     }
@@ -55,6 +83,10 @@ public class SessionNavigateParamsOptionsTest : TestBase
     {
         var model = new SessionNavigateParamsOptions { };
 
+        Assert.Null(model.Referer);
+        Assert.False(model.RawData.ContainsKey("referer"));
+        Assert.Null(model.Timeout);
+        Assert.False(model.RawData.ContainsKey("timeout"));
         Assert.Null(model.WaitUntil);
         Assert.False(model.RawData.ContainsKey("waitUntil"));
     }
@@ -73,9 +105,15 @@ public class SessionNavigateParamsOptionsTest : TestBase
         var model = new SessionNavigateParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            Referer = null,
+            Timeout = null,
             WaitUntil = null,
         };
 
+        Assert.Null(model.Referer);
+        Assert.False(model.RawData.ContainsKey("referer"));
+        Assert.Null(model.Timeout);
+        Assert.False(model.RawData.ContainsKey("timeout"));
         Assert.Null(model.WaitUntil);
         Assert.False(model.RawData.ContainsKey("waitUntil"));
     }
@@ -86,6 +124,8 @@ public class SessionNavigateParamsOptionsTest : TestBase
         var model = new SessionNavigateParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            Referer = null,
+            Timeout = null,
             WaitUntil = null,
         };
 
@@ -146,6 +186,62 @@ public class WaitUntilTest : TestBase
             json,
             ModelBase.SerializerOptions
         );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class SessionNavigateParamsXLanguageTest : TestBase
+{
+    [Theory]
+    [InlineData(SessionNavigateParamsXLanguage.Typescript)]
+    [InlineData(SessionNavigateParamsXLanguage.Python)]
+    [InlineData(SessionNavigateParamsXLanguage.Playground)]
+    public void Validation_Works(SessionNavigateParamsXLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionNavigateParamsXLanguage> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionNavigateParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(SessionNavigateParamsXLanguage.Typescript)]
+    [InlineData(SessionNavigateParamsXLanguage.Python)]
+    [InlineData(SessionNavigateParamsXLanguage.Playground)]
+    public void SerializationRoundtrip_Works(SessionNavigateParamsXLanguage rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionNavigateParamsXLanguage> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionNavigateParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionNavigateParamsXLanguage>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionNavigateParamsXLanguage>
+        >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
