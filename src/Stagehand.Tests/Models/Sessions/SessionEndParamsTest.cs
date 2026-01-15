@@ -25,6 +25,8 @@ public class SessionEndParamsXLanguageTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -82,6 +84,8 @@ public class SessionEndParamsXStreamResponseTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 

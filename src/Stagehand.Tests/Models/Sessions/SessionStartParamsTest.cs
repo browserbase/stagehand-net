@@ -920,6 +920,8 @@ public class TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -1046,6 +1048,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         Assert.Equal(expectedProxies, model.Proxies);
         Assert.Equal(expectedRegion, model.Region);
         Assert.Equal(expectedTimeout, model.Timeout);
+        Assert.NotNull(model.UserMetadata);
         Assert.Equal(expectedUserMetadata.Count, model.UserMetadata.Count);
         foreach (var item in expectedUserMetadata)
         {
@@ -1195,6 +1198,7 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         Assert.Equal(expectedProxies, deserialized.Proxies);
         Assert.Equal(expectedRegion, deserialized.Region);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
+        Assert.NotNull(deserialized.UserMetadata);
         Assert.Equal(expectedUserMetadata.Count, deserialized.UserMetadata.Count);
         foreach (var item in expectedUserMetadata)
         {
@@ -1994,6 +1998,8 @@ public class FingerprintBrowserTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -2052,6 +2058,8 @@ public class DeviceTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -2108,6 +2116,8 @@ public class HTTPVersionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -2167,6 +2177,8 @@ public class OperatingSystemTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -3028,6 +3040,8 @@ public class RegionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -3087,6 +3101,8 @@ public class SessionStartParamsXLanguageTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -3144,6 +3160,8 @@ public class SessionStartParamsXStreamResponseTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
