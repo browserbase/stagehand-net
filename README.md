@@ -8,10 +8,10 @@ The REST API documentation can be found on [docs.stagehand.dev](https://docs.sta
 
 ## Installation
 
-Install the package from [NuGet](https://www.nuget.org/packages/StagehandSdk):
+Install the package from [NuGet](https://www.nuget.org/packages/Stagehand):
 
 ```bash
-dotnet add package StagehandSdk
+dotnet add package Stagehand
 ```
 
 ## Requirements
@@ -24,8 +24,8 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using StagehandSdk;
-using StagehandSdk.Models.Sessions;
+using Stagehand;
+using Stagehand.Models.Sessions;
 
 StagehandClient client = new();
 
@@ -45,7 +45,7 @@ Console.WriteLine(response);
 Configure the client using environment variables:
 
 ```csharp
-using StagehandSdk;
+using Stagehand;
 
 // Configured using the BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY and STAGEHAND_BASE_URL environment variables
 StagehandClient client = new();
@@ -54,7 +54,7 @@ StagehandClient client = new();
 Or manually:
 
 ```csharp
-using StagehandSdk;
+using Stagehand;
 
 StagehandClient client = new()
 {
@@ -115,7 +115,7 @@ These streaming methods return [`IAsyncEnumerable`](https://learn.microsoft.com/
 
 ```csharp
 using System;
-using StagehandSdk.Models.Sessions;
+using Stagehand.Models.Sessions;
 
 SessionActParams parameters = new()
 {
@@ -147,7 +147,7 @@ For non-streaming responses, you can deserialize the response into an instance o
 
 ```csharp
 using System;
-using StagehandSdk.Models.Sessions;
+using Stagehand.Models.Sessions;
 
 var response = await client.WithRawResponse.Sessions.Start(parameters);
 SessionStartResponse deserialized = await response.Deserialize();
@@ -212,7 +212,7 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using StagehandSdk;
+using Stagehand;
 
 StagehandClient client = new() { MaxRetries = 3 };
 ```
@@ -239,7 +239,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using StagehandSdk;
+using Stagehand;
 
 StagehandClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
@@ -278,7 +278,7 @@ response.Validate();
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using StagehandSdk;
+using Stagehand;
 
 StagehandClient client = new() { ResponseValidation = true };
 ```

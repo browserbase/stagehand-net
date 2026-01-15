@@ -1,0 +1,172 @@
+using System;
+using System.Net.Http;
+using System.Text.Json;
+using Stagehand.Core;
+using Stagehand.Exceptions;
+using Stagehand.Models.Sessions;
+
+namespace Stagehand.Tests.Models.Sessions;
+
+public class SessionEndParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new SessionEndParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            _ForceBody = JsonSerializer.Deserialize<JsonElement>("{}"),
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionEndParamsXStreamResponse.True,
+        };
+
+        string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        JsonElement expected_ForceBody = JsonSerializer.Deserialize<JsonElement>("{}");
+        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
+        ApiEnum<string, SessionEndParamsXStreamResponse> expectedXStreamResponse =
+            SessionEndParamsXStreamResponse.True;
+
+        Assert.Equal(expectedID, parameters.ID);
+        Assert.NotNull(parameters._ForceBody);
+        Assert.True(JsonElement.DeepEquals(expected_ForceBody, parameters._ForceBody.Value));
+        Assert.Equal(expectedXSentAt, parameters.XSentAt);
+        Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionEndParams { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
+
+        Assert.Null(parameters._ForceBody);
+        Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new SessionEndParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+
+            // Null should be interpreted as omitted for these properties
+            _ForceBody = null,
+            XSentAt = null,
+            XStreamResponse = null,
+        };
+
+        Assert.Null(parameters._ForceBody);
+        Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SessionEndParams parameters = new() { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
+
+        var url = parameters.Url(
+            new()
+            {
+                BrowserbaseApiKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelApiKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(
+            new Uri(
+                "https://api.stagehand.browserbase.com/v1/sessions/c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123/end"
+            ),
+            url
+        );
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        SessionEndParams parameters = new()
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionEndParamsXStreamResponse.True,
+        };
+
+        parameters.AddHeadersToRequest(
+            requestMessage,
+            new()
+            {
+                BrowserbaseApiKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelApiKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
+        Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
+    }
+}
+
+public class SessionEndParamsXStreamResponseTest : TestBase
+{
+    [Theory]
+    [InlineData(SessionEndParamsXStreamResponse.True)]
+    [InlineData(SessionEndParamsXStreamResponse.False)]
+    public void Validation_Works(SessionEndParamsXStreamResponse rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionEndParamsXStreamResponse> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionEndParamsXStreamResponse>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(SessionEndParamsXStreamResponse.True)]
+    [InlineData(SessionEndParamsXStreamResponse.False)]
+    public void SerializationRoundtrip_Works(SessionEndParamsXStreamResponse rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, SessionEndParamsXStreamResponse> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionEndParamsXStreamResponse>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, SessionEndParamsXStreamResponse>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, SessionEndParamsXStreamResponse>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
