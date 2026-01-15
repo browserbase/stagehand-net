@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using System.Text.Json;
 using Stagehand.Core;
 using Stagehand.Exceptions;
@@ -5,25 +7,188 @@ using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
 
+public class SessionNavigateParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+            FrameID = "frameId",
+            Options = new()
+            {
+                Referer = "referer",
+                Timeout = 30000,
+                WaitUntil = WaitUntil.Networkidle,
+            },
+            StreamResponse = true,
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionNavigateParamsXStreamResponse.True,
+        };
+
+        string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
+        string expectedUrlValue = "https://example.com";
+        string expectedFrameID = "frameId";
+        SessionNavigateParamsOptions expectedOptions = new()
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
+        bool expectedStreamResponse = true;
+        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
+        ApiEnum<string, SessionNavigateParamsXStreamResponse> expectedXStreamResponse =
+            SessionNavigateParamsXStreamResponse.True;
+
+        Assert.Equal(expectedID, parameters.ID);
+        Assert.Equal(expectedUrlValue, parameters.UrlValue);
+        Assert.Equal(expectedFrameID, parameters.FrameID);
+        Assert.Equal(expectedOptions, parameters.Options);
+        Assert.Equal(expectedStreamResponse, parameters.StreamResponse);
+        Assert.Equal(expectedXSentAt, parameters.XSentAt);
+        Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+        Assert.Null(parameters.Options);
+        Assert.False(parameters.RawBodyData.ContainsKey("options"));
+        Assert.Null(parameters.StreamResponse);
+        Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+
+            // Null should be interpreted as omitted for these properties
+            FrameID = null,
+            Options = null,
+            StreamResponse = null,
+            XSentAt = null,
+            XStreamResponse = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+        Assert.Null(parameters.Options);
+        Assert.False(parameters.RawBodyData.ContainsKey("options"));
+        Assert.Null(parameters.StreamResponse);
+        Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
+        Assert.Null(parameters.XSentAt);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SessionNavigateParams parameters = new()
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+        };
+
+        var url = parameters.Url(
+            new()
+            {
+                BrowserbaseApiKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelApiKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(
+            new Uri(
+                "https://api.stagehand.browserbase.com/v1/sessions/c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123/navigate"
+            ),
+            url
+        );
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        SessionNavigateParams parameters = new()
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
+            XStreamResponse = SessionNavigateParamsXStreamResponse.True,
+        };
+
+        parameters.AddHeadersToRequest(
+            requestMessage,
+            new()
+            {
+                BrowserbaseApiKey = "My Browserbase API Key",
+                BrowserbaseProjectID = "My Browserbase Project ID",
+                ModelApiKey = "My Model API Key",
+            }
+        );
+
+        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
+        Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
+    }
+}
+
 public class SessionNavigateParamsOptionsTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
-        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Load;
+        string expectedReferer = "referer";
+        double expectedTimeout = 30000;
+        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Networkidle;
 
+        Assert.Equal(expectedReferer, model.Referer);
+        Assert.Equal(expectedTimeout, model.Timeout);
         Assert.Equal(expectedWaitUntil, model.WaitUntil);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -31,21 +196,38 @@ public class SessionNavigateParamsOptionsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(json);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateParamsOptions>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Load;
+        string expectedReferer = "referer";
+        double expectedTimeout = 30000;
+        ApiEnum<string, WaitUntil> expectedWaitUntil = WaitUntil.Networkidle;
 
+        Assert.Equal(expectedReferer, deserialized.Referer);
+        Assert.Equal(expectedTimeout, deserialized.Timeout);
         Assert.Equal(expectedWaitUntil, deserialized.WaitUntil);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new SessionNavigateParamsOptions { WaitUntil = WaitUntil.Load };
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
 
         model.Validate();
     }
@@ -55,6 +237,10 @@ public class SessionNavigateParamsOptionsTest : TestBase
     {
         var model = new SessionNavigateParamsOptions { };
 
+        Assert.Null(model.Referer);
+        Assert.False(model.RawData.ContainsKey("referer"));
+        Assert.Null(model.Timeout);
+        Assert.False(model.RawData.ContainsKey("timeout"));
         Assert.Null(model.WaitUntil);
         Assert.False(model.RawData.ContainsKey("waitUntil"));
     }
@@ -73,9 +259,15 @@ public class SessionNavigateParamsOptionsTest : TestBase
         var model = new SessionNavigateParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            Referer = null,
+            Timeout = null,
             WaitUntil = null,
         };
 
+        Assert.Null(model.Referer);
+        Assert.False(model.RawData.ContainsKey("referer"));
+        Assert.Null(model.Timeout);
+        Assert.False(model.RawData.ContainsKey("timeout"));
         Assert.Null(model.WaitUntil);
         Assert.False(model.RawData.ContainsKey("waitUntil"));
     }
@@ -86,6 +278,8 @@ public class SessionNavigateParamsOptionsTest : TestBase
         var model = new SessionNavigateParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            Referer = null,
+            Timeout = null,
             WaitUntil = null,
         };
 
@@ -110,9 +304,11 @@ public class WaitUntilTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, WaitUntil>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -138,7 +334,7 @@ public class WaitUntilTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, WaitUntil>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -168,10 +364,9 @@ public class SessionNavigateParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, SessionNavigateParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
         Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
     }
 
@@ -196,10 +391,7 @@ public class SessionNavigateParamsXStreamResponseTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, SessionNavigateParamsXStreamResponse>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, SessionNavigateParamsXStreamResponse>

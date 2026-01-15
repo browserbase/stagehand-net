@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Stagehand.Core;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -20,8 +21,11 @@ public class SessionEndResponseTest : TestBase
     {
         var model = new SessionEndResponse { Success = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -31,8 +35,11 @@ public class SessionEndResponseTest : TestBase
     {
         var model = new SessionEndResponse { Success = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(json);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionEndResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         bool expectedSuccess = true;
@@ -44,48 +51,6 @@ public class SessionEndResponseTest : TestBase
     public void Validation_Works()
     {
         var model = new SessionEndResponse { Success = true };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new SessionEndResponse { };
-
-        Assert.Null(model.Success);
-        Assert.False(model.RawData.ContainsKey("success"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new SessionEndResponse { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new SessionEndResponse
-        {
-            // Null should be interpreted as omitted for these properties
-            Success = null,
-        };
-
-        Assert.Null(model.Success);
-        Assert.False(model.RawData.ContainsKey("success"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new SessionEndResponse
-        {
-            // Null should be interpreted as omitted for these properties
-            Success = null,
-        };
 
         model.Validate();
     }

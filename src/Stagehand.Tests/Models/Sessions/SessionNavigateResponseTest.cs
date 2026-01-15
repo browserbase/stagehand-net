@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Stagehand.Core;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -10,18 +11,23 @@ public class SessionNavigateResponseTest : TestBase
     {
         var model = new SessionNavigateResponse
         {
-            Ok = true,
-            Status = 0,
-            URL = "url",
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
         };
 
-        bool expectedOk = true;
-        long expectedStatus = 0;
-        string expectedURL = "url";
+        SessionNavigateResponseData expectedData = new()
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedOk, model.Ok);
-        Assert.Equal(expectedStatus, model.Status);
-        Assert.Equal(expectedURL, model.URL);
+        Assert.Equal(expectedData, model.Data);
+        Assert.Equal(expectedSuccess, model.Success);
     }
 
     [Fact]
@@ -29,13 +35,19 @@ public class SessionNavigateResponseTest : TestBase
     {
         var model = new SessionNavigateResponse
         {
-            Ok = true,
-            Status = 0,
-            URL = "url",
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -45,22 +57,30 @@ public class SessionNavigateResponseTest : TestBase
     {
         var model = new SessionNavigateResponse
         {
-            Ok = true,
-            Status = 0,
-            URL = "url",
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(json);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
-        bool expectedOk = true;
-        long expectedStatus = 0;
-        string expectedURL = "url";
+        SessionNavigateResponseData expectedData = new()
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+        bool expectedSuccess = true;
 
-        Assert.Equal(expectedOk, deserialized.Ok);
-        Assert.Equal(expectedStatus, deserialized.Status);
-        Assert.Equal(expectedURL, deserialized.URL);
+        Assert.Equal(expectedData, deserialized.Data);
+        Assert.Equal(expectedSuccess, deserialized.Success);
     }
 
     [Fact]
@@ -68,9 +88,84 @@ public class SessionNavigateResponseTest : TestBase
     {
         var model = new SessionNavigateResponse
         {
-            Ok = true,
-            Status = 0,
-            URL = "url",
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
+
+        model.Validate();
+    }
+}
+
+public class SessionNavigateResponseDataTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");
+        string expectedActionID = "actionId";
+
+        Assert.True(JsonElement.DeepEquals(expectedResult, model.Result));
+        Assert.Equal(expectedActionID, model.ActionID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponseData>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionNavigateResponseData>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        JsonElement expectedResult = JsonSerializer.Deserialize<JsonElement>("{}");
+        string expectedActionID = "actionId";
+
+        Assert.True(JsonElement.DeepEquals(expectedResult, deserialized.Result));
+        Assert.Equal(expectedActionID, deserialized.ActionID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
         };
 
         model.Validate();
@@ -79,20 +174,22 @@ public class SessionNavigateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new SessionNavigateResponse { };
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
-        Assert.Null(model.Ok);
-        Assert.False(model.RawData.ContainsKey("ok"));
-        Assert.Null(model.Status);
-        Assert.False(model.RawData.ContainsKey("status"));
-        Assert.Null(model.URL);
-        Assert.False(model.RawData.ContainsKey("url"));
+        Assert.Null(model.ActionID);
+        Assert.False(model.RawData.ContainsKey("actionId"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new SessionNavigateResponse { };
+        var model = new SessionNavigateResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
         model.Validate();
     }
@@ -100,31 +197,27 @@ public class SessionNavigateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new SessionNavigateResponse
+        var model = new SessionNavigateResponseData
         {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+
             // Null should be interpreted as omitted for these properties
-            Ok = null,
-            Status = null,
-            URL = null,
+            ActionID = null,
         };
 
-        Assert.Null(model.Ok);
-        Assert.False(model.RawData.ContainsKey("ok"));
-        Assert.Null(model.Status);
-        Assert.False(model.RawData.ContainsKey("status"));
-        Assert.Null(model.URL);
-        Assert.False(model.RawData.ContainsKey("url"));
+        Assert.Null(model.ActionID);
+        Assert.False(model.RawData.ContainsKey("actionId"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new SessionNavigateResponse
+        var model = new SessionNavigateResponseData
         {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+
             // Null should be interpreted as omitted for these properties
-            Ok = null,
-            Status = null,
-            URL = null,
+            ActionID = null,
         };
 
         model.Validate();

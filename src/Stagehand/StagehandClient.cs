@@ -14,12 +14,114 @@ namespace Stagehand;
 /// <inheritdoc/>
 public sealed class StagehandClient : IStagehandClient
 {
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BrowserbaseApiKey
+    {
+        get { return this._options.BrowserbaseApiKey; }
+        init { this._options.BrowserbaseApiKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BrowserbaseProjectID
+    {
+        get { return this._options.BrowserbaseProjectID; }
+        init { this._options.BrowserbaseProjectID = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ModelApiKey
+    {
+        get { return this._options.ModelApiKey; }
+        init { this._options.ModelApiKey = value; }
+    }
+
+    readonly Lazy<IStagehandClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IStagehandClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    /// <inheritdoc/>
+    public IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new StagehandClient(modifier(this._options));
+    }
+
+    readonly Lazy<ISessionService> _sessions;
+    public ISessionService Sessions
+    {
+        get { return _sessions.Value; }
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public StagehandClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new StagehandClientWithRawResponse(this._options));
+        _sessions = new(() => new SessionService(this));
+    }
+
+    public StagehandClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class StagehandClientWithRawResponse : IStagehandClientWithRawResponse
+{
+#if NET
+    static readonly Random Random = Random.Shared;
+#else
     static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
 
     static Random Random
     {
         get { return _threadLocalRandom.Value!; }
     }
+#endif
 
     readonly ClientOptions _options;
 
@@ -59,10 +161,10 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string BrowserbaseAPIKey
+    public string BrowserbaseApiKey
     {
-        get { return this._options.BrowserbaseAPIKey; }
-        init { this._options.BrowserbaseAPIKey = value; }
+        get { return this._options.BrowserbaseApiKey; }
+        init { this._options.BrowserbaseApiKey = value; }
     }
 
     /// <inheritdoc/>
@@ -73,20 +175,20 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string ModelAPIKey
+    public string ModelApiKey
     {
-        get { return this._options.ModelAPIKey; }
-        init { this._options.ModelAPIKey = value; }
+        get { return this._options.ModelApiKey; }
+        init { this._options.ModelApiKey = value; }
     }
 
     /// <inheritdoc/>
-    public IStagehandClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public IStagehandClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new StagehandClient(modifier(this._options));
+        return new StagehandClientWithRawResponse(modifier(this._options));
     }
 
-    readonly Lazy<ISessionService> _sessions;
-    public ISessionService Sessions
+    readonly Lazy<ISessionServiceWithRawResponse> _sessions;
+    public ISessionServiceWithRawResponse Sessions
     {
         get { return _sessions.Value; }
     }
@@ -118,7 +220,7 @@ public sealed class StagehandClient : IStagehandClient
 
             if (response != null && (++retries > maxRetries || !ShouldRetry(response)))
             {
-                if (response.Message.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return response;
                 }
@@ -126,7 +228,7 @@ public sealed class StagehandClient : IStagehandClient
                 try
                 {
                     throw StagehandExceptionFactory.CreateApiException(
-                        response.Message.StatusCode,
+                        response.StatusCode,
                         await response.ReadAsString(cancellationToken).ConfigureAwait(false)
                     );
                 }
@@ -187,7 +289,7 @@ public sealed class StagehandClient : IStagehandClient
         {
             throw new StagehandIOException("I/O exception", e);
         }
-        return new() { Message = responseMessage, CancellationToken = cts.Token };
+        return new() { RawMessage = responseMessage, CancellationToken = cts.Token };
     }
 
     static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
@@ -209,7 +311,7 @@ public sealed class StagehandClient : IStagehandClient
     static TimeSpan? ParseRetryAfterMsHeader(HttpResponse? response)
     {
         IEnumerable<string>? headerValues = null;
-        response?.Message.Headers.TryGetValues("Retry-After-Ms", out headerValues);
+        response?.TryGetHeaderValues("Retry-After-Ms", out headerValues);
         var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
         if (headerValue == null)
         {
@@ -227,7 +329,7 @@ public sealed class StagehandClient : IStagehandClient
     static TimeSpan? ParseRetryAfterHeader(HttpResponse? response)
     {
         IEnumerable<string>? headerValues = null;
-        response?.Message.Headers.TryGetValues("Retry-After", out headerValues);
+        response?.TryGetHeaderValues("Retry-After", out headerValues);
         var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
         if (headerValue == null)
         {
@@ -249,7 +351,7 @@ public sealed class StagehandClient : IStagehandClient
     static bool ShouldRetry(HttpResponse response)
     {
         if (
-            response.Message.Headers.TryGetValues("X-Should-Retry", out var headerValues)
+            response.TryGetHeaderValues("X-Should-Retry", out var headerValues)
             && bool.TryParse(Enumerable.FirstOrDefault(headerValues), out var shouldRetry)
         )
         {
@@ -257,7 +359,7 @@ public sealed class StagehandClient : IStagehandClient
             return shouldRetry;
         }
 
-        return (int)response.Message.StatusCode switch
+        return (int)response.StatusCode switch
         {
             // Retry on request timeouts
             408
@@ -279,14 +381,16 @@ public sealed class StagehandClient : IStagehandClient
         return e is IOException || e is StagehandIOException;
     }
 
-    public StagehandClient()
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public StagehandClientWithRawResponse()
     {
         _options = new();
 
-        _sessions = new(() => new SessionService(this));
+        _sessions = new(() => new SessionServiceWithRawResponse(this));
     }
 
-    public StagehandClient(ClientOptions options)
+    public StagehandClientWithRawResponse(ClientOptions options)
         : this()
     {
         _options = options;

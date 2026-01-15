@@ -226,9 +226,9 @@ using Stagehand;
 
 StagehandClient client = new()
 {
-    BrowserbaseAPIKey = "My Browserbase API Key",
+    BrowserbaseApiKey = "My Browserbase API Key",
     BrowserbaseProjectID = "My Browserbase Project ID",
-    ModelAPIKey = "My Model API Key",
+    ModelApiKey = "My Model API Key",
 };
 ```
 
@@ -236,12 +236,12 @@ Or using a combination of the two approaches.
 
 See this table for the available options:
 
-| Property               | Environment variable     | Required | Default value                                |
-| ---------------------- | ------------------------ | -------- | -------------------------------------------- |
-| `BrowserbaseAPIKey`    | `BROWSERBASE_API_KEY`    | true     | -                                            |
-| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                            |
-| `ModelAPIKey`          | `MODEL_API_KEY`          | true     | -                                            |
-| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com/v1"` |
+| Property               | Environment variable     | Required | Default value                             |
+| ---------------------- | ------------------------ | -------- | ----------------------------------------- |
+| `BrowserbaseApiKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
+| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                         |
+| `ModelApiKey`          | `MODEL_API_KEY`          | true     | -                                         |
+| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
 
 ### Modifying configuration
 
@@ -273,6 +273,67 @@ To send a request to the Stagehand API, build an instance of some `Params` class
 
 For example, `client.Sessions.Act` should be called with an instance of `SessionActParams`, and it will return an instance of `Task<SessionActResponse>`.
 
+## Streaming
+
+The SDK defines methods that return response "chunk" streams, where each chunk can be individually processed as soon as it arrives instead of waiting on the full response. Streaming methods generally correspond to [SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) or [JSONL](https://jsonlines.org) responses.
+
+Some of these methods may have streaming and non-streaming variants, but a streaming method will always have a `Streaming` suffix in its name, even if it doesn't have a non-streaming variant.
+
+These streaming methods return [`IAsyncEnumerable`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iasyncenumerable-1):
+
+```csharp
+using System;
+using Stagehand.Models.Sessions;
+
+SessionActParams parameters = new()
+{
+    ID = "00000000-your-session-id-000000000000",
+    Input = "click the first link on the page",
+};
+
+await foreach (var response in client.Sessions.ActStreaming(parameters))
+{
+    Console.WriteLine(response);
+}
+```
+
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of C# classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `WithRawResponse`:
+
+```csharp
+var response = await client.WithRawResponse.Sessions.Start(parameters);
+var statusCode = response.StatusCode;
+var headers = response.Headers;
+```
+
+The raw `HttpResponseMessage` can also be accessed through the `RawMessage` property.
+
+For non-streaming responses, you can deserialize the response into an instance of a C# class if needed:
+
+```csharp
+using System;
+using Stagehand.Models.Sessions;
+
+var response = await client.WithRawResponse.Sessions.Start(parameters);
+SessionStartResponse deserialized = await response.Deserialize();
+Console.WriteLine(deserialized);
+```
+
+For streaming responses, you can deserialize the response to an [`IAsyncEnumerable`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iasyncenumerable-1) if needed:
+
+```csharp
+using System;
+
+var response = await client.WithRawResponse.Sessions.ActStreaming(parameters);
+await foreach (var item in response.Enumerate())
+{
+    Console.WriteLine(item);
+}
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
@@ -292,7 +353,7 @@ The SDK throws custom unchecked exception types:
 
 Additionally, all 4xx errors inherit from `Stagehand4xxException`.
 
-false
+- `StagehandSseException`: thrown for errors encountered during [SSE streaming](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) after a successful initial HTTP response.
 
 - `StagehandIOException`: I/O networking errors.
 

@@ -12,34 +12,42 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Performs a browser action based on natural language instruction or a specific
-/// action object returned by observe().
+/// Executes a browser action using natural language instructions or a predefined
+/// Action object.
 /// </summary>
 public sealed record class SessionActParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public string? SessionID { get; init; }
+    public string? ID { get; init; }
 
     /// <summary>
-    /// Natural language instruction
+    /// Natural language instruction or Action object
     /// </summary>
     public required Input Input
     {
-        get { return ModelBase.GetNotNullClass<Input>(this.RawBodyData, "input"); }
-        init { ModelBase.Set(this._rawBodyData, "input", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Input>("input");
+        }
+        init { this._rawBodyData.Set("input", value); }
     }
 
     /// <summary>
-    /// Frame ID to act on (optional)
+    /// Target frame ID for the action
     /// </summary>
     public string? FrameID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "frameId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("frameId");
+        }
         init
         {
             if (value == null)
@@ -47,13 +55,17 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "frameId", value);
+            this._rawBodyData.Set("frameId", value);
         }
     }
 
     public Options? Options
     {
-        get { return ModelBase.GetNullableClass<Options>(this.RawBodyData, "options"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Options>("options");
+        }
         init
         {
             if (value == null)
@@ -61,16 +73,40 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawBodyData, "options", value);
+            this._rawBodyData.Set("options", value);
         }
     }
 
+    /// <summary>
+    /// ISO timestamp when request was sent
+    /// </summary>
+    public System::DateTimeOffset? XSentAt
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-sent-at", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to stream the response via SSE
+    /// </summary>
     public ApiEnum<string, XStreamResponse>? XStreamResponse
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, XStreamResponse>>(
-                this.RawHeaderData,
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<ApiEnum<string, XStreamResponse>>(
                 "x-stream-response"
             );
         }
@@ -81,7 +117,7 @@ public sealed record class SessionActParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "x-stream-response", value);
+            this._rawHeaderData.Set("x-stream-response", value);
         }
     }
 
@@ -90,7 +126,9 @@ public sealed record class SessionActParams : ParamsBase
     public SessionActParams(SessionActParams sessionActParams)
         : base(sessionActParams)
     {
-        this._rawBodyData = [.. sessionActParams._rawBodyData];
+        this.ID = sessionActParams.ID;
+
+        this._rawBodyData = new(sessionActParams._rawBodyData);
     }
 
     public SessionActParams(
@@ -99,9 +137,9 @@ public sealed record class SessionActParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -112,13 +150,13 @@ public sealed record class SessionActParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionActParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -135,17 +173,20 @@ public sealed record class SessionActParams : ParamsBase
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/sessions/{0}/act", this.SessionID)
+            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/v1/sessions/{0}/act", this.ID)
         )
         {
             Query = this.QueryString(options),
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -159,35 +200,41 @@ public sealed record class SessionActParams : ParamsBase
 }
 
 /// <summary>
-/// Natural language instruction
+/// Natural language instruction or Action object
 /// </summary>
 [JsonConverter(typeof(InputConverter))]
-public record class Input
+public record class Input : ModelBase
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public Input(string value, JsonElement? json = null)
+    public Input(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Input(Action value, JsonElement? json = null)
+    public Input(Action value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Input(JsonElement json)
+    public Input(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -312,7 +359,7 @@ public record class Input
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -330,6 +377,9 @@ public record class Input
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class InputConverter : JsonConverter<Input>
@@ -340,14 +390,14 @@ sealed class InputConverter : JsonConverter<Input>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<Action>(json, options);
+            var deserialized = JsonSerializer.Deserialize<Action>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -357,10 +407,10 @@ sealed class InputConverter : JsonConverter<Input>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
@@ -368,7 +418,7 @@ sealed class InputConverter : JsonConverter<Input>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Input value, JsonSerializerOptions options)
@@ -377,12 +427,19 @@ sealed class InputConverter : JsonConverter<Input>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Options, OptionsFromRaw>))]
-public sealed record class Options : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Options, OptionsFromRaw>))]
+public sealed record class Options : JsonModel
 {
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// </summary>
     public ModelConfig? Model
     {
-        get { return ModelBase.GetNullableClass<ModelConfig>(this.RawData, "model"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ModelConfig>("model");
+        }
         init
         {
             if (value == null)
@@ -390,16 +447,20 @@ public sealed record class Options : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "model", value);
+            this._rawData.Set("model", value);
         }
     }
 
     /// <summary>
-    /// Timeout in milliseconds
+    /// Timeout in ms for the action
     /// </summary>
-    public long? Timeout
+    public double? Timeout
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "timeout"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("timeout");
+        }
         init
         {
             if (value == null)
@@ -407,21 +468,19 @@ public sealed record class Options : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "timeout", value);
+            this._rawData.Set("timeout", value);
         }
     }
 
     /// <summary>
-    /// Template variables for instruction
+    /// Variables to substitute in the action instruction
     /// </summary>
     public IReadOnlyDictionary<string, string>? Variables
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, string>>(
-                this.RawData,
-                "variables"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("variables");
         }
         init
         {
@@ -430,7 +489,10 @@ public sealed record class Options : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "variables", value);
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "variables",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
         }
     }
 
@@ -449,14 +511,14 @@ public sealed record class Options : ModelBase
 
     public Options(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Options(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -467,13 +529,16 @@ public sealed record class Options : ModelBase
     }
 }
 
-class OptionsFromRaw : IFromRaw<Options>
+class OptionsFromRaw : IFromRawJson<Options>
 {
     /// <inheritdoc/>
     public Options FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Options.FromRawUnchecked(rawData);
 }
 
+/// <summary>
+/// Whether to stream the response via SSE
+/// </summary>
 [JsonConverter(typeof(XStreamResponseConverter))]
 public enum XStreamResponse
 {

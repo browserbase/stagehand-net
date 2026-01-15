@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Stagehand.Core;
 using Stagehand.Models.Sessions;
 
 namespace Stagehand.Tests.Models.Sessions;
@@ -11,28 +12,29 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
             BackendNodeID = 0,
+            Method = "click",
         };
 
-        List<string> expectedArguments = ["string"];
-        string expectedDescription = "description";
-        string expectedMethod = "method";
-        string expectedSelector = "selector";
-        long expectedBackendNodeID = 0;
+        string expectedDescription = "Click the submit button";
+        string expectedSelector = "[data-testid='submit-button']";
+        List<string> expectedArguments = ["Hello World"];
+        double expectedBackendNodeID = 0;
+        string expectedMethod = "click";
 
+        Assert.Equal(expectedDescription, model.Description);
+        Assert.Equal(expectedSelector, model.Selector);
+        Assert.NotNull(model.Arguments);
         Assert.Equal(expectedArguments.Count, model.Arguments.Count);
         for (int i = 0; i < expectedArguments.Count; i++)
         {
             Assert.Equal(expectedArguments[i], model.Arguments[i]);
         }
-        Assert.Equal(expectedDescription, model.Description);
-        Assert.Equal(expectedMethod, model.Method);
-        Assert.Equal(expectedSelector, model.Selector);
         Assert.Equal(expectedBackendNodeID, model.BackendNodeID);
+        Assert.Equal(expectedMethod, model.Method);
     }
 
     [Fact]
@@ -40,15 +42,15 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
             BackendNodeID = 0,
+            Method = "click",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Action>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Action>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -58,32 +60,33 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
             BackendNodeID = 0,
+            Method = "click",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Action>(json);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Action>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
-        List<string> expectedArguments = ["string"];
-        string expectedDescription = "description";
-        string expectedMethod = "method";
-        string expectedSelector = "selector";
-        long expectedBackendNodeID = 0;
+        string expectedDescription = "Click the submit button";
+        string expectedSelector = "[data-testid='submit-button']";
+        List<string> expectedArguments = ["Hello World"];
+        double expectedBackendNodeID = 0;
+        string expectedMethod = "click";
 
+        Assert.Equal(expectedDescription, deserialized.Description);
+        Assert.Equal(expectedSelector, deserialized.Selector);
+        Assert.NotNull(deserialized.Arguments);
         Assert.Equal(expectedArguments.Count, deserialized.Arguments.Count);
         for (int i = 0; i < expectedArguments.Count; i++)
         {
             Assert.Equal(expectedArguments[i], deserialized.Arguments[i]);
         }
-        Assert.Equal(expectedDescription, deserialized.Description);
-        Assert.Equal(expectedMethod, deserialized.Method);
-        Assert.Equal(expectedSelector, deserialized.Selector);
         Assert.Equal(expectedBackendNodeID, deserialized.BackendNodeID);
+        Assert.Equal(expectedMethod, deserialized.Method);
     }
 
     [Fact]
@@ -91,11 +94,11 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
             BackendNodeID = 0,
+            Method = "click",
         };
 
         model.Validate();
@@ -106,14 +109,16 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
         };
 
+        Assert.Null(model.Arguments);
+        Assert.False(model.RawData.ContainsKey("arguments"));
         Assert.Null(model.BackendNodeID);
         Assert.False(model.RawData.ContainsKey("backendNodeId"));
+        Assert.Null(model.Method);
+        Assert.False(model.RawData.ContainsKey("method"));
     }
 
     [Fact]
@@ -121,10 +126,8 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
         };
 
         model.Validate();
@@ -135,17 +138,21 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
 
             // Null should be interpreted as omitted for these properties
+            Arguments = null,
             BackendNodeID = null,
+            Method = null,
         };
 
+        Assert.Null(model.Arguments);
+        Assert.False(model.RawData.ContainsKey("arguments"));
         Assert.Null(model.BackendNodeID);
         Assert.False(model.RawData.ContainsKey("backendNodeId"));
+        Assert.Null(model.Method);
+        Assert.False(model.RawData.ContainsKey("method"));
     }
 
     [Fact]
@@ -153,13 +160,13 @@ public class ActionTest : TestBase
     {
         var model = new Action
         {
-            Arguments = ["string"],
-            Description = "description",
-            Method = "method",
-            Selector = "selector",
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
 
             // Null should be interpreted as omitted for these properties
+            Arguments = null,
             BackendNodeID = null,
+            Method = null,
         };
 
         model.Validate();

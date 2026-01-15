@@ -7,21 +7,20 @@ using Stagehand.Core;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(ModelConverter<SessionEndResponse, SessionEndResponseFromRaw>))]
-public sealed record class SessionEndResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SessionEndResponse, SessionEndResponseFromRaw>))]
+public sealed record class SessionEndResponse : JsonModel
 {
-    public bool? Success
+    /// <summary>
+    /// Indicates whether the request was successful
+    /// </summary>
+    public required bool Success
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "success"); }
-        init
+        get
         {
-            if (value == null)
-            {
-                return;
-            }
-
-            ModelBase.Set(this._rawData, "success", value);
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("success");
         }
+        init { this._rawData.Set("success", value); }
     }
 
     /// <inheritdoc/>
@@ -37,14 +36,14 @@ public sealed record class SessionEndResponse : ModelBase
 
     public SessionEndResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionEndResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -55,9 +54,16 @@ public sealed record class SessionEndResponse : ModelBase
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public SessionEndResponse(bool success)
+        : this()
+    {
+        this.Success = success;
+    }
 }
 
-class SessionEndResponseFromRaw : IFromRaw<SessionEndResponse>
+class SessionEndResponseFromRaw : IFromRawJson<SessionEndResponse>
 {
     /// <inheritdoc/>
     public SessionEndResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

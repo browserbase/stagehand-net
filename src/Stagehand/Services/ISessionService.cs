@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Stagehand.Core;
-using Sessions = Stagehand.Models.Sessions;
+using Stagehand.Models.Sessions;
 
 namespace Stagehand.Services;
 
@@ -15,6 +15,12 @@ namespace Stagehand.Services;
 public interface ISessionService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISessionServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -22,105 +28,348 @@ public interface ISessionService
     ISessionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Performs a browser action based on natural language instruction or a specific
-    /// action object returned by observe().
+    /// Executes a browser action using natural language instructions or a predefined
+    /// Action object.
     /// </summary>
-    Task<Sessions::SessionActResponse> Act(
-        Sessions::SessionActParams parameters,
+    Task<SessionActResponse> Act(
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="Act(Sessions::SessionActParams, CancellationToken)"/>
-    Task<Sessions::SessionActResponse> Act(
-        string sessionID,
-        Sessions::SessionActParams parameters,
+    /// <inheritdoc cref="Act(SessionActParams, CancellationToken)"/>
+    Task<SessionActResponse> Act(
+        string id,
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Closes the browser and cleans up all resources associated with the session.
+    /// Executes a browser action using natural language instructions or a predefined
+    /// Action object.
     /// </summary>
-    Task<Sessions::SessionEndResponse> End(
-        Sessions::SessionEndParams parameters,
+    IAsyncEnumerable<StreamEvent> ActStreaming(
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="End(Sessions::SessionEndParams, CancellationToken)"/>
-    Task<Sessions::SessionEndResponse> End(
-        string sessionID,
-        Sessions::SessionEndParams? parameters = null,
+    /// <inheritdoc cref="ActStreaming(SessionActParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ActStreaming(
+        string id,
+        SessionActParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Runs an autonomous agent that can perform multiple actions to complete a
-    /// complex task.
+    /// Terminates the browser session and releases all associated resources.
     /// </summary>
-    Task<Sessions::SessionExecuteAgentResponse> ExecuteAgent(
-        Sessions::SessionExecuteAgentParams parameters,
+    Task<SessionEndResponse> End(
+        SessionEndParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="ExecuteAgent(Sessions::SessionExecuteAgentParams, CancellationToken)"/>
-    Task<Sessions::SessionExecuteAgentResponse> ExecuteAgent(
-        string sessionID,
-        Sessions::SessionExecuteAgentParams parameters,
+    /// <inheritdoc cref="End(SessionEndParams, CancellationToken)"/>
+    Task<SessionEndResponse> End(
+        string id,
+        SessionEndParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Extracts data from the current page using natural language instructions and
-    /// optional JSON schema for structured output.
+    /// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
     /// </summary>
-    Task<Sessions::SessionExtractResponse> Extract(
-        Sessions::SessionExtractParams parameters,
+    Task<SessionExecuteResponse> Execute(
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="Extract(Sessions::SessionExtractParams, CancellationToken)"/>
-    Task<Sessions::SessionExtractResponse> Extract(
-        string sessionID,
-        Sessions::SessionExtractParams? parameters = null,
+    /// <inheritdoc cref="Execute(SessionExecuteParams, CancellationToken)"/>
+    Task<SessionExecuteResponse> Execute(
+        string id,
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Navigates the browser to the specified URL and waits for page load.
+    /// Runs an autonomous AI agent that can perform complex multi-step browser tasks.
     /// </summary>
-    Task<Sessions::SessionNavigateResponse?> Navigate(
-        Sessions::SessionNavigateParams parameters,
+    IAsyncEnumerable<StreamEvent> ExecuteStreaming(
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="Navigate(Sessions::SessionNavigateParams, CancellationToken)"/>
-    Task<Sessions::SessionNavigateResponse?> Navigate(
-        string sessionID,
-        Sessions::SessionNavigateParams parameters,
+    /// <inheritdoc cref="ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ExecuteStreaming(
+        string id,
+        SessionExecuteParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Returns a list of candidate actions that can be performed on the page, optionally
-    /// filtered by natural language instruction.
+    /// Extracts structured data from the current page using AI-powered analysis.
     /// </summary>
-    Task<List<Sessions::Action>> Observe(
-        Sessions::SessionObserveParams parameters,
+    Task<SessionExtractResponse> Extract(
+        SessionExtractParams parameters,
         CancellationToken cancellationToken = default
     );
 
-    /// <inheritdoc cref="Observe(Sessions::SessionObserveParams, CancellationToken)"/>
-    Task<List<Sessions::Action>> Observe(
-        string sessionID,
-        Sessions::SessionObserveParams? parameters = null,
+    /// <inheritdoc cref="Extract(SessionExtractParams, CancellationToken)"/>
+    Task<SessionExtractResponse> Extract(
+        string id,
+        SessionExtractParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
-    /// Initializes a new Stagehand session with a browser instance. Returns a session
-    /// ID that must be used for all subsequent requests.
+    /// Extracts structured data from the current page using AI-powered analysis.
     /// </summary>
-    Task<Sessions::SessionStartResponse> Start(
-        Sessions::SessionStartParams parameters,
+    IAsyncEnumerable<StreamEvent> ExtractStreaming(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExtractStreaming(SessionExtractParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ExtractStreaming(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Navigates the browser to the specified URL.
+    /// </summary>
+    Task<SessionNavigateResponse> Navigate(
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Navigate(SessionNavigateParams, CancellationToken)"/>
+    Task<SessionNavigateResponse> Navigate(
+        string id,
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Identifies and returns available actions on the current page that match the
+    /// given instruction.
+    /// </summary>
+    Task<SessionObserveResponse> Observe(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Observe(SessionObserveParams, CancellationToken)"/>
+    Task<SessionObserveResponse> Observe(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Identifies and returns available actions on the current page that match the
+    /// given instruction.
+    /// </summary>
+    IAsyncEnumerable<StreamEvent> ObserveStreaming(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ObserveStreaming(SessionObserveParams, CancellationToken)"/>
+    IAsyncEnumerable<StreamEvent> ObserveStreaming(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Creates a new browser session with the specified configuration. Returns a
+    /// session ID used for all subsequent operations.
+    /// </summary>
+    Task<SessionStartResponse> Start(
+        SessionStartParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISessionService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISessionServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISessionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/act`, but is otherwise the
+    /// same as <see cref="ISessionService.Act(SessionActParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionActResponse>> Act(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Act(SessionActParams, CancellationToken)"/>
+    Task<HttpResponse<SessionActResponse>> Act(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/act`, but is otherwise the
+    /// same as <see cref="ISessionService.ActStreaming(SessionActParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ActStreaming(SessionActParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ActStreaming(
+        string id,
+        SessionActParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/end`, but is otherwise the
+    /// same as <see cref="ISessionService.End(SessionEndParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionEndResponse>> End(
+        SessionEndParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="End(SessionEndParams, CancellationToken)"/>
+    Task<HttpResponse<SessionEndResponse>> End(
+        string id,
+        SessionEndParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/agentExecute`, but is otherwise the
+    /// same as <see cref="ISessionService.Execute(SessionExecuteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionExecuteResponse>> Execute(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Execute(SessionExecuteParams, CancellationToken)"/>
+    Task<HttpResponse<SessionExecuteResponse>> Execute(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/agentExecute`, but is otherwise the
+    /// same as <see cref="ISessionService.ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExecuteStreaming(SessionExecuteParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ExecuteStreaming(
+        string id,
+        SessionExecuteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/extract`, but is otherwise the
+    /// same as <see cref="ISessionService.Extract(SessionExtractParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionExtractResponse>> Extract(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Extract(SessionExtractParams, CancellationToken)"/>
+    Task<HttpResponse<SessionExtractResponse>> Extract(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/extract`, but is otherwise the
+    /// same as <see cref="ISessionService.ExtractStreaming(SessionExtractParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        SessionExtractParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ExtractStreaming(SessionExtractParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ExtractStreaming(
+        string id,
+        SessionExtractParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/navigate`, but is otherwise the
+    /// same as <see cref="ISessionService.Navigate(SessionNavigateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Navigate(SessionNavigateParams, CancellationToken)"/>
+    Task<HttpResponse<SessionNavigateResponse>> Navigate(
+        string id,
+        SessionNavigateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/observe`, but is otherwise the
+    /// same as <see cref="ISessionService.Observe(SessionObserveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionObserveResponse>> Observe(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Observe(SessionObserveParams, CancellationToken)"/>
+    Task<HttpResponse<SessionObserveResponse>> Observe(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/{id}/observe`, but is otherwise the
+    /// same as <see cref="ISessionService.ObserveStreaming(SessionObserveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        SessionObserveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ObserveStreaming(SessionObserveParams, CancellationToken)"/>
+    Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
+        string id,
+        SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /v1/sessions/start`, but is otherwise the
+    /// same as <see cref="ISessionService.Start(SessionStartParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionStartResponse>> Start(
+        SessionStartParams parameters,
         CancellationToken cancellationToken = default
     );
 }

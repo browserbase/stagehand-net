@@ -40,11 +40,15 @@ public struct ClientOptions()
     }
 
     /// <summary>
-    /// Whether to validate every response before returning it.
+    /// Whether to validate response bodies before returning them.
     ///
-    /// <para>Defaults to false, which means the shape of the response will not be
-    /// validated upfront. Instead, validation will only occur for the parts of the
-    /// response that are accessed.</para>
+    /// <para>Defaults to false, which means the shape of the response body will not be validated upfront.
+    /// Instead, validation will only occur for the parts of the response body that are accessed.</para>
+    ///
+    /// <para>Note that when set to true, the response body is only validated if the response is
+    /// deserialized. Methods that don't eagerly deserialize the response, such as those on
+    /// <see cref="IStagehandClient.WithRawResponse"/>, don't perform validation until deserialization
+    /// is triggered.</para>
     /// </summary>
     public bool ResponseValidation { get; set; } = false;
 
@@ -82,21 +86,21 @@ public struct ClientOptions()
     /// <summary>
     /// Your [Browserbase API Key](https://www.browserbase.com/settings)
     /// </summary>
-    Lazy<string> _browserbaseAPIKey = new(() =>
+    Lazy<string> _browserbaseApiKey = new(() =>
         Environment.GetEnvironmentVariable("BROWSERBASE_API_KEY")
         ?? throw new StagehandInvalidDataException(
-            string.Format("{0} cannot be null", nameof(BrowserbaseAPIKey)),
-            new ArgumentNullException(nameof(BrowserbaseAPIKey))
+            string.Format("{0} cannot be null", nameof(BrowserbaseApiKey)),
+            new ArgumentNullException(nameof(BrowserbaseApiKey))
         )
     );
 
     /// <summary>
     /// Your [Browserbase API Key](https://www.browserbase.com/settings)
     /// </summary>
-    public string BrowserbaseAPIKey
+    public string BrowserbaseApiKey
     {
-        readonly get { return _browserbaseAPIKey.Value; }
-        set { _browserbaseAPIKey = new(() => value); }
+        readonly get { return _browserbaseApiKey.Value; }
+        set { _browserbaseApiKey = new(() => value); }
     }
 
     /// <summary>
@@ -122,20 +126,20 @@ public struct ClientOptions()
     /// <summary>
     /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     /// </summary>
-    Lazy<string> _modelAPIKey = new(() =>
+    Lazy<string> _modelApiKey = new(() =>
         Environment.GetEnvironmentVariable("MODEL_API_KEY")
         ?? throw new StagehandInvalidDataException(
-            string.Format("{0} cannot be null", nameof(ModelAPIKey)),
-            new ArgumentNullException(nameof(ModelAPIKey))
+            string.Format("{0} cannot be null", nameof(ModelApiKey)),
+            new ArgumentNullException(nameof(ModelApiKey))
         )
     );
 
     /// <summary>
     /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     /// </summary>
-    public string ModelAPIKey
+    public string ModelApiKey
     {
-        readonly get { return _modelAPIKey.Value; }
-        set { _modelAPIKey = new(() => value); }
+        readonly get { return _modelApiKey.Value; }
+        set { _modelApiKey = new(() => value); }
     }
 }
