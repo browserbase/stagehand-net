@@ -52,7 +52,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    Model = "openai/gpt-5-nano",
+                    Model = "openai/gpt-4o",
                     Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },
@@ -79,7 +79,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    Model = "openai/gpt-5-nano",
+                    Model = "openai/gpt-4o",
                     Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },

@@ -95,7 +95,6 @@ public class SessionStartParamsTest : TestBase
             SystemPrompt = "systemPrompt",
             Verbose = Sessions::Verbose.V1,
             WaitForCaptchaSolves = true,
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
 
@@ -179,7 +178,6 @@ public class SessionStartParamsTest : TestBase
         string expectedSystemPrompt = "systemPrompt";
         ApiEnum<double, Sessions::Verbose> expectedVerbose = Sessions::Verbose.V1;
         bool expectedWaitForCaptchaSolves = true;
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::SessionStartParamsXStreamResponse> expectedXStreamResponse =
             Sessions::SessionStartParamsXStreamResponse.True;
 
@@ -197,7 +195,6 @@ public class SessionStartParamsTest : TestBase
         Assert.Equal(expectedSystemPrompt, parameters.SystemPrompt);
         Assert.Equal(expectedVerbose, parameters.Verbose);
         Assert.Equal(expectedWaitForCaptchaSolves, parameters.WaitForCaptchaSolves);
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -226,8 +223,6 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
         Assert.Null(parameters.WaitForCaptchaSolves);
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -250,7 +245,6 @@ public class SessionStartParamsTest : TestBase
             SystemPrompt = null,
             Verbose = null,
             WaitForCaptchaSolves = null,
-            XSentAt = null,
             XStreamResponse = null,
         };
 
@@ -274,8 +268,6 @@ public class SessionStartParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("verbose"));
         Assert.Null(parameters.WaitForCaptchaSolves);
         Assert.False(parameters.RawBodyData.ContainsKey("waitForCaptchaSolves"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -304,7 +296,6 @@ public class SessionStartParamsTest : TestBase
         Sessions::SessionStartParams parameters = new()
         {
             ModelName = "openai/gpt-4o",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
         };
 
@@ -318,7 +309,6 @@ public class SessionStartParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }

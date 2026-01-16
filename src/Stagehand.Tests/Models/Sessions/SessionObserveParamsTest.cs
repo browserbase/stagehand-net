@@ -19,11 +19,10 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Selector = "nav",
                 Timeout = 30000,
             },
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
         };
 
@@ -32,11 +31,10 @@ public class SessionObserveParamsTest : TestBase
         string expectedInstruction = "Find all clickable navigation links";
         SessionObserveParamsOptions expectedOptions = new()
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "nav",
             Timeout = 30000,
         };
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionObserveParamsXStreamResponse> expectedXStreamResponse =
             SessionObserveParamsXStreamResponse.True;
 
@@ -44,23 +42,22 @@ public class SessionObserveParamsTest : TestBase
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedInstruction, parameters.Instruction);
         Assert.Equal(expectedOptions, parameters.Options);
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new SessionObserveParams { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
+        var parameters = new SessionObserveParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
+        };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Instruction);
         Assert.False(parameters.RawBodyData.ContainsKey("instruction"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -71,25 +68,62 @@ public class SessionObserveParamsTest : TestBase
         var parameters = new SessionObserveParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
-            FrameID = null,
             Instruction = null,
             Options = null,
-            XSentAt = null,
             XStreamResponse = null,
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Instruction);
         Assert.False(parameters.RawBodyData.ContainsKey("instruction"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionObserveParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Instruction = "Find all clickable navigation links",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "nav",
+                Timeout = 30000,
+            },
+            XStreamResponse = SessionObserveParamsXStreamResponse.True,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new SessionObserveParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Instruction = "Find all clickable navigation links",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "nav",
+                Timeout = 30000,
+            },
+            XStreamResponse = SessionObserveParamsXStreamResponse.True,
+
+            FrameID = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.True(parameters.RawBodyData.ContainsKey("frameId"));
     }
 
     [Fact]
@@ -121,7 +155,6 @@ public class SessionObserveParamsTest : TestBase
         SessionObserveParams parameters = new()
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
         };
 
@@ -135,7 +168,6 @@ public class SessionObserveParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
@@ -147,12 +179,12 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "nav",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -166,7 +198,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "nav",
             Timeout = 30000,
         };
@@ -185,7 +217,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "nav",
             Timeout = 30000,
         };
@@ -197,7 +229,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -211,7 +243,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "nav",
             Timeout = 30000,
         };

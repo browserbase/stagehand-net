@@ -24,7 +24,6 @@ public class SessionNavigateParamsTest : TestBase
                 WaitUntil = WaitUntil.Networkidle,
             },
             StreamResponse = true,
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionNavigateParamsXStreamResponse.True,
         };
 
@@ -38,7 +37,6 @@ public class SessionNavigateParamsTest : TestBase
             WaitUntil = WaitUntil.Networkidle,
         };
         bool expectedStreamResponse = true;
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionNavigateParamsXStreamResponse> expectedXStreamResponse =
             SessionNavigateParamsXStreamResponse.True;
 
@@ -47,7 +45,6 @@ public class SessionNavigateParamsTest : TestBase
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedOptions, parameters.Options);
         Assert.Equal(expectedStreamResponse, parameters.StreamResponse);
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -58,16 +55,13 @@ public class SessionNavigateParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             UrlValue = "https://example.com",
+            FrameID = "frameId",
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.StreamResponse);
         Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -79,25 +73,64 @@ public class SessionNavigateParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             UrlValue = "https://example.com",
+            FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
-            FrameID = null,
             Options = null,
             StreamResponse = null,
-            XSentAt = null,
             XStreamResponse = null,
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.StreamResponse);
         Assert.False(parameters.RawBodyData.ContainsKey("streamResponse"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+            Options = new()
+            {
+                Referer = "referer",
+                Timeout = 30000,
+                WaitUntil = WaitUntil.Networkidle,
+            },
+            StreamResponse = true,
+            XStreamResponse = SessionNavigateParamsXStreamResponse.True,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+            Options = new()
+            {
+                Referer = "referer",
+                Timeout = 30000,
+                WaitUntil = WaitUntil.Networkidle,
+            },
+            StreamResponse = true,
+            XStreamResponse = SessionNavigateParamsXStreamResponse.True,
+
+            FrameID = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.True(parameters.RawBodyData.ContainsKey("frameId"));
     }
 
     [Fact]
@@ -134,7 +167,6 @@ public class SessionNavigateParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             UrlValue = "https://example.com",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionNavigateParamsXStreamResponse.True,
         };
 
@@ -148,7 +180,6 @@ public class SessionNavigateParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
