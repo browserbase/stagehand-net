@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2 (2026-01-16)
+
+Full Changelog: [v3.0.1...v3.0.2](https://github.com/browserbase/stagehand-net/compare/v3.0.1...v3.0.2)
+
+### Chores
+
+* remove custom code ([dac677e](https://github.com/browserbase/stagehand-net/commit/dac677e38b31bc6fe2613712a4892b299ab1c2b6))
+
 ## 3.0.1 (2026-01-15)
 
 Full Changelog: [v0.2.0...v3.0.1](https://github.com/browserbase/stagehand-net/compare/v0.2.0...v3.0.1)

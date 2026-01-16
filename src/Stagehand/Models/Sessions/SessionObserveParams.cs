@@ -34,15 +34,7 @@ public sealed record class SessionObserveParams : ParamsBase
             this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<string>("frameId");
         }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("frameId", value);
-        }
+        init { this._rawBodyData.Set("frameId", value); }
     }
 
     /// <summary>
@@ -81,27 +73,6 @@ public sealed record class SessionObserveParams : ParamsBase
             }
 
             this._rawBodyData.Set("options", value);
-        }
-    }
-
-    /// <summary>
-    /// ISO timestamp when request was sent
-    /// </summary>
-    public System::DateTimeOffset? XSentAt
-    {
-        get
-        {
-            this._rawHeaderData.Freeze();
-            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 
@@ -213,7 +184,8 @@ public sealed record class SessionObserveParams : ParamsBase
 public sealed record class SessionObserveParamsOptions : JsonModel
 {
     /// <summary>
-    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// Model name string with provider prefix. Always use the format 'provider/model-name'
+    /// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
     /// </summary>
     public ModelConfig? Model
     {

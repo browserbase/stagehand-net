@@ -3,9 +3,7 @@
     <!-- Metadata -->
     <AssemblyTitle>Stagehand C#</AssemblyTitle>
     <AssemblyName>Stagehand</AssemblyName>
-    <VersionPrefix>3.0.1</VersionPrefix>
-    <Authors>Stagehand</Authors>
-    <Company>Stagehand</Company>
+    <VersionPrefix>3.0.2</VersionPrefix>
     <Description>The official .NET library for the Stagehand API.</Description>
     <OutputType>Library</OutputType>
     <PackageReadmeFile>README.md</PackageReadmeFile>

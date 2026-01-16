@@ -43,27 +43,6 @@ public sealed record class SessionEndParams : ParamsBase
     }
 
     /// <summary>
-    /// ISO timestamp when request was sent
-    /// </summary>
-    public System::DateTimeOffset? XSentAt
-    {
-        get
-        {
-            this._rawHeaderData.Freeze();
-            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawHeaderData.Set("x-sent-at", value);
-        }
-    }
-
-    /// <summary>
     /// Whether to stream the response via SSE
     /// </summary>
     public ApiEnum<string, SessionEndParamsXStreamResponse>? XStreamResponse
