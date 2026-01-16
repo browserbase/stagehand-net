@@ -8,9 +8,9 @@ namespace Stagehand.Tests.Models.Sessions;
 public class ModelConfigTest : TestBase
 {
     [Fact]
-    public void NameValidationWorks()
+    public void StringValidationWorks()
     {
-        ModelConfig value = "openai/gpt-5-nano";
+        ModelConfig value = "openai/gpt-4o";
         value.Validate();
     }
 
@@ -19,7 +19,7 @@ public class ModelConfigTest : TestBase
     {
         ModelConfig value = new ModelConfigObject()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -28,9 +28,9 @@ public class ModelConfigTest : TestBase
     }
 
     [Fact]
-    public void NameSerializationRoundtripWorks()
+    public void StringSerializationRoundtripWorks()
     {
-        ModelConfig value = "openai/gpt-5-nano";
+        ModelConfig value = "openai/gpt-4o";
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ModelConfig>(
             element,
@@ -45,7 +45,7 @@ public class ModelConfigTest : TestBase
     {
         ModelConfig value = new ModelConfigObject()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -67,13 +67,13 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
         };
 
-        string expectedModelName = "openai/gpt-5-nano";
+        string expectedModelName = "openai/gpt-4o";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
@@ -90,7 +90,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -110,7 +110,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -123,7 +123,7 @@ public class ModelConfigObjectTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        string expectedModelName = "openai/gpt-5-nano";
+        string expectedModelName = "openai/gpt-4o";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         ApiEnum<string, ModelConfigObjectProvider> expectedProvider =
@@ -140,7 +140,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Provider = ModelConfigObjectProvider.OpenAI,
@@ -152,7 +152,7 @@ public class ModelConfigObjectTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ModelConfigObject { ModelName = "openai/gpt-5-nano" };
+        var model = new ModelConfigObject { ModelName = "openai/gpt-4o" };
 
         Assert.Null(model.ApiKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
@@ -165,7 +165,7 @@ public class ModelConfigObjectTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ModelConfigObject { ModelName = "openai/gpt-5-nano" };
+        var model = new ModelConfigObject { ModelName = "openai/gpt-4o" };
 
         model.Validate();
     }
@@ -175,7 +175,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
@@ -196,7 +196,7 @@ public class ModelConfigObjectTest : TestBase
     {
         var model = new ModelConfigObject
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-4o",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,

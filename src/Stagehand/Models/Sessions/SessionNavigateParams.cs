@@ -47,15 +47,7 @@ public sealed record class SessionNavigateParams : ParamsBase
             this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<string>("frameId");
         }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("frameId", value);
-        }
+        init { this._rawBodyData.Set("frameId", value); }
     }
 
     public SessionNavigateParamsOptions? Options
@@ -94,27 +86,6 @@ public sealed record class SessionNavigateParams : ParamsBase
             }
 
             this._rawBodyData.Set("streamResponse", value);
-        }
-    }
-
-    /// <summary>
-    /// ISO timestamp when request was sent
-    /// </summary>
-    public System::DateTimeOffset? XSentAt
-    {
-        get
-        {
-            this._rawHeaderData.Freeze();
-            return this._rawHeaderData.GetNullableStruct<System::DateTimeOffset>("x-sent-at");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawHeaderData.Set("x-sent-at", value);
         }
     }
 

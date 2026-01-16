@@ -20,7 +20,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -28,7 +28,6 @@ public class SessionExtractParamsTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExtractParamsXStreamResponse.True,
         };
 
@@ -37,7 +36,7 @@ public class SessionExtractParamsTest : TestBase
         string expectedInstruction = "Extract all product names and prices from the page";
         SessionExtractParamsOptions expectedOptions = new()
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -45,7 +44,6 @@ public class SessionExtractParamsTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionExtractParamsXStreamResponse> expectedXStreamResponse =
             SessionExtractParamsXStreamResponse.True;
 
@@ -61,25 +59,24 @@ public class SessionExtractParamsTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, parameters.Schema[item.Key]));
         }
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new SessionExtractParams { ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123" };
+        var parameters = new SessionExtractParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
+        };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Instruction);
         Assert.False(parameters.RawBodyData.ContainsKey("instruction"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.Schema);
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -90,28 +87,73 @@ public class SessionExtractParamsTest : TestBase
         var parameters = new SessionExtractParams
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
-            FrameID = null,
             Instruction = null,
             Options = null,
             Schema = null,
-            XSentAt = null,
             XStreamResponse = null,
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Instruction);
         Assert.False(parameters.RawBodyData.ContainsKey("instruction"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
         Assert.Null(parameters.Schema);
         Assert.False(parameters.RawBodyData.ContainsKey("schema"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionExtractParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Instruction = "Extract all product names and prices from the page",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "#main-content",
+                Timeout = 30000,
+            },
+            Schema = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            XStreamResponse = SessionExtractParamsXStreamResponse.True,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new SessionExtractParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Instruction = "Extract all product names and prices from the page",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "#main-content",
+                Timeout = 30000,
+            },
+            Schema = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            XStreamResponse = SessionExtractParamsXStreamResponse.True,
+
+            FrameID = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.True(parameters.RawBodyData.ContainsKey("frameId"));
     }
 
     [Fact]
@@ -143,7 +185,6 @@ public class SessionExtractParamsTest : TestBase
         SessionExtractParams parameters = new()
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExtractParamsXStreamResponse.True,
         };
 
@@ -157,7 +198,6 @@ public class SessionExtractParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
@@ -169,12 +209,12 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "#main-content",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -188,7 +228,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -207,7 +247,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -219,7 +259,7 @@ public class SessionExtractParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -233,7 +273,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Selector = "#main-content",
             Timeout = 30000,
         };

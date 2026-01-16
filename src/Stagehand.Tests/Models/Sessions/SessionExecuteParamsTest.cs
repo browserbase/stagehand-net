@@ -18,7 +18,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -30,7 +30,6 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
             },
             FrameID = "frameId",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -38,7 +37,7 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -50,7 +49,6 @@ public class SessionExecuteParamsTest : TestBase
             MaxSteps = 20,
         };
         string expectedFrameID = "frameId";
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionExecuteParamsXStreamResponse> expectedXStreamResponse =
             SessionExecuteParamsXStreamResponse.True;
 
@@ -58,7 +56,6 @@ public class SessionExecuteParamsTest : TestBase
         Assert.Equal(expectedAgentConfig, parameters.AgentConfig);
         Assert.Equal(expectedExecuteOptions, parameters.ExecuteOptions);
         Assert.Equal(expectedFrameID, parameters.FrameID);
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -71,7 +68,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -82,12 +79,9 @@ public class SessionExecuteParamsTest : TestBase
                 HighlightCursor = true,
                 MaxSteps = 20,
             },
+            FrameID = "frameId",
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -101,7 +95,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -112,19 +106,70 @@ public class SessionExecuteParamsTest : TestBase
                 HighlightCursor = true,
                 MaxSteps = 20,
             },
+            FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
-            FrameID = null,
-            XSentAt = null,
             XStreamResponse = null,
+        };
+
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-4o",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
         Assert.Null(parameters.FrameID);
         Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
-        Assert.Null(parameters.XStreamResponse);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-4o",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
+
+            FrameID = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.True(parameters.RawBodyData.ContainsKey("frameId"));
     }
 
     [Fact]
@@ -136,7 +181,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -176,7 +221,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -187,7 +232,6 @@ public class SessionExecuteParamsTest : TestBase
                 HighlightCursor = true,
                 MaxSteps = 20,
             },
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -201,7 +245,6 @@ public class SessionExecuteParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
@@ -214,13 +257,13 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
@@ -236,7 +279,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -256,7 +299,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -269,7 +312,7 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-5-nano";
+        ModelConfig expectedModel = "openai/gpt-4o";
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
@@ -285,7 +328,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };

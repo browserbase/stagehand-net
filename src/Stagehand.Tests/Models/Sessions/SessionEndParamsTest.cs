@@ -16,20 +16,17 @@ public class SessionEndParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             _ForceBody = JsonSerializer.Deserialize<JsonElement>("{}"),
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionEndParamsXStreamResponse.True,
         };
 
         string expectedID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123";
         JsonElement expected_ForceBody = JsonSerializer.Deserialize<JsonElement>("{}");
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, SessionEndParamsXStreamResponse> expectedXStreamResponse =
             SessionEndParamsXStreamResponse.True;
 
         Assert.Equal(expectedID, parameters.ID);
         Assert.NotNull(parameters._ForceBody);
         Assert.True(JsonElement.DeepEquals(expected_ForceBody, parameters._ForceBody.Value));
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -40,8 +37,6 @@ public class SessionEndParamsTest : TestBase
 
         Assert.Null(parameters._ForceBody);
         Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -55,14 +50,11 @@ public class SessionEndParamsTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             _ForceBody = null,
-            XSentAt = null,
             XStreamResponse = null,
         };
 
         Assert.Null(parameters._ForceBody);
         Assert.False(parameters.RawBodyData.ContainsKey("_forceBody"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -96,7 +88,6 @@ public class SessionEndParamsTest : TestBase
         SessionEndParams parameters = new()
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = SessionEndParamsXStreamResponse.True,
         };
 
@@ -110,7 +101,6 @@ public class SessionEndParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }

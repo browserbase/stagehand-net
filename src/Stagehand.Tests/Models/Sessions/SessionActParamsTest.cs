@@ -20,11 +20,10 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = "openai/gpt-5-nano",
+                Model = "openai/gpt-4o",
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::XStreamResponse.True,
         };
 
@@ -33,11 +32,10 @@ public class SessionActParamsTest : TestBase
         string expectedFrameID = "frameId";
         Sessions::Options expectedOptions = new()
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
-        DateTimeOffset expectedXSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z");
         ApiEnum<string, Sessions::XStreamResponse> expectedXStreamResponse =
             Sessions::XStreamResponse.True;
 
@@ -45,7 +43,6 @@ public class SessionActParamsTest : TestBase
         Assert.Equal(expectedInput, parameters.Input);
         Assert.Equal(expectedFrameID, parameters.FrameID);
         Assert.Equal(expectedOptions, parameters.Options);
-        Assert.Equal(expectedXSentAt, parameters.XSentAt);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -56,14 +53,11 @@ public class SessionActParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             Input = "Click the login button",
+            FrameID = "frameId",
         };
 
-        Assert.Null(parameters.FrameID);
-        Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
         Assert.Null(parameters.Options);
         Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -75,22 +69,59 @@ public class SessionActParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             Input = "Click the login button",
+            FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
-            FrameID = null,
             Options = null,
-            XSentAt = null,
             XStreamResponse = null,
+        };
+
+        Assert.Null(parameters.Options);
+        Assert.False(parameters.RawBodyData.ContainsKey("options"));
+        Assert.Null(parameters.XStreamResponse);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new Sessions::SessionActParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Input = "Click the login button",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Timeout = 30000,
+                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            },
+            XStreamResponse = Sessions::XStreamResponse.True,
         };
 
         Assert.Null(parameters.FrameID);
         Assert.False(parameters.RawBodyData.ContainsKey("frameId"));
-        Assert.Null(parameters.Options);
-        Assert.False(parameters.RawBodyData.ContainsKey("options"));
-        Assert.Null(parameters.XSentAt);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-sent-at"));
-        Assert.Null(parameters.XStreamResponse);
-        Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new Sessions::SessionActParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Input = "Click the login button",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Timeout = 30000,
+                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            },
+            XStreamResponse = Sessions::XStreamResponse.True,
+
+            FrameID = null,
+        };
+
+        Assert.Null(parameters.FrameID);
+        Assert.True(parameters.RawBodyData.ContainsKey("frameId"));
     }
 
     [Fact]
@@ -127,7 +158,6 @@ public class SessionActParamsTest : TestBase
         {
             ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
             Input = "Click the login button",
-            XSentAt = DateTimeOffset.Parse("2025-01-15T10:30:00Z"),
             XStreamResponse = Sessions::XStreamResponse.True,
         };
 
@@ -141,7 +171,6 @@ public class SessionActParamsTest : TestBase
             }
         );
 
-        Assert.Equal(["2025-01-15T10:30:00Z"], requestMessage.Headers.GetValues("x-sent-at"));
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
 }
@@ -210,12 +239,12 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-5-nano";
+        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -236,7 +265,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -255,7 +284,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -267,7 +296,7 @@ public class OptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-5-nano";
+        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -288,7 +317,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-5-nano",
+            Model = "openai/gpt-4o",
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };

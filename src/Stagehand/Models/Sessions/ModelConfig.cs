@@ -10,7 +10,8 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+/// Model name string with provider prefix. Always use the format 'provider/model-name'
+/// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
 /// </summary>
 [JsonConverter(typeof(ModelConfigConverter))]
 public record class ModelConfig : ModelBase
@@ -55,14 +56,14 @@ public record class ModelConfig : ModelBase
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickName(out var value)) {
+    /// if (instance.TryPickString(out var value)) {
     ///     // `value` is of type `string`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickName([NotNullWhen(true)] out string? value)
+    public bool TryPickString([NotNullWhen(true)] out string? value)
     {
         value = this.Value as string;
         return value != null;
@@ -109,12 +110,15 @@ public record class ModelConfig : ModelBase
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(System::Action<string> @modelName, System::Action<ModelConfigObject> object_)
+    public void Switch(
+        System::Action<string> @modelConfigString,
+        System::Action<ModelConfigObject> object_
+    )
     {
         switch (this.Value)
         {
             case string value:
-                @modelName(value);
+                @modelConfigString(value);
                 break;
             case ModelConfigObject value:
                 object_(value);
@@ -148,13 +152,13 @@ public record class ModelConfig : ModelBase
     /// </example>
     /// </summary>
     public T Match<T>(
-        System::Func<string, T> @modelName,
+        System::Func<string, T> @modelConfigString,
         System::Func<ModelConfigObject, T> object_
     )
     {
         return this.Value switch
         {
-            string value => @modelName(value),
+            string value => @modelConfigString(value),
             ModelConfigObject value => object_(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of ModelConfig"
@@ -254,7 +258,8 @@ sealed class ModelConfigConverter : JsonConverter<ModelConfig>
 public sealed record class ModelConfigObject : JsonModel
 {
     /// <summary>
-    /// Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+    /// Model name string with provider prefix. Always use the format 'provider/model-name'
+    /// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
     /// </summary>
     public required string ModelName
     {
