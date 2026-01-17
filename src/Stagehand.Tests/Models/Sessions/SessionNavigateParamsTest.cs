@@ -182,6 +182,29 @@ public class SessionNavigateParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionNavigateParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            UrlValue = "https://example.com",
+            FrameID = "frameId",
+            Options = new()
+            {
+                Referer = "referer",
+                Timeout = 30000,
+                WaitUntil = WaitUntil.Networkidle,
+            },
+            StreamResponse = true,
+            XStreamResponse = SessionNavigateParamsXStreamResponse.True,
+        };
+
+        SessionNavigateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SessionNavigateParamsOptionsTest : TestBase

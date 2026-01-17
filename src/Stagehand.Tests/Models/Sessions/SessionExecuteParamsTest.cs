@@ -247,6 +247,35 @@ public class SessionExecuteParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                Model = "openai/gpt-4o",
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+            },
+            FrameID = "frameId",
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
+        };
+
+        SessionExecuteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class AgentConfigTest : TestBase

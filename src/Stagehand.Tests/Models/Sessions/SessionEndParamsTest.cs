@@ -103,6 +103,21 @@ public class SessionEndParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionEndParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            _ForceBody = JsonSerializer.Deserialize<JsonElement>("{}"),
+            XStreamResponse = SessionEndParamsXStreamResponse.True,
+        };
+
+        SessionEndParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SessionEndParamsXStreamResponseTest : TestBase

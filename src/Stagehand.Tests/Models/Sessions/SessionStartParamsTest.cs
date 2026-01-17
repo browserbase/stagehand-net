@@ -311,6 +311,99 @@ public class SessionStartParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Sessions::SessionStartParams
+        {
+            ModelName = "openai/gpt-4o",
+            ActTimeoutMs = 0,
+            Browser = new()
+            {
+                CdpUrl = "ws://localhost:9222",
+                LaunchOptions = new()
+                {
+                    AcceptDownloads = true,
+                    Args = ["string"],
+                    CdpUrl = "cdpUrl",
+                    ChromiumSandbox = true,
+                    ConnectTimeoutMs = 0,
+                    DeviceScaleFactor = 0,
+                    Devtools = true,
+                    DownloadsPath = "downloadsPath",
+                    ExecutablePath = "executablePath",
+                    HasTouch = true,
+                    Headless = true,
+                    IgnoreDefaultArgs = true,
+                    IgnoreHttpsErrors = true,
+                    Locale = "locale",
+                    PreserveUserDataDir = true,
+                    Proxy = new()
+                    {
+                        Server = "server",
+                        Bypass = "bypass",
+                        Password = "password",
+                        Username = "username",
+                    },
+                    UserDataDir = "userDataDir",
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                Type = Sessions::Type.Local,
+            },
+            BrowserbaseSessionCreateParams = new()
+            {
+                BrowserSettings = new()
+                {
+                    AdvancedStealth = true,
+                    BlockAds = true,
+                    Context = new() { ID = "id", Persist = true },
+                    ExtensionID = "extensionId",
+                    Fingerprint = new()
+                    {
+                        Browsers = [Sessions::FingerprintBrowser.Chrome],
+                        Devices = [Sessions::Device.Desktop],
+                        HttpVersion = Sessions::HttpVersion.V1,
+                        Locales = ["string"],
+                        OperatingSystems = [Sessions::OperatingSystem.Android],
+                        Screen = new()
+                        {
+                            MaxHeight = 0,
+                            MaxWidth = 0,
+                            MinHeight = 0,
+                            MinWidth = 0,
+                        },
+                    },
+                    LogSession = true,
+                    RecordSession = true,
+                    SolveCaptchas = true,
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                ExtensionID = "extensionId",
+                KeepAlive = true,
+                ProjectID = "projectId",
+                Proxies = true,
+                Region = Sessions::Region.UsWest2,
+                Timeout = 0,
+                UserMetadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            },
+            BrowserbaseSessionID = "browserbaseSessionID",
+            DomSettleTimeoutMs = 5000,
+            Experimental = true,
+            SelfHeal = true,
+            SystemPrompt = "systemPrompt",
+            Verbose = Sessions::Verbose.V1,
+            WaitForCaptchaSolves = true,
+            XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
+        };
+
+        Sessions::SessionStartParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class BrowserTest : TestBase

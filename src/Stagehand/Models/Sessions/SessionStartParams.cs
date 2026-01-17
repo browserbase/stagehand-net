@@ -15,8 +15,12 @@ namespace Stagehand.Models.Sessions;
 /// <summary>
 /// Creates a new browser session with the specified configuration. Returns a session
 /// ID used for all subsequent operations.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SessionStartParams : ParamsBase
+public record class SessionStartParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -266,11 +270,14 @@ public sealed record class SessionStartParams : ParamsBase
 
     public SessionStartParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionStartParams(SessionStartParams sessionStartParams)
         : base(sessionStartParams)
     {
         this._rawBodyData = new(sessionStartParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public SessionStartParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -311,6 +318,28 @@ public sealed record class SessionStartParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SessionStartParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -337,6 +366,11 @@ public sealed record class SessionStartParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
