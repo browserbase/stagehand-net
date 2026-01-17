@@ -173,6 +173,28 @@ public class SessionActParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Sessions::SessionActParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Input = "Click the login button",
+            FrameID = "frameId",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Timeout = 30000,
+                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            },
+            XStreamResponse = Sessions::XStreamResponse.True,
+        };
+
+        Sessions::SessionActParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class InputTest : TestBase

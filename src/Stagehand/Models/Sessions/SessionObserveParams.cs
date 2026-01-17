@@ -13,8 +13,12 @@ namespace Stagehand.Models.Sessions;
 
 /// <summary>
 /// Identifies and returns available actions on the current page that match the given instruction.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SessionObserveParams : ParamsBase
+public record class SessionObserveParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -101,6 +105,8 @@ public sealed record class SessionObserveParams : ParamsBase
 
     public SessionObserveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionObserveParams(SessionObserveParams sessionObserveParams)
         : base(sessionObserveParams)
     {
@@ -108,6 +114,7 @@ public sealed record class SessionObserveParams : ParamsBase
 
         this._rawBodyData = new(sessionObserveParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public SessionObserveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -148,6 +155,30 @@ public sealed record class SessionObserveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["ID"] = this.ID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SessionObserveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.ID?.Equals(other.ID) ?? other.ID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -175,6 +206,11 @@ public sealed record class SessionObserveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

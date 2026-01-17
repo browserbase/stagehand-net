@@ -170,6 +170,28 @@ public class SessionObserveParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionObserveParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
+            Instruction = "Find all clickable navigation links",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "nav",
+                Timeout = 30000,
+            },
+            XStreamResponse = SessionObserveParamsXStreamResponse.True,
+        };
+
+        SessionObserveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SessionObserveParamsOptionsTest : TestBase

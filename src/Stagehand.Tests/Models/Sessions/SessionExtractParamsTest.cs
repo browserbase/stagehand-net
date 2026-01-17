@@ -200,6 +200,32 @@ public class SessionExtractParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionExtractParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
+            Instruction = "Extract all product names and prices from the page",
+            Options = new()
+            {
+                Model = "openai/gpt-4o",
+                Selector = "#main-content",
+                Timeout = 30000,
+            },
+            Schema = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            XStreamResponse = SessionExtractParamsXStreamResponse.True,
+        };
+
+        SessionExtractParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SessionExtractParamsOptionsTest : TestBase
