@@ -36,6 +36,7 @@ public class SessionStartParamsTest : TestBase
                     IgnoreDefaultArgs = true,
                     IgnoreHttpsErrors = true,
                     Locale = "locale",
+                    Port = 0,
                     PreserveUserDataDir = true,
                     Proxy = new()
                     {
@@ -119,6 +120,7 @@ public class SessionStartParamsTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -338,6 +340,7 @@ public class SessionStartParamsTest : TestBase
                     IgnoreDefaultArgs = true,
                     IgnoreHttpsErrors = true,
                     Locale = "locale",
+                    Port = 0,
                     PreserveUserDataDir = true,
                     Proxy = new()
                     {
@@ -430,6 +433,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -461,6 +465,7 @@ public class BrowserTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -501,6 +506,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -546,6 +552,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -584,6 +591,7 @@ public class BrowserTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -624,6 +632,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -717,6 +726,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -743,6 +753,7 @@ public class LaunchOptionsTest : TestBase
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
+        double expectedPort = 0;
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
         {
@@ -773,6 +784,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedIgnoreDefaultArgs, model.IgnoreDefaultArgs);
         Assert.Equal(expectedIgnoreHttpsErrors, model.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, model.Locale);
+        Assert.Equal(expectedPort, model.Port);
         Assert.Equal(expectedPreserveUserDataDir, model.PreserveUserDataDir);
         Assert.Equal(expectedProxy, model.Proxy);
         Assert.Equal(expectedUserDataDir, model.UserDataDir);
@@ -798,6 +810,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -838,6 +851,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -871,6 +885,7 @@ public class LaunchOptionsTest : TestBase
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
+        double expectedPort = 0;
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
         {
@@ -901,6 +916,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedIgnoreDefaultArgs, deserialized.IgnoreDefaultArgs);
         Assert.Equal(expectedIgnoreHttpsErrors, deserialized.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, deserialized.Locale);
+        Assert.Equal(expectedPort, deserialized.Port);
         Assert.Equal(expectedPreserveUserDataDir, deserialized.PreserveUserDataDir);
         Assert.Equal(expectedProxy, deserialized.Proxy);
         Assert.Equal(expectedUserDataDir, deserialized.UserDataDir);
@@ -926,6 +942,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -974,6 +991,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
+        Assert.Null(model.Port);
+        Assert.False(model.RawData.ContainsKey("port"));
         Assert.Null(model.PreserveUserDataDir);
         Assert.False(model.RawData.ContainsKey("preserveUserDataDir"));
         Assert.Null(model.Proxy);
@@ -1012,6 +1031,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = null,
             IgnoreHttpsErrors = null,
             Locale = null,
+            Port = null,
             PreserveUserDataDir = null,
             Proxy = null,
             UserDataDir = null,
@@ -1046,6 +1066,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
+        Assert.Null(model.Port);
+        Assert.False(model.RawData.ContainsKey("port"));
         Assert.Null(model.PreserveUserDataDir);
         Assert.False(model.RawData.ContainsKey("preserveUserDataDir"));
         Assert.Null(model.Proxy);
@@ -1076,6 +1098,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = null,
             IgnoreHttpsErrors = null,
             Locale = null,
+            Port = null,
             PreserveUserDataDir = null,
             Proxy = null,
             UserDataDir = null,

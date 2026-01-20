@@ -2,7 +2,6 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Stagehand.Core;
@@ -20,31 +19,7 @@ namespace Stagehand.Models.Sessions;
 /// </summary>
 public record class SessionEndParams : ParamsBase
 {
-    readonly JsonDictionary _rawBodyData = new();
-    public IReadOnlyDictionary<string, JsonElement> RawBodyData
-    {
-        get { return this._rawBodyData.Freeze(); }
-    }
-
     public string? ID { get; init; }
-
-    public JsonElement? _ForceBody
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableStruct<JsonElement>("_forceBody");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("_forceBody", value);
-        }
-    }
 
     /// <summary>
     /// Whether to stream the response via SSE
@@ -77,47 +52,39 @@ public record class SessionEndParams : ParamsBase
         : base(sessionEndParams)
     {
         this.ID = sessionEndParams.ID;
-
-        this._rawBodyData = new(sessionEndParams._rawBodyData);
     }
 #pragma warning restore CS8618
 
     public SessionEndParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        IReadOnlyDictionary<string, JsonElement> rawBodyData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SessionEndParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData,
-        FrozenDictionary<string, JsonElement> rawBodyData
+        FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SessionEndParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        IReadOnlyDictionary<string, JsonElement> rawBodyData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData),
-            FrozenDictionary.ToFrozenDictionary(rawBodyData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData)
         );
     }
 
@@ -128,7 +95,6 @@ public record class SessionEndParams : ParamsBase
                 ["ID"] = this.ID,
                 ["HeaderData"] = this._rawHeaderData.Freeze(),
                 ["QueryData"] = this._rawQueryData.Freeze(),
-                ["BodyData"] = this._rawBodyData.Freeze(),
             },
             ModelBase.ToStringSerializerOptions
         );
@@ -141,8 +107,7 @@ public record class SessionEndParams : ParamsBase
         }
         return (this.ID?.Equals(other.ID) ?? other.ID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
-            && this._rawQueryData.Equals(other._rawQueryData)
-            && this._rawBodyData.Equals(other._rawBodyData);
+            && this._rawQueryData.Equals(other._rawQueryData);
     }
 
     public override System::Uri Url(ClientOptions options)
@@ -153,15 +118,6 @@ public record class SessionEndParams : ParamsBase
         {
             Query = this.QueryString(options),
         }.Uri;
-    }
-
-    internal override HttpContent? BodyContent()
-    {
-        return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
-            Encoding.UTF8,
-            "application/json"
-        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
