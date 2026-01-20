@@ -20,7 +20,13 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -36,7 +42,13 @@ public class SessionExtractParamsTest : TestBase
         string expectedInstruction = "Extract all product names and prices from the page";
         SessionExtractParamsOptions expectedOptions = new()
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -115,7 +127,13 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -139,7 +157,13 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -211,7 +235,13 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -235,12 +265,24 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -254,7 +296,13 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -273,7 +321,13 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -285,7 +339,13 @@ public class SessionExtractParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -299,7 +359,13 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };

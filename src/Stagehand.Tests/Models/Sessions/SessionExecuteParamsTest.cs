@@ -18,7 +18,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -37,7 +43,13 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -68,7 +80,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -95,7 +113,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -125,7 +149,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -152,7 +182,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -181,7 +217,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -221,7 +263,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -257,7 +305,13 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -286,13 +340,25 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
@@ -308,7 +374,13 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -328,7 +400,13 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -341,7 +419,13 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
@@ -357,7 +441,13 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };

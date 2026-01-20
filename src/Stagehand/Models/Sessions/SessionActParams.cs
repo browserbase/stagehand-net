@@ -437,10 +437,6 @@ sealed class InputConverter : JsonConverter<Input>
 [JsonConverter(typeof(JsonModelConverter<Options, OptionsFromRaw>))]
 public sealed record class Options : JsonModel
 {
-    /// <summary>
-    /// Model name string with provider prefix. Always use the format 'provider/model-name'
-    /// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
-    /// </summary>
     public ModelConfig? Model
     {
         get
