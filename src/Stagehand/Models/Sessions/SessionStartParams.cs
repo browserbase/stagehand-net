@@ -29,8 +29,7 @@ public record class SessionStartParams : ParamsBase
     }
 
     /// <summary>
-    /// Model name to use for AI operations. Always use the format 'provider/model-name'
-    /// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
+    /// Model name to use for AI operations
     /// </summary>
     public required string ModelName
     {

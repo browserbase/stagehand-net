@@ -20,7 +20,13 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
@@ -32,7 +38,13 @@ public class SessionActParamsTest : TestBase
         string expectedFrameID = "frameId";
         Sessions::Options expectedOptions = new()
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -91,7 +103,13 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
@@ -111,7 +129,13 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
@@ -184,7 +208,13 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
                 Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
             },
@@ -261,12 +291,24 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
+        Sessions::ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -287,7 +329,13 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -306,7 +354,13 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
@@ -318,7 +372,13 @@ public class OptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
+        Sessions::ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
         double expectedTimeout = 30000;
         Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
 
@@ -339,7 +399,13 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };

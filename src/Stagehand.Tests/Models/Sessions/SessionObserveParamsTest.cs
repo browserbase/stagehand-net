@@ -19,7 +19,13 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "nav",
                 Timeout = 30000,
             },
@@ -31,7 +37,13 @@ public class SessionObserveParamsTest : TestBase
         string expectedInstruction = "Find all clickable navigation links";
         SessionObserveParamsOptions expectedOptions = new()
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "nav",
             Timeout = 30000,
         };
@@ -93,7 +105,13 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "nav",
                 Timeout = 30000,
             },
@@ -113,7 +131,13 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "nav",
                 Timeout = 30000,
             },
@@ -181,7 +205,13 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "nav",
                 Timeout = 30000,
             },
@@ -201,12 +231,24 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "nav",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -220,7 +262,13 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "nav",
             Timeout = 30000,
         };
@@ -239,7 +287,13 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "nav",
             Timeout = 30000,
         };
@@ -251,7 +305,13 @@ public class SessionObserveParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ModelConfig expectedModel = new()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
 
@@ -265,7 +325,13 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "nav",
             Timeout = 30000,
         };
