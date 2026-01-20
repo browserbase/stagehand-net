@@ -736,6 +736,24 @@ public sealed record class LaunchOptions : JsonModel
         }
     }
 
+    public double? Port
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("port");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("port", value);
+        }
+    }
+
     public bool? PreserveUserDataDir
     {
         get
@@ -825,6 +843,7 @@ public sealed record class LaunchOptions : JsonModel
         this.IgnoreDefaultArgs?.Validate();
         _ = this.IgnoreHttpsErrors;
         _ = this.Locale;
+        _ = this.Port;
         _ = this.PreserveUserDataDir;
         this.Proxy?.Validate();
         _ = this.UserDataDir;
