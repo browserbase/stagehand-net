@@ -91,10 +91,29 @@ public sealed record class SessionExecuteResponseData : JsonModel
         init { this._rawData.Set("result", value); }
     }
 
+    public CacheEntry? CacheEntry
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<CacheEntry>("cacheEntry");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("cacheEntry", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         this.Result.Validate();
+        this.CacheEntry?.Validate();
     }
 
     public SessionExecuteResponseData() { }
@@ -616,4 +635,72 @@ class UsageFromRaw : IFromRawJson<Usage>
     /// <inheritdoc/>
     public Usage FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Usage.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(JsonModelConverter<CacheEntry, CacheEntryFromRaw>))]
+public sealed record class CacheEntry : JsonModel
+{
+    /// <summary>
+    /// Opaque cache identifier computed from instruction, URL, options, and config
+    /// </summary>
+    public required string CacheKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("cacheKey");
+        }
+        init { this._rawData.Set("cacheKey", value); }
+    }
+
+    /// <summary>
+    /// Serialized cache entry that can be written to disk
+    /// </summary>
+    public required JsonElement Entry
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("entry");
+        }
+        init { this._rawData.Set("entry", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.CacheKey;
+        _ = this.Entry;
+    }
+
+    public CacheEntry() { }
+
+    public CacheEntry(CacheEntry cacheEntry)
+        : base(cacheEntry) { }
+
+    public CacheEntry(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    CacheEntry(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="CacheEntryFromRaw.FromRawUnchecked"/>
+    public static CacheEntry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class CacheEntryFromRaw : IFromRawJson<CacheEntry>
+{
+    /// <inheritdoc/>
+    public CacheEntry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        CacheEntry.FromRawUnchecked(rawData);
 }
