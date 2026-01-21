@@ -62,6 +62,27 @@ public record class SessionExecuteParams : ParamsBase
     }
 
     /// <summary>
+    /// If true, the server captures a cache entry and returns it to the client
+    /// </summary>
+    public bool? ShouldCache
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<bool>("shouldCache");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawBodyData.Set("shouldCache", value);
+        }
+    }
+
+    /// <summary>
     /// Whether to stream the response via SSE
     /// </summary>
     public ApiEnum<string, SessionExecuteParamsXStreamResponse>? XStreamResponse

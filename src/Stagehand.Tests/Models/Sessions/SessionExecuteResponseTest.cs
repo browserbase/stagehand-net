@@ -12,8 +12,9 @@ public class SessionExecuteResponseTest : TestBase
     {
         var model = new SessionExecuteResponse
         {
-            Data = new(
-                new SessionExecuteResponseDataResult()
+            Data = new()
+            {
+                Result = new()
                 {
                     Actions =
                     [
@@ -44,13 +45,19 @@ public class SessionExecuteResponseTest : TestBase
                         CachedInputTokens = 0,
                         ReasoningTokens = 0,
                     },
-                }
-            ),
+                },
+                CacheEntry = new()
+                {
+                    CacheKey = "cacheKey",
+                    Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+                },
+            },
             Success = true,
         };
 
-        SessionExecuteResponseData expectedData = new(
-            new SessionExecuteResponseDataResult()
+        SessionExecuteResponseData expectedData = new()
+        {
+            Result = new()
             {
                 Actions =
                 [
@@ -81,8 +88,13 @@ public class SessionExecuteResponseTest : TestBase
                     CachedInputTokens = 0,
                     ReasoningTokens = 0,
                 },
-            }
-        );
+            },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
+        };
         bool expectedSuccess = true;
 
         Assert.Equal(expectedData, model.Data);
@@ -94,8 +106,9 @@ public class SessionExecuteResponseTest : TestBase
     {
         var model = new SessionExecuteResponse
         {
-            Data = new(
-                new SessionExecuteResponseDataResult()
+            Data = new()
+            {
+                Result = new()
                 {
                     Actions =
                     [
@@ -126,8 +139,13 @@ public class SessionExecuteResponseTest : TestBase
                         CachedInputTokens = 0,
                         ReasoningTokens = 0,
                     },
-                }
-            ),
+                },
+                CacheEntry = new()
+                {
+                    CacheKey = "cacheKey",
+                    Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+                },
+            },
             Success = true,
         };
 
@@ -145,8 +163,9 @@ public class SessionExecuteResponseTest : TestBase
     {
         var model = new SessionExecuteResponse
         {
-            Data = new(
-                new SessionExecuteResponseDataResult()
+            Data = new()
+            {
+                Result = new()
                 {
                     Actions =
                     [
@@ -177,8 +196,13 @@ public class SessionExecuteResponseTest : TestBase
                         CachedInputTokens = 0,
                         ReasoningTokens = 0,
                     },
-                }
-            ),
+                },
+                CacheEntry = new()
+                {
+                    CacheKey = "cacheKey",
+                    Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+                },
+            },
             Success = true,
         };
 
@@ -189,8 +213,9 @@ public class SessionExecuteResponseTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        SessionExecuteResponseData expectedData = new(
-            new SessionExecuteResponseDataResult()
+        SessionExecuteResponseData expectedData = new()
+        {
+            Result = new()
             {
                 Actions =
                 [
@@ -221,8 +246,13 @@ public class SessionExecuteResponseTest : TestBase
                     CachedInputTokens = 0,
                     ReasoningTokens = 0,
                 },
-            }
-        );
+            },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
+        };
         bool expectedSuccess = true;
 
         Assert.Equal(expectedData, deserialized.Data);
@@ -234,8 +264,9 @@ public class SessionExecuteResponseTest : TestBase
     {
         var model = new SessionExecuteResponse
         {
-            Data = new(
-                new SessionExecuteResponseDataResult()
+            Data = new()
+            {
+                Result = new()
                 {
                     Actions =
                     [
@@ -266,8 +297,13 @@ public class SessionExecuteResponseTest : TestBase
                         CachedInputTokens = 0,
                         ReasoningTokens = 0,
                     },
-                }
-            ),
+                },
+                CacheEntry = new()
+                {
+                    CacheKey = "cacheKey",
+                    Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+                },
+            },
             Success = true,
         };
 
@@ -314,6 +350,11 @@ public class SessionExecuteResponseDataTest : TestBase
                     ReasoningTokens = 0,
                 },
             },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
         };
 
         SessionExecuteResponseDataResult expectedResult = new()
@@ -348,8 +389,14 @@ public class SessionExecuteResponseDataTest : TestBase
                 ReasoningTokens = 0,
             },
         };
+        CacheEntry expectedCacheEntry = new()
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
         Assert.Equal(expectedResult, model.Result);
+        Assert.Equal(expectedCacheEntry, model.CacheEntry);
     }
 
     [Fact]
@@ -388,6 +435,11 @@ public class SessionExecuteResponseDataTest : TestBase
                     CachedInputTokens = 0,
                     ReasoningTokens = 0,
                 },
+            },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
             },
         };
 
@@ -437,6 +489,11 @@ public class SessionExecuteResponseDataTest : TestBase
                     ReasoningTokens = 0,
                 },
             },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -478,8 +535,14 @@ public class SessionExecuteResponseDataTest : TestBase
                 ReasoningTokens = 0,
             },
         };
+        CacheEntry expectedCacheEntry = new()
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
 
         Assert.Equal(expectedResult, deserialized.Result);
+        Assert.Equal(expectedCacheEntry, deserialized.CacheEntry);
     }
 
     [Fact]
@@ -519,6 +582,187 @@ public class SessionExecuteResponseDataTest : TestBase
                     ReasoningTokens = 0,
                 },
             },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SessionExecuteResponseData
+        {
+            Result = new()
+            {
+                Actions =
+                [
+                    new()
+                    {
+                        Type = "click",
+                        Action = "action",
+                        Instruction = "instruction",
+                        PageText = "pageText",
+                        PageUrl = "pageUrl",
+                        Reasoning = "reasoning",
+                        TaskCompleted = true,
+                        TimeMs = 0,
+                    },
+                ],
+                Completed = true,
+                Message = "Successfully logged in and navigated to dashboard",
+                Success = true,
+                Metadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Usage = new()
+                {
+                    InferenceTimeMs = 2500,
+                    InputTokens = 1500,
+                    OutputTokens = 250,
+                    CachedInputTokens = 0,
+                    ReasoningTokens = 0,
+                },
+            },
+        };
+
+        Assert.Null(model.CacheEntry);
+        Assert.False(model.RawData.ContainsKey("cacheEntry"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SessionExecuteResponseData
+        {
+            Result = new()
+            {
+                Actions =
+                [
+                    new()
+                    {
+                        Type = "click",
+                        Action = "action",
+                        Instruction = "instruction",
+                        PageText = "pageText",
+                        PageUrl = "pageUrl",
+                        Reasoning = "reasoning",
+                        TaskCompleted = true,
+                        TimeMs = 0,
+                    },
+                ],
+                Completed = true,
+                Message = "Successfully logged in and navigated to dashboard",
+                Success = true,
+                Metadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Usage = new()
+                {
+                    InferenceTimeMs = 2500,
+                    InputTokens = 1500,
+                    OutputTokens = 250,
+                    CachedInputTokens = 0,
+                    ReasoningTokens = 0,
+                },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new SessionExecuteResponseData
+        {
+            Result = new()
+            {
+                Actions =
+                [
+                    new()
+                    {
+                        Type = "click",
+                        Action = "action",
+                        Instruction = "instruction",
+                        PageText = "pageText",
+                        PageUrl = "pageUrl",
+                        Reasoning = "reasoning",
+                        TaskCompleted = true,
+                        TimeMs = 0,
+                    },
+                ],
+                Completed = true,
+                Message = "Successfully logged in and navigated to dashboard",
+                Success = true,
+                Metadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Usage = new()
+                {
+                    InferenceTimeMs = 2500,
+                    InputTokens = 1500,
+                    OutputTokens = 250,
+                    CachedInputTokens = 0,
+                    ReasoningTokens = 0,
+                },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            CacheEntry = null,
+        };
+
+        Assert.Null(model.CacheEntry);
+        Assert.False(model.RawData.ContainsKey("cacheEntry"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SessionExecuteResponseData
+        {
+            Result = new()
+            {
+                Actions =
+                [
+                    new()
+                    {
+                        Type = "click",
+                        Action = "action",
+                        Instruction = "instruction",
+                        PageText = "pageText",
+                        PageUrl = "pageUrl",
+                        Reasoning = "reasoning",
+                        TaskCompleted = true,
+                        TimeMs = 0,
+                    },
+                ],
+                Completed = true,
+                Message = "Successfully logged in and navigated to dashboard",
+                Success = true,
+                Metadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Usage = new()
+                {
+                    InferenceTimeMs = 2500,
+                    InputTokens = 1500,
+                    OutputTokens = 250,
+                    CachedInputTokens = 0,
+                    ReasoningTokens = 0,
+                },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            CacheEntry = null,
         };
 
         model.Validate();
@@ -1263,6 +1507,78 @@ public class UsageTest : TestBase
             // Null should be interpreted as omitted for these properties
             CachedInputTokens = null,
             ReasoningTokens = null,
+        };
+
+        model.Validate();
+    }
+}
+
+public class CacheEntryTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new CacheEntry
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        string expectedCacheKey = "cacheKey";
+        JsonElement expectedEntry = JsonSerializer.Deserialize<JsonElement>("{}");
+
+        Assert.Equal(expectedCacheKey, model.CacheKey);
+        Assert.True(JsonElement.DeepEquals(expectedEntry, model.Entry));
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new CacheEntry
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<CacheEntry>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new CacheEntry
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<CacheEntry>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedCacheKey = "cacheKey";
+        JsonElement expectedEntry = JsonSerializer.Deserialize<JsonElement>("{}");
+
+        Assert.Equal(expectedCacheKey, deserialized.CacheKey);
+        Assert.True(JsonElement.DeepEquals(expectedEntry, deserialized.Entry));
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new CacheEntry
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
         model.Validate();

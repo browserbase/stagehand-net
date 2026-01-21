@@ -36,6 +36,7 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
             },
             FrameID = "frameId",
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -61,6 +62,7 @@ public class SessionExecuteParamsTest : TestBase
             MaxSteps = 20,
         };
         string expectedFrameID = "frameId";
+        bool expectedShouldCache = true;
         ApiEnum<string, SessionExecuteParamsXStreamResponse> expectedXStreamResponse =
             SessionExecuteParamsXStreamResponse.True;
 
@@ -68,6 +70,7 @@ public class SessionExecuteParamsTest : TestBase
         Assert.Equal(expectedAgentConfig, parameters.AgentConfig);
         Assert.Equal(expectedExecuteOptions, parameters.ExecuteOptions);
         Assert.Equal(expectedFrameID, parameters.FrameID);
+        Assert.Equal(expectedShouldCache, parameters.ShouldCache);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -100,6 +103,8 @@ public class SessionExecuteParamsTest : TestBase
             FrameID = "frameId",
         };
 
+        Assert.Null(parameters.ShouldCache);
+        Assert.False(parameters.RawBodyData.ContainsKey("shouldCache"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -133,9 +138,12 @@ public class SessionExecuteParamsTest : TestBase
             FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
+            ShouldCache = null,
             XStreamResponse = null,
         };
 
+        Assert.Null(parameters.ShouldCache);
+        Assert.False(parameters.RawBodyData.ContainsKey("shouldCache"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -166,6 +174,7 @@ public class SessionExecuteParamsTest : TestBase
                 HighlightCursor = true,
                 MaxSteps = 20,
             },
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -199,6 +208,7 @@ public class SessionExecuteParamsTest : TestBase
                 HighlightCursor = true,
                 MaxSteps = 20,
             },
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
 
             FrameID = null,
@@ -323,6 +333,7 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
             },
             FrameID = "frameId",
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
