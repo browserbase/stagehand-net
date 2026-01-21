@@ -18,7 +18,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -44,7 +44,7 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -83,7 +83,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -118,7 +118,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -157,7 +157,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -191,7 +191,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -227,7 +227,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -273,7 +273,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -315,7 +315,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -351,7 +351,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -363,7 +363,7 @@ public class AgentConfigTest : TestBase
         };
 
         bool expectedCua = true;
-        ModelConfig expectedModel = new()
+        AgentConfigModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -385,7 +385,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -411,7 +411,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -430,7 +430,7 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ModelConfig expectedModel = new()
+        AgentConfigModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -452,7 +452,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -524,6 +524,61 @@ public class AgentConfigTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class AgentConfigModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        AgentConfigModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        AgentConfigModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

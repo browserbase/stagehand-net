@@ -52,7 +52,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    Model = new()
+                    Model = new ModelConfig()
                     {
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",
@@ -85,7 +85,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    Model = new()
+                    Model = new ModelConfig()
                     {
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",

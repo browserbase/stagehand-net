@@ -19,7 +19,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -37,7 +37,7 @@ public class SessionObserveParamsTest : TestBase
         string expectedInstruction = "Find all clickable navigation links";
         SessionObserveParamsOptions expectedOptions = new()
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -105,7 +105,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -131,7 +131,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -205,7 +205,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -231,7 +231,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -242,7 +242,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = new()
+        SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -262,7 +262,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -287,7 +287,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -305,7 +305,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = new()
+        SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -325,7 +325,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -391,6 +391,61 @@ public class SessionObserveParamsOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class SessionObserveParamsOptionsModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        SessionObserveParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        SessionObserveParamsOptionsModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
