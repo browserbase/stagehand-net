@@ -20,7 +20,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -42,7 +42,7 @@ public class SessionExtractParamsTest : TestBase
         string expectedInstruction = "Extract all product names and prices from the page";
         SessionExtractParamsOptions expectedOptions = new()
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -127,7 +127,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -157,7 +157,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -235,7 +235,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = new()
+                Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -265,7 +265,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -276,7 +276,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = new()
+        SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -296,7 +296,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -321,7 +321,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -339,7 +339,7 @@ public class SessionExtractParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = new()
+        SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -359,7 +359,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = new()
+            Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -425,6 +425,61 @@ public class SessionExtractParamsOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class SessionExtractParamsOptionsModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        SessionExtractParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        SessionExtractParamsOptionsModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        SessionExtractParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        SessionExtractParamsOptionsModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

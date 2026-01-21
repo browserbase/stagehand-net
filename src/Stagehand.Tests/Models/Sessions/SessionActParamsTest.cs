@@ -20,7 +20,7 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = new()
+                Model = new Sessions::ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -38,7 +38,7 @@ public class SessionActParamsTest : TestBase
         string expectedFrameID = "frameId";
         Sessions::Options expectedOptions = new()
         {
-            Model = new()
+            Model = new Sessions::ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -103,7 +103,7 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = new()
+                Model = new Sessions::ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -129,7 +129,7 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = new()
+                Model = new Sessions::ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -208,7 +208,7 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = new()
+                Model = new Sessions::ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
@@ -291,7 +291,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new()
+            Model = new Sessions::ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -302,7 +302,7 @@ public class OptionsTest : TestBase
             Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
         };
 
-        Sessions::ModelConfig expectedModel = new()
+        Sessions::Model expectedModel = new Sessions::ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -329,7 +329,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new()
+            Model = new Sessions::ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -354,7 +354,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new()
+            Model = new Sessions::ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -372,7 +372,7 @@ public class OptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        Sessions::ModelConfig expectedModel = new()
+        Sessions::Model expectedModel = new Sessions::ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
@@ -399,7 +399,7 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new()
+            Model = new Sessions::ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
@@ -465,6 +465,61 @@ public class OptionsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class ModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        Sessions::Model value = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::Model value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        Sessions::Model value = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::Model value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
