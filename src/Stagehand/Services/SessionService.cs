@@ -301,6 +301,30 @@ public sealed class SessionService : ISessionService
     }
 
     /// <inheritdoc/>
+    public async Task<SessionReplayResponse> Replay(
+        SessionReplayParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Replay(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<SessionReplayResponse> Replay(
+        string id,
+        SessionReplayParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Replay(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<SessionStartResponse> Start(
         SessionStartParams parameters,
         CancellationToken cancellationToken = default
@@ -827,6 +851,51 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters ??= new();
 
         return this.ObserveStreaming(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<SessionReplayResponse>> Replay(
+        SessionReplayParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<SessionReplayParams> request = new()
+        {
+            Method = HttpMethod.Get,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<SessionReplayResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<SessionReplayResponse>> Replay(
+        string id,
+        SessionReplayParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Replay(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
