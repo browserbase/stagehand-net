@@ -176,6 +176,17 @@ public class SessionServiceTest : TestBase
     }
 
     [Fact(Skip = "Prism tests are disabled")]
+    public async Task Replay_Works()
+    {
+        var response = await this.client.Sessions.Replay(
+            "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        response.Validate();
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
     public async Task Start_Works()
     {
         var response = await this.client.Sessions.Start(

@@ -182,6 +182,21 @@ public interface ISessionService
     );
 
     /// <summary>
+    /// Retrieves replay metrics for a session.
+    /// </summary>
+    Task<SessionReplayResponse> Replay(
+        SessionReplayParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replay(SessionReplayParams, CancellationToken)"/>
+    Task<SessionReplayResponse> Replay(
+        string id,
+        SessionReplayParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Creates a new browser session with the specified configuration. Returns a
     /// session ID used for all subsequent operations.
     /// </summary>
@@ -361,6 +376,22 @@ public interface ISessionServiceWithRawResponse
     Task<StreamingHttpResponse<StreamEvent>> ObserveStreaming(
         string id,
         SessionObserveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /v1/sessions/{id}/replay`, but is otherwise the
+    /// same as <see cref="ISessionService.Replay(SessionReplayParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SessionReplayResponse>> Replay(
+        SessionReplayParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replay(SessionReplayParams, CancellationToken)"/>
+    Task<HttpResponse<SessionReplayResponse>> Replay(
+        string id,
+        SessionReplayParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 

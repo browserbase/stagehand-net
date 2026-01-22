@@ -32,6 +32,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, WaitUntil>(),
             new ApiEnumConverter<string, SessionNavigateParamsXStreamResponse>(),
             new ApiEnumConverter<string, SessionObserveParamsXStreamResponse>(),
+            new ApiEnumConverter<string, SessionReplayParamsXStreamResponse>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, FingerprintBrowser>(),
             new ApiEnumConverter<string, Device>(),
