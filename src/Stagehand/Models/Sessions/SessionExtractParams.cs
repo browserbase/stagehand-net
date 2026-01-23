@@ -318,8 +318,11 @@ public sealed record class SessionExtractParamsOptions : JsonModel
 
     public SessionExtractParamsOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionExtractParamsOptions(SessionExtractParamsOptions sessionExtractParamsOptions)
         : base(sessionExtractParamsOptions) { }
+#pragma warning restore CS8618
 
     public SessionExtractParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {

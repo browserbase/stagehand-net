@@ -309,6 +309,59 @@ public class SessionExecuteResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExecuteResponse
+        {
+            Data = new()
+            {
+                Result = new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Type = "click",
+                            Action = "action",
+                            Instruction = "instruction",
+                            PageText = "pageText",
+                            PageUrl = "pageUrl",
+                            Reasoning = "reasoning",
+                            TaskCompleted = true,
+                            TimeMs = 0,
+                        },
+                    ],
+                    Completed = true,
+                    Message = "Successfully logged in and navigated to dashboard",
+                    Success = true,
+                    Metadata = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Usage = new()
+                    {
+                        InferenceTimeMs = 2500,
+                        InputTokens = 1500,
+                        OutputTokens = 250,
+                        CachedInputTokens = 0,
+                        ReasoningTokens = 0,
+                    },
+                },
+                CacheEntry = new()
+                {
+                    CacheKey = "cacheKey",
+                    Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+                },
+            },
+            Success = true,
+        };
+
+        SessionExecuteResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionExecuteResponseDataTest : TestBase
@@ -767,6 +820,55 @@ public class SessionExecuteResponseDataTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExecuteResponseData
+        {
+            Result = new()
+            {
+                Actions =
+                [
+                    new()
+                    {
+                        Type = "click",
+                        Action = "action",
+                        Instruction = "instruction",
+                        PageText = "pageText",
+                        PageUrl = "pageUrl",
+                        Reasoning = "reasoning",
+                        TaskCompleted = true,
+                        TimeMs = 0,
+                    },
+                ],
+                Completed = true,
+                Message = "Successfully logged in and navigated to dashboard",
+                Success = true,
+                Metadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Usage = new()
+                {
+                    InferenceTimeMs = 2500,
+                    InputTokens = 1500,
+                    OutputTokens = 250,
+                    CachedInputTokens = 0,
+                    ReasoningTokens = 0,
+                },
+            },
+            CacheEntry = new()
+            {
+                CacheKey = "cacheKey",
+                Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
+        };
+
+        SessionExecuteResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionExecuteResponseDataResultTest : TestBase
@@ -1153,6 +1255,47 @@ public class SessionExecuteResponseDataResultTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExecuteResponseDataResult
+        {
+            Actions =
+            [
+                new()
+                {
+                    Type = "click",
+                    Action = "action",
+                    Instruction = "instruction",
+                    PageText = "pageText",
+                    PageUrl = "pageUrl",
+                    Reasoning = "reasoning",
+                    TaskCompleted = true,
+                    TimeMs = 0,
+                },
+            ],
+            Completed = true,
+            Message = "Successfully logged in and navigated to dashboard",
+            Success = true,
+            Metadata = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Usage = new()
+            {
+                InferenceTimeMs = 2500,
+                InputTokens = 1500,
+                OutputTokens = 250,
+                CachedInputTokens = 0,
+                ReasoningTokens = 0,
+            },
+        };
+
+        SessionExecuteResponseDataResult copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionExecuteResponseDataResultActionTest : TestBase
@@ -1355,6 +1498,26 @@ public class SessionExecuteResponseDataResultActionTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExecuteResponseDataResultAction
+        {
+            Type = "click",
+            Action = "action",
+            Instruction = "instruction",
+            PageText = "pageText",
+            PageUrl = "pageUrl",
+            Reasoning = "reasoning",
+            TaskCompleted = true,
+            TimeMs = 0,
+        };
+
+        SessionExecuteResponseDataResultAction copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class UsageTest : TestBase
@@ -1511,6 +1674,23 @@ public class UsageTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Usage
+        {
+            InferenceTimeMs = 2500,
+            InputTokens = 1500,
+            OutputTokens = 250,
+            CachedInputTokens = 0,
+            ReasoningTokens = 0,
+        };
+
+        Usage copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class CacheEntryTest : TestBase
@@ -1582,5 +1762,19 @@ public class CacheEntryTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new CacheEntry
+        {
+            CacheKey = "cacheKey",
+            Entry = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        CacheEntry copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

@@ -703,6 +703,48 @@ public class BrowserTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Browser
+        {
+            CdpUrl = "ws://localhost:9222",
+            LaunchOptions = new()
+            {
+                AcceptDownloads = true,
+                Args = ["string"],
+                CdpUrl = "cdpUrl",
+                ChromiumSandbox = true,
+                ConnectTimeoutMs = 0,
+                DeviceScaleFactor = 0,
+                Devtools = true,
+                DownloadsPath = "downloadsPath",
+                ExecutablePath = "executablePath",
+                HasTouch = true,
+                Headless = true,
+                IgnoreDefaultArgs = true,
+                IgnoreHttpsErrors = true,
+                Locale = "locale",
+                Port = 0,
+                PreserveUserDataDir = true,
+                Proxy = new()
+                {
+                    Server = "server",
+                    Bypass = "bypass",
+                    Password = "password",
+                    Username = "username",
+                },
+                UserDataDir = "userDataDir",
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            Type = Sessions::Type.Local,
+        };
+
+        Sessions::Browser copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class LaunchOptionsTest : TestBase
@@ -1107,6 +1149,43 @@ public class LaunchOptionsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::LaunchOptions
+        {
+            AcceptDownloads = true,
+            Args = ["string"],
+            CdpUrl = "cdpUrl",
+            ChromiumSandbox = true,
+            ConnectTimeoutMs = 0,
+            DeviceScaleFactor = 0,
+            Devtools = true,
+            DownloadsPath = "downloadsPath",
+            ExecutablePath = "executablePath",
+            HasTouch = true,
+            Headless = true,
+            IgnoreDefaultArgs = true,
+            IgnoreHttpsErrors = true,
+            Locale = "locale",
+            Port = 0,
+            PreserveUserDataDir = true,
+            Proxy = new()
+            {
+                Server = "server",
+                Bypass = "bypass",
+                Password = "password",
+                Username = "username",
+            },
+            UserDataDir = "userDataDir",
+            Viewport = new() { Height = 0, Width = 0 },
+        };
+
+        Sessions::LaunchOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IgnoreDefaultArgsTest : TestBase
@@ -1296,6 +1375,22 @@ public class ProxyTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Proxy
+        {
+            Server = "server",
+            Bypass = "bypass",
+            Password = "password",
+            Username = "username",
+        };
+
+        Sessions::Proxy copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ViewportTest : TestBase
@@ -1351,6 +1446,16 @@ public class ViewportTest : TestBase
         var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
+
+        Sessions::Viewport copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -1796,6 +1901,54 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserbaseSessionCreateParams
+        {
+            BrowserSettings = new()
+            {
+                AdvancedStealth = true,
+                BlockAds = true,
+                Context = new() { ID = "id", Persist = true },
+                ExtensionID = "extensionId",
+                Fingerprint = new()
+                {
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HttpVersion = Sessions::HttpVersion.V1,
+                    Locales = ["string"],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
+                    Screen = new()
+                    {
+                        MaxHeight = 0,
+                        MaxWidth = 0,
+                        MinHeight = 0,
+                        MinWidth = 0,
+                    },
+                },
+                LogSession = true,
+                RecordSession = true,
+                SolveCaptchas = true,
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            ExtensionID = "extensionId",
+            KeepAlive = true,
+            ProjectID = "projectId",
+            Proxies = true,
+            Region = Sessions::Region.UsWest2,
+            Timeout = 0,
+            UserMetadata = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Sessions::BrowserbaseSessionCreateParams copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BrowserSettingsTest : TestBase
@@ -2098,6 +2251,41 @@ public class BrowserSettingsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserSettings
+        {
+            AdvancedStealth = true,
+            BlockAds = true,
+            Context = new() { ID = "id", Persist = true },
+            ExtensionID = "extensionId",
+            Fingerprint = new()
+            {
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HttpVersion = Sessions::HttpVersion.V1,
+                Locales = ["string"],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
+                Screen = new()
+                {
+                    MaxHeight = 0,
+                    MaxWidth = 0,
+                    MinHeight = 0,
+                    MinWidth = 0,
+                },
+            },
+            LogSession = true,
+            RecordSession = true,
+            SolveCaptchas = true,
+            Viewport = new() { Height = 0, Width = 0 },
+        };
+
+        Sessions::BrowserSettings copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ContextTest : TestBase
@@ -2199,6 +2387,16 @@ public class ContextTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Context { ID = "id", Persist = true };
+
+        Sessions::Context copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -2463,6 +2661,30 @@ public class FingerprintTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Fingerprint
+        {
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HttpVersion = Sessions::HttpVersion.V1,
+            Locales = ["string"],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
+            Screen = new()
+            {
+                MaxHeight = 0,
+                MaxWidth = 0,
+                MinHeight = 0,
+                MinWidth = 0,
+            },
+        };
+
+        Sessions::Fingerprint copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -2852,6 +3074,22 @@ public class ScreenTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Screen
+        {
+            MaxHeight = 0,
+            MaxWidth = 0,
+            MinHeight = 0,
+            MinWidth = 0,
+        };
+
+        Sessions::Screen copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BrowserSettingsViewportTest : TestBase
@@ -2955,6 +3193,16 @@ public class BrowserSettingsViewportTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
+
+        Sessions::BrowserSettingsViewport copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -3256,6 +3504,25 @@ public class BrowserbaseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Browserbase
+        {
+            DomainPattern = "domainPattern",
+            Geolocation = new()
+            {
+                Country = "country",
+                City = "city",
+                State = "state",
+            },
+        };
+
+        Sessions::Browserbase copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class GeolocationTest : TestBase
@@ -3387,6 +3654,21 @@ public class GeolocationTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Geolocation
+        {
+            Country = "country",
+            City = "city",
+            State = "state",
+        };
+
+        Sessions::Geolocation copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -3537,6 +3819,22 @@ public class ExternalTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::External
+        {
+            Server = "server",
+            DomainPattern = "domainPattern",
+            Password = "password",
+            Username = "username",
+        };
+
+        Sessions::External copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

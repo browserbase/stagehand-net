@@ -159,6 +159,34 @@ public class SessionObserveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionObserveResponse
+        {
+            Data = new()
+            {
+                Result =
+                [
+                    new()
+                    {
+                        Description = "Click the submit button",
+                        Selector = "[data-testid='submit-button']",
+                        Arguments = ["Hello World"],
+                        BackendNodeID = 0,
+                        Method = "click",
+                    },
+                ],
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
+
+        SessionObserveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionObserveResponseDataTest : TestBase
@@ -391,6 +419,30 @@ public class SessionObserveResponseDataTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionObserveResponseData
+        {
+            Result =
+            [
+                new()
+                {
+                    Description = "Click the submit button",
+                    Selector = "[data-testid='submit-button']",
+                    Arguments = ["Hello World"],
+                    BackendNodeID = 0,
+                    Method = "click",
+                },
+            ],
+            ActionID = "actionId",
+        };
+
+        SessionObserveResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionObserveResponseDataResultTest : TestBase
@@ -564,5 +616,22 @@ public class SessionObserveResponseDataResultTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionObserveResponseDataResult
+        {
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
+            BackendNodeID = 0,
+            Method = "click",
+        };
+
+        SessionObserveResponseDataResult copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

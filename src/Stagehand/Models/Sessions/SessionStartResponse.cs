@@ -42,8 +42,11 @@ public sealed record class SessionStartResponse : JsonModel
 
     public SessionStartResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionStartResponse(SessionStartResponse sessionStartResponse)
         : base(sessionStartResponse) { }
+#pragma warning restore CS8618
 
     public SessionStartResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -127,8 +130,11 @@ public sealed record class SessionStartResponseData : JsonModel
 
     public SessionStartResponseData() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionStartResponseData(SessionStartResponseData sessionStartResponseData)
         : base(sessionStartResponseData) { }
+#pragma warning restore CS8618
 
     public SessionStartResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {

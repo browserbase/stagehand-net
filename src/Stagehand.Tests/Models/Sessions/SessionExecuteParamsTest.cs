@@ -525,6 +525,28 @@ public class AgentConfigTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfig
+        {
+            Cua = true,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Provider = Provider.OpenAI,
+            SystemPrompt = "systemPrompt",
+        };
+
+        AgentConfig copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AgentConfigModelTest : TestBase
@@ -789,6 +811,22 @@ public class ExecuteOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecuteOptions
+        {
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
+            HighlightCursor = true,
+            MaxSteps = 20,
+        };
+
+        ExecuteOptions copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

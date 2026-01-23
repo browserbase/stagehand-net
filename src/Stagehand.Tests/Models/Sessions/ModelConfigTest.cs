@@ -149,6 +149,22 @@ public class ModelConfigTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ModelConfig
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Provider = ModelConfigProvider.OpenAI,
+        };
+
+        ModelConfig copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ModelConfigProviderTest : TestBase

@@ -314,8 +314,11 @@ public sealed record class AgentConfig : JsonModel
 
     public AgentConfig() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AgentConfig(AgentConfig agentConfig)
         : base(agentConfig) { }
+#pragma warning restore CS8618
 
     public AgentConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -699,8 +702,11 @@ public sealed record class ExecuteOptions : JsonModel
 
     public ExecuteOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ExecuteOptions(ExecuteOptions executeOptions)
         : base(executeOptions) { }
+#pragma warning restore CS8618
 
     public ExecuteOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {

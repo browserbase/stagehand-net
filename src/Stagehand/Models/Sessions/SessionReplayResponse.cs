@@ -43,8 +43,11 @@ public sealed record class SessionReplayResponse : JsonModel
 
     public SessionReplayResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionReplayResponse(SessionReplayResponse sessionReplayResponse)
         : base(sessionReplayResponse) { }
+#pragma warning restore CS8618
 
     public SessionReplayResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -113,8 +116,11 @@ public sealed record class SessionReplayResponseData : JsonModel
 
     public SessionReplayResponseData() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionReplayResponseData(SessionReplayResponseData sessionReplayResponseData)
         : base(sessionReplayResponseData) { }
+#pragma warning restore CS8618
 
     public SessionReplayResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -181,8 +187,11 @@ public sealed record class Page : JsonModel
 
     public Page() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Page(Page page)
         : base(page) { }
+#pragma warning restore CS8618
 
     public Page(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -259,8 +268,11 @@ public sealed record class PageAction : JsonModel
 
     public PageAction() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public PageAction(PageAction pageAction)
         : base(pageAction) { }
+#pragma warning restore CS8618
 
     public PageAction(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -394,8 +406,11 @@ public sealed record class TokenUsage : JsonModel
 
     public TokenUsage() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenUsage(TokenUsage tokenUsage)
         : base(tokenUsage) { }
+#pragma warning restore CS8618
 
     public TokenUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {

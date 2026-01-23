@@ -466,6 +466,27 @@ public class OptionsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Options
+        {
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
+            Timeout = 30000,
+            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+        };
+
+        Sessions::Options copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ModelTest : TestBase

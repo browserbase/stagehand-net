@@ -104,6 +104,25 @@ public class SessionStartResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionStartResponse
+        {
+            Data = new()
+            {
+                Available = true,
+                SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+                CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
+            },
+            Success = true,
+        };
+
+        SessionStartResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionStartResponseDataTest : TestBase
@@ -237,5 +256,20 @@ public class SessionStartResponseDataTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionStartResponseData
+        {
+            Available = true,
+            SessionID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            CdpUrl = "wss://connect.browserbase.com/?signingKey=abc123",
+        };
+
+        SessionStartResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

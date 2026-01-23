@@ -43,8 +43,11 @@ public sealed record class SessionExecuteResponse : JsonModel
 
     public SessionExecuteResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionExecuteResponse(SessionExecuteResponse sessionExecuteResponse)
         : base(sessionExecuteResponse) { }
+#pragma warning restore CS8618
 
     public SessionExecuteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -118,8 +121,11 @@ public sealed record class SessionExecuteResponseData : JsonModel
 
     public SessionExecuteResponseData() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionExecuteResponseData(SessionExecuteResponseData sessionExecuteResponseData)
         : base(sessionExecuteResponseData) { }
+#pragma warning restore CS8618
 
     public SessionExecuteResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -280,10 +286,13 @@ public sealed record class SessionExecuteResponseDataResult : JsonModel
 
     public SessionExecuteResponseDataResult() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionExecuteResponseDataResult(
         SessionExecuteResponseDataResult sessionExecuteResponseDataResult
     )
         : base(sessionExecuteResponseDataResult) { }
+#pragma warning restore CS8618
 
     public SessionExecuteResponseDataResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -483,10 +492,13 @@ public sealed record class SessionExecuteResponseDataResultAction : JsonModel
 
     public SessionExecuteResponseDataResultAction() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionExecuteResponseDataResultAction(
         SessionExecuteResponseDataResultAction sessionExecuteResponseDataResultAction
     )
         : base(sessionExecuteResponseDataResultAction) { }
+#pragma warning restore CS8618
 
     public SessionExecuteResponseDataResultAction(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -607,8 +619,11 @@ public sealed record class Usage : JsonModel
 
     public Usage() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Usage(Usage usage)
         : base(usage) { }
+#pragma warning restore CS8618
 
     public Usage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -675,8 +690,11 @@ public sealed record class CacheEntry : JsonModel
 
     public CacheEntry() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public CacheEntry(CacheEntry cacheEntry)
         : base(cacheEntry) { }
+#pragma warning restore CS8618
 
     public CacheEntry(IReadOnlyDictionary<string, JsonElement> rawData)
     {
