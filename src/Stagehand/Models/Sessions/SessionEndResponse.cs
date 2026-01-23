@@ -31,8 +31,11 @@ public sealed record class SessionEndResponse : JsonModel
 
     public SessionEndResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionEndResponse(SessionEndResponse sessionEndResponse)
         : base(sessionEndResponse) { }
+#pragma warning restore CS8618
 
     public SessionEndResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

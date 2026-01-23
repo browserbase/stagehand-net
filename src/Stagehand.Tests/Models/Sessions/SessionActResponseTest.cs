@@ -195,6 +195,40 @@ public class SessionActResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionActResponse
+        {
+            Data = new()
+            {
+                Result = new()
+                {
+                    ActionDescription = "Clicked button with text 'Login'",
+                    Actions =
+                    [
+                        new()
+                        {
+                            Description = "Click the submit button",
+                            Selector = "[data-testid='submit-button']",
+                            Arguments = ["Hello World"],
+                            BackendNodeID = 0,
+                            Method = "click",
+                        },
+                    ],
+                    Message = "Successfully clicked the login button",
+                    Success = true,
+                },
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
+
+        SessionActResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionActResponseDataTest : TestBase
@@ -479,6 +513,36 @@ public class SessionActResponseDataTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionActResponseData
+        {
+            Result = new()
+            {
+                ActionDescription = "Clicked button with text 'Login'",
+                Actions =
+                [
+                    new()
+                    {
+                        Description = "Click the submit button",
+                        Selector = "[data-testid='submit-button']",
+                        Arguments = ["Hello World"],
+                        BackendNodeID = 0,
+                        Method = "click",
+                    },
+                ],
+                Message = "Successfully clicked the login button",
+                Success = true,
+            },
+            ActionID = "actionId",
+        };
+
+        SessionActResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ResultTest : TestBase
@@ -628,6 +692,32 @@ public class ResultTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Result
+        {
+            ActionDescription = "Clicked button with text 'Login'",
+            Actions =
+            [
+                new()
+                {
+                    Description = "Click the submit button",
+                    Selector = "[data-testid='submit-button']",
+                    Arguments = ["Hello World"],
+                    BackendNodeID = 0,
+                    Method = "click",
+                },
+            ],
+            Message = "Successfully clicked the login button",
+            Success = true,
+        };
+
+        Result copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -802,5 +892,22 @@ public class ResultActionTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ResultAction
+        {
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
+            BackendNodeID = 0,
+            Method = "click",
+        };
+
+        ResultAction copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

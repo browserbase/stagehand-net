@@ -113,6 +113,26 @@ public class StreamEventTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StreamEvent
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Data = new StreamEventSystemDataOutput()
+            {
+                Status = Status.Starting,
+                Error = "error",
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            },
+            Type = StreamEventType.System,
+        };
+
+        StreamEvent copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class DataTest : TestBase
@@ -294,6 +314,21 @@ public class StreamEventSystemDataOutputTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StreamEventSystemDataOutput
+        {
+            Status = Status.Starting,
+            Error = "error",
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        StreamEventSystemDataOutput copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class StatusTest : TestBase
@@ -413,6 +448,16 @@ public class StreamEventLogDataOutputTest : TestBase
         var model = new StreamEventLogDataOutput { Message = "message" };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StreamEventLogDataOutput { Message = "message" };
+
+        StreamEventLogDataOutput copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

@@ -426,6 +426,27 @@ public class SessionExtractParamsOptionsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExtractParamsOptions
+        {
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Selector = "#main-content",
+            Timeout = 30000,
+        };
+
+        SessionExtractParamsOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionExtractParamsOptionsModelTest : TestBase

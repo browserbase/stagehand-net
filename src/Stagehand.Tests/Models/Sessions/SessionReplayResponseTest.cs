@@ -213,6 +213,43 @@ public class SessionReplayResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionReplayResponse
+        {
+            Data = new()
+            {
+                Pages =
+                [
+                    new()
+                    {
+                        Actions =
+                        [
+                            new()
+                            {
+                                Method = "method",
+                                TokenUsage = new()
+                                {
+                                    CachedInputTokens = 0,
+                                    InputTokens = 0,
+                                    OutputTokens = 0,
+                                    ReasoningTokens = 0,
+                                    TimeMs = 0,
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            Success = true,
+        };
+
+        SessionReplayResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionReplayResponseDataTest : TestBase
@@ -449,6 +486,39 @@ public class SessionReplayResponseDataTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionReplayResponseData
+        {
+            Pages =
+            [
+                new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Method = "method",
+                            TokenUsage = new()
+                            {
+                                CachedInputTokens = 0,
+                                InputTokens = 0,
+                                OutputTokens = 0,
+                                ReasoningTokens = 0,
+                                TimeMs = 0,
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+
+        SessionReplayResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class PageTest : TestBase
@@ -643,6 +713,33 @@ public class PageTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Page
+        {
+            Actions =
+            [
+                new()
+                {
+                    Method = "method",
+                    TokenUsage = new()
+                    {
+                        CachedInputTokens = 0,
+                        InputTokens = 0,
+                        OutputTokens = 0,
+                        ReasoningTokens = 0,
+                        TimeMs = 0,
+                    },
+                },
+            ],
+        };
+
+        Page copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class PageActionTest : TestBase
@@ -805,6 +902,27 @@ public class PageActionTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new PageAction
+        {
+            Method = "method",
+            TokenUsage = new()
+            {
+                CachedInputTokens = 0,
+                InputTokens = 0,
+                OutputTokens = 0,
+                ReasoningTokens = 0,
+                TimeMs = 0,
+            },
+        };
+
+        PageAction copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TokenUsageTest : TestBase
@@ -966,5 +1084,22 @@ public class TokenUsageTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TokenUsage
+        {
+            CachedInputTokens = 0,
+            InputTokens = 0,
+            OutputTokens = 0,
+            ReasoningTokens = 0,
+            TimeMs = 0,
+        };
+
+        TokenUsage copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

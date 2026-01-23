@@ -99,8 +99,11 @@ public sealed record class ModelConfig : JsonModel
 
     public ModelConfig() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ModelConfig(ModelConfig modelConfig)
         : base(modelConfig) { }
+#pragma warning restore CS8618
 
     public ModelConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {

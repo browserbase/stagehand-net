@@ -448,8 +448,11 @@ public sealed record class Browser : JsonModel
 
     public Browser() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Browser(Browser browser)
         : base(browser) { }
+#pragma warning restore CS8618
 
     public Browser(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -852,8 +855,11 @@ public sealed record class LaunchOptions : JsonModel
 
     public LaunchOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public LaunchOptions(LaunchOptions launchOptions)
         : base(launchOptions) { }
+#pragma warning restore CS8618
 
     public LaunchOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1190,8 +1196,11 @@ public sealed record class Proxy : JsonModel
 
     public Proxy() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Proxy(Proxy proxy)
         : base(proxy) { }
+#pragma warning restore CS8618
 
     public Proxy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1259,8 +1268,11 @@ public sealed record class Viewport : JsonModel
 
     public Viewport() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Viewport(Viewport viewport)
         : base(viewport) { }
+#pragma warning restore CS8618
 
     public Viewport(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1508,10 +1520,13 @@ public sealed record class BrowserbaseSessionCreateParams : JsonModel
 
     public BrowserbaseSessionCreateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserbaseSessionCreateParams(
         BrowserbaseSessionCreateParams browserbaseSessionCreateParams
     )
         : base(browserbaseSessionCreateParams) { }
+#pragma warning restore CS8618
 
     public BrowserbaseSessionCreateParams(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1724,8 +1739,11 @@ public sealed record class BrowserSettings : JsonModel
 
     public BrowserSettings() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserSettings(BrowserSettings browserSettings)
         : base(browserSettings) { }
+#pragma warning restore CS8618
 
     public BrowserSettings(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1794,8 +1812,11 @@ public sealed record class Context : JsonModel
 
     public Context() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Context(Context context)
         : base(context) { }
+#pragma warning restore CS8618
 
     public Context(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1982,8 +2003,11 @@ public sealed record class Fingerprint : JsonModel
 
     public Fingerprint() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Fingerprint(Fingerprint fingerprint)
         : base(fingerprint) { }
+#pragma warning restore CS8618
 
     public Fingerprint(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2285,8 +2309,11 @@ public sealed record class Screen : JsonModel
 
     public Screen() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Screen(Screen screen)
         : base(screen) { }
+#pragma warning restore CS8618
 
     public Screen(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2363,8 +2390,11 @@ public sealed record class BrowserSettingsViewport : JsonModel
 
     public BrowserSettingsViewport() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserSettingsViewport(BrowserSettingsViewport browserSettingsViewport)
         : base(browserSettingsViewport) { }
+#pragma warning restore CS8618
 
     public BrowserSettingsViewport(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2969,8 +2999,11 @@ public sealed record class Browserbase : JsonModel
         this.Type = JsonSerializer.SerializeToElement("browserbase");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Browserbase(Browserbase browserbase)
         : base(browserbase) { }
+#pragma warning restore CS8618
 
     public Browserbase(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -3060,8 +3093,11 @@ public sealed record class Geolocation : JsonModel
 
     public Geolocation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Geolocation(Geolocation geolocation)
         : base(geolocation) { }
+#pragma warning restore CS8618
 
     public Geolocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -3192,8 +3228,11 @@ public sealed record class External : JsonModel
         this.Type = JsonSerializer.SerializeToElement("external");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public External(External external)
         : base(external) { }
+#pragma warning restore CS8618
 
     public External(IReadOnlyDictionary<string, JsonElement> rawData)
     {

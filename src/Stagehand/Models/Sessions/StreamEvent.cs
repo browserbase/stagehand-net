@@ -62,8 +62,11 @@ public sealed record class StreamEvent : JsonModel
 
     public StreamEvent() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEvent(StreamEvent streamEvent)
         : base(streamEvent) { }
+#pragma warning restore CS8618
 
     public StreamEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -407,8 +410,11 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
 
     public StreamEventSystemDataOutput() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEventSystemDataOutput(StreamEventSystemDataOutput streamEventSystemDataOutput)
         : base(streamEventSystemDataOutput) { }
+#pragma warning restore CS8618
 
     public StreamEventSystemDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -542,8 +548,11 @@ public sealed record class StreamEventLogDataOutput : JsonModel
         this.Status = JsonSerializer.SerializeToElement("running");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEventLogDataOutput(StreamEventLogDataOutput streamEventLogDataOutput)
         : base(streamEventLogDataOutput) { }
+#pragma warning restore CS8618
 
     public StreamEventLogDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {

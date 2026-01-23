@@ -292,8 +292,11 @@ public sealed record class SessionObserveParamsOptions : JsonModel
 
     public SessionObserveParamsOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionObserveParamsOptions(SessionObserveParamsOptions sessionObserveParamsOptions)
         : base(sessionObserveParamsOptions) { }
+#pragma warning restore CS8618
 
     public SessionObserveParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -392,6 +392,27 @@ public class SessionObserveParamsOptionsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionObserveParamsOptions
+        {
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Selector = "nav",
+            Timeout = 30000,
+        };
+
+        SessionObserveParamsOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionObserveParamsOptionsModelTest : TestBase

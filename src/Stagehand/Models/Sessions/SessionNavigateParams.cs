@@ -305,8 +305,11 @@ public sealed record class SessionNavigateParamsOptions : JsonModel
 
     public SessionNavigateParamsOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionNavigateParamsOptions(SessionNavigateParamsOptions sessionNavigateParamsOptions)
         : base(sessionNavigateParamsOptions) { }
+#pragma warning restore CS8618
 
     public SessionNavigateParamsOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {

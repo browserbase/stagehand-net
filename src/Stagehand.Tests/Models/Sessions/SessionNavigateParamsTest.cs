@@ -339,6 +339,21 @@ public class SessionNavigateParamsOptionsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionNavigateParamsOptions
+        {
+            Referer = "referer",
+            Timeout = 30000,
+            WaitUntil = WaitUntil.Networkidle,
+        };
+
+        SessionNavigateParamsOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class WaitUntilTest : TestBase
