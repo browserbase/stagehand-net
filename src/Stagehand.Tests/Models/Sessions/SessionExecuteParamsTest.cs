@@ -18,6 +18,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -44,6 +45,7 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -83,6 +85,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -118,6 +121,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -157,6 +161,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -191,6 +196,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -227,6 +233,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -273,6 +280,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -315,6 +323,7 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
+                Mode = Mode.Cua,
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5-nano",
@@ -351,6 +360,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -363,6 +373,7 @@ public class AgentConfigTest : TestBase
         };
 
         bool expectedCua = true;
+        ApiEnum<string, Mode> expectedMode = Mode.Cua;
         AgentConfigModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
@@ -374,6 +385,7 @@ public class AgentConfigTest : TestBase
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
+        Assert.Equal(expectedMode, model.Mode);
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedProvider, model.Provider);
         Assert.Equal(expectedSystemPrompt, model.SystemPrompt);
@@ -385,6 +397,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -411,6 +424,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -430,6 +444,7 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
+        ApiEnum<string, Mode> expectedMode = Mode.Cua;
         AgentConfigModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5-nano",
@@ -441,6 +456,7 @@ public class AgentConfigTest : TestBase
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
+        Assert.Equal(expectedMode, deserialized.Mode);
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedProvider, deserialized.Provider);
         Assert.Equal(expectedSystemPrompt, deserialized.SystemPrompt);
@@ -452,6 +468,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -473,6 +490,8 @@ public class AgentConfigTest : TestBase
 
         Assert.Null(model.Cua);
         Assert.False(model.RawData.ContainsKey("cua"));
+        Assert.Null(model.Mode);
+        Assert.False(model.RawData.ContainsKey("mode"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Provider);
@@ -496,6 +515,7 @@ public class AgentConfigTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             Cua = null,
+            Mode = null,
             Model = null,
             Provider = null,
             SystemPrompt = null,
@@ -503,6 +523,8 @@ public class AgentConfigTest : TestBase
 
         Assert.Null(model.Cua);
         Assert.False(model.RawData.ContainsKey("cua"));
+        Assert.Null(model.Mode);
+        Assert.False(model.RawData.ContainsKey("mode"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Provider);
@@ -518,6 +540,7 @@ public class AgentConfigTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             Cua = null,
+            Mode = null,
             Model = null,
             Provider = null,
             SystemPrompt = null,
@@ -532,6 +555,7 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
+            Mode = Mode.Cua,
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5-nano",
@@ -546,6 +570,66 @@ public class AgentConfigTest : TestBase
         AgentConfig copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class ModeTest : TestBase
+{
+    [Theory]
+    [InlineData(Mode.Dom)]
+    [InlineData(Mode.Hybrid)]
+    [InlineData(Mode.Cua)]
+    public void Validation_Works(Mode rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Mode> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Mode.Dom)]
+    [InlineData(Mode.Hybrid)]
+    [InlineData(Mode.Cua)]
+    public void SerializationRoundtrip_Works(Mode rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Mode> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

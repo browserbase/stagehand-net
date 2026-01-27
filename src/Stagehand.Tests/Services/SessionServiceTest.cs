@@ -52,6 +52,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
+                    Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {
                         ModelName = "openai/gpt-5-nano",
@@ -85,6 +86,7 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
+                    Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {
                         ModelName = "openai/gpt-5-nano",
