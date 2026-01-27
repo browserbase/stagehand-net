@@ -220,7 +220,7 @@ public record class SessionExecuteParams : ParamsBase
 public sealed record class AgentConfig : JsonModel
 {
     /// <summary>
-    /// Enable Computer Use Agent mode
+    /// Deprecated. Use mode: 'cua' instead. If both are provided, mode takes precedence.
     /// </summary>
     public bool? Cua
     {
@@ -237,6 +237,27 @@ public sealed record class AgentConfig : JsonModel
             }
 
             this._rawData.Set("cua", value);
+        }
+    }
+
+    /// <summary>
+    /// Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
+    /// </summary>
+    public ApiEnum<string, Mode>? Mode
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Mode>>("mode");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("mode", value);
         }
     }
 
@@ -307,6 +328,7 @@ public sealed record class AgentConfig : JsonModel
     public override void Validate()
     {
         _ = this.Cua;
+        this.Mode?.Validate();
         this.Model?.Validate();
         this.Provider?.Validate();
         _ = this.SystemPrompt;
@@ -345,6 +367,52 @@ class AgentConfigFromRaw : IFromRawJson<AgentConfig>
     /// <inheritdoc/>
     public AgentConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AgentConfig.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
+/// </summary>
+[JsonConverter(typeof(ModeConverter))]
+public enum Mode
+{
+    Dom,
+    Hybrid,
+    Cua,
+}
+
+sealed class ModeConverter : JsonConverter<Mode>
+{
+    public override Mode Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "dom" => Mode.Dom,
+            "hybrid" => Mode.Hybrid,
+            "cua" => Mode.Cua,
+            _ => (Mode)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Mode value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Mode.Dom => "dom",
+                Mode.Hybrid => "hybrid",
+                Mode.Cua => "cua",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>

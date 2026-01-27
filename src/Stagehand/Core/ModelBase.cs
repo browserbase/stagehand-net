@@ -26,6 +26,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, StreamEventType>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXStreamResponse>(),
+            new ApiEnumConverter<string, Mode>(),
             new ApiEnumConverter<string, Provider>(),
             new ApiEnumConverter<string, SessionExecuteParamsXStreamResponse>(),
             new ApiEnumConverter<string, SessionExtractParamsXStreamResponse>(),
