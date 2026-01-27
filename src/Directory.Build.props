@@ -3,7 +3,7 @@
     <Authors>Stagehand</Authors>
     <Company>Stagehand</Company>
     <PackageTags>sdk;api;http;library</PackageTags>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2026 Stagehand</Copyright>
     <PackageProjectUrl>https://docs.stagehand.dev</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/browserbase/stagehand-net</RepositoryUrl>
