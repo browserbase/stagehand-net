@@ -8,10 +8,9 @@ The REST API documentation can be found on [docs.stagehand.dev](https://docs.sta
 
 ## Installation
 
-Install the package from [NuGet](https://www.nuget.org/packages/Stagehand):
-
 ```bash
-dotnet add package Stagehand
+git clone git@github.com:browserbase/stagehand-net.git
+dotnet add reference stagehand-net/src/Stagehand
 ```
 
 ## Requirements
