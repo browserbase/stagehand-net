@@ -52,6 +52,13 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
+                    ExecutionModel = new ModelConfig()
+                    {
+                        ModelName = "openai/gpt-5-nano",
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
+                        Provider = ModelConfigProvider.OpenAI,
+                    },
                     Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {
@@ -86,6 +93,13 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
+                    ExecutionModel = new ModelConfig()
+                    {
+                        ModelName = "openai/gpt-5-nano",
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
+                        Provider = ModelConfigProvider.OpenAI,
+                    },
                     Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {

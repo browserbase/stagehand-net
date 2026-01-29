@@ -32,7 +32,7 @@ static class Sse
                 continue;
             }
 
-            if (item.Data.StartsWith("{\"data\":{\"status\":\"finished\""))
+            if (item.Data.StartsWith("finished"))
             {
                 // In this case we don't break because we still want to iterate through the full stream.
                 done = true;
