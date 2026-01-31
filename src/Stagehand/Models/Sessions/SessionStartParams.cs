@@ -1060,10 +1060,10 @@ public record class IgnoreDefaultArgs : ModelBase
         }
     }
 
-    public virtual bool Equals(IgnoreDefaultArgs? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(IgnoreDefaultArgs? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -1072,6 +1072,16 @@ public record class IgnoreDefaultArgs : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            bool _ => 0,
+            IReadOnlyList<string> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
@@ -2602,10 +2612,10 @@ public record class Proxies : ModelBase
         }
     }
 
-    public virtual bool Equals(Proxies? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Proxies? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -2614,6 +2624,16 @@ public record class Proxies : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            bool _ => 0,
+            IReadOnlyList<ProxyConfig> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ProxiesConverter : JsonConverter<Proxies>
@@ -2844,10 +2864,10 @@ public record class ProxyConfig : ModelBase
         this.Switch((browserbase) => browserbase.Validate(), (external) => external.Validate());
     }
 
-    public virtual bool Equals(ProxyConfig? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ProxyConfig? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -2856,6 +2876,16 @@ public record class ProxyConfig : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            Browserbase _ => 0,
+            External _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>

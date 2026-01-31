@@ -570,10 +570,10 @@ public record class ExecutionModel : ModelBase
         this.Switch((modelConfig) => modelConfig.Validate(), (_) => { });
     }
 
-    public virtual bool Equals(ExecutionModel? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ExecutionModel? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -582,6 +582,16 @@ public record class ExecutionModel : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ModelConfig _ => 0,
+            string _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ExecutionModelConverter : JsonConverter<ExecutionModel>
@@ -854,10 +864,10 @@ public record class AgentConfigModel : ModelBase
         this.Switch((config) => config.Validate(), (_) => { });
     }
 
-    public virtual bool Equals(AgentConfigModel? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(AgentConfigModel? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -866,6 +876,16 @@ public record class AgentConfigModel : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ModelConfig _ => 0,
+            string _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class AgentConfigModelConverter : JsonConverter<AgentConfigModel>
