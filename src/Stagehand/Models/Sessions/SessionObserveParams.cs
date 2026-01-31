@@ -504,10 +504,10 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         this.Switch((config) => config.Validate(), (_) => { });
     }
 
-    public virtual bool Equals(SessionObserveParamsOptionsModel? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(SessionObserveParamsOptionsModel? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -516,6 +516,16 @@ public record class SessionObserveParamsOptionsModel : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ModelConfig _ => 0,
+            string _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class SessionObserveParamsOptionsModelConverter
