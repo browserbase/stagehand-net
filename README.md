@@ -67,9 +67,10 @@ Most existing browser automation tools either require you to write low-level cod
 
 ## Installation
 
+Install the package from [NuGet](https://www.nuget.org/packages/Stagehand):
+
 ```bash
-git clone git@github.com:browserbase/stagehand-net.git
-dotnet add reference stagehand-net/src/Stagehand
+dotnet add package Stagehand
 ```
 
 ## Requirements
