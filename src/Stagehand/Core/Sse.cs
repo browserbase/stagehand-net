@@ -48,6 +48,8 @@ static class Sse
             switch (item.EventType)
             {
                 case null:
+                case "":
+                case "message":
                     T? message;
                     try
                     {
