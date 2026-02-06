@@ -324,7 +324,9 @@ export BROWSERBASE_PROJECT_ID="your-bb-project-uuid"
 export MODEL_API_KEY="sk-proj-your-llm-api-key"
 ```
 
-The example lives at `examples/remote_browser_playwright_example.cs`.
+The examples live at:
+- `examples/remote_browser_playwright_example.cs`
+- `examples/local_browser_playwright_example.cs`
 
 Run the example:
 
