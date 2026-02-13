@@ -4,13 +4,18 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Stagehand;
 using Stagehand.Models.Sessions;
+using SessionType = Stagehand.Models.Sessions.Type;
+using StagehandAction = Stagehand.Models.Sessions.Action;
 
 namespace Stagehand.Examples
 {
-    class RemoteBrowserPlaywrightExample
+    internal static class RemoteBrowserPlaywrightExample
     {
-        static async Task Main(string[] args)
+        private static readonly string[] RequiredExtractFields = ["commentText"];
+
+        public static async Task RunAsync()
         {
+            Env.Load();
             // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
             StagehandClient client = new();
 
@@ -18,8 +23,8 @@ namespace Stagehand.Examples
             var startResponse = await client.Sessions.Start(
                 new SessionStartParams
                 {
-                    ModelName = "gpt-4o",
-                    Browser = new Browser { Type = Type.Browserbase },
+                    ModelName = "openai/gpt-5-nano",
+                    Browser = new Browser { Type = SessionType.Browserbase },
                 }
             );
             Console.WriteLine($"Session started: {startResponse.Data.SessionID}");
@@ -29,17 +34,18 @@ namespace Stagehand.Examples
             // Navigate to Hacker News
             await client.Sessions.Navigate(
                 sessionID,
-                new SessionNavigateParams { URL = "https://news.ycombinator.com" }
+                new SessionNavigateParams { UrlValue = "https://news.ycombinator.com" }
             );
             Console.WriteLine("Navigated to Hacker News");
 
             // Observe with SSE streaming to find possible actions
             var observeResponse = await CollectStreamingResult<SessionObserveResponse>(
                 client.Sessions.ObserveStreaming(
-                    sessionID,
                     new SessionObserveParams
                     {
+                        ID = sessionID,
                         Instruction = "find the link to view comments for the top post",
+                        XStreamResponse = SessionObserveParamsXStreamResponse.True,
                     }
                 ),
                 "observe"
@@ -59,11 +65,11 @@ namespace Stagehand.Examples
             // Pass the action to Act (streaming)
             var actResponse = await CollectStreamingResult<SessionActResponse>(
                 client.Sessions.ActStreaming(
-                    sessionID,
                     new SessionActParams
                     {
+                        ID = sessionID,
                         Input = new Input(
-                            new Action
+                            new StagehandAction
                             {
                                 Description = action.Description,
                                 Selector = action.Selector,
@@ -71,6 +77,7 @@ namespace Stagehand.Examples
                                 Arguments = action.Arguments,
                             }
                         ),
+                        XStreamResponse = XStreamResponse.True,
                     }
                 ),
                 "act"
@@ -84,9 +91,9 @@ namespace Stagehand.Examples
             // Extract data from the page (streaming)
             var extractResponse = await CollectStreamingResult<SessionExtractResponse>(
                 client.Sessions.ExtractStreaming(
-                    sessionID,
                     new SessionExtractParams
                     {
+                        ID = sessionID,
                         Instruction = "extract the text of the top comment on this page",
                         Schema = new Dictionary<string, JsonElement>
                         {
@@ -106,10 +113,9 @@ namespace Stagehand.Examples
                                     },
                                 }
                             ),
-                            ["required"] = JsonSerializer.SerializeToElement(
-                                new[] { "commentText" }
-                            ),
+                            ["required"] = JsonSerializer.SerializeToElement(RequiredExtractFields),
                         },
+                        XStreamResponse = SessionExtractParamsXStreamResponse.True,
                     }
                 ),
                 "extract"
@@ -127,10 +133,11 @@ namespace Stagehand.Examples
             var extractedData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
                 extractResponse.Data.Result.ToString()
             );
-            var author =
-                extractedData != null && extractedData.ContainsKey("author")
-                    ? extractedData["author"].GetString()
-                    : null;
+            string? author = null;
+            if (extractedData != null && extractedData.TryGetValue("author", out var authorElement))
+            {
+                author = authorElement.GetString();
+            }
 
             if (string.IsNullOrWhiteSpace(author))
             {
@@ -144,9 +151,9 @@ namespace Stagehand.Examples
             // Use the Agent to find the author's profile (streaming)
             var executeResponse = await CollectStreamingResult<SessionExecuteResponse>(
                 client.Sessions.ExecuteStreaming(
-                    sessionID,
-                    new SessionExecuteAgentParams
+                    new SessionExecuteParams
                     {
+                        ID = sessionID,
                         ExecuteOptions = new ExecuteOptions
                         {
                             Instruction =
@@ -157,15 +164,16 @@ namespace Stagehand.Examples
                         },
                         AgentConfig = new AgentConfig
                         {
-                            Model = new Model(
+                            Model = new AgentConfigModel(
                                 new ModelConfig
                                 {
-                                    ModelName = "openai/gpt-4.1-mini",
-                                    APIKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
+                                    ModelName = "openai/gpt-5-nano",
+                                    ApiKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
                                 }
                             ),
                             Cua = false,
                         },
+                        XStreamResponse = SessionExecuteParamsXStreamResponse.True,
                     }
                 ),
                 "agent"
