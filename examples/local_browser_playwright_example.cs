@@ -2,59 +2,55 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Playwright;
 using Stagehand;
 using Stagehand.Models.Sessions;
+using SessionType = Stagehand.Models.Sessions.Type;
+using StagehandAction = Stagehand.Models.Sessions.Action;
 
 namespace Stagehand.Examples
 {
-    class LocalBrowserPlaywrightExample
+    internal static class LocalBrowserPlaywrightExample
     {
-        static async Task Main(string[] args)
+        private static readonly string[] RequiredExtractFields = ["commentText"];
+
+        public static async Task RunAsync()
         {
+            Env.Load();
             // Uses environment variables: MODEL_API_KEY
             // In local mode, BROWSERBASE_API_KEY and BROWSERBASE_PROJECT_ID can be any value.
             StagehandClient client = new();
 
-            await using var playwright = await Playwright.CreateAsync();
-            await using var browserServer = await playwright.Chromium.LaunchServerAsync(
-                new BrowserTypeLaunchServerOptions { Headless = true }
-            );
-            var cdpUrl = browserServer.WsEndpoint;
-
-            // Start a new local session using the Playwright CDP URL
+            // Start a new local session
             var startResponse = await client.Sessions.Start(
                 new SessionStartParams
                 {
-                    ModelName = "gpt-4o",
-                    Browser = new Browser { Type = Type.Local, CdpUrl = cdpUrl },
+                    ModelName = "openai/gpt-5-nano",
+                    Browser = new Browser
+                    {
+                        Type = SessionType.Local,
+                        LaunchOptions = new LaunchOptions { Headless = true },
+                    },
                 }
             );
             Console.WriteLine($"Session started: {startResponse.Data.SessionID}");
 
             var sessionID = startResponse.Data.SessionID;
 
-            // Connect Playwright to the same local browser
-            var browser = await playwright.Chromium.ConnectOverCDPAsync(cdpUrl);
-            var context =
-                browser.Contexts.Count > 0 ? browser.Contexts[0] : await browser.NewContextAsync();
-            var page = context.Pages.Count > 0 ? context.Pages[0] : await context.NewPageAsync();
-
             // Navigate to Hacker News
             await client.Sessions.Navigate(
                 sessionID,
-                new SessionNavigateParams { URL = "https://news.ycombinator.com" }
+                new SessionNavigateParams { UrlValue = "https://news.ycombinator.com" }
             );
-            await page.GotoAsync("https://news.ycombinator.com");
             Console.WriteLine("Navigated to Hacker News");
 
             // Observe with SSE streaming to find possible actions
             var observeResponse = await CollectStreamingResult<SessionObserveResponse>(
                 client.Sessions.ObserveStreaming(
-                    sessionID,
                     new SessionObserveParams
                     {
+                        ID = sessionID,
                         Instruction = "find the link to view comments for the top post",
+                        XStreamResponse = SessionObserveParamsXStreamResponse.True,
                     }
                 ),
                 "observe"
@@ -74,11 +70,11 @@ namespace Stagehand.Examples
             // Pass the action to Act (streaming)
             var actResponse = await CollectStreamingResult<SessionActResponse>(
                 client.Sessions.ActStreaming(
-                    sessionID,
                     new SessionActParams
                     {
+                        ID = sessionID,
                         Input = new Input(
-                            new Action
+                            new StagehandAction
                             {
                                 Description = action.Description,
                                 Selector = action.Selector,
@@ -86,6 +82,7 @@ namespace Stagehand.Examples
                                 Arguments = action.Arguments,
                             }
                         ),
+                        XStreamResponse = XStreamResponse.True,
                     }
                 ),
                 "act"
@@ -99,9 +96,9 @@ namespace Stagehand.Examples
             // Extract data from the page (streaming)
             var extractResponse = await CollectStreamingResult<SessionExtractResponse>(
                 client.Sessions.ExtractStreaming(
-                    sessionID,
                     new SessionExtractParams
                     {
+                        ID = sessionID,
                         Instruction = "extract the text of the top comment on this page",
                         Schema = new Dictionary<string, JsonElement>
                         {
@@ -121,10 +118,9 @@ namespace Stagehand.Examples
                                     },
                                 }
                             ),
-                            ["required"] = JsonSerializer.SerializeToElement(
-                                new[] { "commentText" }
-                            ),
+                            ["required"] = JsonSerializer.SerializeToElement(RequiredExtractFields),
                         },
+                        XStreamResponse = SessionExtractParamsXStreamResponse.True,
                     }
                 ),
                 "extract"
@@ -142,10 +138,11 @@ namespace Stagehand.Examples
             var extractedData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
                 extractResponse.Data.Result.ToString()
             );
-            var author =
-                extractedData != null && extractedData.ContainsKey("author")
-                    ? extractedData["author"].GetString()
-                    : null;
+            string? author = null;
+            if (extractedData != null && extractedData.TryGetValue("author", out var authorElement))
+            {
+                author = authorElement.GetString();
+            }
 
             if (string.IsNullOrWhiteSpace(author))
             {
@@ -159,9 +156,9 @@ namespace Stagehand.Examples
             // Use the Agent to find the author's profile (streaming)
             var executeResponse = await CollectStreamingResult<SessionExecuteResponse>(
                 client.Sessions.ExecuteStreaming(
-                    sessionID,
-                    new SessionExecuteAgentParams
+                    new SessionExecuteParams
                     {
+                        ID = sessionID,
                         ExecuteOptions = new ExecuteOptions
                         {
                             Instruction =
@@ -172,15 +169,16 @@ namespace Stagehand.Examples
                         },
                         AgentConfig = new AgentConfig
                         {
-                            Model = new Model(
+                            Model = new AgentConfigModel(
                                 new ModelConfig
                                 {
-                                    ModelName = "openai/gpt-4.1-mini",
-                                    APIKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
+                                    ModelName = "openai/gpt-5-nano",
+                                    ApiKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
                                 }
                             ),
                             Cua = false,
                         },
+                        XStreamResponse = SessionExecuteParamsXStreamResponse.True,
                     }
                 ),
                 "agent"
@@ -197,7 +195,6 @@ namespace Stagehand.Examples
 
             // End the session to clean up resources
             await client.Sessions.End(sessionID, new SessionEndParams());
-            await browser.CloseAsync();
             Console.WriteLine("Session ended");
         }
 
@@ -234,31 +231,40 @@ namespace Stagehand.Examples
 
         static void PrintStreamEvent(string label, StreamEvent streamEvent)
         {
-            var payload = streamEvent.Data.RawJSON;
-            Console.WriteLine($"[{label}][{streamEvent.Type}] {payload}");
+            if (streamEvent.Data.TryPickStreamEventLogDataOutput(out var logData))
+            {
+                Console.WriteLine($"[{label}] log: {logData.Message}");
+                return;
+            }
+
+            if (streamEvent.Data.TryPickStreamEventSystemDataOutput(out var systemData))
+            {
+                var status = systemData.Status.Value();
+                var error = string.IsNullOrWhiteSpace(systemData.Error)
+                    ? string.Empty
+                    : $" error={systemData.Error}";
+                Console.WriteLine($"[{label}] system: {status}{error}");
+                return;
+            }
+
+            Console.WriteLine($"[{label}] event: {streamEvent.Data.Json}");
         }
 
         static bool TryGetFinishedResult(StreamEvent streamEvent, out JsonElement result)
         {
             result = default;
 
-            if (streamEvent.Type != StreamEventType.System)
+            if (
+                streamEvent.Data.TryPickStreamEventSystemDataOutput(out var systemData)
+                && systemData.Result is { } resultElement
+                && systemData.Status.Value() == Status.Finished
+            )
             {
-                return false;
+                result = resultElement;
+                return true;
             }
 
-            var system = streamEvent.Data.AsStreamEventDataStreamEventSystemDataOutput();
-            if (system.Status != "finished")
-            {
-                return false;
-            }
-
-            if (!system.JSON.Result.TryGetValue(out result))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
     }
 }

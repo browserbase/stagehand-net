@@ -319,10 +319,11 @@ namespace Stagehand.Examples
 Set your environment variables:
 
 ```bash
-export BROWSERBASE_API_KEY="your-bb-api-key"
-export BROWSERBASE_PROJECT_ID="your-bb-project-uuid"
-export MODEL_API_KEY="sk-proj-your-llm-api-key"
+cp examples/.env.example examples/.env
+# Edit examples/.env with your credentials.
 ```
+
+The examples load `examples/.env` automatically.
 
 The examples live at:
 - `examples/remote_browser_playwright_example.cs`
@@ -331,7 +332,13 @@ The examples live at:
 Run the example:
 
 ```bash
-dotnet run --project examples
+dotnet run --project examples -- remote
+```
+
+To run the local Playwright example:
+
+```bash
+dotnet run --project examples -- local
 ```
 
 ## Client configuration

@@ -407,6 +407,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
         }
 
+        var id = parameters.ID;
         var rawBodyData = Enumerable.ToDictionary(
             parameters.RawBodyData,
             (e) => e.Key,
@@ -418,6 +419,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             parameters.RawQueryData,
             rawBodyData
         );
+        parameters = parameters with { ID = id };
 
         HttpRequest<SessionActParams> request = new()
         {
@@ -553,6 +555,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
         }
 
+        var id = parameters.ID;
         var rawBodyData = Enumerable.ToDictionary(
             parameters.RawBodyData,
             (e) => e.Key,
@@ -564,6 +567,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             parameters.RawQueryData,
             rawBodyData
         );
+        parameters = parameters with { ID = id };
 
         HttpRequest<SessionExecuteParams> request = new()
         {
@@ -656,6 +660,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
         }
 
+        var id = parameters.ID;
         var rawBodyData = Enumerable.ToDictionary(
             parameters.RawBodyData,
             (e) => e.Key,
@@ -667,6 +672,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             parameters.RawQueryData,
             rawBodyData
         );
+        parameters = parameters with { ID = id };
 
         HttpRequest<SessionExtractParams> request = new()
         {
@@ -804,6 +810,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             throw new StagehandInvalidDataException("'parameters.ID' cannot be null");
         }
 
+        var id = parameters.ID;
         var rawBodyData = Enumerable.ToDictionary(
             parameters.RawBodyData,
             (e) => e.Key,
@@ -815,6 +822,7 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
             parameters.RawQueryData,
             rawBodyData
         );
+        parameters = parameters with { ID = id };
 
         HttpRequest<SessionObserveParams> request = new()
         {
