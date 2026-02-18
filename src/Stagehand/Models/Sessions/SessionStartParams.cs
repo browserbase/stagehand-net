@@ -2619,6 +2619,16 @@ public record class Proxies : ModelBase
         {
             throw new StagehandInvalidDataException("Data did not match any variant of Proxies");
         }
+        this.Switch(
+            (_) => { },
+            (proxyConfigList) =>
+            {
+                foreach (var item in proxyConfigList)
+                {
+                    item.Validate();
+                }
+            }
+        );
     }
 
     public virtual bool Equals(Proxies? other) =>
@@ -2671,6 +2681,10 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
             var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(element, options);
             if (deserialized != null)
             {
+                foreach (var item in deserialized)
+                {
+                    item.Validate();
+                }
                 return new(deserialized, element);
             }
         }
