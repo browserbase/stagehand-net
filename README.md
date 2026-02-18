@@ -79,6 +79,8 @@ This library requires .NET Standard 2.0 or later.
 
 ## Usage
 
+This mirrors `examples/remote_browser_playwright_example.cs`.
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -93,13 +95,14 @@ namespace Stagehand.Examples
     {
         static async Task Main(string[] args)
         {
-            // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
+            Env.Load();
+            // Uses environment variables: STAGEHAND_API_URL, BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
             StagehandClient client = new();
 
             // Start a new remote Browserbase session (Playwright-backed)
             var startResponse = await client.Sessions.Start(new SessionStartParams
             {
-                ModelName = "gpt-4o",
+                ModelName = "anthropic/claude-sonnet-4-6",
                 Browser = new Browser { Type = Type.Browserbase }
             });
             Console.WriteLine($"Session started: {startResponse.Data.SessionID}");
@@ -117,7 +120,8 @@ namespace Stagehand.Examples
             var observeResponse = await CollectStreamingResult<SessionObserveResponse>(
                 client.Sessions.ObserveStreaming(sessionID, new SessionObserveParams
                 {
-                    Instruction = "find the link to view comments for the top post"
+                    Instruction = "find the link to view comments for the top post",
+                    XStreamResponse = SessionObserveParamsXStreamResponse.True
                 }),
                 "observe"
             );
@@ -143,7 +147,8 @@ namespace Stagehand.Examples
                         Selector = action.Selector,
                         Method = action.Method,
                         Arguments = action.Arguments
-                    })
+                    }),
+                    XStreamResponse = XStreamResponse.True
                 }),
                 "act"
             );
@@ -177,7 +182,8 @@ namespace Stagehand.Examples
                             }
                         ),
                         ["required"] = JsonSerializer.SerializeToElement(new[] { "commentText" })
-                    }
+                    },
+                    XStreamResponse = SessionExtractParamsXStreamResponse.True
                 }),
                 "extract"
             );
@@ -223,11 +229,12 @@ namespace Stagehand.Examples
                     {
                         Model = new Model(new ModelConfig
                         {
-                            ModelName = "openai/gpt-4.1-mini",
+                            ModelName = "anthropic/claude-opus-4-6",
                             APIKey = Environment.GetEnvironmentVariable("MODEL_API_KEY")
                         }),
                         Cua = false
-                    }
+                    },
+                    XStreamResponse = SessionExecuteParamsXStreamResponse.True
                 }),
                 "agent"
             );
@@ -316,7 +323,12 @@ namespace Stagehand.Examples
 
 ## Running the Example
 
-Set your environment variables:
+Set your environment variables (from `examples/.env.example`):
+
+- `STAGEHAND_API_URL`
+- `MODEL_API_KEY`
+- `BROWSERBASE_API_KEY`
+- `BROWSERBASE_PROJECT_ID`
 
 ```bash
 cp examples/.env.example examples/.env
@@ -328,6 +340,17 @@ The examples load `examples/.env` automatically.
 The examples live at:
 - `examples/remote_browser_playwright_example.cs`
 - `examples/local_browser_playwright_example.cs`
+
+Install the example dependencies:
+
+- `examples/remote_browser_playwright_example.cs`: `Microsoft.Playwright` + Playwright browsers
+- `examples/local_browser_playwright_example.cs`: `Microsoft.Playwright` + Playwright browsers
+
+```bash
+dotnet build examples
+pwsh examples/bin/Debug/net8.0/playwright.ps1 install
+# or: bash examples/bin/Debug/net8.0/playwright.sh install
+```
 
 Run the example:
 
