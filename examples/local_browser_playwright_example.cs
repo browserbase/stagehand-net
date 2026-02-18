@@ -24,7 +24,7 @@ namespace Stagehand.Examples
             var startResponse = await client.Sessions.Start(
                 new SessionStartParams
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "anthropic/claude-sonnet-4-6",
                     Browser = new Browser
                     {
                         Type = SessionType.Local,
@@ -172,7 +172,7 @@ namespace Stagehand.Examples
                             Model = new AgentConfigModel(
                                 new ModelConfig
                                 {
-                                    ModelName = "openai/gpt-5-nano",
+                                    ModelName = "anthropic/claude-opus-4-6",
                                     ApiKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
                                 }
                             ),

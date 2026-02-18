@@ -6,3 +6,5 @@ obj/
 
 # do not edit! excludes generated files used internally
 .artifacts/
+
+examples/.env
