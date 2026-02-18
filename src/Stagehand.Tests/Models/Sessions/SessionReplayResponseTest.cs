@@ -23,18 +23,31 @@ public class SessionReplayResponseTest : TestBase
                             new()
                             {
                                 Method = "method",
+                                Parameters = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Result = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Timestamp = 0,
+                                EndTime = 0,
                                 TokenUsage = new()
                                 {
-                                    CachedInputTokens = 0,
+                                    Cost = 0,
                                     InputTokens = 0,
                                     OutputTokens = 0,
-                                    ReasoningTokens = 0,
                                     TimeMs = 0,
                                 },
                             },
                         ],
+                        Duration = 0,
+                        Timestamp = 0,
+                        Url = "url",
                     },
                 ],
+                ClientLanguage = "clientLanguage",
             },
             Success = true,
         };
@@ -50,18 +63,31 @@ public class SessionReplayResponseTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
         bool expectedSuccess = true;
 
@@ -85,18 +111,31 @@ public class SessionReplayResponseTest : TestBase
                             new()
                             {
                                 Method = "method",
+                                Parameters = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Result = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Timestamp = 0,
+                                EndTime = 0,
                                 TokenUsage = new()
                                 {
-                                    CachedInputTokens = 0,
+                                    Cost = 0,
                                     InputTokens = 0,
                                     OutputTokens = 0,
-                                    ReasoningTokens = 0,
                                     TimeMs = 0,
                                 },
                             },
                         ],
+                        Duration = 0,
+                        Timestamp = 0,
+                        Url = "url",
                     },
                 ],
+                ClientLanguage = "clientLanguage",
             },
             Success = true,
         };
@@ -126,18 +165,31 @@ public class SessionReplayResponseTest : TestBase
                             new()
                             {
                                 Method = "method",
+                                Parameters = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Result = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Timestamp = 0,
+                                EndTime = 0,
                                 TokenUsage = new()
                                 {
-                                    CachedInputTokens = 0,
+                                    Cost = 0,
                                     InputTokens = 0,
                                     OutputTokens = 0,
-                                    ReasoningTokens = 0,
                                     TimeMs = 0,
                                 },
                             },
                         ],
+                        Duration = 0,
+                        Timestamp = 0,
+                        Url = "url",
                     },
                 ],
+                ClientLanguage = "clientLanguage",
             },
             Success = true,
         };
@@ -160,18 +212,31 @@ public class SessionReplayResponseTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
         bool expectedSuccess = true;
 
@@ -195,18 +260,31 @@ public class SessionReplayResponseTest : TestBase
                             new()
                             {
                                 Method = "method",
+                                Parameters = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Result = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Timestamp = 0,
+                                EndTime = 0,
                                 TokenUsage = new()
                                 {
-                                    CachedInputTokens = 0,
+                                    Cost = 0,
                                     InputTokens = 0,
                                     OutputTokens = 0,
-                                    ReasoningTokens = 0,
                                     TimeMs = 0,
                                 },
                             },
                         ],
+                        Duration = 0,
+                        Timestamp = 0,
+                        Url = "url",
                     },
                 ],
+                ClientLanguage = "clientLanguage",
             },
             Success = true,
         };
@@ -230,18 +308,31 @@ public class SessionReplayResponseTest : TestBase
                             new()
                             {
                                 Method = "method",
+                                Parameters = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Result = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Timestamp = 0,
+                                EndTime = 0,
                                 TokenUsage = new()
                                 {
-                                    CachedInputTokens = 0,
+                                    Cost = 0,
                                     InputTokens = 0,
                                     OutputTokens = 0,
-                                    ReasoningTokens = 0,
                                     TimeMs = 0,
                                 },
                             },
                         ],
+                        Duration = 0,
+                        Timestamp = 0,
+                        Url = "url",
                     },
                 ],
+                ClientLanguage = "clientLanguage",
             },
             Success = true,
         };
@@ -268,18 +359,31 @@ public class SessionReplayResponseDataTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
 
         List<Page> expectedPages =
@@ -291,25 +395,38 @@ public class SessionReplayResponseDataTest : TestBase
                     new()
                     {
                         Method = "method",
+                        Parameters = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Result = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timestamp = 0,
+                        EndTime = 0,
                         TokenUsage = new()
                         {
-                            CachedInputTokens = 0,
+                            Cost = 0,
                             InputTokens = 0,
                             OutputTokens = 0,
-                            ReasoningTokens = 0,
                             TimeMs = 0,
                         },
                     },
                 ],
+                Duration = 0,
+                Timestamp = 0,
+                Url = "url",
             },
         ];
+        string expectedClientLanguage = "clientLanguage";
 
-        Assert.NotNull(model.Pages);
         Assert.Equal(expectedPages.Count, model.Pages.Count);
         for (int i = 0; i < expectedPages.Count; i++)
         {
             Assert.Equal(expectedPages[i], model.Pages[i]);
         }
+        Assert.Equal(expectedClientLanguage, model.ClientLanguage);
     }
 
     [Fact]
@@ -326,18 +443,31 @@ public class SessionReplayResponseDataTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -363,18 +493,31 @@ public class SessionReplayResponseDataTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -393,25 +536,38 @@ public class SessionReplayResponseDataTest : TestBase
                     new()
                     {
                         Method = "method",
+                        Parameters = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Result = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timestamp = 0,
+                        EndTime = 0,
                         TokenUsage = new()
                         {
-                            CachedInputTokens = 0,
+                            Cost = 0,
                             InputTokens = 0,
                             OutputTokens = 0,
-                            ReasoningTokens = 0,
                             TimeMs = 0,
                         },
                     },
                 ],
+                Duration = 0,
+                Timestamp = 0,
+                Url = "url",
             },
         ];
+        string expectedClientLanguage = "clientLanguage";
 
-        Assert.NotNull(deserialized.Pages);
         Assert.Equal(expectedPages.Count, deserialized.Pages.Count);
         for (int i = 0; i < expectedPages.Count; i++)
         {
             Assert.Equal(expectedPages[i], deserialized.Pages[i]);
         }
+        Assert.Equal(expectedClientLanguage, deserialized.ClientLanguage);
     }
 
     [Fact]
@@ -428,18 +584,31 @@ public class SessionReplayResponseDataTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
 
         model.Validate();
@@ -448,16 +617,86 @@ public class SessionReplayResponseDataTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new SessionReplayResponseData { };
+        var model = new SessionReplayResponseData
+        {
+            Pages =
+            [
+                new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
+                            TokenUsage = new()
+                            {
+                                Cost = 0,
+                                InputTokens = 0,
+                                OutputTokens = 0,
+                                TimeMs = 0,
+                            },
+                        },
+                    ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
+                },
+            ],
+        };
 
-        Assert.Null(model.Pages);
-        Assert.False(model.RawData.ContainsKey("pages"));
+        Assert.Null(model.ClientLanguage);
+        Assert.False(model.RawData.ContainsKey("clientLanguage"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new SessionReplayResponseData { };
+        var model = new SessionReplayResponseData
+        {
+            Pages =
+            [
+                new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
+                            TokenUsage = new()
+                            {
+                                Cost = 0,
+                                InputTokens = 0,
+                                OutputTokens = 0,
+                                TimeMs = 0,
+                            },
+                        },
+                    ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
+                },
+            ],
+        };
 
         model.Validate();
     }
@@ -467,12 +706,46 @@ public class SessionReplayResponseDataTest : TestBase
     {
         var model = new SessionReplayResponseData
         {
+            Pages =
+            [
+                new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
+                            TokenUsage = new()
+                            {
+                                Cost = 0,
+                                InputTokens = 0,
+                                OutputTokens = 0,
+                                TimeMs = 0,
+                            },
+                        },
+                    ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
+                },
+            ],
+
             // Null should be interpreted as omitted for these properties
-            Pages = null,
+            ClientLanguage = null,
         };
 
-        Assert.Null(model.Pages);
-        Assert.False(model.RawData.ContainsKey("pages"));
+        Assert.Null(model.ClientLanguage);
+        Assert.False(model.RawData.ContainsKey("clientLanguage"));
     }
 
     [Fact]
@@ -480,8 +753,42 @@ public class SessionReplayResponseDataTest : TestBase
     {
         var model = new SessionReplayResponseData
         {
+            Pages =
+            [
+                new()
+                {
+                    Actions =
+                    [
+                        new()
+                        {
+                            Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
+                            TokenUsage = new()
+                            {
+                                Cost = 0,
+                                InputTokens = 0,
+                                OutputTokens = 0,
+                                TimeMs = 0,
+                            },
+                        },
+                    ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
+                },
+            ],
+
             // Null should be interpreted as omitted for these properties
-            Pages = null,
+            ClientLanguage = null,
         };
 
         model.Validate();
@@ -501,18 +808,31 @@ public class SessionReplayResponseDataTest : TestBase
                         new()
                         {
                             Method = "method",
+                            Parameters = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Result = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Timestamp = 0,
+                            EndTime = 0,
                             TokenUsage = new()
                             {
-                                CachedInputTokens = 0,
+                                Cost = 0,
                                 InputTokens = 0,
                                 OutputTokens = 0,
-                                ReasoningTokens = 0,
                                 TimeMs = 0,
                             },
                         },
                     ],
+                    Duration = 0,
+                    Timestamp = 0,
+                    Url = "url",
                 },
             ],
+            ClientLanguage = "clientLanguage",
         };
 
         SessionReplayResponseData copied = new(model);
@@ -533,16 +853,28 @@ public class PageTest : TestBase
                 new()
                 {
                     Method = "method",
+                    Parameters = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Result = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Timestamp = 0,
+                    EndTime = 0,
                     TokenUsage = new()
                     {
-                        CachedInputTokens = 0,
+                        Cost = 0,
                         InputTokens = 0,
                         OutputTokens = 0,
-                        ReasoningTokens = 0,
                         TimeMs = 0,
                     },
                 },
             ],
+            Duration = 0,
+            Timestamp = 0,
+            Url = "url",
         };
 
         List<PageAction> expectedActions =
@@ -550,23 +882,37 @@ public class PageTest : TestBase
             new()
             {
                 Method = "method",
+                Parameters = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Result = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Timestamp = 0,
+                EndTime = 0,
                 TokenUsage = new()
                 {
-                    CachedInputTokens = 0,
+                    Cost = 0,
                     InputTokens = 0,
                     OutputTokens = 0,
-                    ReasoningTokens = 0,
                     TimeMs = 0,
                 },
             },
         ];
+        double expectedDuration = 0;
+        double expectedTimestamp = 0;
+        string expectedUrl = "url";
 
-        Assert.NotNull(model.Actions);
         Assert.Equal(expectedActions.Count, model.Actions.Count);
         for (int i = 0; i < expectedActions.Count; i++)
         {
             Assert.Equal(expectedActions[i], model.Actions[i]);
         }
+        Assert.Equal(expectedDuration, model.Duration);
+        Assert.Equal(expectedTimestamp, model.Timestamp);
+        Assert.Equal(expectedUrl, model.Url);
     }
 
     [Fact]
@@ -579,16 +925,28 @@ public class PageTest : TestBase
                 new()
                 {
                     Method = "method",
+                    Parameters = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Result = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Timestamp = 0,
+                    EndTime = 0,
                     TokenUsage = new()
                     {
-                        CachedInputTokens = 0,
+                        Cost = 0,
                         InputTokens = 0,
                         OutputTokens = 0,
-                        ReasoningTokens = 0,
                         TimeMs = 0,
                     },
                 },
             ],
+            Duration = 0,
+            Timestamp = 0,
+            Url = "url",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -607,16 +965,28 @@ public class PageTest : TestBase
                 new()
                 {
                     Method = "method",
+                    Parameters = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Result = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Timestamp = 0,
+                    EndTime = 0,
                     TokenUsage = new()
                     {
-                        CachedInputTokens = 0,
+                        Cost = 0,
                         InputTokens = 0,
                         OutputTokens = 0,
-                        ReasoningTokens = 0,
                         TimeMs = 0,
                     },
                 },
             ],
+            Duration = 0,
+            Timestamp = 0,
+            Url = "url",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -628,23 +998,37 @@ public class PageTest : TestBase
             new()
             {
                 Method = "method",
+                Parameters = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Result = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Timestamp = 0,
+                EndTime = 0,
                 TokenUsage = new()
                 {
-                    CachedInputTokens = 0,
+                    Cost = 0,
                     InputTokens = 0,
                     OutputTokens = 0,
-                    ReasoningTokens = 0,
                     TimeMs = 0,
                 },
             },
         ];
+        double expectedDuration = 0;
+        double expectedTimestamp = 0;
+        string expectedUrl = "url";
 
-        Assert.NotNull(deserialized.Actions);
         Assert.Equal(expectedActions.Count, deserialized.Actions.Count);
         for (int i = 0; i < expectedActions.Count; i++)
         {
             Assert.Equal(expectedActions[i], deserialized.Actions[i]);
         }
+        Assert.Equal(expectedDuration, deserialized.Duration);
+        Assert.Equal(expectedTimestamp, deserialized.Timestamp);
+        Assert.Equal(expectedUrl, deserialized.Url);
     }
 
     [Fact]
@@ -657,58 +1041,28 @@ public class PageTest : TestBase
                 new()
                 {
                     Method = "method",
+                    Parameters = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Result = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Timestamp = 0,
+                    EndTime = 0,
                     TokenUsage = new()
                     {
-                        CachedInputTokens = 0,
+                        Cost = 0,
                         InputTokens = 0,
                         OutputTokens = 0,
-                        ReasoningTokens = 0,
                         TimeMs = 0,
                     },
                 },
             ],
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new Page { };
-
-        Assert.Null(model.Actions);
-        Assert.False(model.RawData.ContainsKey("actions"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new Page { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new Page
-        {
-            // Null should be interpreted as omitted for these properties
-            Actions = null,
-        };
-
-        Assert.Null(model.Actions);
-        Assert.False(model.RawData.ContainsKey("actions"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new Page
-        {
-            // Null should be interpreted as omitted for these properties
-            Actions = null,
+            Duration = 0,
+            Timestamp = 0,
+            Url = "url",
         };
 
         model.Validate();
@@ -724,16 +1078,28 @@ public class PageTest : TestBase
                 new()
                 {
                     Method = "method",
+                    Parameters = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Result = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Timestamp = 0,
+                    EndTime = 0,
                     TokenUsage = new()
                     {
-                        CachedInputTokens = 0,
+                        Cost = 0,
                         InputTokens = 0,
                         OutputTokens = 0,
-                        ReasoningTokens = 0,
                         TimeMs = 0,
                     },
                 },
             ],
+            Duration = 0,
+            Timestamp = 0,
+            Url = "url",
         };
 
         Page copied = new(model);
@@ -750,27 +1116,61 @@ public class PageActionTest : TestBase
         var model = new PageAction
         {
             Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+            EndTime = 0,
             TokenUsage = new()
             {
-                CachedInputTokens = 0,
+                Cost = 0,
                 InputTokens = 0,
                 OutputTokens = 0,
-                ReasoningTokens = 0,
                 TimeMs = 0,
             },
         };
 
         string expectedMethod = "method";
+        Dictionary<string, JsonElement> expectedParameters = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
+        Dictionary<string, JsonElement> expectedResult = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
+        double expectedTimestamp = 0;
+        double expectedEndTime = 0;
         TokenUsage expectedTokenUsage = new()
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
         Assert.Equal(expectedMethod, model.Method);
+        Assert.Equal(expectedParameters.Count, model.Parameters.Count);
+        foreach (var item in expectedParameters)
+        {
+            Assert.True(model.Parameters.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, model.Parameters[item.Key]));
+        }
+        Assert.Equal(expectedResult.Count, model.Result.Count);
+        foreach (var item in expectedResult)
+        {
+            Assert.True(model.Result.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, model.Result[item.Key]));
+        }
+        Assert.Equal(expectedTimestamp, model.Timestamp);
+        Assert.Equal(expectedEndTime, model.EndTime);
         Assert.Equal(expectedTokenUsage, model.TokenUsage);
     }
 
@@ -780,12 +1180,21 @@ public class PageActionTest : TestBase
         var model = new PageAction
         {
             Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+            EndTime = 0,
             TokenUsage = new()
             {
-                CachedInputTokens = 0,
+                Cost = 0,
                 InputTokens = 0,
                 OutputTokens = 0,
-                ReasoningTokens = 0,
                 TimeMs = 0,
             },
         };
@@ -805,12 +1214,21 @@ public class PageActionTest : TestBase
         var model = new PageAction
         {
             Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+            EndTime = 0,
             TokenUsage = new()
             {
-                CachedInputTokens = 0,
+                Cost = 0,
                 InputTokens = 0,
                 OutputTokens = 0,
-                ReasoningTokens = 0,
                 TimeMs = 0,
             },
         };
@@ -823,16 +1241,41 @@ public class PageActionTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedMethod = "method";
+        Dictionary<string, JsonElement> expectedParameters = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
+        Dictionary<string, JsonElement> expectedResult = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
+        double expectedTimestamp = 0;
+        double expectedEndTime = 0;
         TokenUsage expectedTokenUsage = new()
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
         Assert.Equal(expectedMethod, deserialized.Method);
+        Assert.Equal(expectedParameters.Count, deserialized.Parameters.Count);
+        foreach (var item in expectedParameters)
+        {
+            Assert.True(deserialized.Parameters.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, deserialized.Parameters[item.Key]));
+        }
+        Assert.Equal(expectedResult.Count, deserialized.Result.Count);
+        foreach (var item in expectedResult)
+        {
+            Assert.True(deserialized.Result.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, deserialized.Result[item.Key]));
+        }
+        Assert.Equal(expectedTimestamp, deserialized.Timestamp);
+        Assert.Equal(expectedEndTime, deserialized.EndTime);
         Assert.Equal(expectedTokenUsage, deserialized.TokenUsage);
     }
 
@@ -842,12 +1285,21 @@ public class PageActionTest : TestBase
         var model = new PageAction
         {
             Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+            EndTime = 0,
             TokenUsage = new()
             {
-                CachedInputTokens = 0,
+                Cost = 0,
                 InputTokens = 0,
                 OutputTokens = 0,
-                ReasoningTokens = 0,
                 TimeMs = 0,
             },
         };
@@ -858,10 +1310,22 @@ public class PageActionTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new PageAction { };
+        var model = new PageAction
+        {
+            Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+        };
 
-        Assert.Null(model.Method);
-        Assert.False(model.RawData.ContainsKey("method"));
+        Assert.Null(model.EndTime);
+        Assert.False(model.RawData.ContainsKey("endTime"));
         Assert.Null(model.TokenUsage);
         Assert.False(model.RawData.ContainsKey("tokenUsage"));
     }
@@ -869,7 +1333,19 @@ public class PageActionTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new PageAction { };
+        var model = new PageAction
+        {
+            Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+        };
 
         model.Validate();
     }
@@ -879,13 +1355,24 @@ public class PageActionTest : TestBase
     {
         var model = new PageAction
         {
+            Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+
             // Null should be interpreted as omitted for these properties
-            Method = null,
+            EndTime = null,
             TokenUsage = null,
         };
 
-        Assert.Null(model.Method);
-        Assert.False(model.RawData.ContainsKey("method"));
+        Assert.Null(model.EndTime);
+        Assert.False(model.RawData.ContainsKey("endTime"));
         Assert.Null(model.TokenUsage);
         Assert.False(model.RawData.ContainsKey("tokenUsage"));
     }
@@ -895,8 +1382,19 @@ public class PageActionTest : TestBase
     {
         var model = new PageAction
         {
+            Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+
             // Null should be interpreted as omitted for these properties
-            Method = null,
+            EndTime = null,
             TokenUsage = null,
         };
 
@@ -909,12 +1407,21 @@ public class PageActionTest : TestBase
         var model = new PageAction
         {
             Method = "method",
+            Parameters = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Result = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Timestamp = 0,
+            EndTime = 0,
             TokenUsage = new()
             {
-                CachedInputTokens = 0,
+                Cost = 0,
                 InputTokens = 0,
                 OutputTokens = 0,
-                ReasoningTokens = 0,
                 TimeMs = 0,
             },
         };
@@ -932,23 +1439,20 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
-        double expectedCachedInputTokens = 0;
+        double expectedCost = 0;
         double expectedInputTokens = 0;
         double expectedOutputTokens = 0;
-        double expectedReasoningTokens = 0;
         double expectedTimeMs = 0;
 
-        Assert.Equal(expectedCachedInputTokens, model.CachedInputTokens);
+        Assert.Equal(expectedCost, model.Cost);
         Assert.Equal(expectedInputTokens, model.InputTokens);
         Assert.Equal(expectedOutputTokens, model.OutputTokens);
-        Assert.Equal(expectedReasoningTokens, model.ReasoningTokens);
         Assert.Equal(expectedTimeMs, model.TimeMs);
     }
 
@@ -957,10 +1461,9 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
@@ -978,10 +1481,9 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
@@ -992,16 +1494,14 @@ public class TokenUsageTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        double expectedCachedInputTokens = 0;
+        double expectedCost = 0;
         double expectedInputTokens = 0;
         double expectedOutputTokens = 0;
-        double expectedReasoningTokens = 0;
         double expectedTimeMs = 0;
 
-        Assert.Equal(expectedCachedInputTokens, deserialized.CachedInputTokens);
+        Assert.Equal(expectedCost, deserialized.Cost);
         Assert.Equal(expectedInputTokens, deserialized.InputTokens);
         Assert.Equal(expectedOutputTokens, deserialized.OutputTokens);
-        Assert.Equal(expectedReasoningTokens, deserialized.ReasoningTokens);
         Assert.Equal(expectedTimeMs, deserialized.TimeMs);
     }
 
@@ -1010,10 +1510,9 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 
@@ -1025,14 +1524,12 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage { };
 
-        Assert.Null(model.CachedInputTokens);
-        Assert.False(model.RawData.ContainsKey("cachedInputTokens"));
+        Assert.Null(model.Cost);
+        Assert.False(model.RawData.ContainsKey("cost"));
         Assert.Null(model.InputTokens);
         Assert.False(model.RawData.ContainsKey("inputTokens"));
         Assert.Null(model.OutputTokens);
         Assert.False(model.RawData.ContainsKey("outputTokens"));
-        Assert.Null(model.ReasoningTokens);
-        Assert.False(model.RawData.ContainsKey("reasoningTokens"));
         Assert.Null(model.TimeMs);
         Assert.False(model.RawData.ContainsKey("timeMs"));
     }
@@ -1051,21 +1548,18 @@ public class TokenUsageTest : TestBase
         var model = new TokenUsage
         {
             // Null should be interpreted as omitted for these properties
-            CachedInputTokens = null,
+            Cost = null,
             InputTokens = null,
             OutputTokens = null,
-            ReasoningTokens = null,
             TimeMs = null,
         };
 
-        Assert.Null(model.CachedInputTokens);
-        Assert.False(model.RawData.ContainsKey("cachedInputTokens"));
+        Assert.Null(model.Cost);
+        Assert.False(model.RawData.ContainsKey("cost"));
         Assert.Null(model.InputTokens);
         Assert.False(model.RawData.ContainsKey("inputTokens"));
         Assert.Null(model.OutputTokens);
         Assert.False(model.RawData.ContainsKey("outputTokens"));
-        Assert.Null(model.ReasoningTokens);
-        Assert.False(model.RawData.ContainsKey("reasoningTokens"));
         Assert.Null(model.TimeMs);
         Assert.False(model.RawData.ContainsKey("timeMs"));
     }
@@ -1076,10 +1570,9 @@ public class TokenUsageTest : TestBase
         var model = new TokenUsage
         {
             // Null should be interpreted as omitted for these properties
-            CachedInputTokens = null,
+            Cost = null,
             InputTokens = null,
             OutputTokens = null,
-            ReasoningTokens = null,
             TimeMs = null,
         };
 
@@ -1091,10 +1584,9 @@ public class TokenUsageTest : TestBase
     {
         var model = new TokenUsage
         {
-            CachedInputTokens = 0,
+            Cost = 0,
             InputTokens = 0,
             OutputTokens = 0,
-            ReasoningTokens = 0,
             TimeMs = 0,
         };
 

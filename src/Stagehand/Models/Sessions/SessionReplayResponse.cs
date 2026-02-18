@@ -84,12 +84,28 @@ class SessionReplayResponseFromRaw : IFromRawJson<SessionReplayResponse>
 )]
 public sealed record class SessionReplayResponseData : JsonModel
 {
-    public IReadOnlyList<Page>? Pages
+    public required IReadOnlyList<Page> Pages
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<ImmutableArray<Page>>("pages");
+            return this._rawData.GetNotNullStruct<ImmutableArray<Page>>("pages");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Page>>(
+                "pages",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    public string? ClientLanguage
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("clientLanguage");
         }
         init
         {
@@ -98,20 +114,18 @@ public sealed record class SessionReplayResponseData : JsonModel
                 return;
             }
 
-            this._rawData.Set<ImmutableArray<Page>?>(
-                "pages",
-                value == null ? null : ImmutableArray.ToImmutableArray(value)
-            );
+            this._rawData.Set("clientLanguage", value);
         }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        foreach (var item in this.Pages ?? [])
+        foreach (var item in this.Pages)
         {
             item.Validate();
         }
+        _ = this.ClientLanguage;
     }
 
     public SessionReplayResponseData() { }
@@ -142,6 +156,13 @@ public sealed record class SessionReplayResponseData : JsonModel
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public SessionReplayResponseData(IReadOnlyList<Page> pages)
+        : this()
+    {
+        this.Pages = pages;
+    }
 }
 
 class SessionReplayResponseDataFromRaw : IFromRawJson<SessionReplayResponseData>
@@ -155,34 +176,62 @@ class SessionReplayResponseDataFromRaw : IFromRawJson<SessionReplayResponseData>
 [JsonConverter(typeof(JsonModelConverter<Page, PageFromRaw>))]
 public sealed record class Page : JsonModel
 {
-    public IReadOnlyList<PageAction>? Actions
+    public required IReadOnlyList<PageAction> Actions
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<ImmutableArray<PageAction>>("actions");
+            return this._rawData.GetNotNullStruct<ImmutableArray<PageAction>>("actions");
         }
         init
         {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set<ImmutableArray<PageAction>?>(
+            this._rawData.Set<ImmutableArray<PageAction>>(
                 "actions",
-                value == null ? null : ImmutableArray.ToImmutableArray(value)
+                ImmutableArray.ToImmutableArray(value)
             );
         }
+    }
+
+    public required double Duration
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("duration");
+        }
+        init { this._rawData.Set("duration", value); }
+    }
+
+    public required double Timestamp
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("timestamp");
+        }
+        init { this._rawData.Set("timestamp", value); }
+    }
+
+    public required string Url
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
+        init { this._rawData.Set("url", value); }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        foreach (var item in this.Actions ?? [])
+        foreach (var item in this.Actions)
         {
             item.Validate();
         }
+        _ = this.Duration;
+        _ = this.Timestamp;
+        _ = this.Url;
     }
 
     public Page() { }
@@ -223,12 +272,66 @@ class PageFromRaw : IFromRawJson<Page>
 [JsonConverter(typeof(JsonModelConverter<PageAction, PageActionFromRaw>))]
 public sealed record class PageAction : JsonModel
 {
-    public string? Method
+    public required string Method
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("method");
+            return this._rawData.GetNotNullClass<string>("method");
+        }
+        init { this._rawData.Set("method", value); }
+    }
+
+    public required IReadOnlyDictionary<string, JsonElement> Parameters
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
+                "parameters"
+            );
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>>(
+                "parameters",
+                FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    public required IReadOnlyDictionary<string, JsonElement> Result
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<FrozenDictionary<string, JsonElement>>("result");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>>(
+                "result",
+                FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    public required double Timestamp
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<double>("timestamp");
+        }
+        init { this._rawData.Set("timestamp", value); }
+    }
+
+    public double? EndTime
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("endTime");
         }
         init
         {
@@ -237,7 +340,7 @@ public sealed record class PageAction : JsonModel
                 return;
             }
 
-            this._rawData.Set("method", value);
+            this._rawData.Set("endTime", value);
         }
     }
 
@@ -263,6 +366,10 @@ public sealed record class PageAction : JsonModel
     public override void Validate()
     {
         _ = this.Method;
+        _ = this.Parameters;
+        _ = this.Result;
+        _ = this.Timestamp;
+        _ = this.EndTime;
         this.TokenUsage?.Validate();
     }
 
@@ -304,12 +411,12 @@ class PageActionFromRaw : IFromRawJson<PageAction>
 [JsonConverter(typeof(JsonModelConverter<TokenUsage, TokenUsageFromRaw>))]
 public sealed record class TokenUsage : JsonModel
 {
-    public double? CachedInputTokens
+    public double? Cost
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<double>("cachedInputTokens");
+            return this._rawData.GetNullableStruct<double>("cost");
         }
         init
         {
@@ -318,7 +425,7 @@ public sealed record class TokenUsage : JsonModel
                 return;
             }
 
-            this._rawData.Set("cachedInputTokens", value);
+            this._rawData.Set("cost", value);
         }
     }
 
@@ -358,24 +465,6 @@ public sealed record class TokenUsage : JsonModel
         }
     }
 
-    public double? ReasoningTokens
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<double>("reasoningTokens");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("reasoningTokens", value);
-        }
-    }
-
     public double? TimeMs
     {
         get
@@ -397,10 +486,9 @@ public sealed record class TokenUsage : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.CachedInputTokens;
+        _ = this.Cost;
         _ = this.InputTokens;
         _ = this.OutputTokens;
-        _ = this.ReasoningTokens;
         _ = this.TimeMs;
     }
 
