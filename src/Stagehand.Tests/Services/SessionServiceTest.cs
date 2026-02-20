@@ -5,7 +5,7 @@ namespace Stagehand.Tests.Services;
 
 public class SessionServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Act_Works()
     {
         var response = await this.client.Sessions.Act(
@@ -16,7 +16,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ActStreaming_Works()
     {
         var stream = this.client.Sessions.ActStreaming(
@@ -31,7 +31,7 @@ public class SessionServiceTest : TestBase
         }
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task End_Works()
     {
         var response = await this.client.Sessions.End(
@@ -42,7 +42,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Execute_Works()
     {
         var response = await this.client.Sessions.Execute(
@@ -83,7 +83,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ExecuteStreaming_Works()
     {
         var stream = this.client.Sessions.ExecuteStreaming(
@@ -128,7 +128,7 @@ public class SessionServiceTest : TestBase
         }
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Extract_Works()
     {
         var response = await this.client.Sessions.Extract(
@@ -139,7 +139,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ExtractStreaming_Works()
     {
         var stream = this.client.Sessions.ExtractStreaming(
@@ -154,7 +154,7 @@ public class SessionServiceTest : TestBase
         }
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Navigate_Works()
     {
         var response = await this.client.Sessions.Navigate(
@@ -165,7 +165,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Observe_Works()
     {
         var response = await this.client.Sessions.Observe(
@@ -176,7 +176,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ObserveStreaming_Works()
     {
         var stream = this.client.Sessions.ObserveStreaming(
@@ -191,7 +191,7 @@ public class SessionServiceTest : TestBase
         }
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replay_Works()
     {
         var response = await this.client.Sessions.Replay(
@@ -202,7 +202,7 @@ public class SessionServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Start_Works()
     {
         var response = await this.client.Sessions.Start(
