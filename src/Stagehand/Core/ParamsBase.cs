@@ -216,6 +216,13 @@ public abstract record class ParamsBase
 
     static string GetUserAgent() => $"{typeof(StagehandClient).Name}/C# {GetPackageVersion()}";
 
+    static string GetPackageVersion() =>
+        Assembly
+            .GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+        ?? "unknown";
+
     static string GetOSArch() =>
         RuntimeInformation.OSArchitecture switch
         {
@@ -249,13 +256,6 @@ public abstract record class ParamsBase
         }
         return $"Other:{RuntimeInformation.OSDescription}";
     }
-
-    static string GetPackageVersion() =>
-        Assembly
-            .GetExecutingAssembly()
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion
-        ?? "unknown";
 
     static Runtime GetRuntime()
     {
