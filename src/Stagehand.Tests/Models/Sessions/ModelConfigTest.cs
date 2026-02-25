@@ -174,6 +174,7 @@ public class ModelConfigProviderTest : TestBase
     [InlineData(ModelConfigProvider.Anthropic)]
     [InlineData(ModelConfigProvider.Google)]
     [InlineData(ModelConfigProvider.Microsoft)]
+    [InlineData(ModelConfigProvider.Bedrock)]
     public void Validation_Works(ModelConfigProvider rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -198,6 +199,7 @@ public class ModelConfigProviderTest : TestBase
     [InlineData(ModelConfigProvider.Anthropic)]
     [InlineData(ModelConfigProvider.Google)]
     [InlineData(ModelConfigProvider.Microsoft)]
+    [InlineData(ModelConfigProvider.Bedrock)]
     public void SerializationRoundtrip_Works(ModelConfigProvider rawValue)
     {
         // force implicit conversion because Theory can't do that for us

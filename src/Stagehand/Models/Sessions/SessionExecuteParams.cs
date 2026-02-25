@@ -959,6 +959,7 @@ public enum Provider
     Anthropic,
     Google,
     Microsoft,
+    Bedrock,
 }
 
 sealed class ProviderConverter : JsonConverter<Provider>
@@ -975,6 +976,7 @@ sealed class ProviderConverter : JsonConverter<Provider>
             "anthropic" => Provider.Anthropic,
             "google" => Provider.Google,
             "microsoft" => Provider.Microsoft,
+            "bedrock" => Provider.Bedrock,
             _ => (Provider)(-1),
         };
     }
@@ -989,6 +991,7 @@ sealed class ProviderConverter : JsonConverter<Provider>
                 Provider.Anthropic => "anthropic",
                 Provider.Google => "google",
                 Provider.Microsoft => "microsoft",
+                Provider.Bedrock => "bedrock",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
