@@ -870,6 +870,7 @@ public class ProviderTest : TestBase
     [InlineData(Provider.Anthropic)]
     [InlineData(Provider.Google)]
     [InlineData(Provider.Microsoft)]
+    [InlineData(Provider.Bedrock)]
     public void Validation_Works(Provider rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -894,6 +895,7 @@ public class ProviderTest : TestBase
     [InlineData(Provider.Anthropic)]
     [InlineData(Provider.Google)]
     [InlineData(Provider.Microsoft)]
+    [InlineData(Provider.Bedrock)]
     public void SerializationRoundtrip_Works(Provider rawValue)
     {
         // force implicit conversion because Theory can't do that for us

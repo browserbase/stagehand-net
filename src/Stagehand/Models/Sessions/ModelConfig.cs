@@ -149,6 +149,7 @@ public enum ModelConfigProvider
     Anthropic,
     Google,
     Microsoft,
+    Bedrock,
 }
 
 sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
@@ -165,6 +166,7 @@ sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
             "anthropic" => ModelConfigProvider.Anthropic,
             "google" => ModelConfigProvider.Google,
             "microsoft" => ModelConfigProvider.Microsoft,
+            "bedrock" => ModelConfigProvider.Bedrock,
             _ => (ModelConfigProvider)(-1),
         };
     }
@@ -183,6 +185,7 @@ sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
                 ModelConfigProvider.Anthropic => "anthropic",
                 ModelConfigProvider.Google => "google",
                 ModelConfigProvider.Microsoft => "microsoft",
+                ModelConfigProvider.Bedrock => "bedrock",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
