@@ -341,6 +341,8 @@ The examples live at:
 - `examples/remote_browser_playwright_example.cs`
 - `examples/local_browser_playwright_example.cs`
 
+Multiregion support: see `examples/local_server_multiregion_browser_example.cs`.
+
 Install the example dependencies:
 
 - `examples/remote_browser_playwright_example.cs`: `Microsoft.Playwright` + Playwright browsers
