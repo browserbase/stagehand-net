@@ -529,6 +529,27 @@ public sealed record class LaunchOptions : JsonModel
         }
     }
 
+    public IReadOnlyDictionary<string, string>? CdpHeaders
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("cdpHeaders");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "cdpHeaders",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
     public string? CdpUrl
     {
         get
@@ -840,6 +861,7 @@ public sealed record class LaunchOptions : JsonModel
     {
         _ = this.AcceptDownloads;
         _ = this.Args;
+        _ = this.CdpHeaders;
         _ = this.CdpUrl;
         _ = this.ChromiumSandbox;
         _ = this.ConnectTimeoutMs;

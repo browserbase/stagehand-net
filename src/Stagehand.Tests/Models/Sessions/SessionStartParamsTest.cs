@@ -24,6 +24,7 @@ public class SessionStartParamsTest : TestBase
                 {
                     AcceptDownloads = true,
                     Args = ["string"],
+                    CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                     CdpUrl = "cdpUrl",
                     ChromiumSandbox = true,
                     ConnectTimeoutMs = 0,
@@ -108,6 +109,7 @@ public class SessionStartParamsTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -328,6 +330,7 @@ public class SessionStartParamsTest : TestBase
                 {
                     AcceptDownloads = true,
                     Args = ["string"],
+                    CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                     CdpUrl = "cdpUrl",
                     ChromiumSandbox = true,
                     ConnectTimeoutMs = 0,
@@ -421,6 +424,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -453,6 +457,7 @@ public class BrowserTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -494,6 +499,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -540,6 +546,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -579,6 +586,7 @@ public class BrowserTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -620,6 +628,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -714,6 +723,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -756,6 +766,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -783,6 +794,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
+        Dictionary<string, string> expectedCdpHeaders = new() { { "foo", "string" } };
         string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
@@ -814,6 +826,14 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], model.Args[i]);
         }
+        Assert.NotNull(model.CdpHeaders);
+        Assert.Equal(expectedCdpHeaders.Count, model.CdpHeaders.Count);
+        foreach (var item in expectedCdpHeaders)
+        {
+            Assert.True(model.CdpHeaders.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.CdpHeaders[item.Key]);
+        }
         Assert.Equal(expectedCdpUrl, model.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, model.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, model.ConnectTimeoutMs);
@@ -840,6 +860,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -881,6 +902,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -915,6 +937,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
+        Dictionary<string, string> expectedCdpHeaders = new() { { "foo", "string" } };
         string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
@@ -946,6 +969,14 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], deserialized.Args[i]);
         }
+        Assert.NotNull(deserialized.CdpHeaders);
+        Assert.Equal(expectedCdpHeaders.Count, deserialized.CdpHeaders.Count);
+        foreach (var item in expectedCdpHeaders)
+        {
+            Assert.True(deserialized.CdpHeaders.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.CdpHeaders[item.Key]);
+        }
         Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, deserialized.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, deserialized.ConnectTimeoutMs);
@@ -972,6 +1003,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -1009,6 +1041,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
+        Assert.Null(model.CdpHeaders);
+        Assert.False(model.RawData.ContainsKey("cdpHeaders"));
         Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
@@ -1061,6 +1095,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
+            CdpHeaders = null,
             CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
@@ -1084,6 +1119,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
+        Assert.Null(model.CdpHeaders);
+        Assert.False(model.RawData.ContainsKey("cdpHeaders"));
         Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
@@ -1128,6 +1165,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
+            CdpHeaders = null,
             CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
@@ -1157,6 +1195,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
