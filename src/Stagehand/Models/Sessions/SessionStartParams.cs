@@ -303,7 +303,7 @@ public record class SessionStartParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static SessionStartParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -955,7 +955,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="bool"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -974,14 +974,14 @@ public record class IgnoreDefaultArgs : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<string>"/>.
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>string</c>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickStrings(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<string>`
+    ///     // `value` is of type `IReadOnlyList&lt;string&gt;`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
@@ -996,7 +996,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -1007,8 +1007,8 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<string> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -1034,7 +1034,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -1045,8 +1045,8 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<string> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2506,7 +2506,7 @@ public record class Proxies : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="bool"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2525,14 +2525,14 @@ public record class Proxies : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<ProxyConfig>"/>.
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>ProxyConfig</c>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickProxyConfigList(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<ProxyConfig>`
+    ///     // `value` is of type `IReadOnlyList&lt;ProxyConfig&gt;`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
@@ -2547,7 +2547,7 @@ public record class Proxies : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2558,8 +2558,8 @@ public record class Proxies : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<ProxyConfig> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;ProxyConfig&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2588,7 +2588,7 @@ public record class Proxies : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2599,8 +2599,8 @@ public record class Proxies : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<ProxyConfig> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;ProxyConfig&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2779,7 +2779,7 @@ public record class ProxyConfig : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="Browserbase"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2800,7 +2800,7 @@ public record class ProxyConfig : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="External"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2820,7 +2820,7 @@ public record class ProxyConfig : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2831,8 +2831,8 @@ public record class ProxyConfig : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (Browserbase value) => {...},
-    ///     (External value) => {...}
+    ///     (Browserbase value) =&gt; {...},
+    ///     (External value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2858,7 +2858,7 @@ public record class ProxyConfig : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2869,8 +2869,8 @@ public record class ProxyConfig : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (Browserbase value) => {...},
-    ///     (External value) => {...}
+    ///     (Browserbase value) =&gt; {...},
+    ///     (External value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
