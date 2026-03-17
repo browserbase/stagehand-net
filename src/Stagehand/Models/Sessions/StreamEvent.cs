@@ -11,7 +11,7 @@ namespace Stagehand.Models.Sessions;
 
 /// <summary>
 /// Server-Sent Event emitted during streaming responses. Events are sent as `data:
-/// <JSON>\n\n`. Key order: data (with status first), type, id.
+/// &lt;JSON&gt;\n\n`. Key order: data (with status first), type, id.
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<StreamEvent, StreamEventFromRaw>))]
 public sealed record class StreamEvent : JsonModel
@@ -134,7 +134,7 @@ public record class Data : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="StreamEventSystemDataOutput"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -157,7 +157,7 @@ public record class Data : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="StreamEventLogDataOutput"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -179,7 +179,7 @@ public record class Data : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -190,8 +190,8 @@ public record class Data : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (StreamEventSystemDataOutput value) => {...},
-    ///     (StreamEventLogDataOutput value) => {...}
+    ///     (StreamEventSystemDataOutput value) =&gt; {...},
+    ///     (StreamEventLogDataOutput value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -218,7 +218,7 @@ public record class Data : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -229,8 +229,8 @@ public record class Data : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (StreamEventSystemDataOutput value) => {...},
-    ///     (StreamEventLogDataOutput value) => {...}
+    ///     (StreamEventSystemDataOutput value) =&gt; {...},
+    ///     (StreamEventLogDataOutput value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
