@@ -416,7 +416,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionActParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
 
         HttpRequest<SessionActParams> request = new()
@@ -562,7 +563,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionExecuteParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
 
         HttpRequest<SessionExecuteParams> request = new()
@@ -665,7 +667,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionExtractParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
 
         HttpRequest<SessionExtractParams> request = new()
@@ -813,7 +816,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionObserveParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
 
         HttpRequest<SessionObserveParams> request = new()
