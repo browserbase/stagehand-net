@@ -23,24 +23,20 @@ static class Sse
             )
             .ConfigureAwait(false);
 
+        var done = false;
         await foreach (var item in SseParser.Create(stream).EnumerateAsync(cancellationToken))
         {
+            // Stop emitting messages, but iterate through the full stream.
+            if (done)
+            {
+                continue;
+            }
+
             if (item.Data.StartsWith("{\"data\":{\"status\":\"finished\""))
             {
-                T? message;
-                try
-                {
-                    message = JsonSerializer.Deserialize<T>(item.Data, ModelBase.SerializerOptions);
-                }
-                catch (JsonException e)
-                {
-                    throw new StagehandInvalidDataException(
-                        $"Message must be of type {typeof(T).FullName}",
-                        e
-                    );
-                }
-                yield return message
-                    ?? throw new StagehandInvalidDataException("Message cannot be null");
+                // In this case we don't break because we still want to iterate through the full stream.
+                done = true;
+                continue;
             }
             else if (item.Data.StartsWith("error"))
             {
