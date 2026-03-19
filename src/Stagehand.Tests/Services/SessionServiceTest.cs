@@ -76,6 +76,8 @@ public class SessionServiceTest : TestBase
                         "Log in with username 'demo' and password 'test123', then navigate to settings",
                     HighlightCursor = true,
                     MaxSteps = 20,
+                    ToolTimeout = 30000,
+                    UseSearch = true,
                 },
             },
             TestContext.Current.CancellationToken
@@ -117,6 +119,8 @@ public class SessionServiceTest : TestBase
                         "Log in with username 'demo' and password 'test123', then navigate to settings",
                     HighlightCursor = true,
                     MaxSteps = 20,
+                    ToolTimeout = 30000,
+                    UseSearch = true,
                 },
             },
             TestContext.Current.CancellationToken
