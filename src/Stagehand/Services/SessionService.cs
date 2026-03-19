@@ -417,7 +417,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionActParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
         parameters = parameters with { ID = id };
 
@@ -565,7 +566,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionExecuteParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
         parameters = parameters with { ID = id };
 
@@ -670,7 +672,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionExtractParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
         parameters = parameters with { ID = id };
 
@@ -820,7 +823,8 @@ public sealed class SessionServiceWithRawResponse : ISessionServiceWithRawRespon
         parameters = SessionObserveParams.FromRawUnchecked(
             parameters.RawHeaderData,
             parameters.RawQueryData,
-            rawBodyData
+            rawBodyData,
+            parameters.ID
         );
         parameters = parameters with { ID = id };
 
