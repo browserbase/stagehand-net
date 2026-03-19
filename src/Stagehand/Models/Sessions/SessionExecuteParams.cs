@@ -1063,12 +1063,56 @@ public sealed record class ExecuteOptions : JsonModel
         }
     }
 
+    /// <summary>
+    /// Timeout in milliseconds for each agent tool call
+    /// </summary>
+    public double? ToolTimeout
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("toolTimeout");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("toolTimeout", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to enable the web search tool powered by Browserbase Search API
+    /// </summary>
+    public bool? UseSearch
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useSearch");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useSearch", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Instruction;
         _ = this.HighlightCursor;
         _ = this.MaxSteps;
+        _ = this.ToolTimeout;
+        _ = this.UseSearch;
     }
 
     public ExecuteOptions() { }
