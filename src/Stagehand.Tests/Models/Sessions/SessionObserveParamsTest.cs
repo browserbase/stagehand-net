@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using Stagehand.Core;
@@ -28,6 +29,18 @@ public class SessionObserveParamsTest : TestBase
                 },
                 Selector = "nav",
                 Timeout = 30000,
+                Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+                {
+                    {
+                        "username",
+                        new SessionObserveParamsOptionsVariableUnionMember3()
+                        {
+                            Value = "john@example.com",
+                            Description = "The login email",
+                        }
+                    },
+                    { "rememberMe", true },
+                },
             },
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
         };
@@ -46,6 +59,18 @@ public class SessionObserveParamsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
         ApiEnum<string, SessionObserveParamsXStreamResponse> expectedXStreamResponse =
             SessionObserveParamsXStreamResponse.True;
@@ -114,6 +139,18 @@ public class SessionObserveParamsTest : TestBase
                 },
                 Selector = "nav",
                 Timeout = 30000,
+                Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+                {
+                    {
+                        "username",
+                        new SessionObserveParamsOptionsVariableUnionMember3()
+                        {
+                            Value = "john@example.com",
+                            Description = "The login email",
+                        }
+                    },
+                    { "rememberMe", true },
+                },
             },
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
         };
@@ -140,6 +177,18 @@ public class SessionObserveParamsTest : TestBase
                 },
                 Selector = "nav",
                 Timeout = 30000,
+                Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+                {
+                    {
+                        "username",
+                        new SessionObserveParamsOptionsVariableUnionMember3()
+                        {
+                            Value = "john@example.com",
+                            Description = "The login email",
+                        }
+                    },
+                    { "rememberMe", true },
+                },
             },
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
 
@@ -214,6 +263,18 @@ public class SessionObserveParamsTest : TestBase
                 },
                 Selector = "nav",
                 Timeout = 30000,
+                Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+                {
+                    {
+                        "username",
+                        new SessionObserveParamsOptionsVariableUnionMember3()
+                        {
+                            Value = "john@example.com",
+                            Description = "The login email",
+                        }
+                    },
+                    { "rememberMe", true },
+                },
             },
             XStreamResponse = SessionObserveParamsXStreamResponse.True,
         };
@@ -240,6 +301,18 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
 
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
@@ -251,10 +324,30 @@ public class SessionObserveParamsOptionsTest : TestBase
         };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
+        Dictionary<string, SessionObserveParamsOptionsVariable> expectedVariables = new()
+        {
+            {
+                "username",
+                new SessionObserveParamsOptionsVariableUnionMember3()
+                {
+                    Value = "john@example.com",
+                    Description = "The login email",
+                }
+            },
+            { "rememberMe", true },
+        };
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedSelector, model.Selector);
         Assert.Equal(expectedTimeout, model.Timeout);
+        Assert.NotNull(model.Variables);
+        Assert.Equal(expectedVariables.Count, model.Variables.Count);
+        foreach (var item in expectedVariables)
+        {
+            Assert.True(model.Variables.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Variables[item.Key]);
+        }
     }
 
     [Fact]
@@ -271,6 +364,18 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -296,6 +401,18 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -314,10 +431,30 @@ public class SessionObserveParamsOptionsTest : TestBase
         };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
+        Dictionary<string, SessionObserveParamsOptionsVariable> expectedVariables = new()
+        {
+            {
+                "username",
+                new SessionObserveParamsOptionsVariableUnionMember3()
+                {
+                    Value = "john@example.com",
+                    Description = "The login email",
+                }
+            },
+            { "rememberMe", true },
+        };
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedSelector, deserialized.Selector);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
+        Assert.NotNull(deserialized.Variables);
+        Assert.Equal(expectedVariables.Count, deserialized.Variables.Count);
+        foreach (var item in expectedVariables)
+        {
+            Assert.True(deserialized.Variables.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Variables[item.Key]);
+        }
     }
 
     [Fact]
@@ -334,6 +471,18 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
 
         model.Validate();
@@ -350,6 +499,8 @@ public class SessionObserveParamsOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("selector"));
         Assert.Null(model.Timeout);
         Assert.False(model.RawData.ContainsKey("timeout"));
+        Assert.Null(model.Variables);
+        Assert.False(model.RawData.ContainsKey("variables"));
     }
 
     [Fact]
@@ -369,6 +520,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             Model = null,
             Selector = null,
             Timeout = null,
+            Variables = null,
         };
 
         Assert.Null(model.Model);
@@ -377,6 +529,8 @@ public class SessionObserveParamsOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("selector"));
         Assert.Null(model.Timeout);
         Assert.False(model.RawData.ContainsKey("timeout"));
+        Assert.Null(model.Variables);
+        Assert.False(model.RawData.ContainsKey("variables"));
     }
 
     [Fact]
@@ -388,6 +542,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             Model = null,
             Selector = null,
             Timeout = null,
+            Variables = null,
         };
 
         model.Validate();
@@ -407,6 +562,18 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
             Selector = "nav",
             Timeout = 30000,
+            Variables = new Dictionary<string, SessionObserveParamsOptionsVariable>()
+            {
+                {
+                    "username",
+                    new SessionObserveParamsOptionsVariableUnionMember3()
+                    {
+                        Value = "john@example.com",
+                        Description = "The login email",
+                    }
+                },
+                { "rememberMe", true },
+            },
         };
 
         SessionObserveParamsOptions copied = new(model);
@@ -465,6 +632,299 @@ public class SessionObserveParamsOptionsModelTest : TestBase
             element,
             ModelBase.SerializerOptions
         );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class SessionObserveParamsOptionsVariableTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        SessionObserveParamsOptionsVariable value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        SessionObserveParamsOptionsVariable value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        SessionObserveParamsOptionsVariable value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void SessionObserveParamsOptionsVariableUnionMember3ValidationWorks()
+    {
+        SessionObserveParamsOptionsVariable value =
+            new SessionObserveParamsOptionsVariableUnionMember3()
+            {
+                Value = "string",
+                Description = "description",
+            };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariable value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariable value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariable value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void SessionObserveParamsOptionsVariableUnionMember3SerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariable value =
+            new SessionObserveParamsOptionsVariableUnionMember3()
+            {
+                Value = "string",
+                Description = "description",
+            };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class SessionObserveParamsOptionsVariableUnionMember3Test : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        SessionObserveParamsOptionsVariableUnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, model.Value);
+        Assert.Equal(expectedDescription, model.Description);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<SessionObserveParamsOptionsVariableUnionMember3>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<SessionObserveParamsOptionsVariableUnionMember3>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        SessionObserveParamsOptionsVariableUnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, deserialized.Value);
+        Assert.Equal(expectedDescription, deserialized.Description);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3 { Value = "string" };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3 { Value = "string" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionObserveParamsOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        SessionObserveParamsOptionsVariableUnionMember3 copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class SessionObserveParamsOptionsVariableUnionMember3ValueTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<SessionObserveParamsOptionsVariableUnionMember3Value>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<SessionObserveParamsOptionsVariableUnionMember3Value>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        SessionObserveParamsOptionsVariableUnionMember3Value value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<SessionObserveParamsOptionsVariableUnionMember3Value>(
+                element,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(value, deserialized);
     }
