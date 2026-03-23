@@ -28,7 +28,18 @@ public class SessionActParamsTest : TestBase
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -46,7 +57,18 @@ public class SessionActParamsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
         ApiEnum<string, Sessions::XStreamResponse> expectedXStreamResponse =
             Sessions::XStreamResponse.True;
@@ -111,7 +133,18 @@ public class SessionActParamsTest : TestBase
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -137,7 +170,18 @@ public class SessionActParamsTest : TestBase
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
 
@@ -216,7 +260,18 @@ public class SessionActParamsTest : TestBase
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -299,7 +354,18 @@ public class OptionsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         Sessions::Model expectedModel = new Sessions::ModelConfig()
@@ -310,7 +376,18 @@ public class OptionsTest : TestBase
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
-        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
+        Dictionary<string, Sessions::Variable> expectedVariables = new()
+        {
+            { "username", "john_doe" },
+            {
+                "password",
+                new Sessions::UnionMember3()
+                {
+                    Value = "secret123",
+                    Description = "The login password",
+                }
+            },
+        };
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedTimeout, model.Timeout);
@@ -337,7 +414,18 @@ public class OptionsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -362,7 +450,18 @@ public class OptionsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -380,7 +479,18 @@ public class OptionsTest : TestBase
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
-        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
+        Dictionary<string, Sessions::Variable> expectedVariables = new()
+        {
+            { "username", "john_doe" },
+            {
+                "password",
+                new Sessions::UnionMember3()
+                {
+                    Value = "secret123",
+                    Description = "The login password",
+                }
+            },
+        };
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
@@ -407,7 +517,18 @@ public class OptionsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         model.Validate();
@@ -480,7 +601,18 @@ public class OptionsTest : TestBase
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         Sessions::Options copied = new(model);
@@ -536,6 +668,272 @@ public class ModelTest : TestBase
         Sessions::Model value = "string";
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class VariableTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::Variable value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        Sessions::Variable value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        Sessions::Variable value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void UnionMember3ValidationWorks()
+    {
+        Sessions::Variable value = new Sessions::UnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void UnionMember3SerializationRoundtripWorks()
+    {
+        Sessions::Variable value = new Sessions::UnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class UnionMember3Test : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        Sessions::UnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, model.Value);
+        Assert.Equal(expectedDescription, model.Description);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        Sessions::UnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, deserialized.Value);
+        Assert.Equal(expectedDescription, deserialized.Description);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string" };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::UnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::UnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        Sessions::UnionMember3 copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class UnionMember3ValueTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::UnionMember3Value value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        Sessions::UnionMember3Value value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        Sessions::UnionMember3Value value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
             element,
             ModelBase.SerializerOptions
         );
