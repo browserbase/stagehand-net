@@ -25,6 +25,7 @@ public class SessionExtractParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "#main-content",
@@ -47,6 +48,7 @@ public class SessionExtractParamsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -132,6 +134,7 @@ public class SessionExtractParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "#main-content",
@@ -162,6 +165,7 @@ public class SessionExtractParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "#main-content",
@@ -240,6 +244,7 @@ public class SessionExtractParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "#main-content",
@@ -270,6 +275,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -281,6 +287,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string expectedSelector = "#main-content";
@@ -301,6 +308,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -326,6 +334,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -344,6 +353,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string expectedSelector = "#main-content";
@@ -364,6 +374,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -437,6 +448,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "#main-content",
@@ -459,6 +471,7 @@ public class SessionExtractParamsOptionsModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         value.Validate();
@@ -479,6 +492,7 @@ public class SessionExtractParamsOptionsModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

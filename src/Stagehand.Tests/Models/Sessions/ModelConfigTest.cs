@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Stagehand.Core;
 using Stagehand.Exceptions;
@@ -15,17 +16,27 @@ public class ModelConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 
         string expectedModelName = "openai/gpt-5-nano";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
         ApiEnum<string, ModelConfigProvider> expectedProvider = ModelConfigProvider.OpenAI;
 
         Assert.Equal(expectedModelName, model.ModelName);
         Assert.Equal(expectedApiKey, model.ApiKey);
         Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -37,6 +48,7 @@ public class ModelConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 
@@ -57,6 +69,7 @@ public class ModelConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 
@@ -70,11 +83,20 @@ public class ModelConfigTest : TestBase
         string expectedModelName = "openai/gpt-5-nano";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
         ApiEnum<string, ModelConfigProvider> expectedProvider = ModelConfigProvider.OpenAI;
 
         Assert.Equal(expectedModelName, deserialized.ModelName);
         Assert.Equal(expectedApiKey, deserialized.ApiKey);
         Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -86,6 +108,7 @@ public class ModelConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 
@@ -101,6 +124,8 @@ public class ModelConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("apiKey"));
         Assert.Null(model.BaseUrl);
         Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -123,6 +148,7 @@ public class ModelConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
             BaseUrl = null,
+            Headers = null,
             Provider = null,
         };
 
@@ -130,6 +156,8 @@ public class ModelConfigTest : TestBase
         Assert.False(model.RawData.ContainsKey("apiKey"));
         Assert.Null(model.BaseUrl);
         Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -144,6 +172,7 @@ public class ModelConfigTest : TestBase
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
             BaseUrl = null,
+            Headers = null,
             Provider = null,
         };
 
@@ -158,6 +187,7 @@ public class ModelConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 

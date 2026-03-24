@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using Stagehand.Core;
@@ -23,6 +24,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -31,6 +33,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -59,6 +62,7 @@ public class SessionExecuteParamsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -67,6 +71,7 @@ public class SessionExecuteParamsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -108,6 +113,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -116,6 +122,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -153,6 +160,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -161,6 +169,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -202,6 +211,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -210,6 +220,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -246,6 +257,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -254,6 +266,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -292,6 +305,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -300,6 +314,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -348,6 +363,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -356,6 +372,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -400,6 +417,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
@@ -408,6 +426,7 @@ public class SessionExecuteParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Provider = Provider.OpenAI,
@@ -446,6 +465,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -454,6 +474,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -466,6 +487,7 @@ public class AgentConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Mode> expectedMode = Mode.Cua;
@@ -474,6 +496,7 @@ public class AgentConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
@@ -498,6 +521,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -506,6 +530,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -532,6 +557,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -540,6 +566,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -559,6 +586,7 @@ public class AgentConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Mode> expectedMode = Mode.Cua;
@@ -567,6 +595,7 @@ public class AgentConfigTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
@@ -591,6 +620,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -599,6 +629,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -691,6 +722,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
@@ -699,6 +731,7 @@ public class AgentConfigTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Provider = Provider.OpenAI,
@@ -721,6 +754,7 @@ public class ExecutionModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         value.Validate();
@@ -741,6 +775,7 @@ public class ExecutionModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -836,6 +871,7 @@ public class AgentConfigModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         value.Validate();
@@ -856,6 +892,7 @@ public class AgentConfigModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

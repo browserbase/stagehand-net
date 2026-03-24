@@ -25,6 +25,7 @@ public class SessionActParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
@@ -54,6 +55,7 @@ public class SessionActParamsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -130,6 +132,7 @@ public class SessionActParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
@@ -167,6 +170,7 @@ public class SessionActParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
@@ -257,6 +261,7 @@ public class SessionActParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
@@ -351,6 +356,7 @@ public class OptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -373,6 +379,7 @@ public class OptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
@@ -411,6 +418,7 @@ public class OptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -447,6 +455,7 @@ public class OptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -476,6 +485,7 @@ public class OptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
@@ -514,6 +524,7 @@ public class OptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -598,6 +609,7 @@ public class OptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
@@ -631,6 +643,7 @@ public class ModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         value.Validate();
@@ -651,6 +664,7 @@ public class ModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
