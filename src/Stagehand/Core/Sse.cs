@@ -23,33 +23,18 @@ static class Sse
             )
             .ConfigureAwait(false);
 
-        var done = false;
         await foreach (var item in SseParser.Create(stream).EnumerateAsync(cancellationToken))
         {
-            // Stop emitting messages, but iterate through the full stream.
-            if (done)
-            {
-                continue;
-            }
-
-            if (item.Data.StartsWith("{\"data\":{\"status\":\"finished\""))
-            {
-                // In this case we don't break because we still want to iterate through the full stream.
-                done = true;
-                continue;
-            }
-            else if (item.Data.StartsWith("error"))
-            {
-                throw new StagehandSseException(
-                    string.Format("SSE error returned from server: '{0}'", item.Data)
-                );
-            }
-
             switch (item.EventType)
             {
-                case null:
-                case "":
-                case "message":
+                case "error":
+                    throw new StagehandSseException(
+                        string.Format("SSE error returned from server: '{0}'", item.Data)
+                    );
+                case "starting":
+                case "connected":
+                case "running":
+                case "finished":
                     T? message;
                     try
                     {
