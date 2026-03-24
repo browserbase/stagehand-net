@@ -25,6 +25,7 @@ public class SessionObserveParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "nav",
@@ -55,6 +56,7 @@ public class SessionObserveParamsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -135,6 +137,7 @@ public class SessionObserveParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "nav",
@@ -173,6 +176,7 @@ public class SessionObserveParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "nav",
@@ -259,6 +263,7 @@ public class SessionObserveParamsTest : TestBase
                     ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
                 },
                 Selector = "nav",
@@ -297,6 +302,7 @@ public class SessionObserveParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -320,6 +326,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string expectedSelector = "nav";
@@ -360,6 +367,7 @@ public class SessionObserveParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -397,6 +405,7 @@ public class SessionObserveParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -427,6 +436,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string expectedSelector = "nav";
@@ -467,6 +477,7 @@ public class SessionObserveParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -558,6 +569,7 @@ public class SessionObserveParamsOptionsTest : TestBase
                 ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
             },
             Selector = "nav",
@@ -592,6 +604,7 @@ public class SessionObserveParamsOptionsModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         value.Validate();
@@ -612,6 +625,7 @@ public class SessionObserveParamsOptionsModelTest : TestBase
             ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

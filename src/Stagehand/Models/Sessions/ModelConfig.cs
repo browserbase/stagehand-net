@@ -68,6 +68,30 @@ public sealed record class ModelConfig : JsonModel
     }
 
     /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, ModelConfigProvider>? Provider
@@ -94,6 +118,7 @@ public sealed record class ModelConfig : JsonModel
         _ = this.ModelName;
         _ = this.ApiKey;
         _ = this.BaseUrl;
+        _ = this.Headers;
         this.Provider?.Validate();
     }
 

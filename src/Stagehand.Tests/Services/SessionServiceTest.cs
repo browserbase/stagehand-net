@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Stagehand.Models.Sessions;
 
@@ -57,6 +58,7 @@ public class SessionServiceTest : TestBase
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
                     },
                     Mode = Mode.Cua,
@@ -65,6 +67,7 @@ public class SessionServiceTest : TestBase
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
                     },
                     Provider = Provider.OpenAI,
@@ -100,6 +103,7 @@ public class SessionServiceTest : TestBase
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
                     },
                     Mode = Mode.Cua,
@@ -108,6 +112,7 @@ public class SessionServiceTest : TestBase
                         ModelName = "openai/gpt-5-nano",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
                     },
                     Provider = Provider.OpenAI,
