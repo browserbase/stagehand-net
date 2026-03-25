@@ -98,6 +98,24 @@ public class SessionExtractResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExtractResponse
+        {
+            Data = new()
+            {
+                Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+                ActionID = "actionId",
+            },
+            Success = true,
+        };
+
+        SessionExtractResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SessionExtractResponseDataTest : TestBase
@@ -221,5 +239,19 @@ public class SessionExtractResponseDataTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExtractResponseData
+        {
+            Result = JsonSerializer.Deserialize<JsonElement>("{}"),
+            ActionID = "actionId",
+        };
+
+        SessionExtractResponseData copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

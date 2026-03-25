@@ -20,9 +20,27 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new Sessions::ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -32,9 +50,27 @@ public class SessionActParamsTest : TestBase
         string expectedFrameID = "frameId";
         Sessions::Options expectedOptions = new()
         {
-            Model = "openai/gpt-4o",
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
         ApiEnum<string, Sessions::XStreamResponse> expectedXStreamResponse =
             Sessions::XStreamResponse.True;
@@ -91,9 +127,27 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new Sessions::ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
         };
@@ -111,9 +165,27 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new Sessions::ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
                 Timeout = 30000,
-                Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
             },
             XStreamResponse = Sessions::XStreamResponse.True,
 
@@ -172,6 +244,46 @@ public class SessionActParamsTest : TestBase
         );
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Sessions::SessionActParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            Input = "Click the login button",
+            FrameID = "frameId",
+            Options = new()
+            {
+                Model = new Sessions::ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = Sessions::ModelConfigProvider.OpenAI,
+                },
+                Timeout = 30000,
+                Variables = new Dictionary<string, Sessions::Variable>()
+                {
+                    { "username", "john_doe" },
+                    {
+                        "password",
+                        new Sessions::UnionMember3()
+                        {
+                            Value = "secret123",
+                            Description = "The login password",
+                        }
+                    },
+                },
+            },
+            XStreamResponse = Sessions::XStreamResponse.True,
+        };
+
+        Sessions::SessionActParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
     }
 }
 
@@ -239,14 +351,50 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
+        Sessions::Model expectedModel = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
         double expectedTimeout = 30000;
-        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
+        Dictionary<string, Sessions::Variable> expectedVariables = new()
+        {
+            { "username", "john_doe" },
+            {
+                "password",
+                new Sessions::UnionMember3()
+                {
+                    Value = "secret123",
+                    Description = "The login password",
+                }
+            },
+        };
 
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedTimeout, model.Timeout);
@@ -265,9 +413,27 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -284,9 +450,27 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -296,9 +480,27 @@ public class OptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        Sessions::ModelConfig expectedModel = "openai/gpt-4o";
+        Sessions::Model expectedModel = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
         double expectedTimeout = 30000;
-        Dictionary<string, string> expectedVariables = new() { { "username", "john_doe" } };
+        Dictionary<string, Sessions::Variable> expectedVariables = new()
+        {
+            { "username", "john_doe" },
+            {
+                "password",
+                new Sessions::UnionMember3()
+                {
+                    Value = "secret123",
+                    Description = "The login password",
+                }
+            },
+        };
 
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
@@ -317,9 +519,27 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = "openai/gpt-4o",
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
             Timeout = 30000,
-            Variables = new Dictionary<string, string>() { { "username", "john_doe" } },
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
         };
 
         model.Validate();
@@ -377,6 +597,362 @@ public class OptionsTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Options
+        {
+            Model = new Sessions::ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = Sessions::ModelConfigProvider.OpenAI,
+            },
+            Timeout = 30000,
+            Variables = new Dictionary<string, Sessions::Variable>()
+            {
+                { "username", "john_doe" },
+                {
+                    "password",
+                    new Sessions::UnionMember3()
+                    {
+                        Value = "secret123",
+                        Description = "The login password",
+                    }
+                },
+            },
+        };
+
+        Sessions::Options copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        Sessions::Model value = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::Model value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        Sessions::Model value = new Sessions::ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::Model value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class VariableTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::Variable value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        Sessions::Variable value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        Sessions::Variable value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void UnionMember3ValidationWorks()
+    {
+        Sessions::Variable value = new Sessions::UnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        Sessions::Variable value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void UnionMember3SerializationRoundtripWorks()
+    {
+        Sessions::Variable value = new Sessions::UnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Variable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class UnionMember3Test : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        Sessions::UnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, model.Value);
+        Assert.Equal(expectedDescription, model.Description);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        Sessions::UnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, deserialized.Value);
+        Assert.Equal(expectedDescription, deserialized.Description);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string" };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::UnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::UnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::UnionMember3 { Value = "string", Description = "description" };
+
+        Sessions::UnionMember3 copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class UnionMember3ValueTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::UnionMember3Value value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        Sessions::UnionMember3Value value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        Sessions::UnionMember3Value value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        Sessions::UnionMember3Value value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::UnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

@@ -43,8 +43,11 @@ public sealed record class SessionObserveResponse : JsonModel
 
     public SessionObserveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionObserveResponse(SessionObserveResponse sessionObserveResponse)
         : base(sessionObserveResponse) { }
+#pragma warning restore CS8618
 
     public SessionObserveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -132,8 +135,11 @@ public sealed record class SessionObserveResponseData : JsonModel
 
     public SessionObserveResponseData() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionObserveResponseData(SessionObserveResponseData sessionObserveResponseData)
         : base(sessionObserveResponseData) { }
+#pragma warning restore CS8618
 
     public SessionObserveResponseData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -287,10 +293,13 @@ public sealed record class SessionObserveResponseDataResult : JsonModel
 
     public SessionObserveResponseDataResult() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionObserveResponseDataResult(
         SessionObserveResponseDataResult sessionObserveResponseDataResult
     )
         : base(sessionObserveResponseDataResult) { }
+#pragma warning restore CS8618
 
     public SessionObserveResponseDataResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {

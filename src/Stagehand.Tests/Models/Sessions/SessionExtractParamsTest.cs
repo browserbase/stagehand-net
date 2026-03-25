@@ -20,7 +20,14 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -36,7 +43,14 @@ public class SessionExtractParamsTest : TestBase
         string expectedInstruction = "Extract all product names and prices from the page";
         SessionExtractParamsOptions expectedOptions = new()
         {
-            Model = "openai/gpt-4o",
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -115,7 +129,14 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -139,7 +160,14 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
-                Model = "openai/gpt-4o",
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -200,6 +228,39 @@ public class SessionExtractParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionExtractParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            FrameID = "frameId",
+            Instruction = "Extract all product names and prices from the page",
+            Options = new()
+            {
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Selector = "#main-content",
+                Timeout = 30000,
+            },
+            Schema = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            XStreamResponse = SessionExtractParamsXStreamResponse.True,
+        };
+
+        SessionExtractParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SessionExtractParamsOptionsTest : TestBase
@@ -209,12 +270,26 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -228,7 +303,14 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -247,7 +329,14 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -259,7 +348,14 @@ public class SessionExtractParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        ModelConfig expectedModel = "openai/gpt-4o";
+        SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -273,7 +369,14 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
-            Model = "openai/gpt-4o",
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -333,6 +436,85 @@ public class SessionExtractParamsOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionExtractParamsOptions
+        {
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Selector = "#main-content",
+            Timeout = 30000,
+        };
+
+        SessionExtractParamsOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class SessionExtractParamsOptionsModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        SessionExtractParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        SessionExtractParamsOptionsModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        SessionExtractParamsOptionsModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        SessionExtractParamsOptionsModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptionsModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 

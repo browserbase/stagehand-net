@@ -79,10 +79,11 @@ This library requires .NET Standard 2.0 or later.
 
 ## Usage
 
+This mirrors `examples/remote_browser_playwright_example.cs`.
+
 ```csharp
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Stagehand;
@@ -90,17 +91,19 @@ using Stagehand.Models.Sessions;
 
 namespace Stagehand.Examples
 {
-    class Basic
+    class RemoteBrowserPlaywrightExample
     {
         static async Task Main(string[] args)
         {
-            // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
+            Env.Load();
+            // Uses environment variables: STAGEHAND_API_URL, BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
             StagehandClient client = new();
 
-            // Start a new session
+            // Start a new remote Browserbase session (Playwright-backed)
             var startResponse = await client.Sessions.Start(new SessionStartParams
             {
-                ModelName = "gpt-4o"
+                ModelName = "anthropic/claude-sonnet-4-6",
+                Browser = new Browser { Type = Type.Browserbase }
             });
             Console.WriteLine($"Session started: {startResponse.Data.SessionID}");
 
@@ -113,99 +116,206 @@ namespace Stagehand.Examples
             });
             Console.WriteLine("Navigated to Hacker News");
 
-            // Observe to find possible actions
-            var observeResponse = await client.Sessions.Observe(sessionID, new SessionObserveParams
-            {
-                Instruction = "find the link to view comments for the top post"
-            });
+            // Observe with SSE streaming to find possible actions
+            var observeResponse = await CollectStreamingResult<SessionObserveResponse>(
+                client.Sessions.ObserveStreaming(sessionID, new SessionObserveParams
+                {
+                    Instruction = "find the link to view comments for the top post",
+                    XStreamResponse = SessionObserveParamsXStreamResponse.True
+                }),
+                "observe"
+            );
 
-            var actions = observeResponse.Data.Result;
-            Console.WriteLine($"Found {actions.Count} possible actions");
-
-            if (actions.Count == 0)
+            if (observeResponse == null || observeResponse.Data.Result.Count == 0)
             {
                 Console.WriteLine("No actions found");
+                await client.Sessions.End(sessionID, new SessionEndParams());
                 return;
             }
 
             // Use the first action
-            var action = actions[0];
+            var action = observeResponse.Data.Result[0];
             Console.WriteLine($"Acting on: {action.Description}");
 
-            // Pass the action to Act
-            var actResponse = await client.Sessions.Act(sessionID, new SessionActParams
-            {
-                Input = new Stagehand.Models.Sessions.Input(new Stagehand.Models.Sessions.Action
+            // Pass the action to Act (streaming)
+            var actResponse = await CollectStreamingResult<SessionActResponse>(
+                client.Sessions.ActStreaming(sessionID, new SessionActParams
                 {
-                    Description = action.Description,
-                    Selector = action.Selector,
-                    Method = action.Method,
-                    Arguments = action.Arguments
-                })
-            });
-            Console.WriteLine($"Act completed: {actResponse.Data.Result.Message}");
-
-            // Extract data from the page
-            // We're now on the comments page, so extract the top comment text
-            var extractResponse = await client.Sessions.Extract(sessionID, new SessionExtractParams
-            {
-                Instruction = "extract the text of the top comment on this page",
-                Schema = new Dictionary<string, JsonElement>
-                {
-                    ["type"] = JsonSerializer.SerializeToElement("object"),
-                    ["properties"] = JsonSerializer.SerializeToElement(new Dictionary<string, object>
+                    Input = new Input(new Action
                     {
-                        ["commentText"] = new Dictionary<string, string>
-                        {
-                            ["type"] = "string",
-                            ["description"] = "The text content of the top comment"
-                        },
-                        ["author"] = new Dictionary<string, string>
-                        {
-                            ["type"] = "string",
-                            ["description"] = "The username of the comment author"
-                        }
+                        Description = action.Description,
+                        Selector = action.Selector,
+                        Method = action.Method,
+                        Arguments = action.Arguments
                     }),
-                    ["required"] = JsonSerializer.SerializeToElement(new[] { "commentText" })
-                }
-            });
+                    XStreamResponse = XStreamResponse.True
+                }),
+                "act"
+            );
+
+            if (actResponse != null)
+            {
+                Console.WriteLine($"Act completed: {actResponse.Data.Result.Message}");
+            }
+
+            // Extract data from the page (streaming)
+            var extractResponse = await CollectStreamingResult<SessionExtractResponse>(
+                client.Sessions.ExtractStreaming(sessionID, new SessionExtractParams
+                {
+                    Instruction = "extract the text of the top comment on this page",
+                    Schema = new Dictionary<string, JsonElement>
+                    {
+                        ["type"] = JsonSerializer.SerializeToElement("object"),
+                        ["properties"] = JsonSerializer.SerializeToElement(
+                            new Dictionary<string, object>
+                            {
+                                ["commentText"] = new Dictionary<string, string>
+                                {
+                                    ["type"] = "string",
+                                    ["description"] = "The text content of the top comment"
+                                },
+                                ["author"] = new Dictionary<string, string>
+                                {
+                                    ["type"] = "string",
+                                    ["description"] = "The username of the comment author"
+                                }
+                            }
+                        ),
+                        ["required"] = JsonSerializer.SerializeToElement(new[] { "commentText" })
+                    },
+                    XStreamResponse = SessionExtractParamsXStreamResponse.True
+                }),
+                "extract"
+            );
+
+            if (extractResponse == null)
+            {
+                Console.WriteLine("No extract response received");
+                await client.Sessions.End(sessionID, new SessionEndParams());
+                return;
+            }
+
             Console.WriteLine($"Extracted data: {extractResponse.Data.Result}");
 
-            // Get the author from the extracted data
             var extractedData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
                 extractResponse.Data.Result.ToString()
             );
-            var author = extractedData["author"].GetString();
+            var author = extractedData != null && extractedData.ContainsKey("author")
+                ? extractedData["author"].GetString()
+                : null;
+
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                Console.WriteLine("No author found in extracted data");
+                await client.Sessions.End(sessionID, new SessionEndParams());
+                return;
+            }
+
             Console.WriteLine($"Looking up profile for author: {author}");
 
-            // Use the Agent to find the author's profile
-            // Execute runs an autonomous agent that can navigate and interact with pages
-            var executeResponse = await client.Sessions.Execute(sessionID, new SessionExecuteAgentParams
-            {
-                ExecuteOptions = new ExecuteOptions
+            // Use the Agent to find the author's profile (streaming)
+            var executeResponse = await CollectStreamingResult<SessionExecuteResponse>(
+                client.Sessions.ExecuteStreaming(sessionID, new SessionExecuteAgentParams
                 {
-                    Instruction = $"Find any personal website, GitHub, LinkedIn, or other best profile URL for the Hacker News user '{author}'. " +
-                                  $"Click on their username to go to their profile page and look for any links they have shared. " +
-                                  $"Use Google Search with their username or other details from their profile if you dont find any direct links.",
-                    MaxSteps = 15
-                },
-                AgentConfig = new AgentConfig
-                {
-                    Model = new Model(new ModelConfig
+                    ExecuteOptions = new ExecuteOptions
                     {
-                        ModelName = "openai/gpt-4.1-mini",
-                        APIKey = Environment.GetEnvironmentVariable("MODEL_API_KEY")
-                    }),
-                    Cua = false
-                }
-            });
-            Console.WriteLine($"Agent completed: {executeResponse.Data.Result.Message}");
-            Console.WriteLine($"Agent success: {executeResponse.Data.Result.Success}");
-            Console.WriteLine($"Agent actions taken: {executeResponse.Data.Result.Actions.Count}");
+                        Instruction =
+                            $"Find any personal website, GitHub, LinkedIn, or other best profile URL for the Hacker News user '{author}'. " +
+                            "Click on their username to go to their profile page and look for any links they have shared. " +
+                            "Use Google Search with their username or other details from their profile if you dont find any direct links.",
+                        MaxSteps = 15
+                    },
+                    AgentConfig = new AgentConfig
+                    {
+                        Model = new Model(new ModelConfig
+                        {
+                            ModelName = "anthropic/claude-opus-4-6",
+                            APIKey = Environment.GetEnvironmentVariable("MODEL_API_KEY")
+                        }),
+                        Cua = false
+                    },
+                    XStreamResponse = SessionExecuteParamsXStreamResponse.True
+                }),
+                "agent"
+            );
+
+            if (executeResponse != null)
+            {
+                Console.WriteLine($"Agent completed: {executeResponse.Data.Result.Message}");
+                Console.WriteLine($"Agent success: {executeResponse.Data.Result.Success}");
+                Console.WriteLine($"Agent actions taken: {executeResponse.Data.Result.Actions.Count}");
+            }
 
             // End the session to clean up resources
             await client.Sessions.End(sessionID, new SessionEndParams());
             Console.WriteLine("Session ended");
+        }
+
+        static async Task<T?> CollectStreamingResult<T>(
+            IAsyncEnumerable<StreamEvent> stream,
+            string label
+        )
+        {
+            T? result = default;
+
+            await foreach (var streamEvent in stream)
+            {
+                PrintStreamEvent(label, streamEvent);
+
+                if (!TryGetFinishedResult(streamEvent, out var resultElement))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    result = JsonSerializer.Deserialize<T>(resultElement.GetRawText());
+                }
+                catch (JsonException)
+                {
+                    Console.WriteLine($"[{label}] Warning: unable to parse finished result.");
+                }
+            }
+
+            return result;
+        }
+
+        static bool TryGetFinishedResult(StreamEvent streamEvent, out JsonElement resultElement)
+        {
+            resultElement = default;
+
+            if (
+                streamEvent.Data.TryPickStreamEventSystemDataOutput(out var systemData)
+                && systemData.Result is { } result
+                && systemData.Status.Value() == Status.Finished
+            )
+            {
+                resultElement = result;
+                return true;
+            }
+
+            return false;
+        }
+
+        static void PrintStreamEvent(string label, StreamEvent streamEvent)
+        {
+            if (streamEvent.Data.TryPickStreamEventLogDataOutput(out var logData))
+            {
+                Console.WriteLine($"[{label}] log: {logData.Message}");
+                return;
+            }
+
+            if (streamEvent.Data.TryPickStreamEventSystemDataOutput(out var systemData))
+            {
+                var status = systemData.Status.Value();
+                var error = string.IsNullOrWhiteSpace(systemData.Error)
+                    ? string.Empty
+                    : $" error={systemData.Error}";
+                Console.WriteLine($"[{label}] system: {status}{error}");
+                return;
+            }
+
+            Console.WriteLine($"[{label}] event: {streamEvent.Data.Json}");
         }
     }
 }
@@ -213,18 +323,47 @@ namespace Stagehand.Examples
 
 ## Running the Example
 
-Set your environment variables:
+Set your environment variables (from `examples/.env.example`):
+
+- `STAGEHAND_API_URL`
+- `MODEL_API_KEY`
+- `BROWSERBASE_API_KEY`
+- `BROWSERBASE_PROJECT_ID`
 
 ```bash
-export BROWSERBASE_API_KEY="your-bb-api-key"
-export BROWSERBASE_PROJECT_ID="your-bb-project-uuid"
-export MODEL_API_KEY="sk-proj-your-llm-api-key"
+cp examples/.env.example examples/.env
+# Edit examples/.env with your credentials.
+```
+
+The examples load `examples/.env` automatically.
+
+The examples live at:
+- `examples/remote_browser_playwright_example.cs`
+- `examples/local_browser_playwright_example.cs`
+
+Multiregion support: see `examples/local_server_multiregion_browser_example.cs`.
+
+Install the example dependencies:
+
+- `examples/remote_browser_playwright_example.cs`: `Microsoft.Playwright` + Playwright browsers
+- `examples/local_browser_playwright_example.cs`: `Microsoft.Playwright` + Playwright browsers
+
+```bash
+dotnet build examples
+pwsh examples/bin/Debug/net8.0/playwright.ps1 install
+# or: bash examples/bin/Debug/net8.0/playwright.sh install
 ```
 
 Run the example:
 
 ```bash
-dotnet run --project examples
+dotnet run --project examples -- remote
+```
+
+To run the local Playwright example:
+
+```bash
+dotnet run --project examples -- local
 ```
 
 ## Client configuration
@@ -445,9 +584,142 @@ var response = await client
 Console.WriteLine(response);
 ```
 
+### Proxies
+
+To route requests through a proxy, configure your client with a custom [`HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-10.0):
+
+```csharp
+using System.Net;
+using System.Net.Http;
+using Stagehand;
+
+var httpClient = new HttpClient
+(
+    new HttpClientHandler
+    {
+        Proxy = new WebProxy("https://example.com:8080")
+    }
+);
+
+StagehandClient client = new() { HttpClient = httpClient };
+```
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
+
+### Parameters
+
+To set undocumented parameters, a constructor exists that accepts dictionaries for additional header, query, and body values. If the method type doesn't support request bodies (e.g. `GET` requests), the constructor will only accept a header and query dictionary.
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Stagehand.Models.Sessions;
+
+SessionActParams parameters = new
+(
+    rawHeaderData: new Dictionary<string, JsonElement>()
+    {
+        { "Custom-Header", JsonSerializer.SerializeToElement(42) }
+    },
+
+    rawQueryData: new Dictionary<string, JsonElement>()
+    {
+        { "custom_query_param", JsonSerializer.SerializeToElement(42) }
+    },
+
+    rawBodyData: new Dictionary<string, JsonElement>()
+    {
+        { "custom_body_param", JsonSerializer.SerializeToElement(42) }
+    }
+)
+{
+    // Documented properties can still be added here.
+    // In case of conflict, these parameters take precedence over the custom parameters.
+    ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123"
+};
+```
+
+The raw parameters can also be accessed through the `RawHeaderData`, `RawQueryData`, and `RawBodyData` (if available) properties.
+
+This can also be used to set a documented parameter to an undocumented or not yet supported _value_, as long as the parameter is optional. If the parameter is required, omitting its `init` property will result in a compile-time error. To work around this, the `FromRawUnchecked` method can be used:
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Stagehand.Models.Sessions;
+
+var parameters = SessionActParams.FromRawUnchecked
+(
+
+    rawHeaderData: new Dictionary<string, JsonElement>(),
+    rawQueryData: new Dictionary<string, JsonElement>(),
+    rawBodyData: new Dictionary<string, JsonElement>
+    {
+        {
+            "input",
+            JsonSerializer.SerializeToElement("custom value")
+        }
+    }
+);
+```
+
+### Nested Parameters
+
+Undocumented properties, or undocumented values of documented properties, on nested parameters can be set similarly, using a dictionary in the constructor of the nested parameter.
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Stagehand.Models.Sessions;
+
+SessionActParams parameters = new()
+{
+    Options = new
+    (
+        new Dictionary<string, JsonElement>
+        {
+            { "custom_nested_param", JsonSerializer.SerializeToElement(42) }
+        }
+    )
+};
+```
+
+Required properties on the nested parameter can also be changed or omitted using the `FromRawUnchecked` method:
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Stagehand.Models.Sessions;
+
+SessionActParams parameters = new()
+{
+    Options = Options.FromRawUnchecked
+    (
+        new Dictionary<string, JsonElement>
+        {
+            { "required_property", JsonSerializer.SerializeToElement("custom value") }
+        }
+    )
+};
+```
+
+### Response properties
+
+To access undocumented response properties, the `RawData` property can be used:
+
+```csharp
+using System.Text.Json;
+
+var response = client.Sessions.Act(parameters)
+if (response.RawData.TryGetValue("my_custom_key", out JsonElement value))
+{
+    // Do something with `value`
+}
+```
+
+`RawData` is a `IReadonlyDictionary<string, JsonElement>`. It holds the full data received from the API server.
 
 ### Response validation
 

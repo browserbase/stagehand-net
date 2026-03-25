@@ -24,6 +24,7 @@ public class SessionStartParamsTest : TestBase
                 {
                     AcceptDownloads = true,
                     Args = ["string"],
+                    CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                     CdpUrl = "cdpUrl",
                     ChromiumSandbox = true,
                     ConnectTimeoutMs = 0,
@@ -36,6 +37,7 @@ public class SessionStartParamsTest : TestBase
                     IgnoreDefaultArgs = true,
                     IgnoreHttpsErrors = true,
                     Locale = "locale",
+                    Port = 0,
                     PreserveUserDataDir = true,
                     Proxy = new()
                     {
@@ -107,6 +109,7 @@ public class SessionStartParamsTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -119,6 +122,7 @@ public class SessionStartParamsTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -311,6 +315,101 @@ public class SessionStartParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Sessions::SessionStartParams
+        {
+            ModelName = "openai/gpt-4o",
+            ActTimeoutMs = 0,
+            Browser = new()
+            {
+                CdpUrl = "ws://localhost:9222",
+                LaunchOptions = new()
+                {
+                    AcceptDownloads = true,
+                    Args = ["string"],
+                    CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
+                    CdpUrl = "cdpUrl",
+                    ChromiumSandbox = true,
+                    ConnectTimeoutMs = 0,
+                    DeviceScaleFactor = 0,
+                    Devtools = true,
+                    DownloadsPath = "downloadsPath",
+                    ExecutablePath = "executablePath",
+                    HasTouch = true,
+                    Headless = true,
+                    IgnoreDefaultArgs = true,
+                    IgnoreHttpsErrors = true,
+                    Locale = "locale",
+                    Port = 0,
+                    PreserveUserDataDir = true,
+                    Proxy = new()
+                    {
+                        Server = "server",
+                        Bypass = "bypass",
+                        Password = "password",
+                        Username = "username",
+                    },
+                    UserDataDir = "userDataDir",
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                Type = Sessions::Type.Local,
+            },
+            BrowserbaseSessionCreateParams = new()
+            {
+                BrowserSettings = new()
+                {
+                    AdvancedStealth = true,
+                    BlockAds = true,
+                    Context = new() { ID = "id", Persist = true },
+                    ExtensionID = "extensionId",
+                    Fingerprint = new()
+                    {
+                        Browsers = [Sessions::FingerprintBrowser.Chrome],
+                        Devices = [Sessions::Device.Desktop],
+                        HttpVersion = Sessions::HttpVersion.V1,
+                        Locales = ["string"],
+                        OperatingSystems = [Sessions::OperatingSystem.Android],
+                        Screen = new()
+                        {
+                            MaxHeight = 0,
+                            MaxWidth = 0,
+                            MinHeight = 0,
+                            MinWidth = 0,
+                        },
+                    },
+                    LogSession = true,
+                    RecordSession = true,
+                    SolveCaptchas = true,
+                    Viewport = new() { Height = 0, Width = 0 },
+                },
+                ExtensionID = "extensionId",
+                KeepAlive = true,
+                ProjectID = "projectId",
+                Proxies = true,
+                Region = Sessions::Region.UsWest2,
+                Timeout = 0,
+                UserMetadata = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            },
+            BrowserbaseSessionID = "browserbaseSessionID",
+            DomSettleTimeoutMs = 5000,
+            Experimental = true,
+            SelfHeal = true,
+            SystemPrompt = "systemPrompt",
+            Verbose = Sessions::Verbose.V1,
+            WaitForCaptchaSolves = true,
+            XStreamResponse = Sessions::SessionStartParamsXStreamResponse.True,
+        };
+
+        Sessions::SessionStartParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class BrowserTest : TestBase
@@ -325,6 +424,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -337,6 +437,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -356,6 +457,7 @@ public class BrowserTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -368,6 +470,7 @@ public class BrowserTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -396,6 +499,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -408,6 +512,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -441,6 +546,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -453,6 +559,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -479,6 +586,7 @@ public class BrowserTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -491,6 +599,7 @@ public class BrowserTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -519,6 +628,7 @@ public class BrowserTest : TestBase
             {
                 AcceptDownloads = true,
                 Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
                 CdpUrl = "cdpUrl",
                 ChromiumSandbox = true,
                 ConnectTimeoutMs = 0,
@@ -531,6 +641,7 @@ public class BrowserTest : TestBase
                 IgnoreDefaultArgs = true,
                 IgnoreHttpsErrors = true,
                 Locale = "locale",
+                Port = 0,
                 PreserveUserDataDir = true,
                 Proxy = new()
                 {
@@ -601,6 +712,49 @@ public class BrowserTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Browser
+        {
+            CdpUrl = "ws://localhost:9222",
+            LaunchOptions = new()
+            {
+                AcceptDownloads = true,
+                Args = ["string"],
+                CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
+                CdpUrl = "cdpUrl",
+                ChromiumSandbox = true,
+                ConnectTimeoutMs = 0,
+                DeviceScaleFactor = 0,
+                Devtools = true,
+                DownloadsPath = "downloadsPath",
+                ExecutablePath = "executablePath",
+                HasTouch = true,
+                Headless = true,
+                IgnoreDefaultArgs = true,
+                IgnoreHttpsErrors = true,
+                Locale = "locale",
+                Port = 0,
+                PreserveUserDataDir = true,
+                Proxy = new()
+                {
+                    Server = "server",
+                    Bypass = "bypass",
+                    Password = "password",
+                    Username = "username",
+                },
+                UserDataDir = "userDataDir",
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            Type = Sessions::Type.Local,
+        };
+
+        Sessions::Browser copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class LaunchOptionsTest : TestBase
@@ -612,6 +766,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -624,6 +779,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -638,6 +794,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
+        Dictionary<string, string> expectedCdpHeaders = new() { { "foo", "string" } };
         string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
@@ -650,6 +807,7 @@ public class LaunchOptionsTest : TestBase
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
+        double expectedPort = 0;
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
         {
@@ -668,6 +826,14 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], model.Args[i]);
         }
+        Assert.NotNull(model.CdpHeaders);
+        Assert.Equal(expectedCdpHeaders.Count, model.CdpHeaders.Count);
+        foreach (var item in expectedCdpHeaders)
+        {
+            Assert.True(model.CdpHeaders.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.CdpHeaders[item.Key]);
+        }
         Assert.Equal(expectedCdpUrl, model.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, model.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, model.ConnectTimeoutMs);
@@ -680,6 +846,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedIgnoreDefaultArgs, model.IgnoreDefaultArgs);
         Assert.Equal(expectedIgnoreHttpsErrors, model.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, model.Locale);
+        Assert.Equal(expectedPort, model.Port);
         Assert.Equal(expectedPreserveUserDataDir, model.PreserveUserDataDir);
         Assert.Equal(expectedProxy, model.Proxy);
         Assert.Equal(expectedUserDataDir, model.UserDataDir);
@@ -693,6 +860,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -705,6 +873,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -733,6 +902,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -745,6 +915,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -766,6 +937,7 @@ public class LaunchOptionsTest : TestBase
 
         bool expectedAcceptDownloads = true;
         List<string> expectedArgs = ["string"];
+        Dictionary<string, string> expectedCdpHeaders = new() { { "foo", "string" } };
         string expectedCdpUrl = "cdpUrl";
         bool expectedChromiumSandbox = true;
         double expectedConnectTimeoutMs = 0;
@@ -778,6 +950,7 @@ public class LaunchOptionsTest : TestBase
         Sessions::IgnoreDefaultArgs expectedIgnoreDefaultArgs = true;
         bool expectedIgnoreHttpsErrors = true;
         string expectedLocale = "locale";
+        double expectedPort = 0;
         bool expectedPreserveUserDataDir = true;
         Sessions::Proxy expectedProxy = new()
         {
@@ -796,6 +969,14 @@ public class LaunchOptionsTest : TestBase
         {
             Assert.Equal(expectedArgs[i], deserialized.Args[i]);
         }
+        Assert.NotNull(deserialized.CdpHeaders);
+        Assert.Equal(expectedCdpHeaders.Count, deserialized.CdpHeaders.Count);
+        foreach (var item in expectedCdpHeaders)
+        {
+            Assert.True(deserialized.CdpHeaders.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.CdpHeaders[item.Key]);
+        }
         Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
         Assert.Equal(expectedChromiumSandbox, deserialized.ChromiumSandbox);
         Assert.Equal(expectedConnectTimeoutMs, deserialized.ConnectTimeoutMs);
@@ -808,6 +989,7 @@ public class LaunchOptionsTest : TestBase
         Assert.Equal(expectedIgnoreDefaultArgs, deserialized.IgnoreDefaultArgs);
         Assert.Equal(expectedIgnoreHttpsErrors, deserialized.IgnoreHttpsErrors);
         Assert.Equal(expectedLocale, deserialized.Locale);
+        Assert.Equal(expectedPort, deserialized.Port);
         Assert.Equal(expectedPreserveUserDataDir, deserialized.PreserveUserDataDir);
         Assert.Equal(expectedProxy, deserialized.Proxy);
         Assert.Equal(expectedUserDataDir, deserialized.UserDataDir);
@@ -821,6 +1003,7 @@ public class LaunchOptionsTest : TestBase
         {
             AcceptDownloads = true,
             Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
             CdpUrl = "cdpUrl",
             ChromiumSandbox = true,
             ConnectTimeoutMs = 0,
@@ -833,6 +1016,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = true,
             IgnoreHttpsErrors = true,
             Locale = "locale",
+            Port = 0,
             PreserveUserDataDir = true,
             Proxy = new()
             {
@@ -857,6 +1041,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
+        Assert.Null(model.CdpHeaders);
+        Assert.False(model.RawData.ContainsKey("cdpHeaders"));
         Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
@@ -881,6 +1067,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
+        Assert.Null(model.Port);
+        Assert.False(model.RawData.ContainsKey("port"));
         Assert.Null(model.PreserveUserDataDir);
         Assert.False(model.RawData.ContainsKey("preserveUserDataDir"));
         Assert.Null(model.Proxy);
@@ -907,6 +1095,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
+            CdpHeaders = null,
             CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
@@ -919,6 +1108,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = null,
             IgnoreHttpsErrors = null,
             Locale = null,
+            Port = null,
             PreserveUserDataDir = null,
             Proxy = null,
             UserDataDir = null,
@@ -929,6 +1119,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("acceptDownloads"));
         Assert.Null(model.Args);
         Assert.False(model.RawData.ContainsKey("args"));
+        Assert.Null(model.CdpHeaders);
+        Assert.False(model.RawData.ContainsKey("cdpHeaders"));
         Assert.Null(model.CdpUrl);
         Assert.False(model.RawData.ContainsKey("cdpUrl"));
         Assert.Null(model.ChromiumSandbox);
@@ -953,6 +1145,8 @@ public class LaunchOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreHTTPSErrors"));
         Assert.Null(model.Locale);
         Assert.False(model.RawData.ContainsKey("locale"));
+        Assert.Null(model.Port);
+        Assert.False(model.RawData.ContainsKey("port"));
         Assert.Null(model.PreserveUserDataDir);
         Assert.False(model.RawData.ContainsKey("preserveUserDataDir"));
         Assert.Null(model.Proxy);
@@ -971,6 +1165,7 @@ public class LaunchOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AcceptDownloads = null,
             Args = null,
+            CdpHeaders = null,
             CdpUrl = null,
             ChromiumSandbox = null,
             ConnectTimeoutMs = null,
@@ -983,6 +1178,7 @@ public class LaunchOptionsTest : TestBase
             IgnoreDefaultArgs = null,
             IgnoreHttpsErrors = null,
             Locale = null,
+            Port = null,
             PreserveUserDataDir = null,
             Proxy = null,
             UserDataDir = null,
@@ -990,6 +1186,44 @@ public class LaunchOptionsTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::LaunchOptions
+        {
+            AcceptDownloads = true,
+            Args = ["string"],
+            CdpHeaders = new Dictionary<string, string>() { { "foo", "string" } },
+            CdpUrl = "cdpUrl",
+            ChromiumSandbox = true,
+            ConnectTimeoutMs = 0,
+            DeviceScaleFactor = 0,
+            Devtools = true,
+            DownloadsPath = "downloadsPath",
+            ExecutablePath = "executablePath",
+            HasTouch = true,
+            Headless = true,
+            IgnoreDefaultArgs = true,
+            IgnoreHttpsErrors = true,
+            Locale = "locale",
+            Port = 0,
+            PreserveUserDataDir = true,
+            Proxy = new()
+            {
+                Server = "server",
+                Bypass = "bypass",
+                Password = "password",
+                Username = "username",
+            },
+            UserDataDir = "userDataDir",
+            Viewport = new() { Height = 0, Width = 0 },
+        };
+
+        Sessions::LaunchOptions copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -1180,6 +1414,22 @@ public class ProxyTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Proxy
+        {
+            Server = "server",
+            Bypass = "bypass",
+            Password = "password",
+            Username = "username",
+        };
+
+        Sessions::Proxy copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ViewportTest : TestBase
@@ -1235,6 +1485,16 @@ public class ViewportTest : TestBase
         var model = new Sessions::Viewport { Height = 0, Width = 0 };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Viewport { Height = 0, Width = 0 };
+
+        Sessions::Viewport copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -1680,6 +1940,54 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserbaseSessionCreateParams
+        {
+            BrowserSettings = new()
+            {
+                AdvancedStealth = true,
+                BlockAds = true,
+                Context = new() { ID = "id", Persist = true },
+                ExtensionID = "extensionId",
+                Fingerprint = new()
+                {
+                    Browsers = [Sessions::FingerprintBrowser.Chrome],
+                    Devices = [Sessions::Device.Desktop],
+                    HttpVersion = Sessions::HttpVersion.V1,
+                    Locales = ["string"],
+                    OperatingSystems = [Sessions::OperatingSystem.Android],
+                    Screen = new()
+                    {
+                        MaxHeight = 0,
+                        MaxWidth = 0,
+                        MinHeight = 0,
+                        MinWidth = 0,
+                    },
+                },
+                LogSession = true,
+                RecordSession = true,
+                SolveCaptchas = true,
+                Viewport = new() { Height = 0, Width = 0 },
+            },
+            ExtensionID = "extensionId",
+            KeepAlive = true,
+            ProjectID = "projectId",
+            Proxies = true,
+            Region = Sessions::Region.UsWest2,
+            Timeout = 0,
+            UserMetadata = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Sessions::BrowserbaseSessionCreateParams copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BrowserSettingsTest : TestBase
@@ -1982,6 +2290,41 @@ public class BrowserSettingsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserSettings
+        {
+            AdvancedStealth = true,
+            BlockAds = true,
+            Context = new() { ID = "id", Persist = true },
+            ExtensionID = "extensionId",
+            Fingerprint = new()
+            {
+                Browsers = [Sessions::FingerprintBrowser.Chrome],
+                Devices = [Sessions::Device.Desktop],
+                HttpVersion = Sessions::HttpVersion.V1,
+                Locales = ["string"],
+                OperatingSystems = [Sessions::OperatingSystem.Android],
+                Screen = new()
+                {
+                    MaxHeight = 0,
+                    MaxWidth = 0,
+                    MinHeight = 0,
+                    MinWidth = 0,
+                },
+            },
+            LogSession = true,
+            RecordSession = true,
+            SolveCaptchas = true,
+            Viewport = new() { Height = 0, Width = 0 },
+        };
+
+        Sessions::BrowserSettings copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ContextTest : TestBase
@@ -2083,6 +2426,16 @@ public class ContextTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Context { ID = "id", Persist = true };
+
+        Sessions::Context copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -2347,6 +2700,30 @@ public class FingerprintTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Fingerprint
+        {
+            Browsers = [Sessions::FingerprintBrowser.Chrome],
+            Devices = [Sessions::Device.Desktop],
+            HttpVersion = Sessions::HttpVersion.V1,
+            Locales = ["string"],
+            OperatingSystems = [Sessions::OperatingSystem.Android],
+            Screen = new()
+            {
+                MaxHeight = 0,
+                MaxWidth = 0,
+                MinHeight = 0,
+                MinWidth = 0,
+            },
+        };
+
+        Sessions::Fingerprint copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -2736,6 +3113,22 @@ public class ScreenTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Screen
+        {
+            MaxHeight = 0,
+            MaxWidth = 0,
+            MinHeight = 0,
+            MinWidth = 0,
+        };
+
+        Sessions::Screen copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BrowserSettingsViewportTest : TestBase
@@ -2839,6 +3232,16 @@ public class BrowserSettingsViewportTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::BrowserSettingsViewport { Height = 0, Width = 0 };
+
+        Sessions::BrowserSettingsViewport copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -3140,6 +3543,25 @@ public class BrowserbaseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Browserbase
+        {
+            DomainPattern = "domainPattern",
+            Geolocation = new()
+            {
+                Country = "country",
+                City = "city",
+                State = "state",
+            },
+        };
+
+        Sessions::Browserbase copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class GeolocationTest : TestBase
@@ -3271,6 +3693,21 @@ public class GeolocationTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Geolocation
+        {
+            Country = "country",
+            City = "city",
+            State = "state",
+        };
+
+        Sessions::Geolocation copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -3421,6 +3858,22 @@ public class ExternalTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::External
+        {
+            Server = "server",
+            DomainPattern = "domainPattern",
+            Password = "password",
+            Username = "username",
+        };
+
+        Sessions::External copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

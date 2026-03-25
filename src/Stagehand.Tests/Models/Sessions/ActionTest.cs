@@ -171,4 +171,21 @@ public class ActionTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Action
+        {
+            Description = "Click the submit button",
+            Selector = "[data-testid='submit-button']",
+            Arguments = ["Hello World"],
+            BackendNodeID = 0,
+            Method = "click",
+        };
+
+        Action copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

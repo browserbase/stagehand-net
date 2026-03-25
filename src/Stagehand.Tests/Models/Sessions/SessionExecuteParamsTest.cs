@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using Stagehand.Core;
@@ -18,7 +19,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -28,8 +45,11 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
             FrameID = "frameId",
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -37,7 +57,23 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -47,8 +83,11 @@ public class SessionExecuteParamsTest : TestBase
                 "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
             MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
         };
         string expectedFrameID = "frameId";
+        bool expectedShouldCache = true;
         ApiEnum<string, SessionExecuteParamsXStreamResponse> expectedXStreamResponse =
             SessionExecuteParamsXStreamResponse.True;
 
@@ -56,6 +95,7 @@ public class SessionExecuteParamsTest : TestBase
         Assert.Equal(expectedAgentConfig, parameters.AgentConfig);
         Assert.Equal(expectedExecuteOptions, parameters.ExecuteOptions);
         Assert.Equal(expectedFrameID, parameters.FrameID);
+        Assert.Equal(expectedShouldCache, parameters.ShouldCache);
         Assert.Equal(expectedXStreamResponse, parameters.XStreamResponse);
     }
 
@@ -68,7 +108,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -78,10 +134,14 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
             FrameID = "frameId",
         };
 
+        Assert.Null(parameters.ShouldCache);
+        Assert.False(parameters.RawBodyData.ContainsKey("shouldCache"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -95,7 +155,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -105,13 +181,18 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
             FrameID = "frameId",
 
             // Null should be interpreted as omitted for these properties
+            ShouldCache = null,
             XStreamResponse = null,
         };
 
+        Assert.Null(parameters.ShouldCache);
+        Assert.False(parameters.RawBodyData.ContainsKey("shouldCache"));
         Assert.Null(parameters.XStreamResponse);
         Assert.False(parameters.RawHeaderData.ContainsKey("x-stream-response"));
     }
@@ -125,7 +206,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -135,7 +232,10 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
 
@@ -152,7 +252,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -162,7 +278,10 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
+            ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
 
             FrameID = null,
@@ -181,7 +300,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -191,6 +326,8 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
         };
 
@@ -221,7 +358,23 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                Model = "openai/gpt-4o",
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
                 Provider = Provider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
@@ -231,6 +384,8 @@ public class SessionExecuteParamsTest : TestBase
                     "Log in with username 'demo' and password 'test123', then navigate to settings",
                 HighlightCursor = true,
                 MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
             },
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
@@ -247,6 +402,54 @@ public class SessionExecuteParamsTest : TestBase
 
         Assert.Equal(["true"], requestMessage.Headers.GetValues("x-stream-response"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SessionExecuteParams
+        {
+            ID = "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
+            AgentConfig = new()
+            {
+                Cua = true,
+                ExecutionModel = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Mode = Mode.Cua,
+                Model = new ModelConfig()
+                {
+                    ModelName = "openai/gpt-5-nano",
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Provider = ModelConfigProvider.OpenAI,
+                },
+                Provider = Provider.OpenAI,
+                SystemPrompt = "systemPrompt",
+            },
+            ExecuteOptions = new()
+            {
+                Instruction =
+                    "Log in with username 'demo' and password 'test123', then navigate to settings",
+                HighlightCursor = true,
+                MaxSteps = 20,
+                ToolTimeout = 30000,
+                UseSearch = true,
+            },
+            FrameID = "frameId",
+            ShouldCache = true,
+            XStreamResponse = SessionExecuteParamsXStreamResponse.True,
+        };
+
+        SessionExecuteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class AgentConfigTest : TestBase
@@ -257,17 +460,51 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ExecutionModel expectedExecutionModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        ApiEnum<string, Mode> expectedMode = Mode.Cua;
+        AgentConfigModel expectedModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
+        Assert.Equal(expectedExecutionModel, model.ExecutionModel);
+        Assert.Equal(expectedMode, model.Mode);
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedProvider, model.Provider);
         Assert.Equal(expectedSystemPrompt, model.SystemPrompt);
@@ -279,7 +516,23 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -299,7 +552,23 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -312,11 +581,29 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ModelConfig expectedModel = "openai/gpt-4o";
+        ExecutionModel expectedExecutionModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        ApiEnum<string, Mode> expectedMode = Mode.Cua;
+        AgentConfigModel expectedModel = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
         ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
+        Assert.Equal(expectedExecutionModel, deserialized.ExecutionModel);
+        Assert.Equal(expectedMode, deserialized.Mode);
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedProvider, deserialized.Provider);
         Assert.Equal(expectedSystemPrompt, deserialized.SystemPrompt);
@@ -328,7 +615,23 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            Model = "openai/gpt-4o",
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
             Provider = Provider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
@@ -343,6 +646,10 @@ public class AgentConfigTest : TestBase
 
         Assert.Null(model.Cua);
         Assert.False(model.RawData.ContainsKey("cua"));
+        Assert.Null(model.ExecutionModel);
+        Assert.False(model.RawData.ContainsKey("executionModel"));
+        Assert.Null(model.Mode);
+        Assert.False(model.RawData.ContainsKey("mode"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Provider);
@@ -366,6 +673,8 @@ public class AgentConfigTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             Cua = null,
+            ExecutionModel = null,
+            Mode = null,
             Model = null,
             Provider = null,
             SystemPrompt = null,
@@ -373,6 +682,10 @@ public class AgentConfigTest : TestBase
 
         Assert.Null(model.Cua);
         Assert.False(model.RawData.ContainsKey("cua"));
+        Assert.Null(model.ExecutionModel);
+        Assert.False(model.RawData.ContainsKey("executionModel"));
+        Assert.Null(model.Mode);
+        Assert.False(model.RawData.ContainsKey("mode"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Provider);
@@ -388,12 +701,220 @@ public class AgentConfigTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             Cua = null,
+            ExecutionModel = null,
+            Mode = null,
             Model = null,
             Provider = null,
             SystemPrompt = null,
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfig
+        {
+            Cua = true,
+            ExecutionModel = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Mode = Mode.Cua,
+            Model = new ModelConfig()
+            {
+                ModelName = "openai/gpt-5-nano",
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Provider = ModelConfigProvider.OpenAI,
+            },
+            Provider = Provider.OpenAI,
+            SystemPrompt = "systemPrompt",
+        };
+
+        AgentConfig copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelTest : TestBase
+{
+    [Fact]
+    public void ModelConfigValidationWorks()
+    {
+        ExecutionModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        ExecutionModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ModelConfigSerializationRoundtripWorks()
+    {
+        ExecutionModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        ExecutionModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ModeTest : TestBase
+{
+    [Theory]
+    [InlineData(Mode.Dom)]
+    [InlineData(Mode.Hybrid)]
+    [InlineData(Mode.Cua)]
+    public void Validation_Works(Mode rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Mode> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Mode.Dom)]
+    [InlineData(Mode.Hybrid)]
+    [InlineData(Mode.Cua)]
+    public void SerializationRoundtrip_Works(Mode rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Mode> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Mode>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class AgentConfigModelTest : TestBase
+{
+    [Fact]
+    public void ConfigValidationWorks()
+    {
+        AgentConfigModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringValidationWorks()
+    {
+        AgentConfigModel value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void ConfigSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = new ModelConfig()
+        {
+            ModelName = "openai/gpt-5-nano",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -404,6 +925,7 @@ public class ProviderTest : TestBase
     [InlineData(Provider.Anthropic)]
     [InlineData(Provider.Google)]
     [InlineData(Provider.Microsoft)]
+    [InlineData(Provider.Bedrock)]
     public void Validation_Works(Provider rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -428,6 +950,7 @@ public class ProviderTest : TestBase
     [InlineData(Provider.Anthropic)]
     [InlineData(Provider.Google)]
     [InlineData(Provider.Microsoft)]
+    [InlineData(Provider.Bedrock)]
     public void SerializationRoundtrip_Works(Provider rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -470,16 +993,22 @@ public class ExecuteOptionsTest : TestBase
                 "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
             MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
         };
 
         string expectedInstruction =
             "Log in with username 'demo' and password 'test123', then navigate to settings";
         bool expectedHighlightCursor = true;
         double expectedMaxSteps = 20;
+        double expectedToolTimeout = 30000;
+        bool expectedUseSearch = true;
 
         Assert.Equal(expectedInstruction, model.Instruction);
         Assert.Equal(expectedHighlightCursor, model.HighlightCursor);
         Assert.Equal(expectedMaxSteps, model.MaxSteps);
+        Assert.Equal(expectedToolTimeout, model.ToolTimeout);
+        Assert.Equal(expectedUseSearch, model.UseSearch);
     }
 
     [Fact]
@@ -491,6 +1020,8 @@ public class ExecuteOptionsTest : TestBase
                 "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
             MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -511,6 +1042,8 @@ public class ExecuteOptionsTest : TestBase
                 "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
             MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -524,10 +1057,14 @@ public class ExecuteOptionsTest : TestBase
             "Log in with username 'demo' and password 'test123', then navigate to settings";
         bool expectedHighlightCursor = true;
         double expectedMaxSteps = 20;
+        double expectedToolTimeout = 30000;
+        bool expectedUseSearch = true;
 
         Assert.Equal(expectedInstruction, deserialized.Instruction);
         Assert.Equal(expectedHighlightCursor, deserialized.HighlightCursor);
         Assert.Equal(expectedMaxSteps, deserialized.MaxSteps);
+        Assert.Equal(expectedToolTimeout, deserialized.ToolTimeout);
+        Assert.Equal(expectedUseSearch, deserialized.UseSearch);
     }
 
     [Fact]
@@ -539,6 +1076,8 @@ public class ExecuteOptionsTest : TestBase
                 "Log in with username 'demo' and password 'test123', then navigate to settings",
             HighlightCursor = true,
             MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
         };
 
         model.Validate();
@@ -557,6 +1096,10 @@ public class ExecuteOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("highlightCursor"));
         Assert.Null(model.MaxSteps);
         Assert.False(model.RawData.ContainsKey("maxSteps"));
+        Assert.Null(model.ToolTimeout);
+        Assert.False(model.RawData.ContainsKey("toolTimeout"));
+        Assert.Null(model.UseSearch);
+        Assert.False(model.RawData.ContainsKey("useSearch"));
     }
 
     [Fact]
@@ -582,12 +1125,18 @@ public class ExecuteOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             HighlightCursor = null,
             MaxSteps = null,
+            ToolTimeout = null,
+            UseSearch = null,
         };
 
         Assert.Null(model.HighlightCursor);
         Assert.False(model.RawData.ContainsKey("highlightCursor"));
         Assert.Null(model.MaxSteps);
         Assert.False(model.RawData.ContainsKey("maxSteps"));
+        Assert.Null(model.ToolTimeout);
+        Assert.False(model.RawData.ContainsKey("toolTimeout"));
+        Assert.Null(model.UseSearch);
+        Assert.False(model.RawData.ContainsKey("useSearch"));
     }
 
     [Fact]
@@ -601,9 +1150,29 @@ public class ExecuteOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             HighlightCursor = null,
             MaxSteps = null,
+            ToolTimeout = null,
+            UseSearch = null,
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecuteOptions
+        {
+            Instruction =
+                "Log in with username 'demo' and password 'test123', then navigate to settings",
+            HighlightCursor = true,
+            MaxSteps = 20,
+            ToolTimeout = 30000,
+            UseSearch = true,
+        };
+
+        ExecuteOptions copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

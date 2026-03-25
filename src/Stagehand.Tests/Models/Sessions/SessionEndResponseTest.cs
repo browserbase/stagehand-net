@@ -54,4 +54,14 @@ public class SessionEndResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SessionEndResponse { Success = true };
+
+        SessionEndResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

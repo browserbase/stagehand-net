@@ -10,8 +10,9 @@ using System = System;
 namespace Stagehand.Models.Sessions;
 
 /// <summary>
-/// Server-Sent Event emitted during streaming responses. Events are sent as `data:
-/// <JSON>\n\n`. Key order: data (with status first), type, id.
+/// Server-Sent Event emitted during streaming responses. Events are sent as `event:
+/// &lt;status&gt;\ndata: &lt;JSON&gt;\n\n`, where the JSON payload has the shape
+/// `{ data, type, id }`.
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<StreamEvent, StreamEventFromRaw>))]
 public sealed record class StreamEvent : JsonModel
@@ -62,8 +63,11 @@ public sealed record class StreamEvent : JsonModel
 
     public StreamEvent() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEvent(StreamEvent streamEvent)
         : base(streamEvent) { }
+#pragma warning restore CS8618
 
     public StreamEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -131,7 +135,7 @@ public record class Data : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="StreamEventSystemDataOutput"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -154,7 +158,7 @@ public record class Data : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="StreamEventLogDataOutput"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -176,7 +180,7 @@ public record class Data : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -187,8 +191,8 @@ public record class Data : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (StreamEventSystemDataOutput value) => {...},
-    ///     (StreamEventLogDataOutput value) => {...}
+    ///     (StreamEventSystemDataOutput value) =&gt; {...},
+    ///     (StreamEventLogDataOutput value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -215,7 +219,7 @@ public record class Data : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -226,8 +230,8 @@ public record class Data : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (StreamEventSystemDataOutput value) => {...},
-    ///     (StreamEventLogDataOutput value) => {...}
+    ///     (StreamEventSystemDataOutput value) =&gt; {...},
+    ///     (StreamEventLogDataOutput value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -271,10 +275,10 @@ public record class Data : ModelBase
         );
     }
 
-    public virtual bool Equals(Data? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Data? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -282,7 +286,20 @@ public record class Data : ModelBase
     }
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            StreamEventSystemDataOutput _ => 0,
+            StreamEventLogDataOutput _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class DataConverter : JsonConverter<Data>
@@ -296,7 +313,7 @@ sealed class DataConverter : JsonConverter<Data>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
+            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
                 element,
                 options
             );
@@ -313,7 +330,7 @@ sealed class DataConverter : JsonConverter<Data>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
+            var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
                 element,
                 options
             );
@@ -407,8 +424,11 @@ public sealed record class StreamEventSystemDataOutput : JsonModel
 
     public StreamEventSystemDataOutput() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEventSystemDataOutput(StreamEventSystemDataOutput streamEventSystemDataOutput)
         : base(streamEventSystemDataOutput) { }
+#pragma warning restore CS8618
 
     public StreamEventSystemDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -542,8 +562,11 @@ public sealed record class StreamEventLogDataOutput : JsonModel
         this.Status = JsonSerializer.SerializeToElement("running");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StreamEventLogDataOutput(StreamEventLogDataOutput streamEventLogDataOutput)
         : base(streamEventLogDataOutput) { }
+#pragma warning restore CS8618
 
     public StreamEventLogDataOutput(IReadOnlyDictionary<string, JsonElement> rawData)
     {

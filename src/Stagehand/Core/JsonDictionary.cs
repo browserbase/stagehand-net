@@ -11,15 +11,15 @@ namespace Stagehand.Core;
 /// <summary>
 /// A dictionary that holds JSON data.
 ///
-/// <para>It can be mutated and then frozen once no more mutations are expected. This
-/// is useful for allowing the dictionary to be modified by a class's <c>init</c>
-/// properties, but then preventing it from being modified afterwards.</para>
+/// <para>It can be mutated and then frozen once no more mutations are expected.
+/// This is useful for allowing the dictionary to be modified by a class's
+/// <c>init</c> properties, but then preventing it from being modified afterwards.</para>
 ///
 /// <para>It also caches data deserialization for performance.</para>
 /// </summary>
 sealed class JsonDictionary
 {
-    IDictionary<string, JsonElement> _rawData;
+    IReadOnlyDictionary<string, JsonElement> _rawData;
 
     readonly ConcurrentDictionary<string, object?> _deserializedData;
 
@@ -38,19 +38,19 @@ sealed class JsonDictionary
     public JsonDictionary()
     {
         _rawData = new Dictionary<string, JsonElement>();
-        _deserializedData = [];
+        _deserializedData = new();
     }
 
     public JsonDictionary(IReadOnlyDictionary<string, JsonElement> dictionary)
     {
         _rawData = Enumerable.ToDictionary(dictionary, (e) => e.Key, (e) => e.Value);
-        _deserializedData = [];
+        _deserializedData = new();
     }
 
     public JsonDictionary(FrozenDictionary<string, JsonElement> dictionary)
     {
         _rawData = dictionary;
-        _deserializedData = [];
+        _deserializedData = new();
     }
 
     public JsonDictionary(JsonDictionary dictionary)
@@ -94,20 +94,7 @@ sealed class JsonDictionary
         {
             throw new StagehandInvalidDataException($"'{key}' cannot be absent");
         }
-        T deserialized;
-        try
-        {
-            deserialized =
-                JsonSerializer.Deserialize<T>(element, ModelBase.SerializerOptions)
-                ?? throw new StagehandInvalidDataException($"'{key}' cannot be null");
-        }
-        catch (JsonException e)
-        {
-            throw new StagehandInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
+        T deserialized = WrappedJsonSerializer.GetNotNullClass<T>(element, key);
         _deserializedData[key] = deserialized;
         return deserialized;
     }
@@ -123,20 +110,7 @@ sealed class JsonDictionary
         {
             throw new StagehandInvalidDataException($"'{key}' cannot be absent");
         }
-        T deserialized;
-        try
-        {
-            deserialized =
-                JsonSerializer.Deserialize<T?>(element, ModelBase.SerializerOptions)
-                ?? throw new StagehandInvalidDataException($"'{key}' cannot be null");
-        }
-        catch (JsonException e)
-        {
-            throw new StagehandInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
+        T deserialized = WrappedJsonSerializer.GetNotNullStruct<T>(element, key);
         _deserializedData[key] = deserialized;
         return deserialized;
     }
@@ -153,18 +127,7 @@ sealed class JsonDictionary
             _deserializedData[key] = null;
             return null;
         }
-        T? deserialized;
-        try
-        {
-            deserialized = JsonSerializer.Deserialize<T?>(element, ModelBase.SerializerOptions);
-        }
-        catch (JsonException e)
-        {
-            throw new StagehandInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
+        T? deserialized = WrappedJsonSerializer.GetNullableClass<T>(element, key);
         _deserializedData[key] = deserialized;
         return deserialized;
     }
@@ -181,24 +144,16 @@ sealed class JsonDictionary
             _deserializedData[key] = null;
             return null;
         }
-        T? deserialized;
-        try
-        {
-            deserialized = JsonSerializer.Deserialize<T?>(element, ModelBase.SerializerOptions);
-        }
-        catch (JsonException e)
-        {
-            throw new StagehandInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
+        T? deserialized = WrappedJsonSerializer.GetNullableStruct<T>(element, key);
         _deserializedData[key] = deserialized;
         return deserialized;
     }
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this._rawData, ModelBase.ToStringSerializerOptions);
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this._rawData),
+            ModelBase.ToStringSerializerOptions
+        );
 
     public override bool Equals(object? obj)
     {

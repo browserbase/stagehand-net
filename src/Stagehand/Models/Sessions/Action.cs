@@ -118,8 +118,11 @@ public sealed record class Action : JsonModel
 
     public Action() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Action(Action action)
         : base(action) { }
+#pragma warning restore CS8618
 
     public Action(IReadOnlyDictionary<string, JsonElement> rawData)
     {

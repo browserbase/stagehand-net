@@ -15,8 +15,12 @@ namespace Stagehand.Models.Sessions;
 /// <summary>
 /// Creates a new browser session with the specified configuration. Returns a session
 /// ID used for all subsequent operations.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SessionStartParams : ParamsBase
+public record class SessionStartParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -25,8 +29,7 @@ public sealed record class SessionStartParams : ParamsBase
     }
 
     /// <summary>
-    /// Model name to use for AI operations. Always use the format 'provider/model-name'
-    /// (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
+    /// Model name to use for AI operations
     /// </summary>
     public required string ModelName
     {
@@ -266,11 +269,14 @@ public sealed record class SessionStartParams : ParamsBase
 
     public SessionStartParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SessionStartParams(SessionStartParams sessionStartParams)
         : base(sessionStartParams)
     {
         this._rawBodyData = new(sessionStartParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public SessionStartParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -297,7 +303,7 @@ public sealed record class SessionStartParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static SessionStartParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -309,6 +315,34 @@ public sealed record class SessionStartParams : ParamsBase
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
             FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                    ["BodyData"] = FriendlyJsonPrinter.PrintValue(this._rawBodyData.Freeze()),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SessionStartParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
     }
 
     public override System::Uri Url(ClientOptions options)
@@ -337,6 +371,11 @@ public sealed record class SessionStartParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -415,8 +454,11 @@ public sealed record class Browser : JsonModel
 
     public Browser() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Browser(Browser browser)
         : base(browser) { }
+#pragma warning restore CS8618
 
     public Browser(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -483,6 +525,27 @@ public sealed record class LaunchOptions : JsonModel
             this._rawData.Set<ImmutableArray<string>?>(
                 "args",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    public IReadOnlyDictionary<string, string>? CdpHeaders
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("cdpHeaders");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "cdpHeaders",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
     }
@@ -703,6 +766,24 @@ public sealed record class LaunchOptions : JsonModel
         }
     }
 
+    public double? Port
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("port");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("port", value);
+        }
+    }
+
     public bool? PreserveUserDataDir
     {
         get
@@ -780,6 +861,7 @@ public sealed record class LaunchOptions : JsonModel
     {
         _ = this.AcceptDownloads;
         _ = this.Args;
+        _ = this.CdpHeaders;
         _ = this.CdpUrl;
         _ = this.ChromiumSandbox;
         _ = this.ConnectTimeoutMs;
@@ -792,6 +874,7 @@ public sealed record class LaunchOptions : JsonModel
         this.IgnoreDefaultArgs?.Validate();
         _ = this.IgnoreHttpsErrors;
         _ = this.Locale;
+        _ = this.Port;
         _ = this.PreserveUserDataDir;
         this.Proxy?.Validate();
         _ = this.UserDataDir;
@@ -800,8 +883,11 @@ public sealed record class LaunchOptions : JsonModel
 
     public LaunchOptions() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public LaunchOptions(LaunchOptions launchOptions)
         : base(launchOptions) { }
+#pragma warning restore CS8618
 
     public LaunchOptions(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -869,7 +955,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="bool"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -888,14 +974,14 @@ public record class IgnoreDefaultArgs : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<string>"/>.
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>string</c>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickStrings(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<string>`
+    ///     // `value` is of type `IReadOnlyList&lt;string&gt;`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
@@ -910,7 +996,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -921,8 +1007,8 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<string> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -948,7 +1034,7 @@ public record class IgnoreDefaultArgs : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -959,8 +1045,8 @@ public record class IgnoreDefaultArgs : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<string> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -1002,10 +1088,10 @@ public record class IgnoreDefaultArgs : ModelBase
         }
     }
 
-    public virtual bool Equals(IgnoreDefaultArgs? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(IgnoreDefaultArgs? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -1013,7 +1099,20 @@ public record class IgnoreDefaultArgs : ModelBase
     }
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            bool _ => 0,
+            IReadOnlyList<string> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
@@ -1027,7 +1126,7 @@ sealed class IgnoreDefaultArgsConverter : JsonConverter<IgnoreDefaultArgs>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            return new(JsonSerializer.Deserialize<bool>(element, options));
+            return new(JsonSerializer.Deserialize<bool>(element, options), element);
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
@@ -1138,8 +1237,11 @@ public sealed record class Proxy : JsonModel
 
     public Proxy() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Proxy(Proxy proxy)
         : base(proxy) { }
+#pragma warning restore CS8618
 
     public Proxy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1207,8 +1309,11 @@ public sealed record class Viewport : JsonModel
 
     public Viewport() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Viewport(Viewport viewport)
         : base(viewport) { }
+#pragma warning restore CS8618
 
     public Viewport(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1456,10 +1561,13 @@ public sealed record class BrowserbaseSessionCreateParams : JsonModel
 
     public BrowserbaseSessionCreateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserbaseSessionCreateParams(
         BrowserbaseSessionCreateParams browserbaseSessionCreateParams
     )
         : base(browserbaseSessionCreateParams) { }
+#pragma warning restore CS8618
 
     public BrowserbaseSessionCreateParams(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1672,8 +1780,11 @@ public sealed record class BrowserSettings : JsonModel
 
     public BrowserSettings() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserSettings(BrowserSettings browserSettings)
         : base(browserSettings) { }
+#pragma warning restore CS8618
 
     public BrowserSettings(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1742,8 +1853,11 @@ public sealed record class Context : JsonModel
 
     public Context() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Context(Context context)
         : base(context) { }
+#pragma warning restore CS8618
 
     public Context(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1930,8 +2044,11 @@ public sealed record class Fingerprint : JsonModel
 
     public Fingerprint() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Fingerprint(Fingerprint fingerprint)
         : base(fingerprint) { }
+#pragma warning restore CS8618
 
     public Fingerprint(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2233,8 +2350,11 @@ public sealed record class Screen : JsonModel
 
     public Screen() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Screen(Screen screen)
         : base(screen) { }
+#pragma warning restore CS8618
 
     public Screen(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2311,8 +2431,11 @@ public sealed record class BrowserSettingsViewport : JsonModel
 
     public BrowserSettingsViewport() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrowserSettingsViewport(BrowserSettingsViewport browserSettingsViewport)
         : base(browserSettingsViewport) { }
+#pragma warning restore CS8618
 
     public BrowserSettingsViewport(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -2383,7 +2506,7 @@ public record class Proxies : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="bool"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2402,14 +2525,14 @@ public record class Proxies : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<ProxyConfig>"/>.
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>ProxyConfig</c>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickProxyConfigList(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<ProxyConfig>`
+    ///     // `value` is of type `IReadOnlyList&lt;ProxyConfig&gt;`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
@@ -2424,7 +2547,7 @@ public record class Proxies : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2435,8 +2558,8 @@ public record class Proxies : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<ProxyConfig> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;ProxyConfig&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2465,7 +2588,7 @@ public record class Proxies : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2476,8 +2599,8 @@ public record class Proxies : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (bool value) => {...},
-    ///     (IReadOnlyList<ProxyConfig> value) => {...}
+    ///     (bool value) =&gt; {...},
+    ///     (IReadOnlyList&lt;ProxyConfig&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2518,12 +2641,22 @@ public record class Proxies : ModelBase
         {
             throw new StagehandInvalidDataException("Data did not match any variant of Proxies");
         }
+        this.Switch(
+            (_) => { },
+            (proxyConfigList) =>
+            {
+                foreach (var item in proxyConfigList)
+                {
+                    item.Validate();
+                }
+            }
+        );
     }
 
-    public virtual bool Equals(Proxies? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Proxies? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -2531,7 +2664,20 @@ public record class Proxies : ModelBase
     }
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            bool _ => 0,
+            IReadOnlyList<ProxyConfig> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ProxiesConverter : JsonConverter<Proxies>
@@ -2545,7 +2691,7 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            return new(JsonSerializer.Deserialize<bool>(element, options));
+            return new(JsonSerializer.Deserialize<bool>(element, options), element);
         }
         catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
         {
@@ -2557,6 +2703,10 @@ sealed class ProxiesConverter : JsonConverter<Proxies>
             var deserialized = JsonSerializer.Deserialize<List<ProxyConfig>>(element, options);
             if (deserialized != null)
             {
+                foreach (var item in deserialized)
+                {
+                    item.Validate();
+                }
                 return new(deserialized, element);
             }
         }
@@ -2629,7 +2779,7 @@ public record class ProxyConfig : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="Browserbase"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2650,7 +2800,7 @@ public record class ProxyConfig : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="External"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2670,7 +2820,7 @@ public record class ProxyConfig : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2681,8 +2831,8 @@ public record class ProxyConfig : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (Browserbase value) => {...},
-    ///     (External value) => {...}
+    ///     (Browserbase value) =&gt; {...},
+    ///     (External value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2708,7 +2858,7 @@ public record class ProxyConfig : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="StagehandInvalidDataException">
@@ -2719,8 +2869,8 @@ public record class ProxyConfig : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (Browserbase value) => {...},
-    ///     (External value) => {...}
+    ///     (Browserbase value) =&gt; {...},
+    ///     (External value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2762,10 +2912,10 @@ public record class ProxyConfig : ModelBase
         this.Switch((browserbase) => browserbase.Validate(), (external) => external.Validate());
     }
 
-    public virtual bool Equals(ProxyConfig? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ProxyConfig? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -2773,7 +2923,20 @@ public record class ProxyConfig : ModelBase
     }
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            Browserbase _ => 0,
+            External _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
@@ -2917,8 +3080,11 @@ public sealed record class Browserbase : JsonModel
         this.Type = JsonSerializer.SerializeToElement("browserbase");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Browserbase(Browserbase browserbase)
         : base(browserbase) { }
+#pragma warning restore CS8618
 
     public Browserbase(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -3008,8 +3174,11 @@ public sealed record class Geolocation : JsonModel
 
     public Geolocation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Geolocation(Geolocation geolocation)
         : base(geolocation) { }
+#pragma warning restore CS8618
 
     public Geolocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -3140,8 +3309,11 @@ public sealed record class External : JsonModel
         this.Type = JsonSerializer.SerializeToElement("external");
     }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public External(External external)
         : base(external) { }
+#pragma warning restore CS8618
 
     public External(IReadOnlyDictionary<string, JsonElement> rawData)
     {
