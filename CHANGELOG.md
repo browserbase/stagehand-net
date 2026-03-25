@@ -1,5 +1,70 @@
 # Changelog
 
+## 3.18.0 (2026-03-25)
+
+Full Changelog: [v3.0.2...v3.18.0](https://github.com/browserbase/stagehand-net/compare/v3.0.2...v3.18.0)
+
+### Features
+
+* [feat]: add support for local caching of agent when using api (2) ([2cafd02](https://github.com/browserbase/stagehand-net/commit/2cafd023d69d10ff33a239f26d72e4eab17ed2de))
+* [fix]: add `useSearch` & `toolTimeout` to stainless types ([7293763](https://github.com/browserbase/stagehand-net/commit/7293763097064afb7943c0f32b579940e7418d5a))
+* [STG-1607] Yield finished SSE event instead of silently dropping it ([5b6b3fc](https://github.com/browserbase/stagehand-net/commit/5b6b3fcd8b7197d78b17f32f91fbcfd08396aaaa))
+* add auto-bedrock support based on bedrock/provider.model-name ([2627a23](https://github.com/browserbase/stagehand-net/commit/2627a232681be0a7fc3469bca31852decc87a9a6))
+* Add bedrock to provider enum in Zod schemas and OpenAPI spec ([9b19bf9](https://github.com/browserbase/stagehand-net/commit/9b19bf91f2393a3163b0c58582f32b59f11f0a5b))
+* Add executionModel serialization to api client ([6171867](https://github.com/browserbase/stagehand-net/commit/617186772fb6e704f04c7f0b8aa4ea6fff8400ba))
+* Add explicit SSE event names for local v3 streaming ([7239f7a](https://github.com/browserbase/stagehand-net/commit/7239f7a4c85ee42fb3ddb7f68c1a82e0f4f3a483))
+* Add missing cdpHeaders field to v3 server openapi spec ([a417fc8](https://github.com/browserbase/stagehand-net/commit/a417fc83d3c26537057aa998fba24309cd830b09))
+* add v3 integration tests matching cloud exactly ([a5a3ab7](https://github.com/browserbase/stagehand-net/commit/a5a3ab7acb6fadd38b01160fba7eb580e5b7a9e2))
+* **api:** manual updates ([51b11b1](https://github.com/browserbase/stagehand-net/commit/51b11b137bd6a3a348a1db25e3066a6f19bf4624))
+* **client:** add `ToString` and `Equals` methods ([44c5549](https://github.com/browserbase/stagehand-net/commit/44c554907ae79cd91847f4c0611e1a04866053cf))
+* **client:** add `ToString` to `ApiEnum` ([20899c6](https://github.com/browserbase/stagehand-net/commit/20899c6f1f10e4fef11da62dd21a0b480e18020b))
+* **client:** add equality and tostring for multipart data ([7e64d5f](https://github.com/browserbase/stagehand-net/commit/7e64d5fa069e6372831812d43b25bb753ce6ada2))
+* **client:** add Equals and ToString to params ([80c81af](https://github.com/browserbase/stagehand-net/commit/80c81af5710b875c5d8628fa5c92f5fa3fd24125))
+* End endpoint cleanup ([6b33978](https://github.com/browserbase/stagehand-net/commit/6b33978623eedce1b5579e705361c839ff2e0c9f))
+* Include LLM headers in ModelConfig ([ea89f89](https://github.com/browserbase/stagehand-net/commit/ea89f897c49f86777b6f06edaba309f608bd94da))
+* Include replay endpoint in stainless spec so SDK clients can get run metrics ([e9fdd89](https://github.com/browserbase/stagehand-net/commit/e9fdd89600606e06b760afd1dbff555d90691156))
+* move Stainless compatibility transforms from gen-openapi.ts into stainless.yml ([7068824](https://github.com/browserbase/stagehand-net/commit/706882437b7438fada41642c4e27ce8c833c8ea8))
+* randomize region used for evals, split out pnpm and turbo cache, veri… ([5c36c02](https://github.com/browserbase/stagehand-net/commit/5c36c027a72715dc394d4dc4482d309685abee10))
+* Removed MCP from readme for now ([f173a80](https://github.com/browserbase/stagehand-net/commit/f173a80394811c28d64ea561b23050159ee47db0))
+* Revert broken finished SSE yield config ([dcab6a5](https://github.com/browserbase/stagehand-net/commit/dcab6a549b3daaa2084b629633a462910a71df03))
+* Update stainless.yml for project and publish settings ([5f7a786](https://github.com/browserbase/stagehand-net/commit/5f7a786bb55f3d2958af0335850c1de917bcb6e7))
+* variables for observe ([6668a7e](https://github.com/browserbase/stagehand-net/commit/6668a7e4df2fb13c7463bd5a8d3417d716cf68db))
+
+
+### Bug Fixes
+
+* **client:** handle path params correctly in `FromRawUnchecked` ([29e411c](https://github.com/browserbase/stagehand-net/commit/29e411c157e2868886ff9e02c873f155b840b15c))
+* **client:** handle root bodies in requests properly ([1c7654f](https://github.com/browserbase/stagehand-net/commit/1c7654f6dc8dae28bf5467d2e665d53a5e1e5d96))
+* **client:** handle unions containing unknown types properly ([2a7576a](https://github.com/browserbase/stagehand-net/commit/2a7576aefd876d6dd2075a561e258c4e3cde14d8))
+* **client:** improve behaviour for comma-delimited binary content in multipart requests ([63f7db5](https://github.com/browserbase/stagehand-net/commit/63f7db584e2dcccc2a4a8b0f159364656a50b695))
+* **client:** improve union equality method ([e0a1678](https://github.com/browserbase/stagehand-net/commit/e0a167855a6540366efea3e2e7eccbc64b0065dd))
+* **client:** validate unions properly ([087cc53](https://github.com/browserbase/stagehand-net/commit/087cc531de13193f6734cc77601826736099b68d))
+* **docs:** make xml syntactically correct ([f3c68ef](https://github.com/browserbase/stagehand-net/commit/f3c68ef22883a20c2bdd5f5520a37608b5fd4b69))
+
+
+### Chores
+
+* change visibility of QueryString() and AddDefaultHeaders ([f655845](https://github.com/browserbase/stagehand-net/commit/f65584521843f75b3b90a1a2e8493bb51675c474))
+* **ci:** skip lint on metadata-only changes ([a027bc6](https://github.com/browserbase/stagehand-net/commit/a027bc620f45a6ace517434e4cc71b42ac2fbb7b))
+* **client:** update formatting ([721c480](https://github.com/browserbase/stagehand-net/commit/721c4807811f583802b2e44cab336d88ea8314b8))
+* **docs:** add proxy documentation to readme ([1fd2998](https://github.com/browserbase/stagehand-net/commit/1fd299833ce513ec9a9ea19cd4febf5541b8ab0f))
+* **docs:** add undocumented parameters to readme ([79503d8](https://github.com/browserbase/stagehand-net/commit/79503d8c88c73ad54cfe24e4daccb30a5ca1b502))
+* **internal:** add copy constructor tests ([e4dcd96](https://github.com/browserbase/stagehand-net/commit/e4dcd96a44a62e54399d1cc139ec1e3d57fe8d88))
+* **internal:** add sse tests ([3c2c701](https://github.com/browserbase/stagehand-net/commit/3c2c701a3b77eda43d11355abac59fb206b99645))
+* **internal:** ignore stainless-internal artifacts ([a06a892](https://github.com/browserbase/stagehand-net/commit/a06a89244434cb9f952c1729d17956780c2f0629))
+* **internal:** improve HttpResponse qualification ([b9f018b](https://github.com/browserbase/stagehand-net/commit/b9f018b477d27b215553c20028b02d0d81dbdc54))
+* **internal:** remove mock server code ([5a63556](https://github.com/browserbase/stagehand-net/commit/5a63556e7d91e0ce5c43e1c5513741667cff67f3))
+* **internal:** tweak CI branches ([8b75d2c](https://github.com/browserbase/stagehand-net/commit/8b75d2c36e9a79eab71076924b61fd59ec6d8e35))
+* **internal:** update `actions/checkout` version ([bebf217](https://github.com/browserbase/stagehand-net/commit/bebf217c94e0cb86861f9308853c02dc281d9921))
+* **internal:** update gitignore ([214f388](https://github.com/browserbase/stagehand-net/commit/214f38876701a414a7f4869cd20c3cf5899d8edc))
+* **tests:** add tests for retry logic ([8666f41](https://github.com/browserbase/stagehand-net/commit/8666f41d3886eb08db10025a6d283ee199d27be4))
+* update mock server docs ([7aac0ab](https://github.com/browserbase/stagehand-net/commit/7aac0ab0381d2903c5feac7554a2814e4ded175c))
+
+
+### Refactors
+
+* **internal:** default headers ([a6d9731](https://github.com/browserbase/stagehand-net/commit/a6d97313e053b7c8a593a7b3134fd75516a57c26))
+
 ## 3.0.2 (2026-01-16)
 
 Full Changelog: [v3.0.1...v3.0.2](https://github.com/browserbase/stagehand-net/compare/v3.0.1...v3.0.2)
