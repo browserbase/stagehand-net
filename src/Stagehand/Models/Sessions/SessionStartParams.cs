@@ -2967,12 +2967,10 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
                     var deserialized = JsonSerializer.Deserialize<Browserbase>(element, options);
                     if (deserialized != null)
                     {
-                        deserialized.Validate();
                         return new(deserialized, element);
                     }
                 }
-                catch (System::Exception e)
-                    when (e is JsonException || e is StagehandInvalidDataException)
+                catch (JsonException)
                 {
                     // ignore
                 }
@@ -2986,12 +2984,10 @@ sealed class ProxyConfigConverter : JsonConverter<ProxyConfig>
                     var deserialized = JsonSerializer.Deserialize<External>(element, options);
                     if (deserialized != null)
                     {
-                        deserialized.Validate();
                         return new(deserialized, element);
                     }
                 }
-                catch (System::Exception e)
-                    when (e is JsonException || e is StagehandInvalidDataException)
+                catch (JsonException)
                 {
                     // ignore
                 }
