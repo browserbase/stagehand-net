@@ -22,7 +22,7 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -53,7 +53,7 @@ public class SessionObserveParamsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -134,7 +134,7 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -173,7 +173,7 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -260,7 +260,7 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -299,7 +299,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -323,7 +323,7 @@ public class SessionObserveParamsOptionsTest : TestBase
 
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -364,7 +364,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -402,7 +402,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -433,7 +433,7 @@ public class SessionObserveParamsOptionsTest : TestBase
 
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -474,7 +474,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -566,7 +566,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -601,7 +601,7 @@ public class SessionObserveParamsOptionsModelTest : TestBase
     {
         SessionObserveParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -622,7 +622,7 @@ public class SessionObserveParamsOptionsModelTest : TestBase
     {
         SessionObserveParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
