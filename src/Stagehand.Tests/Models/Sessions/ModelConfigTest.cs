@@ -13,14 +13,14 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
         };
 
-        string expectedModelName = "openai/gpt-5-nano";
+        string expectedModelName = "openai/gpt-5.4-mini";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
@@ -45,7 +45,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -66,7 +66,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -80,7 +80,7 @@ public class ModelConfigTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        string expectedModelName = "openai/gpt-5-nano";
+        string expectedModelName = "openai/gpt-5.4-mini";
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
@@ -105,7 +105,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
@@ -118,7 +118,7 @@ public class ModelConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ModelConfig { ModelName = "openai/gpt-5-nano" };
+        var model = new ModelConfig { ModelName = "openai/gpt-5.4-mini" };
 
         Assert.Null(model.ApiKey);
         Assert.False(model.RawData.ContainsKey("apiKey"));
@@ -133,7 +133,7 @@ public class ModelConfigTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ModelConfig { ModelName = "openai/gpt-5-nano" };
+        var model = new ModelConfig { ModelName = "openai/gpt-5.4-mini" };
 
         model.Validate();
     }
@@ -143,7 +143,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
@@ -167,7 +167,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
 
             // Null should be interpreted as omitted for these properties
             ApiKey = null,
@@ -184,7 +184,7 @@ public class ModelConfigTest : TestBase
     {
         var model = new ModelConfig
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
