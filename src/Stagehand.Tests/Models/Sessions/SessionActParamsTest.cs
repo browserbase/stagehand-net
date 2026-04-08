@@ -22,11 +22,16 @@ public class SessionActParamsTest : TestBase
             {
                 Model = new Sessions::ModelConfig()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
+                    ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
+                    ProviderOptions =
+                        new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                            "us-east-1"
+                        ),
+                    SkipApiKeyFallback = true,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -52,11 +57,16 @@ public class SessionActParamsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -129,11 +139,16 @@ public class SessionActParamsTest : TestBase
             {
                 Model = new Sessions::ModelConfig()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
+                    ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
+                    ProviderOptions =
+                        new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                            "us-east-1"
+                        ),
+                    SkipApiKeyFallback = true,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -167,11 +182,16 @@ public class SessionActParamsTest : TestBase
             {
                 Model = new Sessions::ModelConfig()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
+                    ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
+                    ProviderOptions =
+                        new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                            "us-east-1"
+                        ),
+                    SkipApiKeyFallback = true,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -258,11 +278,16 @@ public class SessionActParamsTest : TestBase
             {
                 Model = new Sessions::ModelConfig()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
+                    ModelName = "openai/gpt-5-nano",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                     Provider = Sessions::ModelConfigProvider.OpenAI,
+                    ProviderOptions =
+                        new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                            "us-east-1"
+                        ),
+                    SkipApiKeyFallback = true,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -353,11 +378,16 @@ public class OptionsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -376,11 +406,15 @@ public class OptionsTest : TestBase
 
         Sessions::Model expectedModel = new Sessions::ModelConfig()
         {
-            ModelName = "openai/gpt-5.4-mini",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
+            ProviderOptions = new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                "us-east-1"
+            ),
+            SkipApiKeyFallback = true,
         };
         double expectedTimeout = 30000;
         Dictionary<string, Sessions::Variable> expectedVariables = new()
@@ -415,11 +449,16 @@ public class OptionsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -452,11 +491,16 @@ public class OptionsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -482,11 +526,15 @@ public class OptionsTest : TestBase
 
         Sessions::Model expectedModel = new Sessions::ModelConfig()
         {
-            ModelName = "openai/gpt-5.4-mini",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
+            ProviderOptions = new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                "us-east-1"
+            ),
+            SkipApiKeyFallback = true,
         };
         double expectedTimeout = 30000;
         Dictionary<string, Sessions::Variable> expectedVariables = new()
@@ -521,11 +569,16 @@ public class OptionsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -606,11 +659,16 @@ public class OptionsTest : TestBase
         {
             Model = new Sessions::ModelConfig()
             {
-                ModelName = "openai/gpt-5.4-mini",
+                ModelName = "openai/gpt-5-nano",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
                 Provider = Sessions::ModelConfigProvider.OpenAI,
+                ProviderOptions =
+                    new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                        "us-east-1"
+                    ),
+                SkipApiKeyFallback = true,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -640,11 +698,15 @@ public class ModelTest : TestBase
     {
         Sessions::Model value = new Sessions::ModelConfig()
         {
-            ModelName = "openai/gpt-5.4-mini",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
+            ProviderOptions = new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                "us-east-1"
+            ),
+            SkipApiKeyFallback = true,
         };
         value.Validate();
     }
@@ -661,11 +723,15 @@ public class ModelTest : TestBase
     {
         Sessions::Model value = new Sessions::ModelConfig()
         {
-            ModelName = "openai/gpt-5.4-mini",
+            ModelName = "openai/gpt-5-nano",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
             Provider = Sessions::ModelConfigProvider.OpenAI,
+            ProviderOptions = new Sessions::ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
+                "us-east-1"
+            ),
+            SkipApiKeyFallback = true,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
