@@ -39,6 +39,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Device>(),
             new ApiEnumConverter<string, HttpVersion>(),
             new ApiEnumConverter<string, OperatingSystem>(),
+            new ApiEnumConverter<string, Os>(),
             new ApiEnumConverter<string, Region>(),
             new ApiEnumConverter<double, Verbose>(),
             new ApiEnumConverter<string, SessionStartParamsXStreamResponse>(),

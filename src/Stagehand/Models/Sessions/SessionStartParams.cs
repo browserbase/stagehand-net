@@ -1660,6 +1660,42 @@ public sealed record class BrowserSettings : JsonModel
         }
     }
 
+    public string? CaptchaImageSelector
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("captchaImageSelector");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("captchaImageSelector", value);
+        }
+    }
+
+    public string? CaptchaInputSelector
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("captchaInputSelector");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("captchaInputSelector", value);
+        }
+    }
+
     public Context? Context
     {
         get
@@ -1732,6 +1768,24 @@ public sealed record class BrowserSettings : JsonModel
         }
     }
 
+    public ApiEnum<string, Os>? Os
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Os>>("os");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("os", value);
+        }
+    }
+
     public bool? RecordSession
     {
         get
@@ -1768,6 +1822,24 @@ public sealed record class BrowserSettings : JsonModel
         }
     }
 
+    public bool? Verified
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("verified");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("verified", value);
+        }
+    }
+
     public BrowserSettingsViewport? Viewport
     {
         get
@@ -1791,12 +1863,16 @@ public sealed record class BrowserSettings : JsonModel
     {
         _ = this.AdvancedStealth;
         _ = this.BlockAds;
+        _ = this.CaptchaImageSelector;
+        _ = this.CaptchaInputSelector;
         this.Context?.Validate();
         _ = this.ExtensionID;
         this.Fingerprint?.Validate();
         _ = this.LogSession;
+        this.Os?.Validate();
         _ = this.RecordSession;
         _ = this.SolveCaptchas;
+        _ = this.Verified;
         this.Viewport?.Validate();
     }
 
@@ -2403,6 +2479,55 @@ class ScreenFromRaw : IFromRawJson<Screen>
     /// <inheritdoc/>
     public Screen FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Screen.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(OsConverter))]
+public enum Os
+{
+    Windows,
+    Mac,
+    Linux,
+    Mobile,
+    Tablet,
+}
+
+sealed class OsConverter : JsonConverter<Os>
+{
+    public override Os Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "windows" => Os.Windows,
+            "mac" => Os.Mac,
+            "linux" => Os.Linux,
+            "mobile" => Os.Mobile,
+            "tablet" => Os.Tablet,
+            _ => (Os)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Os value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Os.Windows => "windows",
+                Os.Mac => "mac",
+                Os.Linux => "linux",
+                Os.Mobile => "mobile",
+                Os.Tablet => "tablet",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 [JsonConverter(typeof(JsonModelConverter<BrowserSettingsViewport, BrowserSettingsViewportFromRaw>))]

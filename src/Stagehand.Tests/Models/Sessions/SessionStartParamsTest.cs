@@ -57,6 +57,8 @@ public class SessionStartParamsTest : TestBase
                 {
                     AdvancedStealth = true,
                     BlockAds = true,
+                    CaptchaImageSelector = "captchaImageSelector",
+                    CaptchaInputSelector = "captchaInputSelector",
                     Context = new() { ID = "id", Persist = true },
                     ExtensionID = "extensionId",
                     Fingerprint = new()
@@ -75,8 +77,10 @@ public class SessionStartParamsTest : TestBase
                         },
                     },
                     LogSession = true,
+                    Os = Sessions::Os.Windows,
                     RecordSession = true,
                     SolveCaptchas = true,
+                    Verified = true,
                     Viewport = new() { Height = 0, Width = 0 },
                 },
                 ExtensionID = "extensionId",
@@ -150,6 +154,8 @@ public class SessionStartParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -168,8 +174,10 @@ public class SessionStartParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -386,6 +394,8 @@ public class SessionStartParamsTest : TestBase
                 {
                     AdvancedStealth = true,
                     BlockAds = true,
+                    CaptchaImageSelector = "captchaImageSelector",
+                    CaptchaInputSelector = "captchaInputSelector",
                     Context = new() { ID = "id", Persist = true },
                     ExtensionID = "extensionId",
                     Fingerprint = new()
@@ -404,8 +414,10 @@ public class SessionStartParamsTest : TestBase
                         },
                     },
                     LogSession = true,
+                    Os = Sessions::Os.Windows,
                     RecordSession = true,
                     SolveCaptchas = true,
+                    Verified = true,
                     Viewport = new() { Height = 0, Width = 0 },
                 },
                 ExtensionID = "extensionId",
@@ -1598,6 +1610,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -1616,8 +1630,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -1636,6 +1652,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -1654,8 +1672,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
         string expectedExtensionID = "extensionId";
@@ -1695,6 +1715,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -1713,8 +1735,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -1747,6 +1771,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -1765,8 +1791,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -1792,6 +1820,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -1810,8 +1840,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
         string expectedExtensionID = "extensionId";
@@ -1851,6 +1883,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -1869,8 +1903,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -1981,6 +2017,8 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
             {
                 AdvancedStealth = true,
                 BlockAds = true,
+                CaptchaImageSelector = "captchaImageSelector",
+                CaptchaInputSelector = "captchaInputSelector",
                 Context = new() { ID = "id", Persist = true },
                 ExtensionID = "extensionId",
                 Fingerprint = new()
@@ -1999,8 +2037,10 @@ public class BrowserbaseSessionCreateParamsTest : TestBase
                     },
                 },
                 LogSession = true,
+                Os = Sessions::Os.Windows,
                 RecordSession = true,
                 SolveCaptchas = true,
+                Verified = true,
                 Viewport = new() { Height = 0, Width = 0 },
             },
             ExtensionID = "extensionId",
@@ -2030,6 +2070,8 @@ public class BrowserSettingsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -2048,13 +2090,17 @@ public class BrowserSettingsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
 
         bool expectedAdvancedStealth = true;
         bool expectedBlockAds = true;
+        string expectedCaptchaImageSelector = "captchaImageSelector";
+        string expectedCaptchaInputSelector = "captchaInputSelector";
         Sessions::Context expectedContext = new() { ID = "id", Persist = true };
         string expectedExtensionID = "extensionId";
         Sessions::Fingerprint expectedFingerprint = new()
@@ -2073,18 +2119,24 @@ public class BrowserSettingsTest : TestBase
             },
         };
         bool expectedLogSession = true;
+        ApiEnum<string, Sessions::Os> expectedOs = Sessions::Os.Windows;
         bool expectedRecordSession = true;
         bool expectedSolveCaptchas = true;
+        bool expectedVerified = true;
         Sessions::BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAdvancedStealth, model.AdvancedStealth);
         Assert.Equal(expectedBlockAds, model.BlockAds);
+        Assert.Equal(expectedCaptchaImageSelector, model.CaptchaImageSelector);
+        Assert.Equal(expectedCaptchaInputSelector, model.CaptchaInputSelector);
         Assert.Equal(expectedContext, model.Context);
         Assert.Equal(expectedExtensionID, model.ExtensionID);
         Assert.Equal(expectedFingerprint, model.Fingerprint);
         Assert.Equal(expectedLogSession, model.LogSession);
+        Assert.Equal(expectedOs, model.Os);
         Assert.Equal(expectedRecordSession, model.RecordSession);
         Assert.Equal(expectedSolveCaptchas, model.SolveCaptchas);
+        Assert.Equal(expectedVerified, model.Verified);
         Assert.Equal(expectedViewport, model.Viewport);
     }
 
@@ -2095,6 +2147,8 @@ public class BrowserSettingsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -2113,8 +2167,10 @@ public class BrowserSettingsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
 
@@ -2134,6 +2190,8 @@ public class BrowserSettingsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -2152,8 +2210,10 @@ public class BrowserSettingsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
 
@@ -2166,6 +2226,8 @@ public class BrowserSettingsTest : TestBase
 
         bool expectedAdvancedStealth = true;
         bool expectedBlockAds = true;
+        string expectedCaptchaImageSelector = "captchaImageSelector";
+        string expectedCaptchaInputSelector = "captchaInputSelector";
         Sessions::Context expectedContext = new() { ID = "id", Persist = true };
         string expectedExtensionID = "extensionId";
         Sessions::Fingerprint expectedFingerprint = new()
@@ -2184,18 +2246,24 @@ public class BrowserSettingsTest : TestBase
             },
         };
         bool expectedLogSession = true;
+        ApiEnum<string, Sessions::Os> expectedOs = Sessions::Os.Windows;
         bool expectedRecordSession = true;
         bool expectedSolveCaptchas = true;
+        bool expectedVerified = true;
         Sessions::BrowserSettingsViewport expectedViewport = new() { Height = 0, Width = 0 };
 
         Assert.Equal(expectedAdvancedStealth, deserialized.AdvancedStealth);
         Assert.Equal(expectedBlockAds, deserialized.BlockAds);
+        Assert.Equal(expectedCaptchaImageSelector, deserialized.CaptchaImageSelector);
+        Assert.Equal(expectedCaptchaInputSelector, deserialized.CaptchaInputSelector);
         Assert.Equal(expectedContext, deserialized.Context);
         Assert.Equal(expectedExtensionID, deserialized.ExtensionID);
         Assert.Equal(expectedFingerprint, deserialized.Fingerprint);
         Assert.Equal(expectedLogSession, deserialized.LogSession);
+        Assert.Equal(expectedOs, deserialized.Os);
         Assert.Equal(expectedRecordSession, deserialized.RecordSession);
         Assert.Equal(expectedSolveCaptchas, deserialized.SolveCaptchas);
+        Assert.Equal(expectedVerified, deserialized.Verified);
         Assert.Equal(expectedViewport, deserialized.Viewport);
     }
 
@@ -2206,6 +2274,8 @@ public class BrowserSettingsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -2224,8 +2294,10 @@ public class BrowserSettingsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
 
@@ -2241,6 +2313,10 @@ public class BrowserSettingsTest : TestBase
         Assert.False(model.RawData.ContainsKey("advancedStealth"));
         Assert.Null(model.BlockAds);
         Assert.False(model.RawData.ContainsKey("blockAds"));
+        Assert.Null(model.CaptchaImageSelector);
+        Assert.False(model.RawData.ContainsKey("captchaImageSelector"));
+        Assert.Null(model.CaptchaInputSelector);
+        Assert.False(model.RawData.ContainsKey("captchaInputSelector"));
         Assert.Null(model.Context);
         Assert.False(model.RawData.ContainsKey("context"));
         Assert.Null(model.ExtensionID);
@@ -2249,10 +2325,14 @@ public class BrowserSettingsTest : TestBase
         Assert.False(model.RawData.ContainsKey("fingerprint"));
         Assert.Null(model.LogSession);
         Assert.False(model.RawData.ContainsKey("logSession"));
+        Assert.Null(model.Os);
+        Assert.False(model.RawData.ContainsKey("os"));
         Assert.Null(model.RecordSession);
         Assert.False(model.RawData.ContainsKey("recordSession"));
         Assert.Null(model.SolveCaptchas);
         Assert.False(model.RawData.ContainsKey("solveCaptchas"));
+        Assert.Null(model.Verified);
+        Assert.False(model.RawData.ContainsKey("verified"));
         Assert.Null(model.Viewport);
         Assert.False(model.RawData.ContainsKey("viewport"));
     }
@@ -2273,12 +2353,16 @@ public class BrowserSettingsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AdvancedStealth = null,
             BlockAds = null,
+            CaptchaImageSelector = null,
+            CaptchaInputSelector = null,
             Context = null,
             ExtensionID = null,
             Fingerprint = null,
             LogSession = null,
+            Os = null,
             RecordSession = null,
             SolveCaptchas = null,
+            Verified = null,
             Viewport = null,
         };
 
@@ -2286,6 +2370,10 @@ public class BrowserSettingsTest : TestBase
         Assert.False(model.RawData.ContainsKey("advancedStealth"));
         Assert.Null(model.BlockAds);
         Assert.False(model.RawData.ContainsKey("blockAds"));
+        Assert.Null(model.CaptchaImageSelector);
+        Assert.False(model.RawData.ContainsKey("captchaImageSelector"));
+        Assert.Null(model.CaptchaInputSelector);
+        Assert.False(model.RawData.ContainsKey("captchaInputSelector"));
         Assert.Null(model.Context);
         Assert.False(model.RawData.ContainsKey("context"));
         Assert.Null(model.ExtensionID);
@@ -2294,10 +2382,14 @@ public class BrowserSettingsTest : TestBase
         Assert.False(model.RawData.ContainsKey("fingerprint"));
         Assert.Null(model.LogSession);
         Assert.False(model.RawData.ContainsKey("logSession"));
+        Assert.Null(model.Os);
+        Assert.False(model.RawData.ContainsKey("os"));
         Assert.Null(model.RecordSession);
         Assert.False(model.RawData.ContainsKey("recordSession"));
         Assert.Null(model.SolveCaptchas);
         Assert.False(model.RawData.ContainsKey("solveCaptchas"));
+        Assert.Null(model.Verified);
+        Assert.False(model.RawData.ContainsKey("verified"));
         Assert.Null(model.Viewport);
         Assert.False(model.RawData.ContainsKey("viewport"));
     }
@@ -2310,12 +2402,16 @@ public class BrowserSettingsTest : TestBase
             // Null should be interpreted as omitted for these properties
             AdvancedStealth = null,
             BlockAds = null,
+            CaptchaImageSelector = null,
+            CaptchaInputSelector = null,
             Context = null,
             ExtensionID = null,
             Fingerprint = null,
             LogSession = null,
+            Os = null,
             RecordSession = null,
             SolveCaptchas = null,
+            Verified = null,
             Viewport = null,
         };
 
@@ -2329,6 +2425,8 @@ public class BrowserSettingsTest : TestBase
         {
             AdvancedStealth = true,
             BlockAds = true,
+            CaptchaImageSelector = "captchaImageSelector",
+            CaptchaInputSelector = "captchaInputSelector",
             Context = new() { ID = "id", Persist = true },
             ExtensionID = "extensionId",
             Fingerprint = new()
@@ -2347,8 +2445,10 @@ public class BrowserSettingsTest : TestBase
                 },
             },
             LogSession = true,
+            Os = Sessions::Os.Windows,
             RecordSession = true,
             SolveCaptchas = true,
+            Verified = true,
             Viewport = new() { Height = 0, Width = 0 },
         };
 
@@ -3159,6 +3259,70 @@ public class ScreenTest : TestBase
         Sessions::Screen copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class OsTest : TestBase
+{
+    [Theory]
+    [InlineData(Sessions::Os.Windows)]
+    [InlineData(Sessions::Os.Mac)]
+    [InlineData(Sessions::Os.Linux)]
+    [InlineData(Sessions::Os.Mobile)]
+    [InlineData(Sessions::Os.Tablet)]
+    public void Validation_Works(Sessions::Os rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Os> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Os>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Sessions::Os.Windows)]
+    [InlineData(Sessions::Os.Mac)]
+    [InlineData(Sessions::Os.Linux)]
+    [InlineData(Sessions::Os.Mobile)]
+    [InlineData(Sessions::Os.Tablet)]
+    public void SerializationRoundtrip_Works(Sessions::Os rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Os> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Os>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Os>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Os>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
