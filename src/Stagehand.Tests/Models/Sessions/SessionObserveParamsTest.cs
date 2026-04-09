@@ -22,15 +22,11 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "nav",
                 Timeout = 30000,
@@ -57,15 +53,11 @@ public class SessionObserveParamsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -142,15 +134,11 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "nav",
                 Timeout = 30000,
@@ -185,15 +173,11 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "nav",
                 Timeout = 30000,
@@ -276,15 +260,11 @@ public class SessionObserveParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "nav",
                 Timeout = 30000,
@@ -319,15 +299,11 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -347,15 +323,11 @@ public class SessionObserveParamsOptionsTest : TestBase
 
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
@@ -392,15 +364,11 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -434,15 +402,11 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -469,15 +433,11 @@ public class SessionObserveParamsOptionsTest : TestBase
 
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string expectedSelector = "nav";
         double expectedTimeout = 30000;
@@ -514,15 +474,11 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -610,15 +566,11 @@ public class SessionObserveParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "nav",
             Timeout = 30000,
@@ -649,15 +601,11 @@ public class SessionObserveParamsOptionsModelTest : TestBase
     {
         SessionObserveParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         value.Validate();
     }
@@ -674,15 +622,11 @@ public class SessionObserveParamsOptionsModelTest : TestBase
     {
         SessionObserveParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<SessionObserveParamsOptionsModel>(
