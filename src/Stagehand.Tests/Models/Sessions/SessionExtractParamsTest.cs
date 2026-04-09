@@ -22,15 +22,11 @@ public class SessionExtractParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "#main-content",
                 Timeout = 30000,
@@ -49,15 +45,11 @@ public class SessionExtractParamsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -139,15 +131,11 @@ public class SessionExtractParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "#main-content",
                 Timeout = 30000,
@@ -174,15 +162,11 @@ public class SessionExtractParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "#main-content",
                 Timeout = 30000,
@@ -257,15 +241,11 @@ public class SessionExtractParamsTest : TestBase
             {
                 Model = new ModelConfig()
                 {
-                    ModelName = "openai/gpt-5-nano",
+                    ModelName = "openai/gpt-5.4-mini",
                     ApiKey = "sk-some-openai-api-key",
                     BaseUrl = "https://api.openai.com/v1",
-                    Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
                     Provider = ModelConfigProvider.OpenAI,
-                    ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                        "us-east-1"
-                    ),
-                    SkipApiKeyFallback = true,
                 },
                 Selector = "#main-content",
                 Timeout = 30000,
@@ -292,15 +272,11 @@ public class SessionExtractParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -308,15 +284,11 @@ public class SessionExtractParamsOptionsTest : TestBase
 
         SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
@@ -333,15 +305,11 @@ public class SessionExtractParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -363,15 +331,11 @@ public class SessionExtractParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -386,15 +350,11 @@ public class SessionExtractParamsOptionsTest : TestBase
 
         SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
@@ -411,15 +371,11 @@ public class SessionExtractParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -489,15 +445,11 @@ public class SessionExtractParamsOptionsTest : TestBase
         {
             Model = new ModelConfig()
             {
-                ModelName = "openai/gpt-5-nano",
+                ModelName = "openai/gpt-5.4-mini",
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
-                Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 Provider = ModelConfigProvider.OpenAI,
-                ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                    "us-east-1"
-                ),
-                SkipApiKeyFallback = true,
             },
             Selector = "#main-content",
             Timeout = 30000,
@@ -516,15 +468,11 @@ public class SessionExtractParamsOptionsModelTest : TestBase
     {
         SessionExtractParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         value.Validate();
     }
@@ -541,15 +489,11 @@ public class SessionExtractParamsOptionsModelTest : TestBase
     {
         SessionExtractParamsOptionsModel value = new ModelConfig()
         {
-            ModelName = "openai/gpt-5-nano",
+            ModelName = "openai/gpt-5.4-mini",
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
-            Headers = new Dictionary<string, string>() { { "X-Custom-Header", "value" } },
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
             Provider = ModelConfigProvider.OpenAI,
-            ProviderOptions = new ModelConfigProviderOptionsBedrockApiKeyProviderOptions(
-                "us-east-1"
-            ),
-            SkipApiKeyFallback = true,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<SessionExtractParamsOptionsModel>(
