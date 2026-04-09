@@ -55,32 +55,20 @@ public class SessionServiceTest : TestBase
                     Cua = true,
                     ExecutionModel = new ModelConfig()
                     {
-                        ModelName = "openai/gpt-5-nano",
+                        ModelName = "openai/gpt-5.4-mini",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
-                        Headers = new Dictionary<string, string>()
-                        {
-                            { "X-Custom-Header", "value" },
-                        },
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
-                        ProviderOptions =
-                            new ModelConfigProviderOptionsBedrockApiKeyProviderOptions("us-east-1"),
-                        SkipApiKeyFallback = true,
                     },
                     Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {
-                        ModelName = "openai/gpt-5-nano",
+                        ModelName = "openai/gpt-5.4-mini",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
-                        Headers = new Dictionary<string, string>()
-                        {
-                            { "X-Custom-Header", "value" },
-                        },
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
-                        ProviderOptions =
-                            new ModelConfigProviderOptionsBedrockApiKeyProviderOptions("us-east-1"),
-                        SkipApiKeyFallback = true,
                     },
                     Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
@@ -91,6 +79,8 @@ public class SessionServiceTest : TestBase
                         "Log in with username 'demo' and password 'test123', then navigate to settings",
                     HighlightCursor = true,
                     MaxSteps = 20,
+                    ToolTimeout = 30000,
+                    UseSearch = true,
                 },
             },
             TestContext.Current.CancellationToken
@@ -110,32 +100,20 @@ public class SessionServiceTest : TestBase
                     Cua = true,
                     ExecutionModel = new ModelConfig()
                     {
-                        ModelName = "openai/gpt-5-nano",
+                        ModelName = "openai/gpt-5.4-mini",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
-                        Headers = new Dictionary<string, string>()
-                        {
-                            { "X-Custom-Header", "value" },
-                        },
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
-                        ProviderOptions =
-                            new ModelConfigProviderOptionsBedrockApiKeyProviderOptions("us-east-1"),
-                        SkipApiKeyFallback = true,
                     },
                     Mode = Mode.Cua,
                     Model = new ModelConfig()
                     {
-                        ModelName = "openai/gpt-5-nano",
+                        ModelName = "openai/gpt-5.4-mini",
                         ApiKey = "sk-some-openai-api-key",
                         BaseUrl = "https://api.openai.com/v1",
-                        Headers = new Dictionary<string, string>()
-                        {
-                            { "X-Custom-Header", "value" },
-                        },
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
                         Provider = ModelConfigProvider.OpenAI,
-                        ProviderOptions =
-                            new ModelConfigProviderOptionsBedrockApiKeyProviderOptions("us-east-1"),
-                        SkipApiKeyFallback = true,
                     },
                     Provider = Provider.OpenAI,
                     SystemPrompt = "systemPrompt",
@@ -146,6 +124,8 @@ public class SessionServiceTest : TestBase
                         "Log in with username 'demo' and password 'test123', then navigate to settings",
                     HighlightCursor = true,
                     MaxSteps = 20,
+                    ToolTimeout = 30000,
+                    UseSearch = true,
                 },
             },
             TestContext.Current.CancellationToken
