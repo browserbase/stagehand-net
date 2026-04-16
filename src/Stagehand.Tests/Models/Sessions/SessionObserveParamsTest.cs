@@ -217,11 +217,13 @@ public class SessionObserveParamsTest : TestBase
             }
         );
 
-        Assert.Equal(
-            new Uri(
-                "https://api.stagehand.browserbase.com/v1/sessions/c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123/observe"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.stagehand.browserbase.com/v1/sessions/c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123/observe"
+                ),
+                url
+            )
         );
     }
 
