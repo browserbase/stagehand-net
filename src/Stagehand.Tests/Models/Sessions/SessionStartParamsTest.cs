@@ -298,7 +298,12 @@ public class SessionStartParamsTest : TestBase
             }
         );
 
-        Assert.Equal(new Uri("https://api.stagehand.browserbase.com/v1/sessions/start"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.stagehand.browserbase.com/v1/sessions/start"),
+                url
+            )
+        );
     }
 
     [Fact]
