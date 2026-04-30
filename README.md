@@ -373,7 +373,7 @@ Configure the client using environment variables:
 ```csharp
 using Stagehand;
 
-// Configured using the BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY and STAGEHAND_BASE_URL environment variables
+// Configured using the BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY and STAGEHAND_API_URL environment variables
 StagehandClient client = new();
 ```
 
@@ -399,7 +399,7 @@ See this table for the available options:
 | `BrowserbaseApiKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
 | `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                         |
 | `ModelApiKey`          | `MODEL_API_KEY`          | true     | -                                         |
-| `BaseUrl`              | `STAGEHAND_BASE_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
+| `BaseUrl`              | `STAGEHAND_API_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
 
 ### Modifying configuration
 

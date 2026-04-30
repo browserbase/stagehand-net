@@ -17,7 +17,7 @@ namespace Stagehand.Examples
         {
             Env.Load();
             // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
-            // STAGEHAND_BASE_URL should point to the local Stagehand server.
+            // STAGEHAND_API_URL should point to the local Stagehand server.
             StagehandClient client = new();
 
             var startResponse = await client.Sessions.Start(
