@@ -51,14 +51,6 @@ namespace Stagehand.Examples
                     $"Missing required env vars: {string.Join(", ", missing)} (from examples/.env)"
                 );
             }
-
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("STAGEHAND_BASE_URL")))
-            {
-                Environment.SetEnvironmentVariable(
-                    "STAGEHAND_BASE_URL",
-                    Environment.GetEnvironmentVariable("STAGEHAND_API_URL")
-                );
-            }
         }
 
         private static string? FindEnvPath()

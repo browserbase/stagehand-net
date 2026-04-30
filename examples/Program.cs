@@ -33,7 +33,9 @@ namespace Stagehand.Examples
 
         private static void PrintUsage()
         {
-            Console.WriteLine("Usage: dotnet run --project examples -- <remote|local|local-multiregion>");
+            Console.WriteLine(
+                "Usage: dotnet run --project examples -- <remote|local|local-multiregion>"
+            );
         }
     }
 }

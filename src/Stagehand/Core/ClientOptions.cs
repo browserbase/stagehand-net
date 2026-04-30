@@ -26,7 +26,9 @@ public record struct ClientOptions()
         new(new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.Available });
 
     Lazy<string> _baseUrl = new(() =>
-        Environment.GetEnvironmentVariable("STAGEHAND_BASE_URL") ?? EnvironmentUrl.Production
+        Environment.GetEnvironmentVariable("STAGEHAND_API_URL")
+        ?? Environment.GetEnvironmentVariable("STAGEHAND_BASE_URL")
+        ?? EnvironmentUrl.Production
     );
 
     /// <summary>
