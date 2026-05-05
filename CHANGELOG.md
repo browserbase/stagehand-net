@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.19.3 (2026-05-05)
+
+Full Changelog: [v3.18.0...v3.19.3](https://github.com/browserbase/stagehand-net/compare/v3.18.0...v3.19.3)
+
+### Features
+
+* [STG-1798] feat: support Browserbase verified sessions ([4ba175f](https://github.com/browserbase/stagehand-net/commit/4ba175f797ac9197f86d412217aaa38ec74a4c45))
+* Bedrock auth passthrough ([37699f0](https://github.com/browserbase/stagehand-net/commit/37699f057d6bbc547df62b84888dea3726297d7f))
+* **client:** enable gzip decompression ([49ab455](https://github.com/browserbase/stagehand-net/commit/49ab4556442cad5938efc0596b3654875b0ba312))
+* Replace default model used in server-v3 api spec examples ([9b1f30b](https://github.com/browserbase/stagehand-net/commit/9b1f30b10bc25a590209487b356c09d94c9f366a))
+* Revert "[STG-1573] Add providerOptions for extensible model auth ([#1822](https://github.com/browserbase/stagehand-net/issues/1822))" ([4a70f7c](https://github.com/browserbase/stagehand-net/commit/4a70f7c79569fbdaf91551e34db95ea87685b30b))
+* support setting headers via env ([61b971d](https://github.com/browserbase/stagehand-net/commit/61b971d2341b0eeb200b41ad2657b8b6e61317ad))
+
+
+### Bug Fixes
+
+* **client:** allow cancelling when enumerating over an http response ([9184144](https://github.com/browserbase/stagehand-net/commit/9184144f8562fb9cf341787386c97de7db753a2b))
+* **client:** don't overzealously validate union variants when deserializing ([9278721](https://github.com/browserbase/stagehand-net/commit/92787213b4c96f7cbb42dfa05bedba8cfd9f671b))
+* **tests:** round-trip urls correctly ([4f0fb62](https://github.com/browserbase/stagehand-net/commit/4f0fb6240ca759edbdf6a0fd3b2abadb1d877011))
+
 ## 3.18.0 (2026-03-25)
 
 Full Changelog: [v3.0.2...v3.18.0](https://github.com/browserbase/stagehand-net/compare/v3.0.2...v3.18.0)
