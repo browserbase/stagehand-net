@@ -259,12 +259,12 @@ namespace Stagehand.Examples
                 return false;
             }
 
-            if (systemData.Status != StreamEventSystemDataOutputStatus.Finished)
+            if (systemData.Status != Status.Finished || systemData.Result == null)
             {
                 return false;
             }
 
-            result = systemData.Result;
+            result = systemData.Result.Value;
             return true;
         }
     }
