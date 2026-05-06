@@ -397,7 +397,7 @@ See this table for the available options:
 | Property               | Environment variable     | Required | Default value                             |
 | ---------------------- | ------------------------ | -------- | ----------------------------------------- |
 | `BrowserbaseApiKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
-| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | true     | -                                         |
+| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | false    | -                                         |
 | `ModelApiKey`          | `MODEL_API_KEY`          | true     | -                                         |
 | `BaseUrl`              | `STAGEHAND_API_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
 
