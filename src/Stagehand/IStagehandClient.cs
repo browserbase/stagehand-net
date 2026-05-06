@@ -42,9 +42,10 @@ public interface IStagehandClient : IDisposable
     string BrowserbaseApiKey { get; init; }
 
     /// <summary>
-    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// Deprecated. Browserbase API keys are now project-scoped, so this value is
+    /// no longer required.
     /// </summary>
-    string BrowserbaseProjectID { get; init; }
+    string? BrowserbaseProjectID { get; init; }
 
     /// <summary>
     /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
@@ -93,9 +94,10 @@ public interface IStagehandClientWithRawResponse : IDisposable
     string BrowserbaseApiKey { get; init; }
 
     /// <summary>
-    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// Deprecated. Browserbase API keys are now project-scoped, so this value is
+    /// no longer required.
     /// </summary>
-    string BrowserbaseProjectID { get; init; }
+    string? BrowserbaseProjectID { get; init; }
 
     /// <summary>
     /// Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
