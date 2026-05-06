@@ -81,6 +81,10 @@ public class SessionServiceTest : TestBase
                     MaxSteps = 20,
                     ToolTimeout = 30000,
                     UseSearch = true,
+                    Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                    {
+                        { "foo", "string" },
+                    },
                 },
             },
             TestContext.Current.CancellationToken
@@ -126,6 +130,10 @@ public class SessionServiceTest : TestBase
                     MaxSteps = 20,
                     ToolTimeout = 30000,
                     UseSearch = true,
+                    Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                    {
+                        { "foo", "string" },
+                    },
                 },
             },
             TestContext.Current.CancellationToken

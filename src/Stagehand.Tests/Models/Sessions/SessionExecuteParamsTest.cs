@@ -47,6 +47,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             FrameID = "frameId",
             ShouldCache = true,
@@ -85,6 +89,7 @@ public class SessionExecuteParamsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
         string expectedFrameID = "frameId";
         bool expectedShouldCache = true;
@@ -136,6 +141,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             FrameID = "frameId",
         };
@@ -183,6 +192,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             FrameID = "frameId",
 
@@ -234,6 +247,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
@@ -280,6 +297,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             ShouldCache = true,
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
@@ -328,6 +349,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
         };
 
@@ -388,6 +413,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             XStreamResponse = SessionExecuteParamsXStreamResponse.True,
         };
@@ -442,6 +471,10 @@ public class SessionExecuteParamsTest : TestBase
                 MaxSteps = 20,
                 ToolTimeout = 30000,
                 UseSearch = true,
+                Variables = new Dictionary<string, ExecuteOptionsVariable>()
+                {
+                    { "foo", "string" },
+                },
             },
             FrameID = "frameId",
             ShouldCache = true,
@@ -997,6 +1030,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
 
         string expectedInstruction =
@@ -1005,12 +1039,24 @@ public class ExecuteOptionsTest : TestBase
         double expectedMaxSteps = 20;
         double expectedToolTimeout = 30000;
         bool expectedUseSearch = true;
+        Dictionary<string, ExecuteOptionsVariable> expectedVariables = new()
+        {
+            { "foo", "string" },
+        };
 
         Assert.Equal(expectedInstruction, model.Instruction);
         Assert.Equal(expectedHighlightCursor, model.HighlightCursor);
         Assert.Equal(expectedMaxSteps, model.MaxSteps);
         Assert.Equal(expectedToolTimeout, model.ToolTimeout);
         Assert.Equal(expectedUseSearch, model.UseSearch);
+        Assert.NotNull(model.Variables);
+        Assert.Equal(expectedVariables.Count, model.Variables.Count);
+        foreach (var item in expectedVariables)
+        {
+            Assert.True(model.Variables.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Variables[item.Key]);
+        }
     }
 
     [Fact]
@@ -1024,6 +1070,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1046,6 +1093,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1061,12 +1109,24 @@ public class ExecuteOptionsTest : TestBase
         double expectedMaxSteps = 20;
         double expectedToolTimeout = 30000;
         bool expectedUseSearch = true;
+        Dictionary<string, ExecuteOptionsVariable> expectedVariables = new()
+        {
+            { "foo", "string" },
+        };
 
         Assert.Equal(expectedInstruction, deserialized.Instruction);
         Assert.Equal(expectedHighlightCursor, deserialized.HighlightCursor);
         Assert.Equal(expectedMaxSteps, deserialized.MaxSteps);
         Assert.Equal(expectedToolTimeout, deserialized.ToolTimeout);
         Assert.Equal(expectedUseSearch, deserialized.UseSearch);
+        Assert.NotNull(deserialized.Variables);
+        Assert.Equal(expectedVariables.Count, deserialized.Variables.Count);
+        foreach (var item in expectedVariables)
+        {
+            Assert.True(deserialized.Variables.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Variables[item.Key]);
+        }
     }
 
     [Fact]
@@ -1080,6 +1140,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
 
         model.Validate();
@@ -1102,6 +1163,8 @@ public class ExecuteOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("toolTimeout"));
         Assert.Null(model.UseSearch);
         Assert.False(model.RawData.ContainsKey("useSearch"));
+        Assert.Null(model.Variables);
+        Assert.False(model.RawData.ContainsKey("variables"));
     }
 
     [Fact]
@@ -1129,6 +1192,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = null,
             ToolTimeout = null,
             UseSearch = null,
+            Variables = null,
         };
 
         Assert.Null(model.HighlightCursor);
@@ -1139,6 +1203,8 @@ public class ExecuteOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("toolTimeout"));
         Assert.Null(model.UseSearch);
         Assert.False(model.RawData.ContainsKey("useSearch"));
+        Assert.Null(model.Variables);
+        Assert.False(model.RawData.ContainsKey("variables"));
     }
 
     [Fact]
@@ -1154,6 +1220,7 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = null,
             ToolTimeout = null,
             UseSearch = null,
+            Variables = null,
         };
 
         model.Validate();
@@ -1170,11 +1237,298 @@ public class ExecuteOptionsTest : TestBase
             MaxSteps = 20,
             ToolTimeout = 30000,
             UseSearch = true,
+            Variables = new Dictionary<string, ExecuteOptionsVariable>() { { "foo", "string" } },
         };
 
         ExecuteOptions copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class ExecuteOptionsVariableTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        ExecuteOptionsVariable value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        ExecuteOptionsVariable value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        ExecuteOptionsVariable value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void ExecuteOptionsVariableUnionMember3ValidationWorks()
+    {
+        ExecuteOptionsVariable value = new ExecuteOptionsVariableUnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariable value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariable value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariable value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void ExecuteOptionsVariableUnionMember3SerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariable value = new ExecuteOptionsVariableUnionMember3()
+        {
+            Value = "string",
+            Description = "description",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariable>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ExecuteOptionsVariableUnionMember3Test : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        ExecuteOptionsVariableUnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, model.Value);
+        Assert.Equal(expectedDescription, model.Description);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariableUnionMember3>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariableUnionMember3>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        ExecuteOptionsVariableUnionMember3Value expectedValue = "string";
+        string expectedDescription = "description";
+
+        Assert.Equal(expectedValue, deserialized.Value);
+        Assert.Equal(expectedDescription, deserialized.Description);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3 { Value = "string" };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3 { Value = "string" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+
+            // Null should be interpreted as omitted for these properties
+            Description = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecuteOptionsVariableUnionMember3
+        {
+            Value = "string",
+            Description = "description",
+        };
+
+        ExecuteOptionsVariableUnionMember3 copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecuteOptionsVariableUnionMember3ValueTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void DoubleValidationWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = 0;
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariableUnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void DoubleSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariableUnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        ExecuteOptionsVariableUnionMember3Value value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecuteOptionsVariableUnionMember3Value>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
