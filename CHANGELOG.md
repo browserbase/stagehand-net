@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.20.0 (2026-05-06)
+
+Full Changelog: [v3.19.3...v3.20.0](https://github.com/browserbase/stagehand-net/compare/v3.19.3...v3.20.0)
+
+### Features
+
+* [feat]: add `ignoreSelectors` to `extract()` ([a9b327f](https://github.com/browserbase/stagehand-net/commit/a9b327f17942b28a16800c3dd93b569bb1bac6dc))
+* [STG-1808] Deprecate Browserbase project ID ([1571286](https://github.com/browserbase/stagehand-net/commit/15712866df03d50e920ab9f71e24e30d7b17e455))
+* remove experimental requirement on agent variables ([#2079](https://github.com/browserbase/stagehand-net/issues/2079)) ([1c3a03c](https://github.com/browserbase/stagehand-net/commit/1c3a03c6961d3c4fab99e2852ce0ea4dc4778444))
+
 ## 3.19.3 (2026-05-05)
 
 Full Changelog: [v3.18.0...v3.19.3](https://github.com/browserbase/stagehand-net/compare/v3.18.0...v3.19.3)
