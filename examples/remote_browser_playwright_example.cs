@@ -16,7 +16,7 @@ namespace Stagehand.Examples
         public static async Task RunAsync()
         {
             Env.Load();
-            // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
+            // Uses environment variables: BROWSERBASE_API_KEY and MODEL_API_KEY
             StagehandClient client = new();
 
             // Start a new remote Browserbase session (Playwright-backed)

@@ -16,8 +16,8 @@ namespace Stagehand.Examples
         public static async Task RunAsync()
         {
             Env.Load();
-            // Uses environment variables: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
-            // STAGEHAND_API_URL should point to the local Stagehand server.
+            // Uses environment variables: BROWSERBASE_API_KEY and MODEL_API_KEY
+            // STAGEHAND_API_URL should point to the local Stagehand server; STAGEHAND_BASE_URL is a fallback.
             StagehandClient client = new();
 
             var startResponse = await client.Sessions.Start(

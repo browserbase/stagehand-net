@@ -110,13 +110,11 @@ public record struct ClientOptions()
     /// Deprecated. Browserbase API keys are now project-scoped, so this value is
     /// no longer required.
     /// </summary>
-    Lazy<string?> _browserbaseProjectID = new(() =>
-        Environment.GetEnvironmentVariable("BROWSERBASE_PROJECT_ID")
-    );
+    Lazy<string?> _browserbaseProjectID = new(() => null);
 
     /// <summary>
     /// Deprecated. Browserbase API keys are now project-scoped, so this value is
-    /// no longer required.
+    /// no longer required. Accepted for backwards compatibility; it is not sent to the API.
     /// </summary>
     public string? BrowserbaseProjectID
     {

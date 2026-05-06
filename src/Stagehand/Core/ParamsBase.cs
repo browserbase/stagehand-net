@@ -215,10 +215,6 @@ public abstract record class ParamsBase
         {
             request.Headers.Add("x-bb-api-key", options.BrowserbaseApiKey);
         }
-        if (options.BrowserbaseProjectID != null)
-        {
-            request.Headers.Add("x-bb-project-id", options.BrowserbaseProjectID);
-        }
         if (options.ModelApiKey != null)
         {
             request.Headers.Add("x-model-api-key", options.ModelApiKey);

@@ -43,7 +43,7 @@ public interface IStagehandClient : IDisposable
 
     /// <summary>
     /// Deprecated. Browserbase API keys are now project-scoped, so this value is
-    /// no longer required.
+    /// no longer required. Accepted for backwards compatibility; it is not sent to the API.
     /// </summary>
     string? BrowserbaseProjectID { get; init; }
 
@@ -95,7 +95,7 @@ public interface IStagehandClientWithRawResponse : IDisposable
 
     /// <summary>
     /// Deprecated. Browserbase API keys are now project-scoped, so this value is
-    /// no longer required.
+    /// no longer required. Accepted for backwards compatibility; it is not sent to the API.
     /// </summary>
     string? BrowserbaseProjectID { get; init; }
 
