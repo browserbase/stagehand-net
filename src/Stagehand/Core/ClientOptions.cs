@@ -105,20 +105,18 @@ public record struct ClientOptions()
     }
 
     /// <summary>
-    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// Deprecated. Browserbase API keys are now project-scoped, so this value is
+    /// no longer required.
     /// </summary>
-    Lazy<string> _browserbaseProjectID = new(() =>
+    Lazy<string?> _browserbaseProjectID = new(() =>
         Environment.GetEnvironmentVariable("BROWSERBASE_PROJECT_ID")
-        ?? throw new StagehandInvalidDataException(
-            string.Format("{0} cannot be null", nameof(BrowserbaseProjectID)),
-            new ArgumentNullException(nameof(BrowserbaseProjectID))
-        )
     );
 
     /// <summary>
-    /// Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    /// Deprecated. Browserbase API keys are now project-scoped, so this value is
+    /// no longer required.
     /// </summary>
-    public string BrowserbaseProjectID
+    public string? BrowserbaseProjectID
     {
         readonly get { return _browserbaseProjectID.Value; }
         set { _browserbaseProjectID = new(() => value); }

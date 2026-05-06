@@ -1451,6 +1451,11 @@ public sealed record class BrowserbaseSessionCreateParams : JsonModel
         }
     }
 
+    /// <summary>
+    /// Deprecated. Browserbase API keys are now project-scoped, so this field is
+    /// no longer required.
+    /// </summary>
+    [System::Obsolete("deprecated")]
     public string? ProjectID
     {
         get

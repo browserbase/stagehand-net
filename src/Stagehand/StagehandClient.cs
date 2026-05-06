@@ -59,7 +59,7 @@ public sealed class StagehandClient : IStagehandClient
     }
 
     /// <inheritdoc/>
-    public string BrowserbaseProjectID
+    public string? BrowserbaseProjectID
     {
         get { return this._options.BrowserbaseProjectID; }
         init { this._options.BrowserbaseProjectID = value; }
@@ -168,7 +168,7 @@ public sealed class StagehandClientWithRawResponse : IStagehandClientWithRawResp
     }
 
     /// <inheritdoc/>
-    public string BrowserbaseProjectID
+    public string? BrowserbaseProjectID
     {
         get { return this._options.BrowserbaseProjectID; }
         init { this._options.BrowserbaseProjectID = value; }
