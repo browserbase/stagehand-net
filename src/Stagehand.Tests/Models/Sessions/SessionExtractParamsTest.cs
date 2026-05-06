@@ -20,6 +20,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -43,6 +44,7 @@ public class SessionExtractParamsTest : TestBase
         string expectedInstruction = "Extract all product names and prices from the page";
         SessionExtractParamsOptions expectedOptions = new()
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -129,6 +131,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -160,6 +163,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -241,6 +245,7 @@ public class SessionExtractParamsTest : TestBase
             Instruction = "Extract all product names and prices from the page",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -272,6 +277,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -284,6 +290,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Timeout = 30000,
         };
 
+        List<string> expectedIgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"];
         SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5.4-mini",
@@ -295,6 +302,12 @@ public class SessionExtractParamsOptionsTest : TestBase
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
+        Assert.NotNull(model.IgnoreSelectors);
+        Assert.Equal(expectedIgnoreSelectors.Count, model.IgnoreSelectors.Count);
+        for (int i = 0; i < expectedIgnoreSelectors.Count; i++)
+        {
+            Assert.Equal(expectedIgnoreSelectors[i], model.IgnoreSelectors[i]);
+        }
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedSelector, model.Selector);
         Assert.Equal(expectedTimeout, model.Timeout);
@@ -305,6 +318,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -331,6 +345,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -350,6 +365,7 @@ public class SessionExtractParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        List<string> expectedIgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"];
         SessionExtractParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5.4-mini",
@@ -361,6 +377,12 @@ public class SessionExtractParamsOptionsTest : TestBase
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
+        Assert.NotNull(deserialized.IgnoreSelectors);
+        Assert.Equal(expectedIgnoreSelectors.Count, deserialized.IgnoreSelectors.Count);
+        for (int i = 0; i < expectedIgnoreSelectors.Count; i++)
+        {
+            Assert.Equal(expectedIgnoreSelectors[i], deserialized.IgnoreSelectors[i]);
+        }
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedSelector, deserialized.Selector);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
@@ -371,6 +393,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -391,6 +414,8 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions { };
 
+        Assert.Null(model.IgnoreSelectors);
+        Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Selector);
@@ -413,11 +438,14 @@ public class SessionExtractParamsOptionsTest : TestBase
         var model = new SessionExtractParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            IgnoreSelectors = null,
             Model = null,
             Selector = null,
             Timeout = null,
         };
 
+        Assert.Null(model.IgnoreSelectors);
+        Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Selector);
@@ -432,6 +460,7 @@ public class SessionExtractParamsOptionsTest : TestBase
         var model = new SessionExtractParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            IgnoreSelectors = null,
             Model = null,
             Selector = null,
             Timeout = null,
@@ -445,6 +474,7 @@ public class SessionExtractParamsOptionsTest : TestBase
     {
         var model = new SessionExtractParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
