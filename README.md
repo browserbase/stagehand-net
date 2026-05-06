@@ -96,7 +96,7 @@ namespace Stagehand.Examples
         static async Task Main(string[] args)
         {
             Env.Load();
-            // Uses environment variables: STAGEHAND_API_URL, BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY
+            // Uses environment variables: BROWSERBASE_API_KEY and MODEL_API_KEY
             StagehandClient client = new();
 
             // Start a new remote Browserbase session (Playwright-backed)
@@ -325,10 +325,8 @@ namespace Stagehand.Examples
 
 Set your environment variables (from `examples/.env.example`):
 
-- `STAGEHAND_API_URL`
 - `MODEL_API_KEY`
 - `BROWSERBASE_API_KEY`
-- `BROWSERBASE_PROJECT_ID`
 
 ```bash
 cp examples/.env.example examples/.env
@@ -373,7 +371,7 @@ Configure the client using environment variables:
 ```csharp
 using Stagehand;
 
-// Configured using the BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID, MODEL_API_KEY and STAGEHAND_API_URL environment variables
+// Configured using BROWSERBASE_API_KEY, MODEL_API_KEY, and STAGEHAND_API_URL, with STAGEHAND_BASE_URL as a fallback
 StagehandClient client = new();
 ```
 
@@ -385,7 +383,6 @@ using Stagehand;
 StagehandClient client = new()
 {
     BrowserbaseApiKey = "My Browserbase API Key",
-    BrowserbaseProjectID = "My Browserbase Project ID",
     ModelApiKey = "My Model API Key",
 };
 ```
@@ -397,9 +394,11 @@ See this table for the available options:
 | Property               | Environment variable     | Required | Default value                             |
 | ---------------------- | ------------------------ | -------- | ----------------------------------------- |
 | `BrowserbaseApiKey`    | `BROWSERBASE_API_KEY`    | true     | -                                         |
-| `BrowserbaseProjectID` | `BROWSERBASE_PROJECT_ID` | false    | -                                         |
+| `BrowserbaseProjectID` | -                        | false    | -                                         |
 | `ModelApiKey`          | `MODEL_API_KEY`          | true     | -                                         |
-| `BaseUrl`              | `STAGEHAND_API_URL`     | true     | `"https://api.stagehand.browserbase.com"` |
+| `BaseUrl`              | `STAGEHAND_API_URL`      | false    | `"https://api.stagehand.browserbase.com"` |
+
+`BrowserbaseProjectID` is deprecated, accepted for backwards compatibility, and ignored. `STAGEHAND_BASE_URL` remains supported as a deprecated fallback when `STAGEHAND_API_URL` is unset.
 
 ### Modifying configuration
 

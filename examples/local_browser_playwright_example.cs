@@ -17,7 +17,7 @@ namespace Stagehand.Examples
         {
             Env.Load();
             // Uses environment variables: MODEL_API_KEY
-            // In local mode, BROWSERBASE_API_KEY and BROWSERBASE_PROJECT_ID can be any value.
+            // In local mode, BROWSERBASE_API_KEY can be any value.
             StagehandClient client = new();
 
             // Start a new local session

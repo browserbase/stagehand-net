@@ -6,13 +6,7 @@ namespace Stagehand.Examples
 {
     internal static class Env
     {
-        private static readonly string[] RequiredKeys =
-        [
-            "STAGEHAND_API_URL",
-            "MODEL_API_KEY",
-            "BROWSERBASE_API_KEY",
-            "BROWSERBASE_PROJECT_ID",
-        ];
+        private static readonly string[] RequiredKeys = ["MODEL_API_KEY", "BROWSERBASE_API_KEY"];
 
         public static void Load()
         {
