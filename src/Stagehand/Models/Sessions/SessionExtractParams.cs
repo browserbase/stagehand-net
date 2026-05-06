@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -256,6 +257,30 @@ public record class SessionExtractParams : ParamsBase
 public sealed record class SessionExtractParamsOptions : JsonModel
 {
     /// <summary>
+    /// Selectors for elements and subtrees that should be excluded from extraction
+    /// </summary>
+    public IReadOnlyList<string>? IgnoreSelectors
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("ignoreSelectors");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<ImmutableArray<string>?>(
+                "ignoreSelectors",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
     /// Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
     /// </summary>
     public SessionExtractParamsOptionsModel? Model
@@ -321,6 +346,7 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.IgnoreSelectors;
         this.Model?.Validate();
         _ = this.Selector;
         _ = this.Timeout;
