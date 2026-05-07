@@ -20,6 +20,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -51,6 +52,7 @@ public class SessionObserveParamsTest : TestBase
         string expectedInstruction = "Find all clickable navigation links";
         SessionObserveParamsOptions expectedOptions = new()
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -132,6 +134,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -171,6 +174,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -260,6 +264,7 @@ public class SessionObserveParamsTest : TestBase
             Instruction = "Find all clickable navigation links",
             Options = new()
             {
+                IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
                 Model = new ModelConfig()
                 {
                     ModelName = "openai/gpt-5.4-mini",
@@ -299,6 +304,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -323,6 +329,7 @@ public class SessionObserveParamsOptionsTest : TestBase
             },
         };
 
+        List<string> expectedIgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"];
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5.4-mini",
@@ -346,6 +353,12 @@ public class SessionObserveParamsOptionsTest : TestBase
             { "rememberMe", true },
         };
 
+        Assert.NotNull(model.IgnoreSelectors);
+        Assert.Equal(expectedIgnoreSelectors.Count, model.IgnoreSelectors.Count);
+        for (int i = 0; i < expectedIgnoreSelectors.Count; i++)
+        {
+            Assert.Equal(expectedIgnoreSelectors[i], model.IgnoreSelectors[i]);
+        }
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedSelector, model.Selector);
         Assert.Equal(expectedTimeout, model.Timeout);
@@ -364,6 +377,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -402,6 +416,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -433,6 +448,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        List<string> expectedIgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"];
         SessionObserveParamsOptionsModel expectedModel = new ModelConfig()
         {
             ModelName = "openai/gpt-5.4-mini",
@@ -456,6 +472,12 @@ public class SessionObserveParamsOptionsTest : TestBase
             { "rememberMe", true },
         };
 
+        Assert.NotNull(deserialized.IgnoreSelectors);
+        Assert.Equal(expectedIgnoreSelectors.Count, deserialized.IgnoreSelectors.Count);
+        for (int i = 0; i < expectedIgnoreSelectors.Count; i++)
+        {
+            Assert.Equal(expectedIgnoreSelectors[i], deserialized.IgnoreSelectors[i]);
+        }
         Assert.Equal(expectedModel, deserialized.Model);
         Assert.Equal(expectedSelector, deserialized.Selector);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
@@ -474,6 +496,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
@@ -506,6 +529,8 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions { };
 
+        Assert.Null(model.IgnoreSelectors);
+        Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Selector);
@@ -530,12 +555,15 @@ public class SessionObserveParamsOptionsTest : TestBase
         var model = new SessionObserveParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            IgnoreSelectors = null,
             Model = null,
             Selector = null,
             Timeout = null,
             Variables = null,
         };
 
+        Assert.Null(model.IgnoreSelectors);
+        Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
         Assert.Null(model.Selector);
@@ -552,6 +580,7 @@ public class SessionObserveParamsOptionsTest : TestBase
         var model = new SessionObserveParamsOptions
         {
             // Null should be interpreted as omitted for these properties
+            IgnoreSelectors = null,
             Model = null,
             Selector = null,
             Timeout = null,
@@ -566,6 +595,7 @@ public class SessionObserveParamsOptionsTest : TestBase
     {
         var model = new SessionObserveParamsOptions
         {
+            IgnoreSelectors = ["nav", ".cookie-banner", "#sidebar-ads"],
             Model = new ModelConfig()
             {
                 ModelName = "openai/gpt-5.4-mini",
