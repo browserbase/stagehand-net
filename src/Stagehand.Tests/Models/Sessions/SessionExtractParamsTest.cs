@@ -51,6 +51,7 @@ public class SessionExtractParamsTest : TestBase
                     Project = "my-gcp-project",
                     Provider = ModelConfigProvider.OpenAI,
                 },
+                Screenshot = false,
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -97,6 +98,7 @@ public class SessionExtractParamsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -206,6 +208,7 @@ public class SessionExtractParamsTest : TestBase
                     Project = "my-gcp-project",
                     Provider = ModelConfigProvider.OpenAI,
                 },
+                Screenshot = false,
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -260,6 +263,7 @@ public class SessionExtractParamsTest : TestBase
                     Project = "my-gcp-project",
                     Provider = ModelConfigProvider.OpenAI,
                 },
+                Screenshot = false,
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -364,6 +368,7 @@ public class SessionExtractParamsTest : TestBase
                     Project = "my-gcp-project",
                     Provider = ModelConfigProvider.OpenAI,
                 },
+                Screenshot = false,
                 Selector = "#main-content",
                 Timeout = 30000,
             },
@@ -418,6 +423,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -453,6 +459,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Project = "my-gcp-project",
             Provider = ModelConfigProvider.OpenAI,
         };
+        bool expectedScreenshot = false;
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -463,6 +470,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Assert.Equal(expectedIgnoreSelectors[i], model.IgnoreSelectors[i]);
         }
         Assert.Equal(expectedModel, model.Model);
+        Assert.Equal(expectedScreenshot, model.Screenshot);
         Assert.Equal(expectedSelector, model.Selector);
         Assert.Equal(expectedTimeout, model.Timeout);
     }
@@ -503,6 +511,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -552,6 +561,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -594,6 +604,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Project = "my-gcp-project",
             Provider = ModelConfigProvider.OpenAI,
         };
+        bool expectedScreenshot = false;
         string expectedSelector = "#main-content";
         double expectedTimeout = 30000;
 
@@ -604,6 +615,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             Assert.Equal(expectedIgnoreSelectors[i], deserialized.IgnoreSelectors[i]);
         }
         Assert.Equal(expectedModel, deserialized.Model);
+        Assert.Equal(expectedScreenshot, deserialized.Screenshot);
         Assert.Equal(expectedSelector, deserialized.Selector);
         Assert.Equal(expectedTimeout, deserialized.Timeout);
     }
@@ -644,6 +656,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
@@ -660,6 +673,8 @@ public class SessionExtractParamsOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Screenshot);
+        Assert.False(model.RawData.ContainsKey("screenshot"));
         Assert.Null(model.Selector);
         Assert.False(model.RawData.ContainsKey("selector"));
         Assert.Null(model.Timeout);
@@ -682,6 +697,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             IgnoreSelectors = null,
             Model = null,
+            Screenshot = null,
             Selector = null,
             Timeout = null,
         };
@@ -690,6 +706,8 @@ public class SessionExtractParamsOptionsTest : TestBase
         Assert.False(model.RawData.ContainsKey("ignoreSelectors"));
         Assert.Null(model.Model);
         Assert.False(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Screenshot);
+        Assert.False(model.RawData.ContainsKey("screenshot"));
         Assert.Null(model.Selector);
         Assert.False(model.RawData.ContainsKey("selector"));
         Assert.Null(model.Timeout);
@@ -704,6 +722,7 @@ public class SessionExtractParamsOptionsTest : TestBase
             // Null should be interpreted as omitted for these properties
             IgnoreSelectors = null,
             Model = null,
+            Screenshot = null,
             Selector = null,
             Timeout = null,
         };
@@ -747,6 +766,7 @@ public class SessionExtractParamsOptionsTest : TestBase
                 Project = "my-gcp-project",
                 Provider = ModelConfigProvider.OpenAI,
             },
+            Screenshot = false,
             Selector = "#main-content",
             Timeout = 30000,
         };
