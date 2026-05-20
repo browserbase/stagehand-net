@@ -302,6 +302,28 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     }
 
     /// <summary>
+    /// When true, include a screenshot of the current viewport in the extraction
+    /// LLM call. Defaults to false.
+    /// </summary>
+    public bool? Screenshot
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("screenshot");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("screenshot", value);
+        }
+    }
+
+    /// <summary>
     /// CSS selector to scope extraction to a specific element
     /// </summary>
     public string? Selector
@@ -348,6 +370,7 @@ public sealed record class SessionExtractParamsOptions : JsonModel
     {
         _ = this.IgnoreSelectors;
         this.Model?.Validate();
+        _ = this.Screenshot;
         _ = this.Selector;
         _ = this.Timeout;
     }
