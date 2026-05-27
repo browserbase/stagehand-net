@@ -10,9 +10,330 @@ using System = System;
 
 namespace Stagehand.Models.Sessions;
 
-[JsonConverter(typeof(JsonModelConverter<ModelConfig, ModelConfigFromRaw>))]
-public sealed record class ModelConfig : JsonModel
+[JsonConverter(typeof(ModelConfigConverter))]
+public record class ModelConfig : ModelBase
 {
+    public object? Value { get; } = null;
+
+    JsonElement? _element = null;
+
+    public JsonElement Json
+    {
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string ModelName
+    {
+        get
+        {
+            return Match(
+                vertexModelConfigObject: (x) => x.ModelName,
+                genericModelConfigObject: (x) => x.ModelName
+            );
+        }
+    }
+
+    public string? ApiKey
+    {
+        get
+        {
+            return Match<string?>(
+                vertexModelConfigObject: (x) => x.ApiKey,
+                genericModelConfigObject: (x) => x.ApiKey
+            );
+        }
+    }
+
+    public string? BaseUrl
+    {
+        get
+        {
+            return Match<string?>(
+                vertexModelConfigObject: (x) => x.BaseUrl,
+                genericModelConfigObject: (x) => x.BaseUrl
+            );
+        }
+    }
+
+    public ModelConfig(ModelConfigVertexModelConfigObject value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public ModelConfig(ModelConfigGenericModelConfigObject value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public ModelConfig(JsonElement element)
+    {
+        this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ModelConfigVertexModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickVertexModelConfigObject(out var value)) {
+    ///     // `value` is of type `ModelConfigVertexModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickVertexModelConfigObject(
+        [NotNullWhen(true)] out ModelConfigVertexModelConfigObject? value
+    )
+    {
+        value = this.Value as ModelConfigVertexModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ModelConfigGenericModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickGenericModelConfigObject(out var value)) {
+    ///     // `value` is of type `ModelConfigGenericModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickGenericModelConfigObject(
+        [NotNullWhen(true)] out ModelConfigGenericModelConfigObject? value
+    )
+    {
+        value = this.Value as ModelConfigGenericModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (ModelConfigVertexModelConfigObject value) =&gt; {...},
+    ///     (ModelConfigGenericModelConfigObject value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public void Switch(
+        System::Action<ModelConfigVertexModelConfigObject> vertexModelConfigObject,
+        System::Action<ModelConfigGenericModelConfigObject> genericModelConfigObject
+    )
+    {
+        switch (this.Value)
+        {
+            case ModelConfigVertexModelConfigObject value:
+                vertexModelConfigObject(value);
+                break;
+            case ModelConfigGenericModelConfigObject value:
+                genericModelConfigObject(value);
+                break;
+            default:
+                throw new StagehandInvalidDataException(
+                    "Data did not match any variant of ModelConfig"
+                );
+        }
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (ModelConfigVertexModelConfigObject value) =&gt; {...},
+    ///     (ModelConfigGenericModelConfigObject value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public T Match<T>(
+        System::Func<ModelConfigVertexModelConfigObject, T> vertexModelConfigObject,
+        System::Func<ModelConfigGenericModelConfigObject, T> genericModelConfigObject
+    )
+    {
+        return this.Value switch
+        {
+            ModelConfigVertexModelConfigObject value => vertexModelConfigObject(value),
+            ModelConfigGenericModelConfigObject value => genericModelConfigObject(value),
+            _ => throw new StagehandInvalidDataException(
+                "Data did not match any variant of ModelConfig"
+            ),
+        };
+    }
+
+    public static implicit operator ModelConfig(ModelConfigVertexModelConfigObject value) =>
+        new(value);
+
+    public static implicit operator ModelConfig(ModelConfigGenericModelConfigObject value) =>
+        new(value);
+
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
+    public override void Validate()
+    {
+        if (this.Value == null)
+        {
+            throw new StagehandInvalidDataException(
+                "Data did not match any variant of ModelConfig"
+            );
+        }
+        this.Switch(
+            (vertexModelConfigObject) => vertexModelConfigObject.Validate(),
+            (genericModelConfigObject) => genericModelConfigObject.Validate()
+        );
+    }
+
+    public virtual bool Equals(ModelConfig? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ModelConfigVertexModelConfigObject _ => 0,
+            ModelConfigGenericModelConfigObject _ => 1,
+            _ => -1,
+        };
+    }
+}
+
+sealed class ModelConfigConverter : JsonConverter<ModelConfig>
+{
+    public override ModelConfig? Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ModelConfigVertexModelConfigObject>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ModelConfigGenericModelConfigObject>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        return new(element);
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        ModelConfig value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(writer, value.Json, options);
+    }
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigVertexModelConfigObject,
+        ModelConfigVertexModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class ModelConfigVertexModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Vertex provider authentication configuration
+    /// </summary>
+    public required ModelConfigVertexModelConfigObjectAuth Auth
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ModelConfigVertexModelConfigObjectAuth>("auth");
+        }
+        init { this._rawData.Set("auth", value); }
+    }
+
     /// <summary>
     /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
     /// </summary>
@@ -24,6 +345,34 @@ public sealed record class ModelConfig : JsonModel
             return this._rawData.GetNotNullClass<string>("modelName");
         }
         init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Vertex AI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Vertex provider-specific model configuration
+    /// </summary>
+    public required ModelConfigVertexModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ModelConfigVertexModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
     }
 
     /// <summary>
@@ -69,27 +418,6 @@ public sealed record class ModelConfig : JsonModel
     }
 
     /// <summary>
-    /// google-auth-library options used to authenticate Vertex AI models
-    /// </summary>
-    public GoogleAuthOptions? GoogleAuthOptions
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<GoogleAuthOptions>("googleAuthOptions");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("googleAuthOptions", value);
-        }
-    }
-
-    /// <summary>
     /// Custom headers sent with every request to the model provider
     /// </summary>
     public IReadOnlyDictionary<string, string>? Headers
@@ -113,149 +441,103 @@ public sealed record class ModelConfig : JsonModel
         }
     }
 
-    /// <summary>
-    /// Google Cloud location for Vertex AI models
-    /// </summary>
-    public string? Location
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("location");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("location", value);
-        }
-    }
-
-    /// <summary>
-    /// Google Cloud project ID for Vertex AI models
-    /// </summary>
-    public string? Project
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("project");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("project", value);
-        }
-    }
-
-    /// <summary>
-    /// AI provider for the model (or provide a baseURL endpoint instead)
-    /// </summary>
-    public ApiEnum<string, ModelConfigProvider>? Provider
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<ApiEnum<string, ModelConfigProvider>>("provider");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("provider", value);
-        }
-    }
-
     /// <inheritdoc/>
     public override void Validate()
     {
+        this.Auth.Validate();
         _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("vertex")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
         _ = this.ApiKey;
         _ = this.BaseUrl;
-        this.GoogleAuthOptions?.Validate();
         _ = this.Headers;
-        _ = this.Location;
-        _ = this.Project;
-        this.Provider?.Validate();
     }
 
-    public ModelConfig() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public ModelConfig(ModelConfig modelConfig)
-        : base(modelConfig) { }
-#pragma warning restore CS8618
-
-    public ModelConfig(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ModelConfigVertexModelConfigObject()
     {
-        this._rawData = new(rawData);
+        this.Provider = JsonSerializer.SerializeToElement("vertex");
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ModelConfig(FrozenDictionary<string, JsonElement> rawData)
+    public ModelConfigVertexModelConfigObject(
+        ModelConfigVertexModelConfigObject modelConfigVertexModelConfigObject
+    )
+        : base(modelConfigVertexModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public ModelConfigVertexModelConfigObject(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("vertex");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ModelConfigVertexModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="ModelConfigFromRaw.FromRawUnchecked"/>
-    public static ModelConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="ModelConfigVertexModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static ModelConfigVertexModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
-
-    [SetsRequiredMembers]
-    public ModelConfig(string modelName)
-        : this()
-    {
-        this.ModelName = modelName;
-    }
 }
 
-class ModelConfigFromRaw : IFromRawJson<ModelConfig>
+class ModelConfigVertexModelConfigObjectFromRaw : IFromRawJson<ModelConfigVertexModelConfigObject>
 {
     /// <inheritdoc/>
-    public ModelConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        ModelConfig.FromRawUnchecked(rawData);
+    public ModelConfigVertexModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigVertexModelConfigObject.FromRawUnchecked(rawData);
 }
 
 /// <summary>
-/// google-auth-library options used to authenticate Vertex AI models
+/// Vertex provider authentication configuration
 /// </summary>
-[JsonConverter(typeof(JsonModelConverter<GoogleAuthOptions, GoogleAuthOptionsFromRaw>))]
-public sealed record class GoogleAuthOptions : JsonModel
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigVertexModelConfigObjectAuth,
+        ModelConfigVertexModelConfigObjectAuthFromRaw
+    >)
+)]
+public sealed record class ModelConfigVertexModelConfigObjectAuth : JsonModel
 {
     /// <summary>
     /// Google Cloud service account credentials
     /// </summary>
-    public Credentials? Credentials
+    public required ModelConfigVertexModelConfigObjectAuthCredentials Credentials
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<Credentials>("credentials");
+            return this._rawData.GetNotNullClass<ModelConfigVertexModelConfigObjectAuthCredentials>(
+                "credentials"
+            );
         }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
+        init { this._rawData.Set("credentials", value); }
+    }
 
-            this._rawData.Set("credentials", value);
+    /// <summary>
+    /// Use inline Google Cloud service account credentials for provider authentication
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
         }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <summary>
@@ -282,12 +564,14 @@ public sealed record class GoogleAuthOptions : JsonModel
     /// <summary>
     /// Google auth scopes for the desired API request
     /// </summary>
-    public Scopes? Scopes
+    public ModelConfigVertexModelConfigObjectAuthScopes? Scopes
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<Scopes>("scopes");
+            return this._rawData.GetNullableClass<ModelConfigVertexModelConfigObjectAuthScopes>(
+                "scopes"
+            );
         }
         init
         {
@@ -324,54 +608,86 @@ public sealed record class GoogleAuthOptions : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        this.Credentials?.Validate();
+        this.Credentials.Validate();
+        if (
+            !JsonElement.DeepEquals(
+                this.Type,
+                JsonSerializer.SerializeToElement("googleServiceAccount")
+            )
+        )
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
         _ = this.ProjectID;
         this.Scopes?.Validate();
         _ = this.UniverseDomain;
     }
 
-    public GoogleAuthOptions() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public GoogleAuthOptions(GoogleAuthOptions googleAuthOptions)
-        : base(googleAuthOptions) { }
-#pragma warning restore CS8618
-
-    public GoogleAuthOptions(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ModelConfigVertexModelConfigObjectAuth()
     {
-        this._rawData = new(rawData);
+        this.Type = JsonSerializer.SerializeToElement("googleServiceAccount");
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    GoogleAuthOptions(FrozenDictionary<string, JsonElement> rawData)
+    public ModelConfigVertexModelConfigObjectAuth(
+        ModelConfigVertexModelConfigObjectAuth modelConfigVertexModelConfigObjectAuth
+    )
+        : base(modelConfigVertexModelConfigObjectAuth) { }
+#pragma warning restore CS8618
+
+    public ModelConfigVertexModelConfigObjectAuth(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("googleServiceAccount");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ModelConfigVertexModelConfigObjectAuth(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="GoogleAuthOptionsFromRaw.FromRawUnchecked"/>
-    public static GoogleAuthOptions FromRawUnchecked(
+    /// <inheritdoc cref="ModelConfigVertexModelConfigObjectAuthFromRaw.FromRawUnchecked"/>
+    public static ModelConfigVertexModelConfigObjectAuth FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public ModelConfigVertexModelConfigObjectAuth(
+        ModelConfigVertexModelConfigObjectAuthCredentials credentials
+    )
+        : this()
+    {
+        this.Credentials = credentials;
+    }
 }
 
-class GoogleAuthOptionsFromRaw : IFromRawJson<GoogleAuthOptions>
+class ModelConfigVertexModelConfigObjectAuthFromRaw
+    : IFromRawJson<ModelConfigVertexModelConfigObjectAuth>
 {
     /// <inheritdoc/>
-    public GoogleAuthOptions FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        GoogleAuthOptions.FromRawUnchecked(rawData);
+    public ModelConfigVertexModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigVertexModelConfigObjectAuth.FromRawUnchecked(rawData);
 }
 
 /// <summary>
 /// Google Cloud service account credentials
 /// </summary>
-[JsonConverter(typeof(JsonModelConverter<Credentials, CredentialsFromRaw>))]
-public sealed record class Credentials : JsonModel
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigVertexModelConfigObjectAuthCredentials,
+        ModelConfigVertexModelConfigObjectAuthCredentialsFromRaw
+    >)
+)]
+public sealed record class ModelConfigVertexModelConfigObjectAuthCredentials : JsonModel
 {
     public required string ClientEmail
     {
@@ -519,12 +835,14 @@ public sealed record class Credentials : JsonModel
         }
     }
 
-    public ApiEnum<string, CredentialsType>? Type
+    public ApiEnum<string, ModelConfigVertexModelConfigObjectAuthCredentialsType>? Type
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<ApiEnum<string, CredentialsType>>("type");
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, ModelConfigVertexModelConfigObjectAuthCredentialsType>
+            >("type");
         }
         init
         {
@@ -571,50 +889,59 @@ public sealed record class Credentials : JsonModel
         _ = this.UniverseDomain;
     }
 
-    public Credentials() { }
+    public ModelConfigVertexModelConfigObjectAuthCredentials() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public Credentials(Credentials credentials)
-        : base(credentials) { }
+    public ModelConfigVertexModelConfigObjectAuthCredentials(
+        ModelConfigVertexModelConfigObjectAuthCredentials modelConfigVertexModelConfigObjectAuthCredentials
+    )
+        : base(modelConfigVertexModelConfigObjectAuthCredentials) { }
 #pragma warning restore CS8618
 
-    public Credentials(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ModelConfigVertexModelConfigObjectAuthCredentials(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Credentials(FrozenDictionary<string, JsonElement> rawData)
+    ModelConfigVertexModelConfigObjectAuthCredentials(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="CredentialsFromRaw.FromRawUnchecked"/>
-    public static Credentials FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="ModelConfigVertexModelConfigObjectAuthCredentialsFromRaw.FromRawUnchecked"/>
+    public static ModelConfigVertexModelConfigObjectAuthCredentials FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class CredentialsFromRaw : IFromRawJson<Credentials>
+class ModelConfigVertexModelConfigObjectAuthCredentialsFromRaw
+    : IFromRawJson<ModelConfigVertexModelConfigObjectAuthCredentials>
 {
     /// <inheritdoc/>
-    public Credentials FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Credentials.FromRawUnchecked(rawData);
+    public ModelConfigVertexModelConfigObjectAuthCredentials FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigVertexModelConfigObjectAuthCredentials.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(CredentialsTypeConverter))]
-public enum CredentialsType
+[JsonConverter(typeof(ModelConfigVertexModelConfigObjectAuthCredentialsTypeConverter))]
+public enum ModelConfigVertexModelConfigObjectAuthCredentialsType
 {
     ServiceAccount,
 }
 
-sealed class CredentialsTypeConverter : JsonConverter<CredentialsType>
+sealed class ModelConfigVertexModelConfigObjectAuthCredentialsTypeConverter
+    : JsonConverter<ModelConfigVertexModelConfigObjectAuthCredentialsType>
 {
-    public override CredentialsType Read(
+    public override ModelConfigVertexModelConfigObjectAuthCredentialsType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -622,14 +949,15 @@ sealed class CredentialsTypeConverter : JsonConverter<CredentialsType>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "service_account" => CredentialsType.ServiceAccount,
-            _ => (CredentialsType)(-1),
+            "service_account" =>
+                ModelConfigVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            _ => (ModelConfigVertexModelConfigObjectAuthCredentialsType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        CredentialsType value,
+        ModelConfigVertexModelConfigObjectAuthCredentialsType value,
         JsonSerializerOptions options
     )
     {
@@ -637,7 +965,8 @@ sealed class CredentialsTypeConverter : JsonConverter<CredentialsType>
             writer,
             value switch
             {
-                CredentialsType.ServiceAccount => "service_account",
+                ModelConfigVertexModelConfigObjectAuthCredentialsType.ServiceAccount =>
+                    "service_account",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -650,8 +979,8 @@ sealed class CredentialsTypeConverter : JsonConverter<CredentialsType>
 /// <summary>
 /// Google auth scopes for the desired API request
 /// </summary>
-[JsonConverter(typeof(ScopesConverter))]
-public record class Scopes : ModelBase
+[JsonConverter(typeof(ModelConfigVertexModelConfigObjectAuthScopesConverter))]
+public record class ModelConfigVertexModelConfigObjectAuthScopes : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -668,19 +997,22 @@ public record class Scopes : ModelBase
         }
     }
 
-    public Scopes(string value, JsonElement? element = null)
+    public ModelConfigVertexModelConfigObjectAuthScopes(string value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
     }
 
-    public Scopes(IReadOnlyList<string> value, JsonElement? element = null)
+    public ModelConfigVertexModelConfigObjectAuthScopes(
+        IReadOnlyList<string> value,
+        JsonElement? element = null
+    )
     {
         this.Value = ImmutableArray.ToImmutableArray(value);
         this._element = element;
     }
 
-    public Scopes(JsonElement element)
+    public ModelConfigVertexModelConfigObjectAuthScopes(JsonElement element)
     {
         this._element = element;
     }
@@ -761,7 +1093,9 @@ public record class Scopes : ModelBase
                 strings(value);
                 break;
             default:
-                throw new StagehandInvalidDataException("Data did not match any variant of Scopes");
+                throw new StagehandInvalidDataException(
+                    "Data did not match any variant of ModelConfigVertexModelConfigObjectAuthScopes"
+                );
         }
     }
 
@@ -796,14 +1130,17 @@ public record class Scopes : ModelBase
             string value => @string(value),
             IReadOnlyList<string> value => strings(value),
             _ => throw new StagehandInvalidDataException(
-                "Data did not match any variant of Scopes"
+                "Data did not match any variant of ModelConfigVertexModelConfigObjectAuthScopes"
             ),
         };
     }
 
-    public static implicit operator Scopes(string value) => new(value);
+    public static implicit operator ModelConfigVertexModelConfigObjectAuthScopes(string value) =>
+        new(value);
 
-    public static implicit operator Scopes(List<string> value) => new((IReadOnlyList<string>)value);
+    public static implicit operator ModelConfigVertexModelConfigObjectAuthScopes(
+        List<string> value
+    ) => new((IReadOnlyList<string>)value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -819,11 +1156,13 @@ public record class Scopes : ModelBase
     {
         if (this.Value == null)
         {
-            throw new StagehandInvalidDataException("Data did not match any variant of Scopes");
+            throw new StagehandInvalidDataException(
+                "Data did not match any variant of ModelConfigVertexModelConfigObjectAuthScopes"
+            );
         }
     }
 
-    public virtual bool Equals(Scopes? other) =>
+    public virtual bool Equals(ModelConfigVertexModelConfigObjectAuthScopes? other) =>
         other != null
         && this.VariantIndex() == other.VariantIndex()
         && JsonElement.DeepEquals(this.Json, other.Json);
@@ -850,9 +1189,10 @@ public record class Scopes : ModelBase
     }
 }
 
-sealed class ScopesConverter : JsonConverter<Scopes>
+sealed class ModelConfigVertexModelConfigObjectAuthScopesConverter
+    : JsonConverter<ModelConfigVertexModelConfigObjectAuthScopes>
 {
-    public override Scopes? Read(
+    public override ModelConfigVertexModelConfigObjectAuthScopes? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -888,29 +1228,420 @@ sealed class ScopesConverter : JsonConverter<Scopes>
         return new(element);
     }
 
-    public override void Write(Utf8JsonWriter writer, Scopes value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ModelConfigVertexModelConfigObjectAuthScopes value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
 /// <summary>
+/// Vertex provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigVertexModelConfigObjectProviderOptions,
+        ModelConfigVertexModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class ModelConfigVertexModelConfigObjectProviderOptions : JsonModel
+{
+    /// <summary>
+    /// Vertex AI provider-specific settings
+    /// </summary>
+    public required ModelConfigVertexModelConfigObjectProviderOptionsVertex Vertex
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ModelConfigVertexModelConfigObjectProviderOptionsVertex>(
+                "vertex"
+            );
+        }
+        init { this._rawData.Set("vertex", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Vertex.Validate();
+    }
+
+    public ModelConfigVertexModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ModelConfigVertexModelConfigObjectProviderOptions(
+        ModelConfigVertexModelConfigObjectProviderOptions modelConfigVertexModelConfigObjectProviderOptions
+    )
+        : base(modelConfigVertexModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public ModelConfigVertexModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ModelConfigVertexModelConfigObjectProviderOptions(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ModelConfigVertexModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static ModelConfigVertexModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ModelConfigVertexModelConfigObjectProviderOptions(
+        ModelConfigVertexModelConfigObjectProviderOptionsVertex vertex
+    )
+        : this()
+    {
+        this.Vertex = vertex;
+    }
+}
+
+class ModelConfigVertexModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<ModelConfigVertexModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public ModelConfigVertexModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigVertexModelConfigObjectProviderOptions.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Vertex AI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigVertexModelConfigObjectProviderOptionsVertex,
+        ModelConfigVertexModelConfigObjectProviderOptionsVertexFromRaw
+    >)
+)]
+public sealed record class ModelConfigVertexModelConfigObjectProviderOptionsVertex : JsonModel
+{
+    /// <summary>
+    /// Google Cloud location for Vertex AI models
+    /// </summary>
+    public required string Location
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("location");
+        }
+        init { this._rawData.Set("location", value); }
+    }
+
+    /// <summary>
+    /// Google Cloud project ID for Vertex AI models
+    /// </summary>
+    public required string Project
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("project");
+        }
+        init { this._rawData.Set("project", value); }
+    }
+
+    /// <summary>
+    /// Base URL for the Vertex AI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Vertex AI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Location;
+        _ = this.Project;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public ModelConfigVertexModelConfigObjectProviderOptionsVertex() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ModelConfigVertexModelConfigObjectProviderOptionsVertex(
+        ModelConfigVertexModelConfigObjectProviderOptionsVertex modelConfigVertexModelConfigObjectProviderOptionsVertex
+    )
+        : base(modelConfigVertexModelConfigObjectProviderOptionsVertex) { }
+#pragma warning restore CS8618
+
+    public ModelConfigVertexModelConfigObjectProviderOptionsVertex(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ModelConfigVertexModelConfigObjectProviderOptionsVertex(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ModelConfigVertexModelConfigObjectProviderOptionsVertexFromRaw.FromRawUnchecked"/>
+    public static ModelConfigVertexModelConfigObjectProviderOptionsVertex FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ModelConfigVertexModelConfigObjectProviderOptionsVertexFromRaw
+    : IFromRawJson<ModelConfigVertexModelConfigObjectProviderOptionsVertex>
+{
+    /// <inheritdoc/>
+    public ModelConfigVertexModelConfigObjectProviderOptionsVertex FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigVertexModelConfigObjectProviderOptionsVertex.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ModelConfigGenericModelConfigObject,
+        ModelConfigGenericModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class ModelConfigGenericModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// AI provider for the model (or provide a baseURL endpoint instead)
+    /// </summary>
+    public ApiEnum<string, ModelConfigGenericModelConfigObjectProvider>? Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, ModelConfigGenericModelConfigObjectProvider>
+            >("provider");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("provider", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ModelName;
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        this.Provider?.Validate();
+    }
+
+    public ModelConfigGenericModelConfigObject() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ModelConfigGenericModelConfigObject(
+        ModelConfigGenericModelConfigObject modelConfigGenericModelConfigObject
+    )
+        : base(modelConfigGenericModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public ModelConfigGenericModelConfigObject(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ModelConfigGenericModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ModelConfigGenericModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static ModelConfigGenericModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ModelConfigGenericModelConfigObject(string modelName)
+        : this()
+    {
+        this.ModelName = modelName;
+    }
+}
+
+class ModelConfigGenericModelConfigObjectFromRaw : IFromRawJson<ModelConfigGenericModelConfigObject>
+{
+    /// <inheritdoc/>
+    public ModelConfigGenericModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ModelConfigGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
 /// AI provider for the model (or provide a baseURL endpoint instead)
 /// </summary>
-[JsonConverter(typeof(ModelConfigProviderConverter))]
-public enum ModelConfigProvider
+[JsonConverter(typeof(ModelConfigGenericModelConfigObjectProviderConverter))]
+public enum ModelConfigGenericModelConfigObjectProvider
 {
     OpenAI,
     Anthropic,
     Google,
     Microsoft,
     Bedrock,
-    Vertex,
 }
 
-sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
+sealed class ModelConfigGenericModelConfigObjectProviderConverter
+    : JsonConverter<ModelConfigGenericModelConfigObjectProvider>
 {
-    public override ModelConfigProvider Read(
+    public override ModelConfigGenericModelConfigObjectProvider Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -918,19 +1649,18 @@ sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "openai" => ModelConfigProvider.OpenAI,
-            "anthropic" => ModelConfigProvider.Anthropic,
-            "google" => ModelConfigProvider.Google,
-            "microsoft" => ModelConfigProvider.Microsoft,
-            "bedrock" => ModelConfigProvider.Bedrock,
-            "vertex" => ModelConfigProvider.Vertex,
-            _ => (ModelConfigProvider)(-1),
+            "openai" => ModelConfigGenericModelConfigObjectProvider.OpenAI,
+            "anthropic" => ModelConfigGenericModelConfigObjectProvider.Anthropic,
+            "google" => ModelConfigGenericModelConfigObjectProvider.Google,
+            "microsoft" => ModelConfigGenericModelConfigObjectProvider.Microsoft,
+            "bedrock" => ModelConfigGenericModelConfigObjectProvider.Bedrock,
+            _ => (ModelConfigGenericModelConfigObjectProvider)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        ModelConfigProvider value,
+        ModelConfigGenericModelConfigObjectProvider value,
         JsonSerializerOptions options
     )
     {
@@ -938,12 +1668,11 @@ sealed class ModelConfigProviderConverter : JsonConverter<ModelConfigProvider>
             writer,
             value switch
             {
-                ModelConfigProvider.OpenAI => "openai",
-                ModelConfigProvider.Anthropic => "anthropic",
-                ModelConfigProvider.Google => "google",
-                ModelConfigProvider.Microsoft => "microsoft",
-                ModelConfigProvider.Bedrock => "bedrock",
-                ModelConfigProvider.Vertex => "vertex",
+                ModelConfigGenericModelConfigObjectProvider.OpenAI => "openai",
+                ModelConfigGenericModelConfigObjectProvider.Anthropic => "anthropic",
+                ModelConfigGenericModelConfigObjectProvider.Google => "google",
+                ModelConfigGenericModelConfigObjectProvider.Microsoft => "microsoft",
+                ModelConfigGenericModelConfigObjectProvider.Bedrock => "bedrock",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

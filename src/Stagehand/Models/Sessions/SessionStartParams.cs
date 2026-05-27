@@ -424,14 +424,12 @@ public sealed record class Browser : JsonModel
     /// <summary>
     /// Browser type to use
     /// </summary>
-    public ApiEnum<string, global::Stagehand.Models.Sessions.Type>? Type
+    public ApiEnum<string, BrowserType>? Type
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
-                ApiEnum<string, global::Stagehand.Models.Sessions.Type>
-            >("type");
+            return this._rawData.GetNullableClass<ApiEnum<string, BrowserType>>("type");
         }
         init
         {
@@ -1345,16 +1343,16 @@ class ViewportFromRaw : IFromRawJson<Viewport>
 /// <summary>
 /// Browser type to use
 /// </summary>
-[JsonConverter(typeof(TypeConverter))]
-public enum Type
+[JsonConverter(typeof(BrowserTypeConverter))]
+public enum BrowserType
 {
     Local,
     Browserbase,
 }
 
-sealed class TypeConverter : JsonConverter<global::Stagehand.Models.Sessions.Type>
+sealed class BrowserTypeConverter : JsonConverter<BrowserType>
 {
-    public override global::Stagehand.Models.Sessions.Type Read(
+    public override BrowserType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1362,15 +1360,15 @@ sealed class TypeConverter : JsonConverter<global::Stagehand.Models.Sessions.Typ
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "local" => global::Stagehand.Models.Sessions.Type.Local,
-            "browserbase" => global::Stagehand.Models.Sessions.Type.Browserbase,
-            _ => (global::Stagehand.Models.Sessions.Type)(-1),
+            "local" => BrowserType.Local,
+            "browserbase" => BrowserType.Browserbase,
+            _ => (BrowserType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        global::Stagehand.Models.Sessions.Type value,
+        BrowserType value,
         JsonSerializerOptions options
     )
     {
@@ -1378,8 +1376,8 @@ sealed class TypeConverter : JsonConverter<global::Stagehand.Models.Sessions.Typ
             writer,
             value switch
             {
-                global::Stagehand.Models.Sessions.Type.Local => "local",
-                global::Stagehand.Models.Sessions.Type.Browserbase => "browserbase",
+                BrowserType.Local => "local",
+                BrowserType.Browserbase => "browserbase",
                 _ => throw new StagehandInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

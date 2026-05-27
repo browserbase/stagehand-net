@@ -49,7 +49,7 @@ public class SessionStartParamsTest : TestBase
                     UserDataDir = "userDataDir",
                     Viewport = new() { Height = 0, Width = 0 },
                 },
-                Type = Sessions::Type.Local,
+                Type = Sessions::BrowserType.Local,
             },
             BrowserbaseSessionCreateParams = new()
             {
@@ -138,7 +138,7 @@ public class SessionStartParamsTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
         Sessions::BrowserbaseSessionCreateParams expectedBrowserbaseSessionCreateParams = new()
         {
@@ -368,7 +368,7 @@ public class SessionStartParamsTest : TestBase
                     UserDataDir = "userDataDir",
                     Viewport = new() { Height = 0, Width = 0 },
                 },
-                Type = Sessions::Type.Local,
+                Type = Sessions::BrowserType.Local,
             },
             BrowserbaseSessionCreateParams = new()
             {
@@ -466,7 +466,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
 
         string expectedCdpUrl = "ws://localhost:9222";
@@ -499,7 +499,7 @@ public class BrowserTest : TestBase
             UserDataDir = "userDataDir",
             Viewport = new() { Height = 0, Width = 0 },
         };
-        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
+        ApiEnum<string, Sessions::BrowserType> expectedType = Sessions::BrowserType.Local;
 
         Assert.Equal(expectedCdpUrl, model.CdpUrl);
         Assert.Equal(expectedLaunchOptions, model.LaunchOptions);
@@ -541,7 +541,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -588,7 +588,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -628,7 +628,7 @@ public class BrowserTest : TestBase
             UserDataDir = "userDataDir",
             Viewport = new() { Height = 0, Width = 0 },
         };
-        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.Local;
+        ApiEnum<string, Sessions::BrowserType> expectedType = Sessions::BrowserType.Local;
 
         Assert.Equal(expectedCdpUrl, deserialized.CdpUrl);
         Assert.Equal(expectedLaunchOptions, deserialized.LaunchOptions);
@@ -670,7 +670,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
 
         model.Validate();
@@ -765,7 +765,7 @@ public class BrowserTest : TestBase
                 UserDataDir = "userDataDir",
                 Viewport = new() { Height = 0, Width = 0 },
             },
-            Type = Sessions::Type.Local,
+            Type = Sessions::BrowserType.Local,
         };
 
         Sessions::Browser copied = new(model);
@@ -1515,22 +1515,22 @@ public class ViewportTest : TestBase
     }
 }
 
-public class TypeTest : TestBase
+public class BrowserTypeTest : TestBase
 {
     [Theory]
-    [InlineData(Sessions::Type.Local)]
-    [InlineData(Sessions::Type.Browserbase)]
-    public void Validation_Works(Sessions::Type rawValue)
+    [InlineData(Sessions::BrowserType.Local)]
+    [InlineData(Sessions::BrowserType.Browserbase)]
+    public void Validation_Works(Sessions::BrowserType rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::Type> value = rawValue;
+        ApiEnum<string, Sessions::BrowserType> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::BrowserType>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
@@ -1540,15 +1540,15 @@ public class TypeTest : TestBase
     }
 
     [Theory]
-    [InlineData(Sessions::Type.Local)]
-    [InlineData(Sessions::Type.Browserbase)]
-    public void SerializationRoundtrip_Works(Sessions::Type rawValue)
+    [InlineData(Sessions::BrowserType.Local)]
+    [InlineData(Sessions::BrowserType.Browserbase)]
+    public void SerializationRoundtrip_Works(Sessions::BrowserType rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Sessions::Type> value = rawValue;
+        ApiEnum<string, Sessions::BrowserType> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::BrowserType>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -1559,12 +1559,12 @@ public class TypeTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::BrowserType>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::BrowserType>>(
             json,
             ModelBase.SerializerOptions
         );

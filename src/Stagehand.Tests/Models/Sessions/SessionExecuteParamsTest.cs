@@ -19,12 +19,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -37,25 +34,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -68,19 +72,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -105,12 +119,9 @@ public class SessionExecuteParamsTest : TestBase
         AgentConfig expectedAgentConfig = new()
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -123,25 +134,32 @@ public class SessionExecuteParamsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -154,19 +172,29 @@ public class SessionExecuteParamsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
         ExecuteOptions expectedExecuteOptions = new()
@@ -201,12 +229,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -219,25 +244,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -250,19 +282,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -296,12 +338,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -314,25 +353,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -345,19 +391,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -395,12 +451,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -413,25 +466,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -444,19 +504,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -489,12 +559,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -507,25 +574,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -538,19 +612,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -585,12 +669,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -603,25 +684,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -634,19 +722,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -693,12 +791,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -711,25 +806,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -742,19 +844,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -795,12 +907,9 @@ public class SessionExecuteParamsTest : TestBase
             AgentConfig = new()
             {
                 Cua = true,
-                ExecutionModel = new ModelConfig()
+                ExecutionModel = new ExecutionModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -813,25 +922,32 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
                 Mode = Mode.Cua,
-                Model = new ModelConfig()
+                Model = new AgentConfigModelVertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -844,19 +960,29 @@ public class SessionExecuteParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = CredentialsType.ServiceAccount,
+                            Type =
+                                AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = ModelConfigProvider.OpenAI,
                 },
-                Provider = Provider.OpenAI,
+                Provider = AgentConfigProvider.OpenAI,
                 SystemPrompt = "systemPrompt",
             },
             ExecuteOptions = new()
@@ -891,12 +1017,9 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -909,25 +1032,32 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -940,29 +1070,36 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
         bool expectedCua = true;
-        ExecutionModel expectedExecutionModel = new ModelConfig()
+        ExecutionModel expectedExecutionModel = new ExecutionModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -975,25 +1112,31 @@ public class AgentConfigTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Mode> expectedMode = Mode.Cua;
-        AgentConfigModel expectedModel = new ModelConfig()
+        AgentConfigModel expectedModel = new AgentConfigModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1006,19 +1149,29 @@ public class AgentConfigTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
         };
-        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
+        ApiEnum<string, AgentConfigProvider> expectedProvider = AgentConfigProvider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, model.Cua);
@@ -1035,12 +1188,9 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1053,25 +1203,32 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1084,19 +1241,29 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -1115,12 +1282,9 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1133,25 +1297,32 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1164,19 +1335,29 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -1188,12 +1369,9 @@ public class AgentConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         bool expectedCua = true;
-        ExecutionModel expectedExecutionModel = new ModelConfig()
+        ExecutionModel expectedExecutionModel = new ExecutionModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1206,25 +1384,31 @@ public class AgentConfigTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
         };
         ApiEnum<string, Mode> expectedMode = Mode.Cua;
-        AgentConfigModel expectedModel = new ModelConfig()
+        AgentConfigModel expectedModel = new AgentConfigModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1237,19 +1421,29 @@ public class AgentConfigTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
         };
-        ApiEnum<string, Provider> expectedProvider = Provider.OpenAI;
+        ApiEnum<string, AgentConfigProvider> expectedProvider = AgentConfigProvider.OpenAI;
         string expectedSystemPrompt = "systemPrompt";
 
         Assert.Equal(expectedCua, deserialized.Cua);
@@ -1266,12 +1460,9 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1284,25 +1475,32 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1315,19 +1513,29 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -1412,12 +1620,9 @@ public class AgentConfigTest : TestBase
         var model = new AgentConfig
         {
             Cua = true,
-            ExecutionModel = new ModelConfig()
+            ExecutionModel = new ExecutionModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1430,25 +1635,32 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
             Mode = Mode.Cua,
-            Model = new ModelConfig()
+            Model = new AgentConfigModelVertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -1461,19 +1673,29 @@ public class AgentConfigTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = CredentialsType.ServiceAccount,
+                        Type =
+                            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = ModelConfigProvider.OpenAI,
             },
-            Provider = Provider.OpenAI,
+            Provider = AgentConfigProvider.OpenAI,
             SystemPrompt = "systemPrompt",
         };
 
@@ -1486,14 +1708,11 @@ public class AgentConfigTest : TestBase
 public class ExecutionModelTest : TestBase
 {
     [Fact]
-    public void ModelConfigValidationWorks()
+    public void VertexModelConfigObjectValidationWorks()
     {
-        ExecutionModel value = new ModelConfig()
+        ExecutionModel value = new ExecutionModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1506,17 +1725,40 @@ public class ExecutionModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectValidationWorks()
+    {
+        ExecutionModel value = new ExecutionModelGenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
     }
@@ -1529,14 +1771,11 @@ public class ExecutionModelTest : TestBase
     }
 
     [Fact]
-    public void ModelConfigSerializationRoundtripWorks()
+    public void VertexModelConfigObjectSerializationRoundtripWorks()
     {
-        ExecutionModel value = new ModelConfig()
+        ExecutionModel value = new ExecutionModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1549,17 +1788,46 @@ public class ExecutionModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectSerializationRoundtripWorks()
+    {
+        ExecutionModel value = new ExecutionModelGenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
@@ -1579,6 +1847,1768 @@ public class ExecutionModelTest : TestBase
             element,
             ModelBase.SerializerOptions
         );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelVertexModelConfigObjectAuth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        ExecutionModelVertexModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, model.Auth);
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelVertexModelConfigObjectAuth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        ExecutionModelVertexModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, deserialized.Auth);
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelVertexModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectAuthTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        ExecutionModelVertexModelConfigObjectAuthCredentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        ExecutionModelVertexModelConfigObjectAuthScopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, model.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, model.Type));
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedScopes, model.Scopes);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuth>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuth>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelVertexModelConfigObjectAuthCredentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        ExecutionModelVertexModelConfigObjectAuthScopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, deserialized.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, deserialized.Type));
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedScopes, deserialized.Scopes);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        ExecutionModelVertexModelConfigObjectAuth copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectAuthCredentialsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType> expectedType =
+            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, model.ClientEmail);
+        Assert.Equal(expectedPrivateKey, model.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, model.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, model.AuthUri);
+        Assert.Equal(expectedClientID, model.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, model.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, model.PrivateKeyID);
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedTokenUri, model.TokenUri);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuthCredentials>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuthCredentials>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType> expectedType =
+            ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, deserialized.ClientEmail);
+        Assert.Equal(expectedPrivateKey, deserialized.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, deserialized.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, deserialized.AuthUri);
+        Assert.Equal(expectedClientID, deserialized.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, deserialized.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, deserialized.PrivateKeyID);
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedTokenUri, deserialized.TokenUri);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        ExecutionModelVertexModelConfigObjectAuthCredentials copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectAuthCredentialsTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount)]
+    public void Validation_Works(ExecutionModelVertexModelConfigObjectAuthCredentialsType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount)]
+    public void SerializationRoundtrip_Works(
+        ExecutionModelVertexModelConfigObjectAuthCredentialsType rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelVertexModelConfigObjectAuthCredentialsType>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectAuthScopesTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        ExecutionModelVertexModelConfigObjectAuthScopes value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringsValidationWorks()
+    {
+        ExecutionModelVertexModelConfigObjectAuthScopes value = new(["string"]);
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        ExecutionModelVertexModelConfigObjectAuthScopes value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuthScopes>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringsSerializationRoundtripWorks()
+    {
+        ExecutionModelVertexModelConfigObjectAuthScopes value = new(["string"]);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectAuthScopes>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        ExecutionModelVertexModelConfigObjectProviderOptionsVertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, model.Vertex);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelVertexModelConfigObjectProviderOptionsVertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, deserialized.Vertex);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        ExecutionModelVertexModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelVertexModelConfigObjectProviderOptionsVertexTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, model.Location);
+        Assert.Equal(expectedProject, model.Project);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectProviderOptionsVertex>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelVertexModelConfigObjectProviderOptionsVertex>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, deserialized.Location);
+        Assert.Equal(expectedProject, deserialized.Project);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelVertexModelConfigObjectProviderOptionsVertex copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelGenericModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
+            ExecutionModelGenericModelConfigObjectProvider.OpenAI;
+
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, model.Provider);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelGenericModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelGenericModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
+            ExecutionModelGenericModelConfigObjectProvider.OpenAI;
+
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, deserialized.Provider);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        ExecutionModelGenericModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelGenericModelConfigObjectProviderTest : TestBase
+{
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.OpenAI)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Anthropic)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Google)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Microsoft)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Bedrock)]
+    public void Validation_Works(ExecutionModelGenericModelConfigObjectProvider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.OpenAI)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Anthropic)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Google)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Microsoft)]
+    [InlineData(ExecutionModelGenericModelConfigObjectProvider.Bedrock)]
+    public void SerializationRoundtrip_Works(
+        ExecutionModelGenericModelConfigObjectProvider rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>
+        >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -1647,14 +3677,11 @@ public class ModeTest : TestBase
 public class AgentConfigModelTest : TestBase
 {
     [Fact]
-    public void ConfigValidationWorks()
+    public void VertexModelConfigObjectValidationWorks()
     {
-        AgentConfigModel value = new ModelConfig()
+        AgentConfigModel value = new AgentConfigModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1667,17 +3694,41 @@ public class AgentConfigModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectValidationWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelGenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
     }
@@ -1690,14 +3741,11 @@ public class AgentConfigModelTest : TestBase
     }
 
     [Fact]
-    public void ConfigSerializationRoundtripWorks()
+    public void VertexModelConfigObjectSerializationRoundtripWorks()
     {
-        AgentConfigModel value = new ModelConfig()
+        AgentConfigModel value = new AgentConfigModelVertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -1710,17 +3758,47 @@ public class AgentConfigModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = CredentialsType.ServiceAccount,
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelGenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
@@ -1745,25 +3823,1800 @@ public class AgentConfigModelTest : TestBase
     }
 }
 
-public class ProviderTest : TestBase
+public class AgentConfigModelVertexModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelVertexModelConfigObjectAuth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        AgentConfigModelVertexModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, model.Auth);
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelVertexModelConfigObjectAuth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        AgentConfigModelVertexModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, deserialized.Auth);
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type =
+                        AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelVertexModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectAuthTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        AgentConfigModelVertexModelConfigObjectAuthCredentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        AgentConfigModelVertexModelConfigObjectAuthScopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, model.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, model.Type));
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedScopes, model.Scopes);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuth>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuth>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelVertexModelConfigObjectAuthCredentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        AgentConfigModelVertexModelConfigObjectAuthScopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, deserialized.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, deserialized.Type));
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedScopes, deserialized.Scopes);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        AgentConfigModelVertexModelConfigObjectAuth copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectAuthCredentialsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType> expectedType =
+            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, model.ClientEmail);
+        Assert.Equal(expectedPrivateKey, model.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, model.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, model.AuthUri);
+        Assert.Equal(expectedClientID, model.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, model.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, model.PrivateKeyID);
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedTokenUri, model.TokenUri);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuthCredentials>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuthCredentials>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType> expectedType =
+            AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, deserialized.ClientEmail);
+        Assert.Equal(expectedPrivateKey, deserialized.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, deserialized.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, deserialized.AuthUri);
+        Assert.Equal(expectedClientID, deserialized.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, deserialized.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, deserialized.PrivateKeyID);
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedTokenUri, deserialized.TokenUri);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectAuthCredentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        AgentConfigModelVertexModelConfigObjectAuthCredentials copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectAuthCredentialsTypeTest : TestBase
 {
     [Theory]
-    [InlineData(Provider.OpenAI)]
-    [InlineData(Provider.Anthropic)]
-    [InlineData(Provider.Google)]
-    [InlineData(Provider.Microsoft)]
-    [InlineData(Provider.Bedrock)]
-    public void Validation_Works(Provider rawValue)
+    [InlineData(AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount)]
+    public void Validation_Works(
+        AgentConfigModelVertexModelConfigObjectAuthCredentialsType rawValue
+    )
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Provider> value = rawValue;
+        ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType> value =
+            rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount)]
+    public void SerializationRoundtrip_Works(
+        AgentConfigModelVertexModelConfigObjectAuthCredentialsType rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType> value =
+            rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelVertexModelConfigObjectAuthCredentialsType>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectAuthScopesTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        AgentConfigModelVertexModelConfigObjectAuthScopes value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringsValidationWorks()
+    {
+        AgentConfigModelVertexModelConfigObjectAuthScopes value = new(["string"]);
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        AgentConfigModelVertexModelConfigObjectAuthScopes value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuthScopes>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringsSerializationRoundtripWorks()
+    {
+        AgentConfigModelVertexModelConfigObjectAuthScopes value = new(["string"]);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectAuthScopes>(
+                element,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        AgentConfigModelVertexModelConfigObjectProviderOptionsVertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, model.Vertex);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelVertexModelConfigObjectProviderOptionsVertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, deserialized.Vertex);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        AgentConfigModelVertexModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelVertexModelConfigObjectProviderOptionsVertexTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, model.Location);
+        Assert.Equal(expectedProject, model.Project);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectProviderOptionsVertex>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelVertexModelConfigObjectProviderOptionsVertex>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, deserialized.Location);
+        Assert.Equal(expectedProject, deserialized.Project);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelVertexModelConfigObjectProviderOptionsVertex copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelGenericModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
+            AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
+
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, model.Provider);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelGenericModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelGenericModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
+            AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
+
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, deserialized.Provider);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelGenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
+        };
+
+        AgentConfigModelGenericModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelGenericModelConfigObjectProviderTest : TestBase
+{
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.OpenAI)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Anthropic)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Google)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Microsoft)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Bedrock)]
+    public void Validation_Works(AgentConfigModelGenericModelConfigObjectProvider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.OpenAI)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Anthropic)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Google)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Microsoft)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectProvider.Bedrock)]
+    public void SerializationRoundtrip_Works(
+        AgentConfigModelGenericModelConfigObjectProvider rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class AgentConfigProviderTest : TestBase
+{
+    [Theory]
+    [InlineData(AgentConfigProvider.OpenAI)]
+    [InlineData(AgentConfigProvider.Anthropic)]
+    [InlineData(AgentConfigProvider.Google)]
+    [InlineData(AgentConfigProvider.Microsoft)]
+    [InlineData(AgentConfigProvider.Bedrock)]
+    public void Validation_Works(AgentConfigProvider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigProvider> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AgentConfigProvider>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
@@ -1773,18 +5626,18 @@ public class ProviderTest : TestBase
     }
 
     [Theory]
-    [InlineData(Provider.OpenAI)]
-    [InlineData(Provider.Anthropic)]
-    [InlineData(Provider.Google)]
-    [InlineData(Provider.Microsoft)]
-    [InlineData(Provider.Bedrock)]
-    public void SerializationRoundtrip_Works(Provider rawValue)
+    [InlineData(AgentConfigProvider.OpenAI)]
+    [InlineData(AgentConfigProvider.Anthropic)]
+    [InlineData(AgentConfigProvider.Google)]
+    [InlineData(AgentConfigProvider.Microsoft)]
+    [InlineData(AgentConfigProvider.Bedrock)]
+    public void SerializationRoundtrip_Works(AgentConfigProvider rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Provider> value = rawValue;
+        ApiEnum<string, AgentConfigProvider> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AgentConfigProvider>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -1795,12 +5648,12 @@ public class ProviderTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AgentConfigProvider>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Provider>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AgentConfigProvider>>(
             json,
             ModelBase.SerializerOptions
         );

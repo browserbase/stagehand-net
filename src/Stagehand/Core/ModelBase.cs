@@ -21,21 +21,49 @@ public abstract record class ModelBase
         Converters =
         {
             new FrozenDictionaryConverterFactory(),
-            new ApiEnumConverter<string, CredentialsType>(),
-            new ApiEnumConverter<string, ModelConfigProvider>(),
+            new ApiEnumConverter<string, ModelConfigVertexModelConfigObjectAuthCredentialsType>(),
+            new ApiEnumConverter<string, ModelConfigGenericModelConfigObjectProvider>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, StreamEventType>(),
+            new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, Provider>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXStreamResponse>(),
+            new ApiEnumConverter<
+                string,
+                ExecutionModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<string, ExecutionModelGenericModelConfigObjectProvider>(),
             new ApiEnumConverter<string, Mode>(),
-            new ApiEnumConverter<string, Provider>(),
+            new ApiEnumConverter<
+                string,
+                AgentConfigModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<string, AgentConfigModelGenericModelConfigObjectProvider>(),
+            new ApiEnumConverter<string, AgentConfigProvider>(),
             new ApiEnumConverter<string, SessionExecuteParamsXStreamResponse>(),
+            new ApiEnumConverter<
+                string,
+                SessionExtractParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<
+                string,
+                SessionExtractParamsOptionsModelGenericModelConfigObjectProvider
+            >(),
             new ApiEnumConverter<string, SessionExtractParamsXStreamResponse>(),
             new ApiEnumConverter<string, WaitUntil>(),
             new ApiEnumConverter<string, SessionNavigateParamsXStreamResponse>(),
+            new ApiEnumConverter<
+                string,
+                SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider
+            >(),
             new ApiEnumConverter<string, SessionObserveParamsXStreamResponse>(),
             new ApiEnumConverter<string, SessionReplayParamsXStreamResponse>(),
-            new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, BrowserType>(),
             new ApiEnumConverter<string, FingerprintBrowser>(),
             new ApiEnumConverter<string, Device>(),
             new ApiEnumConverter<string, HttpVersion>(),
