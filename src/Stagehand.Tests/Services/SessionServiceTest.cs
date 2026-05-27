@@ -53,12 +53,9 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    ExecutionModel = new ModelConfig()
+                    ExecutionModel = new ExecutionModelVertexModelConfigObject()
                     {
-                        ModelName = "openai/gpt-5.4-mini",
-                        ApiKey = "sk-some-openai-api-key",
-                        BaseUrl = "https://api.openai.com/v1",
-                        GoogleAuthOptions = new()
+                        Auth = new()
                         {
                             Credentials = new()
                             {
@@ -71,25 +68,32 @@ public class SessionServiceTest : TestBase
                                 PrivateKeyID = "private_key_id",
                                 ProjectID = "project_id",
                                 TokenUri = "https://example.com",
-                                Type = CredentialsType.ServiceAccount,
+                                Type =
+                                    ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                                 UniverseDomain = "universe_domain",
                             },
                             ProjectID = "projectId",
                             Scopes = "string",
                             UniverseDomain = "universeDomain",
                         },
+                        ModelName = "openai/gpt-5.4-mini",
+                        ProviderOptions = new(
+                            new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                            {
+                                Location = "us-central1",
+                                Project = "my-gcp-project",
+                                BaseUrl = "https://example.com",
+                                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                            }
+                        ),
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
                         Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                        Location = "us-central1",
-                        Project = "my-gcp-project",
-                        Provider = ModelConfigProvider.OpenAI,
                     },
                     Mode = Mode.Cua,
-                    Model = new ModelConfig()
+                    Model = new AgentConfigModelVertexModelConfigObject()
                     {
-                        ModelName = "openai/gpt-5.4-mini",
-                        ApiKey = "sk-some-openai-api-key",
-                        BaseUrl = "https://api.openai.com/v1",
-                        GoogleAuthOptions = new()
+                        Auth = new()
                         {
                             Credentials = new()
                             {
@@ -102,19 +106,29 @@ public class SessionServiceTest : TestBase
                                 PrivateKeyID = "private_key_id",
                                 ProjectID = "project_id",
                                 TokenUri = "https://example.com",
-                                Type = CredentialsType.ServiceAccount,
+                                Type =
+                                    AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                                 UniverseDomain = "universe_domain",
                             },
                             ProjectID = "projectId",
                             Scopes = "string",
                             UniverseDomain = "universeDomain",
                         },
+                        ModelName = "openai/gpt-5.4-mini",
+                        ProviderOptions = new(
+                            new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                            {
+                                Location = "us-central1",
+                                Project = "my-gcp-project",
+                                BaseUrl = "https://example.com",
+                                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                            }
+                        ),
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
                         Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                        Location = "us-central1",
-                        Project = "my-gcp-project",
-                        Provider = ModelConfigProvider.OpenAI,
                     },
-                    Provider = Provider.OpenAI,
+                    Provider = AgentConfigProvider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },
                 ExecuteOptions = new()
@@ -146,12 +160,9 @@ public class SessionServiceTest : TestBase
                 AgentConfig = new()
                 {
                     Cua = true,
-                    ExecutionModel = new ModelConfig()
+                    ExecutionModel = new ExecutionModelVertexModelConfigObject()
                     {
-                        ModelName = "openai/gpt-5.4-mini",
-                        ApiKey = "sk-some-openai-api-key",
-                        BaseUrl = "https://api.openai.com/v1",
-                        GoogleAuthOptions = new()
+                        Auth = new()
                         {
                             Credentials = new()
                             {
@@ -164,25 +175,32 @@ public class SessionServiceTest : TestBase
                                 PrivateKeyID = "private_key_id",
                                 ProjectID = "project_id",
                                 TokenUri = "https://example.com",
-                                Type = CredentialsType.ServiceAccount,
+                                Type =
+                                    ExecutionModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                                 UniverseDomain = "universe_domain",
                             },
                             ProjectID = "projectId",
                             Scopes = "string",
                             UniverseDomain = "universeDomain",
                         },
+                        ModelName = "openai/gpt-5.4-mini",
+                        ProviderOptions = new(
+                            new ExecutionModelVertexModelConfigObjectProviderOptionsVertex()
+                            {
+                                Location = "us-central1",
+                                Project = "my-gcp-project",
+                                BaseUrl = "https://example.com",
+                                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                            }
+                        ),
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
                         Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                        Location = "us-central1",
-                        Project = "my-gcp-project",
-                        Provider = ModelConfigProvider.OpenAI,
                     },
                     Mode = Mode.Cua,
-                    Model = new ModelConfig()
+                    Model = new AgentConfigModelVertexModelConfigObject()
                     {
-                        ModelName = "openai/gpt-5.4-mini",
-                        ApiKey = "sk-some-openai-api-key",
-                        BaseUrl = "https://api.openai.com/v1",
-                        GoogleAuthOptions = new()
+                        Auth = new()
                         {
                             Credentials = new()
                             {
@@ -195,19 +213,29 @@ public class SessionServiceTest : TestBase
                                 PrivateKeyID = "private_key_id",
                                 ProjectID = "project_id",
                                 TokenUri = "https://example.com",
-                                Type = CredentialsType.ServiceAccount,
+                                Type =
+                                    AgentConfigModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
                                 UniverseDomain = "universe_domain",
                             },
                             ProjectID = "projectId",
                             Scopes = "string",
                             UniverseDomain = "universeDomain",
                         },
+                        ModelName = "openai/gpt-5.4-mini",
+                        ProviderOptions = new(
+                            new AgentConfigModelVertexModelConfigObjectProviderOptionsVertex()
+                            {
+                                Location = "us-central1",
+                                Project = "my-gcp-project",
+                                BaseUrl = "https://example.com",
+                                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                            }
+                        ),
+                        ApiKey = "sk-some-openai-api-key",
+                        BaseUrl = "https://api.openai.com/v1",
                         Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                        Location = "us-central1",
-                        Project = "my-gcp-project",
-                        Provider = ModelConfigProvider.OpenAI,
                     },
-                    Provider = Provider.OpenAI,
+                    Provider = AgentConfigProvider.OpenAI,
                     SystemPrompt = "systemPrompt",
                 },
                 ExecuteOptions = new()

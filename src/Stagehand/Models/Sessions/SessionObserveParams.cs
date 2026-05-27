@@ -420,7 +420,55 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         }
     }
 
-    public SessionObserveParamsOptionsModel(ModelConfig value, JsonElement? element = null)
+    public string? ModelName
+    {
+        get
+        {
+            return Match<string?>(
+                vertexModelConfigObject: (x) => x.ModelName,
+                genericModelConfigObject: (x) => x.ModelName,
+                @string: (_) => null
+            );
+        }
+    }
+
+    public string? ApiKey
+    {
+        get
+        {
+            return Match<string?>(
+                vertexModelConfigObject: (x) => x.ApiKey,
+                genericModelConfigObject: (x) => x.ApiKey,
+                @string: (_) => null
+            );
+        }
+    }
+
+    public string? BaseUrl
+    {
+        get
+        {
+            return Match<string?>(
+                vertexModelConfigObject: (x) => x.BaseUrl,
+                genericModelConfigObject: (x) => x.BaseUrl,
+                @string: (_) => null
+            );
+        }
+    }
+
+    public SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelVertexModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelGenericModelConfigObject value,
+        JsonElement? element = null
+    )
     {
         this.Value = value;
         this._element = element;
@@ -439,22 +487,47 @@ public record class SessionObserveParamsOptionsModel : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="ModelConfig"/>.
+    /// type <see cref="SessionObserveParamsOptionsModelVertexModelConfigObject"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickConfig(out var value)) {
-    ///     // `value` is of type `ModelConfig`
+    /// if (instance.TryPickVertexModelConfigObject(out var value)) {
+    ///     // `value` is of type `SessionObserveParamsOptionsModelVertexModelConfigObject`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickConfig([NotNullWhen(true)] out ModelConfig? value)
+    public bool TryPickVertexModelConfigObject(
+        [NotNullWhen(true)] out SessionObserveParamsOptionsModelVertexModelConfigObject? value
+    )
     {
-        value = this.Value as ModelConfig;
+        value = this.Value as SessionObserveParamsOptionsModelVertexModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="SessionObserveParamsOptionsModelGenericModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickGenericModelConfigObject(out var value)) {
+    ///     // `value` is of type `SessionObserveParamsOptionsModelGenericModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickGenericModelConfigObject(
+        [NotNullWhen(true)] out SessionObserveParamsOptionsModelGenericModelConfigObject? value
+    )
+    {
+        value = this.Value as SessionObserveParamsOptionsModelGenericModelConfigObject;
         return value != null;
     }
 
@@ -493,18 +566,26 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ModelConfig value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelVertexModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(System::Action<ModelConfig> config, System::Action<string> @string)
+    public void Switch(
+        System::Action<SessionObserveParamsOptionsModelVertexModelConfigObject> vertexModelConfigObject,
+        System::Action<SessionObserveParamsOptionsModelGenericModelConfigObject> genericModelConfigObject,
+        System::Action<string> @string
+    )
     {
         switch (this.Value)
         {
-            case ModelConfig value:
-                config(value);
+            case SessionObserveParamsOptionsModelVertexModelConfigObject value:
+                vertexModelConfigObject(value);
+                break;
+            case SessionObserveParamsOptionsModelGenericModelConfigObject value:
+                genericModelConfigObject(value);
                 break;
             case string value:
                 @string(value);
@@ -531,17 +612,31 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ModelConfig value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelVertexModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public T Match<T>(System::Func<ModelConfig, T> config, System::Func<string, T> @string)
+    public T Match<T>(
+        System::Func<
+            SessionObserveParamsOptionsModelVertexModelConfigObject,
+            T
+        > vertexModelConfigObject,
+        System::Func<
+            SessionObserveParamsOptionsModelGenericModelConfigObject,
+            T
+        > genericModelConfigObject,
+        System::Func<string, T> @string
+    )
     {
         return this.Value switch
         {
-            ModelConfig value => config(value),
+            SessionObserveParamsOptionsModelVertexModelConfigObject value =>
+                vertexModelConfigObject(value),
+            SessionObserveParamsOptionsModelGenericModelConfigObject value =>
+                genericModelConfigObject(value),
             string value => @string(value),
             _ => throw new StagehandInvalidDataException(
                 "Data did not match any variant of SessionObserveParamsOptionsModel"
@@ -549,8 +644,13 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         };
     }
 
-    public static implicit operator SessionObserveParamsOptionsModel(ModelConfig value) =>
-        new(value);
+    public static implicit operator SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelVertexModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelGenericModelConfigObject value
+    ) => new(value);
 
     public static implicit operator SessionObserveParamsOptionsModel(string value) => new(value);
 
@@ -572,7 +672,11 @@ public record class SessionObserveParamsOptionsModel : ModelBase
                 "Data did not match any variant of SessionObserveParamsOptionsModel"
             );
         }
-        this.Switch((config) => config.Validate(), (_) => { });
+        this.Switch(
+            (vertexModelConfigObject) => vertexModelConfigObject.Validate(),
+            (genericModelConfigObject) => genericModelConfigObject.Validate(),
+            (_) => { }
+        );
     }
 
     public virtual bool Equals(SessionObserveParamsOptionsModel? other) =>
@@ -595,8 +699,9 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     {
         return this.Value switch
         {
-            ModelConfig _ => 0,
-            string _ => 1,
+            SessionObserveParamsOptionsModelVertexModelConfigObject _ => 0,
+            SessionObserveParamsOptionsModelGenericModelConfigObject _ => 1,
+            string _ => 2,
             _ => -1,
         };
     }
@@ -614,7 +719,29 @@ sealed class SessionObserveParamsOptionsModelConverter
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ModelConfig>(element, options);
+            var deserialized =
+                JsonSerializer.Deserialize<SessionObserveParamsOptionsModelVertexModelConfigObject>(
+                    element,
+                    options
+                );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<SessionObserveParamsOptionsModelGenericModelConfigObject>(
+                    element,
+                    options
+                );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -649,6 +776,1429 @@ sealed class SessionObserveParamsOptionsModelConverter
     )
     {
         JsonSerializer.Serialize(writer, value.Json, options);
+    }
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelVertexModelConfigObject,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelVertexModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Vertex provider authentication configuration
+    /// </summary>
+    public required SessionObserveParamsOptionsModelVertexModelConfigObjectAuth Auth
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelVertexModelConfigObjectAuth>(
+                "auth"
+            );
+        }
+        init { this._rawData.Set("auth", value); }
+    }
+
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Vertex AI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Vertex provider-specific model configuration
+    /// </summary>
+    public required SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Auth.Validate();
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("vertex")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("vertex");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObject(
+        SessionObserveParamsOptionsModelVertexModelConfigObject sessionObserveParamsOptionsModelVertexModelConfigObject
+    )
+        : base(sessionObserveParamsOptionsModelVertexModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("vertex");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelVertexModelConfigObject(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelVertexModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelVertexModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelVertexModelConfigObjectFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelVertexModelConfigObject>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelVertexModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelVertexModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Vertex provider authentication configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuth,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelVertexModelConfigObjectAuth : JsonModel
+{
+    /// <summary>
+    /// Google Cloud service account credentials
+    /// </summary>
+    public required SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials Credentials
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials>(
+                "credentials"
+            );
+        }
+        init { this._rawData.Set("credentials", value); }
+    }
+
+    /// <summary>
+    /// Use inline Google Cloud service account credentials for provider authentication
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <summary>
+    /// Google Cloud project ID used by google-auth-library
+    /// </summary>
+    public string? ProjectID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("projectId");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("projectId", value);
+        }
+    }
+
+    /// <summary>
+    /// Google auth scopes for the desired API request
+    /// </summary>
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes? Scopes
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes>(
+                "scopes"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("scopes", value);
+        }
+    }
+
+    /// <summary>
+    /// Google Cloud universe domain
+    /// </summary>
+    public string? UniverseDomain
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("universeDomain");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("universeDomain", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Credentials.Validate();
+        if (
+            !JsonElement.DeepEquals(
+                this.Type,
+                JsonSerializer.SerializeToElement("googleServiceAccount")
+            )
+        )
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        _ = this.ProjectID;
+        this.Scopes?.Validate();
+        _ = this.UniverseDomain;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuth()
+    {
+        this.Type = JsonSerializer.SerializeToElement("googleServiceAccount");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuth(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuth sessionObserveParamsOptionsModelVertexModelConfigObjectAuth
+    )
+        : base(sessionObserveParamsOptionsModelVertexModelConfigObjectAuth) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuth(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("googleServiceAccount");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelVertexModelConfigObjectAuth(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelVertexModelConfigObjectAuthFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelVertexModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuth(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials credentials
+    )
+        : this()
+    {
+        this.Credentials = credentials;
+    }
+}
+
+class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelVertexModelConfigObjectAuth>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelVertexModelConfigObjectAuth.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Google Cloud service account credentials
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials
+    : JsonModel
+{
+    public required string ClientEmail
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("client_email");
+        }
+        init { this._rawData.Set("client_email", value); }
+    }
+
+    public required string PrivateKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("private_key");
+        }
+        init { this._rawData.Set("private_key", value); }
+    }
+
+    public string? AuthProviderX509CertUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("auth_provider_x509_cert_url");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("auth_provider_x509_cert_url", value);
+        }
+    }
+
+    public string? AuthUri
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("auth_uri");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("auth_uri", value);
+        }
+    }
+
+    public string? ClientID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("client_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("client_id", value);
+        }
+    }
+
+    public string? ClientX509CertUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("client_x509_cert_url");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("client_x509_cert_url", value);
+        }
+    }
+
+    public string? PrivateKeyID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("private_key_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("private_key_id", value);
+        }
+    }
+
+    public string? ProjectID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("project_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("project_id", value);
+        }
+    }
+
+    public string? TokenUri
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("token_uri");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("token_uri", value);
+        }
+    }
+
+    public ApiEnum<
+        string,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+    >? Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<
+                    string,
+                    SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+                >
+            >("type");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("type", value);
+        }
+    }
+
+    public string? UniverseDomain
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("universe_domain");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("universe_domain", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ClientEmail;
+        _ = this.PrivateKey;
+        _ = this.AuthProviderX509CertUrl;
+        _ = this.AuthUri;
+        _ = this.ClientID;
+        _ = this.ClientX509CertUrl;
+        _ = this.PrivateKeyID;
+        _ = this.ProjectID;
+        _ = this.TokenUri;
+        this.Type?.Validate();
+        _ = this.UniverseDomain;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials sessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials
+    )
+        : base(sessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentials.FromRawUnchecked(
+            rawData
+        );
+}
+
+[JsonConverter(
+    typeof(SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsTypeConverter)
+)]
+public enum SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+{
+    ServiceAccount,
+}
+
+sealed class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsTypeConverter
+    : JsonConverter<SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType>
+{
+    public override SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "service_account" =>
+                SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount,
+            _ => (SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType.ServiceAccount =>
+                    "service_account",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Google auth scopes for the desired API request
+/// </summary>
+[JsonConverter(typeof(SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopesConverter))]
+public record class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes : ModelBase
+{
+    public object? Value { get; } = null;
+
+    JsonElement? _element = null;
+
+    public JsonElement Json
+    {
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes(
+        string value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes(
+        IReadOnlyList<string> value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = ImmutableArray.ToImmutableArray(value);
+        this._element = element;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes(JsonElement element)
+    {
+        this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="string"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickString(out var value)) {
+    ///     // `value` is of type `string`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickString([NotNullWhen(true)] out string? value)
+    {
+        value = this.Value as string;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>string</c>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickStrings(out var value)) {
+    ///     // `value` is of type `IReadOnlyList&lt;string&gt;`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickStrings([NotNullWhen(true)] out IReadOnlyList<string>? value)
+    {
+        value = this.Value as IReadOnlyList<string>;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (string value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public void Switch(
+        System::Action<string> @string,
+        System::Action<IReadOnlyList<string>> strings
+    )
+    {
+        switch (this.Value)
+        {
+            case string value:
+                @string(value);
+                break;
+            case IReadOnlyList<string> value:
+                strings(value);
+                break;
+            default:
+                throw new StagehandInvalidDataException(
+                    "Data did not match any variant of SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes"
+                );
+        }
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (string value) =&gt; {...},
+    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public T Match<T>(
+        System::Func<string, T> @string,
+        System::Func<IReadOnlyList<string>, T> strings
+    )
+    {
+        return this.Value switch
+        {
+            string value => @string(value),
+            IReadOnlyList<string> value => strings(value),
+            _ => throw new StagehandInvalidDataException(
+                "Data did not match any variant of SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes"
+            ),
+        };
+    }
+
+    public static implicit operator SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes(
+        string value
+    ) => new(value);
+
+    public static implicit operator SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes(
+        List<string> value
+    ) => new((IReadOnlyList<string>)value);
+
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="StagehandInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
+    public override void Validate()
+    {
+        if (this.Value == null)
+        {
+            throw new StagehandInvalidDataException(
+                "Data did not match any variant of SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes"
+            );
+        }
+    }
+
+    public virtual bool Equals(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes? other
+    ) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            IReadOnlyList<string> _ => 1,
+            _ => -1,
+        };
+    }
+}
+
+sealed class SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopesConverter
+    : JsonConverter<SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes>
+{
+    public override SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes? Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
+            if (deserialized != null)
+            {
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
+            if (deserialized != null)
+            {
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        return new(element);
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectAuthScopes value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(writer, value.Json, options);
+    }
+}
+
+/// <summary>
+/// Vertex provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions
+    : JsonModel
+{
+    /// <summary>
+    /// Vertex AI provider-specific settings
+    /// </summary>
+    public required SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex Vertex
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex>(
+                "vertex"
+            );
+        }
+        init { this._rawData.Set("vertex", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Vertex.Validate();
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions sessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions
+    )
+        : base(sessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex vertex
+    )
+        : this()
+    {
+        this.Vertex = vertex;
+    }
+}
+
+class SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptions.FromRawUnchecked(
+            rawData
+        );
+}
+
+/// <summary>
+/// Vertex AI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex,
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertexFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex
+    : JsonModel
+{
+    /// <summary>
+    /// Google Cloud location for Vertex AI models
+    /// </summary>
+    public required string Location
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("location");
+        }
+        init { this._rawData.Set("location", value); }
+    }
+
+    /// <summary>
+    /// Google Cloud project ID for Vertex AI models
+    /// </summary>
+    public required string Project
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("project");
+        }
+        init { this._rawData.Set("project", value); }
+    }
+
+    /// <summary>
+    /// Base URL for the Vertex AI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Vertex AI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Location;
+        _ = this.Project;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex(
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex sessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex
+    )
+        : base(sessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertexFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertexFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVertex.FromRawUnchecked(
+            rawData
+        );
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelGenericModelConfigObject,
+        SessionObserveParamsOptionsModelGenericModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelGenericModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// AI provider for the model (or provide a baseURL endpoint instead)
+    /// </summary>
+    public ApiEnum<
+        string,
+        SessionObserveParamsOptionsModelGenericModelConfigObjectProvider
+    >? Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, SessionObserveParamsOptionsModelGenericModelConfigObjectProvider>
+            >("provider");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("provider", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ModelName;
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        this.Provider?.Validate();
+    }
+
+    public SessionObserveParamsOptionsModelGenericModelConfigObject() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelGenericModelConfigObject(
+        SessionObserveParamsOptionsModelGenericModelConfigObject sessionObserveParamsOptionsModelGenericModelConfigObject
+    )
+        : base(sessionObserveParamsOptionsModelGenericModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelGenericModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelGenericModelConfigObject(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelGenericModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelGenericModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelGenericModelConfigObject(string modelName)
+        : this()
+    {
+        this.ModelName = modelName;
+    }
+}
+
+class SessionObserveParamsOptionsModelGenericModelConfigObjectFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelGenericModelConfigObject>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelGenericModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// AI provider for the model (or provide a baseURL endpoint instead)
+/// </summary>
+[JsonConverter(typeof(SessionObserveParamsOptionsModelGenericModelConfigObjectProviderConverter))]
+public enum SessionObserveParamsOptionsModelGenericModelConfigObjectProvider
+{
+    OpenAI,
+    Anthropic,
+    Google,
+    Microsoft,
+    Bedrock,
+}
+
+sealed class SessionObserveParamsOptionsModelGenericModelConfigObjectProviderConverter
+    : JsonConverter<SessionObserveParamsOptionsModelGenericModelConfigObjectProvider>
+{
+    public override SessionObserveParamsOptionsModelGenericModelConfigObjectProvider Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "openai" => SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
+            "anthropic" =>
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Anthropic,
+            "google" => SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Google,
+            "microsoft" =>
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Microsoft,
+            "bedrock" => SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Bedrock,
+            _ => (SessionObserveParamsOptionsModelGenericModelConfigObjectProvider)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionObserveParamsOptionsModelGenericModelConfigObjectProvider value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI => "openai",
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Anthropic =>
+                    "anthropic",
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Google => "google",
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Microsoft =>
+                    "microsoft",
+                SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.Bedrock =>
+                    "bedrock",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }
 
