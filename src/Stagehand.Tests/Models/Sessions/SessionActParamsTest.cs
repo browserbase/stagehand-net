@@ -20,12 +20,9 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = new Sessions::ModelConfig()
+                Model = new Sessions::VertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -38,17 +35,26 @@ public class SessionActParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = Sessions::CredentialsType.ServiceAccount,
+                            Type = Sessions::Type.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new Sessions::Vertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -72,12 +78,9 @@ public class SessionActParamsTest : TestBase
         string expectedFrameID = "frameId";
         Sessions::Options expectedOptions = new()
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -90,17 +93,26 @@ public class SessionActParamsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -171,12 +183,9 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = new Sessions::ModelConfig()
+                Model = new Sessions::VertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -189,17 +198,26 @@ public class SessionActParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = Sessions::CredentialsType.ServiceAccount,
+                            Type = Sessions::Type.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new Sessions::Vertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -231,12 +249,9 @@ public class SessionActParamsTest : TestBase
             Input = "Click the login button",
             Options = new()
             {
-                Model = new Sessions::ModelConfig()
+                Model = new Sessions::VertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -249,17 +264,26 @@ public class SessionActParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = Sessions::CredentialsType.ServiceAccount,
+                            Type = Sessions::Type.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new Sessions::Vertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -346,12 +370,9 @@ public class SessionActParamsTest : TestBase
             FrameID = "frameId",
             Options = new()
             {
-                Model = new Sessions::ModelConfig()
+                Model = new Sessions::VertexModelConfigObject()
                 {
-                    ModelName = "openai/gpt-5.4-mini",
-                    ApiKey = "sk-some-openai-api-key",
-                    BaseUrl = "https://api.openai.com/v1",
-                    GoogleAuthOptions = new()
+                    Auth = new()
                     {
                         Credentials = new()
                         {
@@ -364,17 +385,26 @@ public class SessionActParamsTest : TestBase
                             PrivateKeyID = "private_key_id",
                             ProjectID = "project_id",
                             TokenUri = "https://example.com",
-                            Type = Sessions::CredentialsType.ServiceAccount,
+                            Type = Sessions::Type.ServiceAccount,
                             UniverseDomain = "universe_domain",
                         },
                         ProjectID = "projectId",
                         Scopes = "string",
                         UniverseDomain = "universeDomain",
                     },
+                    ModelName = "openai/gpt-5.4-mini",
+                    ProviderOptions = new(
+                        new Sessions::Vertex()
+                        {
+                            Location = "us-central1",
+                            Project = "my-gcp-project",
+                            BaseUrl = "https://example.com",
+                            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                        }
+                    ),
+                    ApiKey = "sk-some-openai-api-key",
+                    BaseUrl = "https://api.openai.com/v1",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Location = "us-central1",
-                    Project = "my-gcp-project",
-                    Provider = Sessions::ModelConfigProvider.OpenAI,
                 },
                 Timeout = 30000,
                 Variables = new Dictionary<string, Sessions::Variable>()
@@ -463,12 +493,9 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -481,17 +508,26 @@ public class OptionsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -508,12 +544,9 @@ public class OptionsTest : TestBase
             },
         };
 
-        Sessions::Model expectedModel = new Sessions::ModelConfig()
+        Sessions::Model expectedModel = new Sessions::VertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -526,17 +559,26 @@ public class OptionsTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = Sessions::CredentialsType.ServiceAccount,
+                    Type = Sessions::Type.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
         Dictionary<string, Sessions::Variable> expectedVariables = new()
@@ -569,12 +611,9 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -587,17 +626,26 @@ public class OptionsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -628,12 +676,9 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -646,17 +691,26 @@ public class OptionsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -680,12 +734,9 @@ public class OptionsTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        Sessions::Model expectedModel = new Sessions::ModelConfig()
+        Sessions::Model expectedModel = new Sessions::VertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -698,17 +749,26 @@ public class OptionsTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = Sessions::CredentialsType.ServiceAccount,
+                    Type = Sessions::Type.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = Sessions::ModelConfigProvider.OpenAI,
         };
         double expectedTimeout = 30000;
         Dictionary<string, Sessions::Variable> expectedVariables = new()
@@ -741,12 +801,9 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -759,17 +816,26 @@ public class OptionsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -848,12 +914,9 @@ public class OptionsTest : TestBase
     {
         var model = new Sessions::Options
         {
-            Model = new Sessions::ModelConfig()
+            Model = new Sessions::VertexModelConfigObject()
             {
-                ModelName = "openai/gpt-5.4-mini",
-                ApiKey = "sk-some-openai-api-key",
-                BaseUrl = "https://api.openai.com/v1",
-                GoogleAuthOptions = new()
+                Auth = new()
                 {
                     Credentials = new()
                     {
@@ -866,17 +929,26 @@ public class OptionsTest : TestBase
                         PrivateKeyID = "private_key_id",
                         ProjectID = "project_id",
                         TokenUri = "https://example.com",
-                        Type = Sessions::CredentialsType.ServiceAccount,
+                        Type = Sessions::Type.ServiceAccount,
                         UniverseDomain = "universe_domain",
                     },
                     ProjectID = "projectId",
                     Scopes = "string",
                     UniverseDomain = "universeDomain",
                 },
+                ModelName = "openai/gpt-5.4-mini",
+                ProviderOptions = new(
+                    new Sessions::Vertex()
+                    {
+                        Location = "us-central1",
+                        Project = "my-gcp-project",
+                        BaseUrl = "https://example.com",
+                        Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    }
+                ),
+                ApiKey = "sk-some-openai-api-key",
+                BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                Location = "us-central1",
-                Project = "my-gcp-project",
-                Provider = Sessions::ModelConfigProvider.OpenAI,
             },
             Timeout = 30000,
             Variables = new Dictionary<string, Sessions::Variable>()
@@ -902,14 +974,11 @@ public class OptionsTest : TestBase
 public class ModelTest : TestBase
 {
     [Fact]
-    public void ConfigValidationWorks()
+    public void VertexModelConfigObjectValidationWorks()
     {
-        Sessions::Model value = new Sessions::ModelConfig()
+        Sessions::Model value = new Sessions::VertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -922,17 +991,40 @@ public class ModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = Sessions::CredentialsType.ServiceAccount,
+                    Type = Sessions::Type.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectValidationWorks()
+    {
+        Sessions::Model value = new Sessions::GenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
         };
         value.Validate();
     }
@@ -945,14 +1037,11 @@ public class ModelTest : TestBase
     }
 
     [Fact]
-    public void ConfigSerializationRoundtripWorks()
+    public void VertexModelConfigObjectSerializationRoundtripWorks()
     {
-        Sessions::Model value = new Sessions::ModelConfig()
+        Sessions::Model value = new Sessions::VertexModelConfigObject()
         {
-            ModelName = "openai/gpt-5.4-mini",
-            ApiKey = "sk-some-openai-api-key",
-            BaseUrl = "https://api.openai.com/v1",
-            GoogleAuthOptions = new()
+            Auth = new()
             {
                 Credentials = new()
                 {
@@ -965,17 +1054,46 @@ public class ModelTest : TestBase
                     PrivateKeyID = "private_key_id",
                     ProjectID = "project_id",
                     TokenUri = "https://example.com",
-                    Type = Sessions::CredentialsType.ServiceAccount,
+                    Type = Sessions::Type.ServiceAccount,
                     UniverseDomain = "universe_domain",
                 },
                 ProjectID = "projectId",
                 Scopes = "string",
                 UniverseDomain = "universeDomain",
             },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
-            Location = "us-central1",
-            Project = "my-gcp-project",
-            Provider = Sessions::ModelConfigProvider.OpenAI,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void GenericModelConfigObjectSerializationRoundtripWorks()
+    {
+        Sessions::Model value = new Sessions::GenericModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
@@ -993,6 +1111,1746 @@ public class ModelTest : TestBase
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Sessions::Model>(
             element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class VertexModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Sessions::Auth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        Sessions::ProviderOptions expectedProviderOptions = new(
+            new Sessions::Vertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, model.Auth);
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::VertexModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::VertexModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        Sessions::Auth expectedAuth = new()
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("vertex");
+        Sessions::ProviderOptions expectedProviderOptions = new(
+            new Sessions::Vertex()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, deserialized.Auth);
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::VertexModelConfigObject
+        {
+            Auth = new()
+            {
+                Credentials = new()
+                {
+                    ClientEmail = "client_email",
+                    PrivateKey = "private_key",
+                    AuthProviderX509CertUrl = "https://example.com",
+                    AuthUri = "https://example.com",
+                    ClientID = "client_id",
+                    ClientX509CertUrl = "https://example.com",
+                    PrivateKeyID = "private_key_id",
+                    ProjectID = "project_id",
+                    TokenUri = "https://example.com",
+                    Type = Sessions::Type.ServiceAccount,
+                    UniverseDomain = "universe_domain",
+                },
+                ProjectID = "projectId",
+                Scopes = "string",
+                UniverseDomain = "universeDomain",
+            },
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new Sessions::Vertex()
+                {
+                    Location = "us-central1",
+                    Project = "my-gcp-project",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Sessions::VertexModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AuthTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        Sessions::Credentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        Sessions::Scopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, model.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, model.Type));
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedScopes, model.Scopes);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Auth>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Auth>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        Sessions::Credentials expectedCredentials = new()
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+        JsonElement expectedType = JsonSerializer.SerializeToElement("googleServiceAccount");
+        string expectedProjectID = "projectId";
+        Sessions::Scopes expectedScopes = "string";
+        string expectedUniverseDomain = "universeDomain";
+
+        Assert.Equal(expectedCredentials, deserialized.Credentials);
+        Assert.True(JsonElement.DeepEquals(expectedType, deserialized.Type));
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedScopes, deserialized.Scopes);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("projectId"));
+        Assert.Null(model.Scopes);
+        Assert.False(model.RawData.ContainsKey("scopes"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universeDomain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            ProjectID = null,
+            Scopes = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Auth
+        {
+            Credentials = new()
+            {
+                ClientEmail = "client_email",
+                PrivateKey = "private_key",
+                AuthProviderX509CertUrl = "https://example.com",
+                AuthUri = "https://example.com",
+                ClientID = "client_id",
+                ClientX509CertUrl = "https://example.com",
+                PrivateKeyID = "private_key_id",
+                ProjectID = "project_id",
+                TokenUri = "https://example.com",
+                Type = Sessions::Type.ServiceAccount,
+                UniverseDomain = "universe_domain",
+            },
+            ProjectID = "projectId",
+            Scopes = "string",
+            UniverseDomain = "universeDomain",
+        };
+
+        Sessions::Auth copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class CredentialsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, model.ClientEmail);
+        Assert.Equal(expectedPrivateKey, model.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, model.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, model.AuthUri);
+        Assert.Equal(expectedClientID, model.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, model.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, model.PrivateKeyID);
+        Assert.Equal(expectedProjectID, model.ProjectID);
+        Assert.Equal(expectedTokenUri, model.TokenUri);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedUniverseDomain, model.UniverseDomain);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Credentials>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Credentials>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedClientEmail = "client_email";
+        string expectedPrivateKey = "private_key";
+        string expectedAuthProviderX509CertUrl = "https://example.com";
+        string expectedAuthUri = "https://example.com";
+        string expectedClientID = "client_id";
+        string expectedClientX509CertUrl = "https://example.com";
+        string expectedPrivateKeyID = "private_key_id";
+        string expectedProjectID = "project_id";
+        string expectedTokenUri = "https://example.com";
+        ApiEnum<string, Sessions::Type> expectedType = Sessions::Type.ServiceAccount;
+        string expectedUniverseDomain = "universe_domain";
+
+        Assert.Equal(expectedClientEmail, deserialized.ClientEmail);
+        Assert.Equal(expectedPrivateKey, deserialized.PrivateKey);
+        Assert.Equal(expectedAuthProviderX509CertUrl, deserialized.AuthProviderX509CertUrl);
+        Assert.Equal(expectedAuthUri, deserialized.AuthUri);
+        Assert.Equal(expectedClientID, deserialized.ClientID);
+        Assert.Equal(expectedClientX509CertUrl, deserialized.ClientX509CertUrl);
+        Assert.Equal(expectedPrivateKeyID, deserialized.PrivateKeyID);
+        Assert.Equal(expectedProjectID, deserialized.ProjectID);
+        Assert.Equal(expectedTokenUri, deserialized.TokenUri);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedUniverseDomain, deserialized.UniverseDomain);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        Assert.Null(model.AuthProviderX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("auth_provider_x509_cert_url"));
+        Assert.Null(model.AuthUri);
+        Assert.False(model.RawData.ContainsKey("auth_uri"));
+        Assert.Null(model.ClientID);
+        Assert.False(model.RawData.ContainsKey("client_id"));
+        Assert.Null(model.ClientX509CertUrl);
+        Assert.False(model.RawData.ContainsKey("client_x509_cert_url"));
+        Assert.Null(model.PrivateKeyID);
+        Assert.False(model.RawData.ContainsKey("private_key_id"));
+        Assert.Null(model.ProjectID);
+        Assert.False(model.RawData.ContainsKey("project_id"));
+        Assert.Null(model.TokenUri);
+        Assert.False(model.RawData.ContainsKey("token_uri"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UniverseDomain);
+        Assert.False(model.RawData.ContainsKey("universe_domain"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+
+            // Null should be interpreted as omitted for these properties
+            AuthProviderX509CertUrl = null,
+            AuthUri = null,
+            ClientID = null,
+            ClientX509CertUrl = null,
+            PrivateKeyID = null,
+            ProjectID = null,
+            TokenUri = null,
+            Type = null,
+            UniverseDomain = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Credentials
+        {
+            ClientEmail = "client_email",
+            PrivateKey = "private_key",
+            AuthProviderX509CertUrl = "https://example.com",
+            AuthUri = "https://example.com",
+            ClientID = "client_id",
+            ClientX509CertUrl = "https://example.com",
+            PrivateKeyID = "private_key_id",
+            ProjectID = "project_id",
+            TokenUri = "https://example.com",
+            Type = Sessions::Type.ServiceAccount,
+            UniverseDomain = "universe_domain",
+        };
+
+        Sessions::Credentials copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class TypeTest : TestBase
+{
+    [Theory]
+    [InlineData(Sessions::Type.ServiceAccount)]
+    public void Validation_Works(Sessions::Type rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Type> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Sessions::Type.ServiceAccount)]
+    public void SerializationRoundtrip_Works(Sessions::Type rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Type> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Type>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ScopesTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Sessions::Scopes value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringsValidationWorks()
+    {
+        Sessions::Scopes value = new(["string"]);
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Sessions::Scopes value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Scopes>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringsSerializationRoundtripWorks()
+    {
+        Sessions::Scopes value = new(["string"]);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Scopes>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::ProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        Sessions::Vertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, model.Vertex);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::ProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::ProviderOptions>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::ProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::ProviderOptions>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        Sessions::Vertex expectedVertex = new()
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Assert.Equal(expectedVertex, deserialized.Vertex);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::ProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::ProviderOptions
+        {
+            Vertex = new()
+            {
+                Location = "us-central1",
+                Project = "my-gcp-project",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+        };
+
+        Sessions::ProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class VertexTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, model.Location);
+        Assert.Equal(expectedProject, model.Project);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Vertex>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::Vertex>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedLocation = "us-central1";
+        string expectedProject = "my-gcp-project";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedLocation, deserialized.Location);
+        Assert.Equal(expectedProject, deserialized.Project);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::Vertex { Location = "us-central1", Project = "my-gcp-project" };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::Vertex { Location = "us-central1", Project = "my-gcp-project" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::Vertex
+        {
+            Location = "us-central1",
+            Project = "my-gcp-project",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Sessions::Vertex copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class GenericModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
+        };
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, Sessions::Provider> expectedProvider = Sessions::Provider.OpenAI;
+
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, model.Provider);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::GenericModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Sessions::GenericModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<string, Sessions::Provider> expectedProvider = Sessions::Provider.OpenAI;
+
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedProvider, deserialized.Provider);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject { ModelName = "openai/gpt-5.4-mini" };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject { ModelName = "openai/gpt-5.4-mini" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.Provider);
+        Assert.False(model.RawData.ContainsKey("provider"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+            Provider = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Sessions::GenericModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            Provider = Sessions::Provider.OpenAI,
+        };
+
+        Sessions::GenericModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ProviderTest : TestBase
+{
+    [Theory]
+    [InlineData(Sessions::Provider.OpenAI)]
+    [InlineData(Sessions::Provider.Anthropic)]
+    [InlineData(Sessions::Provider.Google)]
+    [InlineData(Sessions::Provider.Microsoft)]
+    [InlineData(Sessions::Provider.Bedrock)]
+    public void Validation_Works(Sessions::Provider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Provider> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Provider>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Sessions::Provider.OpenAI)]
+    [InlineData(Sessions::Provider.Anthropic)]
+    [InlineData(Sessions::Provider.Google)]
+    [InlineData(Sessions::Provider.Microsoft)]
+    [InlineData(Sessions::Provider.Bedrock)]
+    public void SerializationRoundtrip_Works(Sessions::Provider rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Sessions::Provider> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Provider>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Provider>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Sessions::Provider>>(
+            json,
             ModelBase.SerializerOptions
         );
 
