@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Stagehand;
 using Stagehand.Models.Sessions;
-using SessionType = Stagehand.Models.Sessions.Type;
 using StagehandAction = Stagehand.Models.Sessions.Action;
 
 namespace Stagehand.Examples
@@ -27,7 +26,7 @@ namespace Stagehand.Examples
                     ModelName = "anthropic/claude-sonnet-4-6",
                     Browser = new Browser
                     {
-                        Type = SessionType.Local,
+                        Type = BrowserType.Local,
                         LaunchOptions = new LaunchOptions { Headless = true },
                     },
                 }
@@ -170,7 +169,7 @@ namespace Stagehand.Examples
                         AgentConfig = new AgentConfig
                         {
                             Model = new AgentConfigModel(
-                                new ModelConfig
+                                new AgentConfigModelGenericModelConfigObject
                                 {
                                     ModelName = "anthropic/claude-opus-4-6",
                                     ApiKey = Environment.GetEnvironmentVariable("MODEL_API_KEY"),
