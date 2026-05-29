@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.21.0 (2026-05-29)
+
+Full Changelog: [v3.20.0...v3.21.0](https://github.com/browserbase/stagehand-net/compare/v3.20.0...v3.21.0)
+
+### Features
+
+* [feat]: add `ignoreSelectors` to `observe()` ([37f80f3](https://github.com/browserbase/stagehand-net/commit/37f80f3936fc9a85e6e6079381c41ef4e3793472))
+* [STG-1756] forward Vertex model config ([491fbd8](https://github.com/browserbase/stagehand-net/commit/491fbd8190a86a1a8e9ba41e849753207aa8574c))
+* Add `screenshot` option to Extract ([1dae7c2](https://github.com/browserbase/stagehand-net/commit/1dae7c22aa40af570d387fa871ee10ea4c0b9084))
+* STG-1756 add Vertex auth params to Stagehand spec ([8fa4926](https://github.com/browserbase/stagehand-net/commit/8fa49262dca9eda52850f3226279b7ee97228f39))
+
+
+### Bug Fixes
+
+* **csharp:** update examples for generated model unions ([ebca6e0](https://github.com/browserbase/stagehand-net/commit/ebca6e031e6d7894675cc0502803fb0cbe985219))
+* **internal:** disable default HttpClient timeout as we have our own ([c20c6e0](https://github.com/browserbase/stagehand-net/commit/c20c6e01fb40ff0ab9547bf733f6c735e0949e4e))
+
 ## 3.20.0 (2026-05-06)
 
 Full Changelog: [v3.19.3...v3.20.0](https://github.com/browserbase/stagehand-net/compare/v3.19.3...v3.20.0)
