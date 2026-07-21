@@ -3115,6 +3115,33 @@ public sealed record class ExecutionModelGenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>? Provider
@@ -3144,6 +3171,7 @@ public sealed record class ExecutionModelGenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -3193,6 +3221,55 @@ class ExecutionModelGenericModelConfigObjectFromRaw
     public ExecutionModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ExecutionModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatConverter))]
+public enum ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" => ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses => "responses",
+                ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>
@@ -6021,6 +6098,33 @@ public sealed record class AgentConfigModelGenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>? Provider
@@ -6050,6 +6154,7 @@ public sealed record class AgentConfigModelGenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -6101,6 +6206,56 @@ class AgentConfigModelGenericModelConfigObjectFromRaw
     public AgentConfigModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AgentConfigModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatConverter))]
+public enum AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" => AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses =>
+                    "responses",
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>

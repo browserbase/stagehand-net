@@ -1080,6 +1080,8 @@ public class SessionObserveParamsOptionsModelTest : TestBase
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                OpenAIEndpointFormat =
+                    SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
                 Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
             };
         value.Validate();
@@ -1212,6 +1214,8 @@ public class SessionObserveParamsOptionsModelTest : TestBase
                 ApiKey = "sk-some-openai-api-key",
                 BaseUrl = "https://api.openai.com/v1",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                OpenAIEndpointFormat =
+                    SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
                 Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
             };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -4185,6 +4189,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4192,6 +4198,11 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<
             string,
             SessionObserveParamsOptionsModelGenericModelConfigObjectProvider
@@ -4209,6 +4220,7 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
 
             Assert.Equal(value, model.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, model.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -4221,6 +4233,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4243,6 +4257,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4260,6 +4276,11 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
         ApiEnum<
             string,
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
+        ApiEnum<
+            string,
             SessionObserveParamsOptionsModelGenericModelConfigObjectProvider
         > expectedProvider =
             SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI;
@@ -4275,6 +4296,7 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
 
             Assert.Equal(value, deserialized.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, deserialized.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -4287,6 +4309,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4307,6 +4331,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -4333,6 +4359,7 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -4342,6 +4369,8 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -4357,6 +4386,7 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -4372,12 +4402,95 @@ public class SessionObserveParamsOptionsModelGenericModelConfigObjectTest : Test
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = SessionObserveParamsOptionsModelGenericModelConfigObjectProvider.OpenAI,
         };
 
         SessionObserveParamsOptionsModelGenericModelConfigObject copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormatTest
+    : TestBase
+{
+    [Theory]
+    [InlineData(
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses
+    )]
+    [InlineData(SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void Validation_Works(
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<
+            string,
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+        > value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+            >
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses
+    )]
+    [InlineData(SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void SerializationRoundtrip_Works(
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<
+            string,
+            SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+        > value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+            >
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+            >
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+            >
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 

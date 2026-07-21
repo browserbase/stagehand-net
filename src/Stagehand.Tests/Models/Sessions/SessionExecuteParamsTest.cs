@@ -1804,6 +1804,7 @@ public class ExecutionModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
@@ -1931,6 +1932,7 @@ public class ExecutionModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -4776,6 +4778,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4783,6 +4786,11 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
             ExecutionModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -4797,6 +4805,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, model.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, model.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -4809,6 +4818,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4830,6 +4840,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4844,6 +4855,11 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
             ExecutionModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -4858,6 +4874,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, deserialized.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, deserialized.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -4870,6 +4887,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -4890,6 +4908,8 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -4916,6 +4936,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -4925,6 +4946,8 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -4940,6 +4963,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -4955,12 +4979,73 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
         ExecutionModelGenericModelConfigObject copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatTest : TestBase
+{
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void Validation_Works(
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void SerializationRoundtrip_Works(
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -5186,6 +5271,8 @@ public class AgentConfigModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
@@ -5314,6 +5401,8 @@ public class AgentConfigModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -8172,6 +8261,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -8179,6 +8270,11 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
             AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -8193,6 +8289,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, model.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, model.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -8205,6 +8302,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -8226,6 +8325,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -8240,6 +8341,11 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
             AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -8254,6 +8360,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, deserialized.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, deserialized.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -8266,6 +8373,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -8286,6 +8395,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -8312,6 +8423,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -8321,6 +8433,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -8336,6 +8450,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -8351,12 +8466,74 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
         AgentConfigModelGenericModelConfigObject copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatTest : TestBase
+{
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void Validation_Works(
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void SerializationRoundtrip_Works(
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 

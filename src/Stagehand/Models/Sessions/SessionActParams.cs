@@ -3113,6 +3113,30 @@ public sealed record class GenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<string, OpenAIEndpointFormat>? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, OpenAIEndpointFormat>>(
+                "openaiEndpointFormat"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, Provider>? Provider
@@ -3140,6 +3164,7 @@ public sealed record class GenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -3186,6 +3211,54 @@ class GenericModelConfigObjectFromRaw : IFromRawJson<GenericModelConfigObject>
     public GenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => GenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(OpenAIEndpointFormatConverter))]
+public enum OpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class OpenAIEndpointFormatConverter : JsonConverter<OpenAIEndpointFormat>
+{
+    public override OpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => OpenAIEndpointFormat.Responses,
+            "chat" => OpenAIEndpointFormat.Chat,
+            _ => (OpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        OpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                OpenAIEndpointFormat.Responses => "responses",
+                OpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>
