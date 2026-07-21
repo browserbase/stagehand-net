@@ -3202,6 +3202,36 @@ public sealed record class SessionExtractParamsOptionsModelGenericModelConfigObj
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<
+                    string,
+                    SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+                >
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<
@@ -3234,6 +3264,7 @@ public sealed record class SessionExtractParamsOptionsModelGenericModelConfigObj
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -3287,6 +3318,61 @@ class SessionExtractParamsOptionsModelGenericModelConfigObjectFromRaw
     public SessionExtractParamsOptionsModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SessionExtractParamsOptionsModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(
+    typeof(SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormatConverter)
+)]
+public enum SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" =>
+                SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" =>
+                SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses =>
+                    "responses",
+                SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat =>
+                    "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>

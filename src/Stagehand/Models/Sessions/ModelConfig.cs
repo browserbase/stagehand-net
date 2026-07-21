@@ -2636,6 +2636,33 @@ public sealed record class ModelConfigGenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        ModelConfigGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, ModelConfigGenericModelConfigObjectOpenAIEndpointFormat>
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, ModelConfigGenericModelConfigObjectProvider>? Provider
@@ -2665,6 +2692,7 @@ public sealed record class ModelConfigGenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -2713,6 +2741,55 @@ class ModelConfigGenericModelConfigObjectFromRaw : IFromRawJson<ModelConfigGener
     public ModelConfigGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ModelConfigGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(ModelConfigGenericModelConfigObjectOpenAIEndpointFormatConverter))]
+public enum ModelConfigGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class ModelConfigGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<ModelConfigGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override ModelConfigGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => ModelConfigGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" => ModelConfigGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (ModelConfigGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        ModelConfigGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ModelConfigGenericModelConfigObjectOpenAIEndpointFormat.Responses => "responses",
+                ModelConfigGenericModelConfigObjectOpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>
