@@ -313,7 +313,7 @@ sealed class DataConverter : JsonConverter<Data>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
+            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
                 element,
                 options
             );
@@ -330,7 +330,7 @@ sealed class DataConverter : JsonConverter<Data>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<StreamEventLogDataOutput>(
+            var deserialized = JsonSerializer.Deserialize<StreamEventSystemDataOutput>(
                 element,
                 options
             );
