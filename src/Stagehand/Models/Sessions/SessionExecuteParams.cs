@@ -433,6 +433,8 @@ public record class ExecutionModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ModelName,
+                azureEntraModelConfigObject: (x) => x.ModelName,
+                azureApiKeyModelConfigObject: (x) => x.ModelName,
                 genericModelConfigObject: (x) => x.ModelName,
                 @string: (_) => null
             );
@@ -445,6 +447,8 @@ public record class ExecutionModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ApiKey,
+                azureEntraModelConfigObject: (_) => null,
+                azureApiKeyModelConfigObject: (x) => x.ApiKey,
                 genericModelConfigObject: (x) => x.ApiKey,
                 @string: (_) => null
             );
@@ -457,6 +461,8 @@ public record class ExecutionModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.BaseUrl,
+                azureEntraModelConfigObject: (x) => x.BaseUrl,
+                azureApiKeyModelConfigObject: (x) => x.BaseUrl,
                 genericModelConfigObject: (x) => x.BaseUrl,
                 @string: (_) => null
             );
@@ -464,6 +470,24 @@ public record class ExecutionModel : ModelBase
     }
 
     public ExecutionModel(ExecutionModelVertexModelConfigObject value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public ExecutionModel(
+        ExecutionModelAzureEntraModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public ExecutionModel(
+        ExecutionModelAzureApiKeyModelConfigObject value,
+        JsonElement? element = null
+    )
     {
         this.Value = value;
         this._element = element;
@@ -506,6 +530,52 @@ public record class ExecutionModel : ModelBase
     )
     {
         value = this.Value as ExecutionModelVertexModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ExecutionModelAzureEntraModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureEntraModelConfigObject(out var value)) {
+    ///     // `value` is of type `ExecutionModelAzureEntraModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureEntraModelConfigObject(
+        [NotNullWhen(true)] out ExecutionModelAzureEntraModelConfigObject? value
+    )
+    {
+        value = this.Value as ExecutionModelAzureEntraModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ExecutionModelAzureApiKeyModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureApiKeyModelConfigObject(out var value)) {
+    ///     // `value` is of type `ExecutionModelAzureApiKeyModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureApiKeyModelConfigObject(
+        [NotNullWhen(true)] out ExecutionModelAzureApiKeyModelConfigObject? value
+    )
+    {
+        value = this.Value as ExecutionModelAzureApiKeyModelConfigObject;
         return value != null;
     }
 
@@ -568,6 +638,8 @@ public record class ExecutionModel : ModelBase
     /// <code>
     /// instance.Switch(
     ///     (ExecutionModelVertexModelConfigObject value) =&gt; {...},
+    ///     (ExecutionModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (ExecutionModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (ExecutionModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -576,6 +648,8 @@ public record class ExecutionModel : ModelBase
     /// </summary>
     public void Switch(
         System::Action<ExecutionModelVertexModelConfigObject> vertexModelConfigObject,
+        System::Action<ExecutionModelAzureEntraModelConfigObject> azureEntraModelConfigObject,
+        System::Action<ExecutionModelAzureApiKeyModelConfigObject> azureApiKeyModelConfigObject,
         System::Action<ExecutionModelGenericModelConfigObject> genericModelConfigObject,
         System::Action<string> @string
     )
@@ -584,6 +658,12 @@ public record class ExecutionModel : ModelBase
         {
             case ExecutionModelVertexModelConfigObject value:
                 vertexModelConfigObject(value);
+                break;
+            case ExecutionModelAzureEntraModelConfigObject value:
+                azureEntraModelConfigObject(value);
+                break;
+            case ExecutionModelAzureApiKeyModelConfigObject value:
+                azureApiKeyModelConfigObject(value);
                 break;
             case ExecutionModelGenericModelConfigObject value:
                 genericModelConfigObject(value);
@@ -614,6 +694,8 @@ public record class ExecutionModel : ModelBase
     /// <code>
     /// var result = instance.Match(
     ///     (ExecutionModelVertexModelConfigObject value) =&gt; {...},
+    ///     (ExecutionModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (ExecutionModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (ExecutionModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -622,6 +704,8 @@ public record class ExecutionModel : ModelBase
     /// </summary>
     public T Match<T>(
         System::Func<ExecutionModelVertexModelConfigObject, T> vertexModelConfigObject,
+        System::Func<ExecutionModelAzureEntraModelConfigObject, T> azureEntraModelConfigObject,
+        System::Func<ExecutionModelAzureApiKeyModelConfigObject, T> azureApiKeyModelConfigObject,
         System::Func<ExecutionModelGenericModelConfigObject, T> genericModelConfigObject,
         System::Func<string, T> @string
     )
@@ -629,6 +713,8 @@ public record class ExecutionModel : ModelBase
         return this.Value switch
         {
             ExecutionModelVertexModelConfigObject value => vertexModelConfigObject(value),
+            ExecutionModelAzureEntraModelConfigObject value => azureEntraModelConfigObject(value),
+            ExecutionModelAzureApiKeyModelConfigObject value => azureApiKeyModelConfigObject(value),
             ExecutionModelGenericModelConfigObject value => genericModelConfigObject(value),
             string value => @string(value),
             _ => throw new StagehandInvalidDataException(
@@ -639,6 +725,14 @@ public record class ExecutionModel : ModelBase
 
     public static implicit operator ExecutionModel(ExecutionModelVertexModelConfigObject value) =>
         new(value);
+
+    public static implicit operator ExecutionModel(
+        ExecutionModelAzureEntraModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator ExecutionModel(
+        ExecutionModelAzureApiKeyModelConfigObject value
+    ) => new(value);
 
     public static implicit operator ExecutionModel(ExecutionModelGenericModelConfigObject value) =>
         new(value);
@@ -665,6 +759,8 @@ public record class ExecutionModel : ModelBase
         }
         this.Switch(
             (vertexModelConfigObject) => vertexModelConfigObject.Validate(),
+            (azureEntraModelConfigObject) => azureEntraModelConfigObject.Validate(),
+            (azureApiKeyModelConfigObject) => azureApiKeyModelConfigObject.Validate(),
             (genericModelConfigObject) => genericModelConfigObject.Validate(),
             (_) => { }
         );
@@ -691,8 +787,10 @@ public record class ExecutionModel : ModelBase
         return this.Value switch
         {
             ExecutionModelVertexModelConfigObject _ => 0,
-            ExecutionModelGenericModelConfigObject _ => 1,
-            string _ => 2,
+            ExecutionModelAzureEntraModelConfigObject _ => 1,
+            ExecutionModelAzureApiKeyModelConfigObject _ => 2,
+            ExecutionModelGenericModelConfigObject _ => 3,
+            string _ => 4,
             _ => -1,
         };
     }
@@ -713,6 +811,42 @@ sealed class ExecutionModelConverter : JsonConverter<ExecutionModel>
                 element,
                 options
             );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObject>(
+                    element,
+                    options
+                );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObject>(
+                    element,
+                    options
+                );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -1924,6 +2058,977 @@ class ExecutionModelVertexModelConfigObjectProviderOptionsVertexFromRaw
 
 [JsonConverter(
     typeof(JsonModelConverter<
+        ExecutionModelAzureEntraModelConfigObject,
+        ExecutionModelAzureEntraModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureEntraModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Azure provider authentication configuration
+    /// </summary>
+    public required ExecutionModelAzureEntraModelConfigObjectAuth Auth
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExecutionModelAzureEntraModelConfigObjectAuth>(
+                "auth"
+            );
+        }
+        init { this._rawData.Set("auth", value); }
+    }
+
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required ExecutionModelAzureEntraModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExecutionModelAzureEntraModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Auth.Validate();
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public ExecutionModelAzureEntraModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObject(
+        ExecutionModelAzureEntraModelConfigObject executionModelAzureEntraModelConfigObject
+    )
+        : base(executionModelAzureEntraModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureEntraModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureEntraModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureEntraModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ExecutionModelAzureEntraModelConfigObjectFromRaw
+    : IFromRawJson<ExecutionModelAzureEntraModelConfigObject>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureEntraModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider authentication configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureEntraModelConfigObjectAuth,
+        ExecutionModelAzureEntraModelConfigObjectAuthFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureEntraModelConfigObjectAuth : JsonModel
+{
+    /// <summary>
+    /// Microsoft Entra ID bearer token for Azure OpenAI
+    /// </summary>
+    public required string Token
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
+    }
+
+    /// <summary>
+    /// Use a Microsoft Entra ID bearer token for authentication
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Token;
+        if (!JsonElement.DeepEquals(this.Type, JsonSerializer.SerializeToElement("azureEntraId")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+    }
+
+    public ExecutionModelAzureEntraModelConfigObjectAuth()
+    {
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObjectAuth(
+        ExecutionModelAzureEntraModelConfigObjectAuth executionModelAzureEntraModelConfigObjectAuth
+    )
+        : base(executionModelAzureEntraModelConfigObjectAuth) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureEntraModelConfigObjectAuth(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureEntraModelConfigObjectAuth(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureEntraModelConfigObjectAuthFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObjectAuth(string token)
+        : this()
+    {
+        this.Token = token;
+    }
+}
+
+class ExecutionModelAzureEntraModelConfigObjectAuthFromRaw
+    : IFromRawJson<ExecutionModelAzureEntraModelConfigObjectAuth>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureEntraModelConfigObjectAuth.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureEntraModelConfigObjectProviderOptions,
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureEntraModelConfigObjectProviderOptions : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptions(
+        ExecutionModelAzureEntraModelConfigObjectProviderOptions executionModelAzureEntraModelConfigObjectProviderOptions
+    )
+        : base(executionModelAzureEntraModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureEntraModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureEntraModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptions(
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class ExecutionModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<ExecutionModelAzureEntraModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureEntraModelConfigObjectProviderOptions.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure,
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure executionModelAzureEntraModelConfigObjectProviderOptionsAzure
+    )
+        : base(executionModelAzureEntraModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureApiKeyModelConfigObject,
+        ExecutionModelAzureApiKeyModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureApiKeyModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required ExecutionModelAzureApiKeyModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExecutionModelAzureApiKeyModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public ExecutionModelAzureApiKeyModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureApiKeyModelConfigObject(
+        ExecutionModelAzureApiKeyModelConfigObject executionModelAzureApiKeyModelConfigObject
+    )
+        : base(executionModelAzureApiKeyModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureApiKeyModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureApiKeyModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureApiKeyModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ExecutionModelAzureApiKeyModelConfigObjectFromRaw
+    : IFromRawJson<ExecutionModelAzureApiKeyModelConfigObject>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureApiKeyModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptions,
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureApiKeyModelConfigObjectProviderOptions : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptions(
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptions executionModelAzureApiKeyModelConfigObjectProviderOptions
+    )
+        : base(executionModelAzureApiKeyModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureApiKeyModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptions(
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<ExecutionModelAzureApiKeyModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureApiKeyModelConfigObjectProviderOptions.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure,
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure executionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    )
+        : base(executionModelAzureApiKeyModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
         ExecutionModelGenericModelConfigObject,
         ExecutionModelGenericModelConfigObjectFromRaw
     >)
@@ -2010,6 +3115,33 @@ public sealed record class ExecutionModelGenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider>? Provider
@@ -2039,6 +3171,7 @@ public sealed record class ExecutionModelGenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -2088,6 +3221,55 @@ class ExecutionModelGenericModelConfigObjectFromRaw
     public ExecutionModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ExecutionModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatConverter))]
+public enum ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" => ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses => "responses",
+                ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>
@@ -2220,6 +3402,8 @@ public record class AgentConfigModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ModelName,
+                azureEntraModelConfigObject: (x) => x.ModelName,
+                azureApiKeyModelConfigObject: (x) => x.ModelName,
                 genericModelConfigObject: (x) => x.ModelName,
                 @string: (_) => null
             );
@@ -2232,6 +3416,8 @@ public record class AgentConfigModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ApiKey,
+                azureEntraModelConfigObject: (_) => null,
+                azureApiKeyModelConfigObject: (x) => x.ApiKey,
                 genericModelConfigObject: (x) => x.ApiKey,
                 @string: (_) => null
             );
@@ -2244,6 +3430,8 @@ public record class AgentConfigModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.BaseUrl,
+                azureEntraModelConfigObject: (x) => x.BaseUrl,
+                azureApiKeyModelConfigObject: (x) => x.BaseUrl,
                 genericModelConfigObject: (x) => x.BaseUrl,
                 @string: (_) => null
             );
@@ -2252,6 +3440,24 @@ public record class AgentConfigModel : ModelBase
 
     public AgentConfigModel(
         AgentConfigModelVertexModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public AgentConfigModel(
+        AgentConfigModelAzureEntraModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public AgentConfigModel(
+        AgentConfigModelAzureApiKeyModelConfigObject value,
         JsonElement? element = null
     )
     {
@@ -2299,6 +3505,52 @@ public record class AgentConfigModel : ModelBase
     )
     {
         value = this.Value as AgentConfigModelVertexModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AgentConfigModelAzureEntraModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureEntraModelConfigObject(out var value)) {
+    ///     // `value` is of type `AgentConfigModelAzureEntraModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureEntraModelConfigObject(
+        [NotNullWhen(true)] out AgentConfigModelAzureEntraModelConfigObject? value
+    )
+    {
+        value = this.Value as AgentConfigModelAzureEntraModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AgentConfigModelAzureApiKeyModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureApiKeyModelConfigObject(out var value)) {
+    ///     // `value` is of type `AgentConfigModelAzureApiKeyModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureApiKeyModelConfigObject(
+        [NotNullWhen(true)] out AgentConfigModelAzureApiKeyModelConfigObject? value
+    )
+    {
+        value = this.Value as AgentConfigModelAzureApiKeyModelConfigObject;
         return value != null;
     }
 
@@ -2361,6 +3613,8 @@ public record class AgentConfigModel : ModelBase
     /// <code>
     /// instance.Switch(
     ///     (AgentConfigModelVertexModelConfigObject value) =&gt; {...},
+    ///     (AgentConfigModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (AgentConfigModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (AgentConfigModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -2369,6 +3623,8 @@ public record class AgentConfigModel : ModelBase
     /// </summary>
     public void Switch(
         System::Action<AgentConfigModelVertexModelConfigObject> vertexModelConfigObject,
+        System::Action<AgentConfigModelAzureEntraModelConfigObject> azureEntraModelConfigObject,
+        System::Action<AgentConfigModelAzureApiKeyModelConfigObject> azureApiKeyModelConfigObject,
         System::Action<AgentConfigModelGenericModelConfigObject> genericModelConfigObject,
         System::Action<string> @string
     )
@@ -2377,6 +3633,12 @@ public record class AgentConfigModel : ModelBase
         {
             case AgentConfigModelVertexModelConfigObject value:
                 vertexModelConfigObject(value);
+                break;
+            case AgentConfigModelAzureEntraModelConfigObject value:
+                azureEntraModelConfigObject(value);
+                break;
+            case AgentConfigModelAzureApiKeyModelConfigObject value:
+                azureApiKeyModelConfigObject(value);
                 break;
             case AgentConfigModelGenericModelConfigObject value:
                 genericModelConfigObject(value);
@@ -2407,6 +3669,8 @@ public record class AgentConfigModel : ModelBase
     /// <code>
     /// var result = instance.Match(
     ///     (AgentConfigModelVertexModelConfigObject value) =&gt; {...},
+    ///     (AgentConfigModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (AgentConfigModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (AgentConfigModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -2415,6 +3679,8 @@ public record class AgentConfigModel : ModelBase
     /// </summary>
     public T Match<T>(
         System::Func<AgentConfigModelVertexModelConfigObject, T> vertexModelConfigObject,
+        System::Func<AgentConfigModelAzureEntraModelConfigObject, T> azureEntraModelConfigObject,
+        System::Func<AgentConfigModelAzureApiKeyModelConfigObject, T> azureApiKeyModelConfigObject,
         System::Func<AgentConfigModelGenericModelConfigObject, T> genericModelConfigObject,
         System::Func<string, T> @string
     )
@@ -2422,6 +3688,10 @@ public record class AgentConfigModel : ModelBase
         return this.Value switch
         {
             AgentConfigModelVertexModelConfigObject value => vertexModelConfigObject(value),
+            AgentConfigModelAzureEntraModelConfigObject value => azureEntraModelConfigObject(value),
+            AgentConfigModelAzureApiKeyModelConfigObject value => azureApiKeyModelConfigObject(
+                value
+            ),
             AgentConfigModelGenericModelConfigObject value => genericModelConfigObject(value),
             string value => @string(value),
             _ => throw new StagehandInvalidDataException(
@@ -2432,6 +3702,14 @@ public record class AgentConfigModel : ModelBase
 
     public static implicit operator AgentConfigModel(
         AgentConfigModelVertexModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator AgentConfigModel(
+        AgentConfigModelAzureEntraModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator AgentConfigModel(
+        AgentConfigModelAzureApiKeyModelConfigObject value
     ) => new(value);
 
     public static implicit operator AgentConfigModel(
@@ -2460,6 +3738,8 @@ public record class AgentConfigModel : ModelBase
         }
         this.Switch(
             (vertexModelConfigObject) => vertexModelConfigObject.Validate(),
+            (azureEntraModelConfigObject) => azureEntraModelConfigObject.Validate(),
+            (azureApiKeyModelConfigObject) => azureApiKeyModelConfigObject.Validate(),
             (genericModelConfigObject) => genericModelConfigObject.Validate(),
             (_) => { }
         );
@@ -2486,8 +3766,10 @@ public record class AgentConfigModel : ModelBase
         return this.Value switch
         {
             AgentConfigModelVertexModelConfigObject _ => 0,
-            AgentConfigModelGenericModelConfigObject _ => 1,
-            string _ => 2,
+            AgentConfigModelAzureEntraModelConfigObject _ => 1,
+            AgentConfigModelAzureApiKeyModelConfigObject _ => 2,
+            AgentConfigModelGenericModelConfigObject _ => 3,
+            string _ => 4,
             _ => -1,
         };
     }
@@ -2508,6 +3790,42 @@ sealed class AgentConfigModelConverter : JsonConverter<AgentConfigModel>
                 element,
                 options
             );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObject>(
+                    element,
+                    options
+                );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObject>(
+                    element,
+                    options
+                );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -3722,6 +5040,978 @@ class AgentConfigModelVertexModelConfigObjectProviderOptionsVertexFromRaw
 
 [JsonConverter(
     typeof(JsonModelConverter<
+        AgentConfigModelAzureEntraModelConfigObject,
+        AgentConfigModelAzureEntraModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureEntraModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Azure provider authentication configuration
+    /// </summary>
+    public required AgentConfigModelAzureEntraModelConfigObjectAuth Auth
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AgentConfigModelAzureEntraModelConfigObjectAuth>(
+                "auth"
+            );
+        }
+        init { this._rawData.Set("auth", value); }
+    }
+
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required AgentConfigModelAzureEntraModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AgentConfigModelAzureEntraModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Auth.Validate();
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public AgentConfigModelAzureEntraModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObject(
+        AgentConfigModelAzureEntraModelConfigObject agentConfigModelAzureEntraModelConfigObject
+    )
+        : base(agentConfigModelAzureEntraModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureEntraModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureEntraModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureEntraModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class AgentConfigModelAzureEntraModelConfigObjectFromRaw
+    : IFromRawJson<AgentConfigModelAzureEntraModelConfigObject>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureEntraModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider authentication configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureEntraModelConfigObjectAuth,
+        AgentConfigModelAzureEntraModelConfigObjectAuthFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureEntraModelConfigObjectAuth : JsonModel
+{
+    /// <summary>
+    /// Microsoft Entra ID bearer token for Azure OpenAI
+    /// </summary>
+    public required string Token
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
+    }
+
+    /// <summary>
+    /// Use a Microsoft Entra ID bearer token for authentication
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Token;
+        if (!JsonElement.DeepEquals(this.Type, JsonSerializer.SerializeToElement("azureEntraId")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+    }
+
+    public AgentConfigModelAzureEntraModelConfigObjectAuth()
+    {
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObjectAuth(
+        AgentConfigModelAzureEntraModelConfigObjectAuth agentConfigModelAzureEntraModelConfigObjectAuth
+    )
+        : base(agentConfigModelAzureEntraModelConfigObjectAuth) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureEntraModelConfigObjectAuth(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureEntraModelConfigObjectAuth(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureEntraModelConfigObjectAuthFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObjectAuth(string token)
+        : this()
+    {
+        this.Token = token;
+    }
+}
+
+class AgentConfigModelAzureEntraModelConfigObjectAuthFromRaw
+    : IFromRawJson<AgentConfigModelAzureEntraModelConfigObjectAuth>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureEntraModelConfigObjectAuth.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptions,
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureEntraModelConfigObjectProviderOptions : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptions(
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptions agentConfigModelAzureEntraModelConfigObjectProviderOptions
+    )
+        : base(agentConfigModelAzureEntraModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureEntraModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureEntraModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptions(
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class AgentConfigModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<AgentConfigModelAzureEntraModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureEntraModelConfigObjectProviderOptions.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure,
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure agentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+    )
+        : base(agentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureApiKeyModelConfigObject,
+        AgentConfigModelAzureApiKeyModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureApiKeyModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public AgentConfigModelAzureApiKeyModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureApiKeyModelConfigObject(
+        AgentConfigModelAzureApiKeyModelConfigObject agentConfigModelAzureApiKeyModelConfigObject
+    )
+        : base(agentConfigModelAzureApiKeyModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureApiKeyModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureApiKeyModelConfigObject(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureApiKeyModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class AgentConfigModelAzureApiKeyModelConfigObjectFromRaw
+    : IFromRawJson<AgentConfigModelAzureApiKeyModelConfigObject>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureApiKeyModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions,
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions(
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions agentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+    )
+        : base(agentConfigModelAzureApiKeyModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions(
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure,
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure agentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    )
+        : base(agentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
         AgentConfigModelGenericModelConfigObject,
         AgentConfigModelGenericModelConfigObjectFromRaw
     >)
@@ -3808,6 +6098,33 @@ public sealed record class AgentConfigModelGenericModelConfigObject : JsonModel
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider>? Provider
@@ -3837,6 +6154,7 @@ public sealed record class AgentConfigModelGenericModelConfigObject : JsonModel
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -3888,6 +6206,56 @@ class AgentConfigModelGenericModelConfigObjectFromRaw
     public AgentConfigModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AgentConfigModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(typeof(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatConverter))]
+public enum AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" => AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" => AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses =>
+                    "responses",
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat => "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>

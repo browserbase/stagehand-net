@@ -22,10 +22,12 @@ public abstract record class ModelBase
         {
             new FrozenDictionaryConverterFactory(),
             new ApiEnumConverter<string, ModelConfigVertexModelConfigObjectAuthCredentialsType>(),
+            new ApiEnumConverter<string, ModelConfigGenericModelConfigObjectOpenAIEndpointFormat>(),
             new ApiEnumConverter<string, ModelConfigGenericModelConfigObjectProvider>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, StreamEventType>(),
             new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, OpenAIEndpointFormat>(),
             new ApiEnumConverter<string, Provider>(),
             new ApiEnumConverter<string, XStreamResponse>(),
             new ApiEnumConverter<string, SessionEndParamsXStreamResponse>(),
@@ -33,11 +35,19 @@ public abstract record class ModelBase
                 string,
                 ExecutionModelVertexModelConfigObjectAuthCredentialsType
             >(),
+            new ApiEnumConverter<
+                string,
+                ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+            >(),
             new ApiEnumConverter<string, ExecutionModelGenericModelConfigObjectProvider>(),
             new ApiEnumConverter<string, Mode>(),
             new ApiEnumConverter<
                 string,
                 AgentConfigModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<
+                string,
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
             >(),
             new ApiEnumConverter<string, AgentConfigModelGenericModelConfigObjectProvider>(),
             new ApiEnumConverter<string, AgentConfigProvider>(),
@@ -45,6 +55,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<
                 string,
                 SessionExtractParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<
+                string,
+                SessionExtractParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
             >(),
             new ApiEnumConverter<
                 string,
@@ -56,6 +70,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<
                 string,
                 SessionObserveParamsOptionsModelVertexModelConfigObjectAuthCredentialsType
+            >(),
+            new ApiEnumConverter<
+                string,
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
             >(),
             new ApiEnumConverter<
                 string,
