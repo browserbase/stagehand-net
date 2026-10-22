@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.22.0 (2026-07-25)
+
+Full Changelog: [v3.21.0...v3.22.0](https://github.com/browserbase/stagehand-net/compare/v3.21.0...v3.22.0)
+
+### Features
+
+* [STG-2090] Add Azure Entra model auth support ([889f962](https://github.com/browserbase/stagehand-net/commit/889f962499019bbe14fbb29e2d5bf6afdf096a99))
+* **server-v3:** expose OpenAI endpoint format ([eb515f8](https://github.com/browserbase/stagehand-net/commit/eb515f8aa3a8d6d508cc5e3d3c4f8e598744f57d))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([21b8d30](https://github.com/browserbase/stagehand-net/commit/21b8d30f5b2d75636d77521c9ebe255be396a756))
+
+
+### Bug Fixes
+
+* **client:** tolerate JSON null in required untyped fields and prefer more specific union variants ([0d81242](https://github.com/browserbase/stagehand-net/commit/0d81242a3cdd1980f72b98f4758be0e11b21583e))
+* **csharp:** resolve ambiguity in parsing query strings ([6a57880](https://github.com/browserbase/stagehand-net/commit/6a57880b0ecfbe79c5acc5e5a942df3d19494715))
+
 ## 3.21.0 (2026-05-29)
 
 Full Changelog: [v3.20.0...v3.21.0](https://github.com/browserbase/stagehand-net/compare/v3.20.0...v3.21.0)

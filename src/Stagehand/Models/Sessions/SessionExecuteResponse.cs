@@ -676,7 +676,7 @@ public sealed record class CacheEntry : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<JsonElement>("entry");
+            return this._rawData.GetNotAbsentElement("entry");
         }
         init { this._rawData.Set("entry", value); }
     }

@@ -426,6 +426,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ModelName,
+                azureEntraModelConfigObject: (x) => x.ModelName,
+                azureApiKeyModelConfigObject: (x) => x.ModelName,
                 genericModelConfigObject: (x) => x.ModelName,
                 @string: (_) => null
             );
@@ -438,6 +440,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.ApiKey,
+                azureEntraModelConfigObject: (_) => null,
+                azureApiKeyModelConfigObject: (x) => x.ApiKey,
                 genericModelConfigObject: (x) => x.ApiKey,
                 @string: (_) => null
             );
@@ -450,6 +454,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         {
             return Match<string?>(
                 vertexModelConfigObject: (x) => x.BaseUrl,
+                azureEntraModelConfigObject: (x) => x.BaseUrl,
+                azureApiKeyModelConfigObject: (x) => x.BaseUrl,
                 genericModelConfigObject: (x) => x.BaseUrl,
                 @string: (_) => null
             );
@@ -458,6 +464,24 @@ public record class SessionObserveParamsOptionsModel : ModelBase
 
     public SessionObserveParamsOptionsModel(
         SessionObserveParamsOptionsModelVertexModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObject value,
+        JsonElement? element = null
+    )
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value,
         JsonElement? element = null
     )
     {
@@ -505,6 +529,52 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     )
     {
         value = this.Value as SessionObserveParamsOptionsModelVertexModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="SessionObserveParamsOptionsModelAzureEntraModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureEntraModelConfigObject(out var value)) {
+    ///     // `value` is of type `SessionObserveParamsOptionsModelAzureEntraModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureEntraModelConfigObject(
+        [NotNullWhen(true)] out SessionObserveParamsOptionsModelAzureEntraModelConfigObject? value
+    )
+    {
+        value = this.Value as SessionObserveParamsOptionsModelAzureEntraModelConfigObject;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAzureApiKeyModelConfigObject(out var value)) {
+    ///     // `value` is of type `SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAzureApiKeyModelConfigObject(
+        [NotNullWhen(true)] out SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject? value
+    )
+    {
+        value = this.Value as SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject;
         return value != null;
     }
 
@@ -567,6 +637,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     /// <code>
     /// instance.Switch(
     ///     (SessionObserveParamsOptionsModelVertexModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (SessionObserveParamsOptionsModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -575,6 +647,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     /// </summary>
     public void Switch(
         System::Action<SessionObserveParamsOptionsModelVertexModelConfigObject> vertexModelConfigObject,
+        System::Action<SessionObserveParamsOptionsModelAzureEntraModelConfigObject> azureEntraModelConfigObject,
+        System::Action<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject> azureApiKeyModelConfigObject,
         System::Action<SessionObserveParamsOptionsModelGenericModelConfigObject> genericModelConfigObject,
         System::Action<string> @string
     )
@@ -583,6 +657,12 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         {
             case SessionObserveParamsOptionsModelVertexModelConfigObject value:
                 vertexModelConfigObject(value);
+                break;
+            case SessionObserveParamsOptionsModelAzureEntraModelConfigObject value:
+                azureEntraModelConfigObject(value);
+                break;
+            case SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value:
+                azureApiKeyModelConfigObject(value);
                 break;
             case SessionObserveParamsOptionsModelGenericModelConfigObject value:
                 genericModelConfigObject(value);
@@ -613,6 +693,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
     /// <code>
     /// var result = instance.Match(
     ///     (SessionObserveParamsOptionsModelVertexModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelAzureEntraModelConfigObject value) =&gt; {...},
+    ///     (SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value) =&gt; {...},
     ///     (SessionObserveParamsOptionsModelGenericModelConfigObject value) =&gt; {...},
     ///     (string value) =&gt; {...}
     /// );
@@ -625,6 +707,14 @@ public record class SessionObserveParamsOptionsModel : ModelBase
             T
         > vertexModelConfigObject,
         System::Func<
+            SessionObserveParamsOptionsModelAzureEntraModelConfigObject,
+            T
+        > azureEntraModelConfigObject,
+        System::Func<
+            SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject,
+            T
+        > azureApiKeyModelConfigObject,
+        System::Func<
             SessionObserveParamsOptionsModelGenericModelConfigObject,
             T
         > genericModelConfigObject,
@@ -635,6 +725,10 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         {
             SessionObserveParamsOptionsModelVertexModelConfigObject value =>
                 vertexModelConfigObject(value),
+            SessionObserveParamsOptionsModelAzureEntraModelConfigObject value =>
+                azureEntraModelConfigObject(value),
+            SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value =>
+                azureApiKeyModelConfigObject(value),
             SessionObserveParamsOptionsModelGenericModelConfigObject value =>
                 genericModelConfigObject(value),
             string value => @string(value),
@@ -646,6 +740,14 @@ public record class SessionObserveParamsOptionsModel : ModelBase
 
     public static implicit operator SessionObserveParamsOptionsModel(
         SessionObserveParamsOptionsModelVertexModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObject value
+    ) => new(value);
+
+    public static implicit operator SessionObserveParamsOptionsModel(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject value
     ) => new(value);
 
     public static implicit operator SessionObserveParamsOptionsModel(
@@ -674,6 +776,8 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         }
         this.Switch(
             (vertexModelConfigObject) => vertexModelConfigObject.Validate(),
+            (azureEntraModelConfigObject) => azureEntraModelConfigObject.Validate(),
+            (azureApiKeyModelConfigObject) => azureApiKeyModelConfigObject.Validate(),
             (genericModelConfigObject) => genericModelConfigObject.Validate(),
             (_) => { }
         );
@@ -700,8 +804,10 @@ public record class SessionObserveParamsOptionsModel : ModelBase
         return this.Value switch
         {
             SessionObserveParamsOptionsModelVertexModelConfigObject _ => 0,
-            SessionObserveParamsOptionsModelGenericModelConfigObject _ => 1,
-            string _ => 2,
+            SessionObserveParamsOptionsModelAzureEntraModelConfigObject _ => 1,
+            SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject _ => 2,
+            SessionObserveParamsOptionsModelGenericModelConfigObject _ => 3,
+            string _ => 4,
             _ => -1,
         };
     }
@@ -721,6 +827,42 @@ sealed class SessionObserveParamsOptionsModelConverter
         {
             var deserialized =
                 JsonSerializer.Deserialize<SessionObserveParamsOptionsModelVertexModelConfigObject>(
+                    element,
+                    options
+                );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<SessionObserveParamsOptionsModelAzureEntraModelConfigObject>(
+                    element,
+                    options
+                );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is StagehandInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized =
+                JsonSerializer.Deserialize<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject>(
                     element,
                     options
                 );
@@ -1967,6 +2109,999 @@ class SessionObserveParamsOptionsModelVertexModelConfigObjectProviderOptionsVert
 
 [JsonConverter(
     typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObject,
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureEntraModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Azure provider authentication configuration
+    /// </summary>
+    public required SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth Auth
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth>(
+                "auth"
+            );
+        }
+        init { this._rawData.Set("auth", value); }
+    }
+
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Auth.Validate();
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObject(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObject sessionObserveParamsOptionsModelAzureEntraModelConfigObject
+    )
+        : base(sessionObserveParamsOptionsModelAzureEntraModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureEntraModelConfigObject(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureEntraModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureEntraModelConfigObject>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelAzureEntraModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider authentication configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth,
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuthFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth
+    : JsonModel
+{
+    /// <summary>
+    /// Microsoft Entra ID bearer token for Azure OpenAI
+    /// </summary>
+    public required string Token
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
+    }
+
+    /// <summary>
+    /// Use a Microsoft Entra ID bearer token for authentication
+    /// </summary>
+    public JsonElement Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Token;
+        if (!JsonElement.DeepEquals(this.Type, JsonSerializer.SerializeToElement("azureEntraId")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+    }
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth()
+    {
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth sessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth
+    )
+        : base(sessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Type = JsonSerializer.SerializeToElement("azureEntraId");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuthFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth(string token)
+        : this()
+    {
+        this.Token = token;
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuthFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelAzureEntraModelConfigObjectAuth.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions,
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions sessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions
+    )
+        : base(sessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptions.FromRawUnchecked(
+            rawData
+        );
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure,
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure sessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure
+    )
+        : base(sessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelAzureEntraModelConfigObjectProviderOptionsAzure.FromRawUnchecked(
+            rawData
+        );
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject,
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject : JsonModel
+{
+    /// <summary>
+    /// Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+    /// </summary>
+    public required string ModelName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("modelName");
+        }
+        init { this._rawData.Set("modelName", value); }
+    }
+
+    /// <summary>
+    /// Azure OpenAI model provider
+    /// </summary>
+    public JsonElement Provider
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<JsonElement>("provider");
+        }
+        init { this._rawData.Set("provider", value); }
+    }
+
+    /// <summary>
+    /// Azure provider-specific model configuration
+    /// </summary>
+    public required SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions ProviderOptions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions>(
+                "providerOptions"
+            );
+        }
+        init { this._rawData.Set("providerOptions", value); }
+    }
+
+    /// <summary>
+    /// API key for the model provider
+    /// </summary>
+    public string? ApiKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiKey");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiKey", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the model provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the model provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ModelName;
+        if (!JsonElement.DeepEquals(this.Provider, JsonSerializer.SerializeToElement("azure")))
+        {
+            throw new StagehandInvalidDataException("Invalid value given for constant");
+        }
+        this.ProviderOptions.Validate();
+        _ = this.ApiKey;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+    }
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject()
+    {
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject sessionObserveParamsOptionsModelAzureApiKeyModelConfigObject
+    )
+        : base(sessionObserveParamsOptionsModelAzureApiKeyModelConfigObject) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+
+        this.Provider = JsonSerializer.SerializeToElement("azure");
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SessionObserveParamsOptionsModelAzureApiKeyModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Azure provider-specific model configuration
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions,
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI provider-specific settings
+    /// </summary>
+    public required SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure Azure
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                "azure"
+            );
+        }
+        init { this._rawData.Set("azure", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Azure.Validate();
+    }
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions sessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions
+    )
+        : base(sessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure azure
+    )
+        : this()
+    {
+        this.Azure = azure;
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptions.FromRawUnchecked(
+            rawData
+        );
+}
+
+/// <summary>
+/// Azure OpenAI provider-specific settings
+/// </summary>
+[JsonConverter(
+    typeof(JsonModelConverter<
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure,
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    >)
+)]
+public sealed record class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    : JsonModel
+{
+    /// <summary>
+    /// Azure OpenAI API version
+    /// </summary>
+    public string? ApiVersion
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apiVersion");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("apiVersion", value);
+        }
+    }
+
+    /// <summary>
+    /// Base URL for the Azure OpenAI provider
+    /// </summary>
+    public string? BaseUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("baseURL");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("baseURL", value);
+        }
+    }
+
+    /// <summary>
+    /// Custom headers sent with every request to the Azure OpenAI provider
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? Headers
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Azure OpenAI resource name
+    /// </summary>
+    public string? ResourceName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("resourceName");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("resourceName", value);
+        }
+    }
+
+    /// <summary>
+    /// Whether to use deployment-based Azure OpenAI URLs
+    /// </summary>
+    public bool? UseDeploymentBasedUrls
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("useDeploymentBasedUrls");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("useDeploymentBasedUrls", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ApiVersion;
+        _ = this.BaseUrl;
+        _ = this.Headers;
+        _ = this.ResourceName;
+        _ = this.UseDeploymentBasedUrls;
+    }
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure sessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+    )
+        : base(sessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure) { }
+#pragma warning restore CS8618
+
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure(
+        FrozenDictionary<string, JsonElement> rawData
+    )
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw.FromRawUnchecked"/>
+    public static SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzureFromRaw
+    : IFromRawJson<SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure>
+{
+    /// <inheritdoc/>
+    public SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) =>
+        SessionObserveParamsOptionsModelAzureApiKeyModelConfigObjectProviderOptionsAzure.FromRawUnchecked(
+            rawData
+        );
+}
+
+[JsonConverter(
+    typeof(JsonModelConverter<
         SessionObserveParamsOptionsModelGenericModelConfigObject,
         SessionObserveParamsOptionsModelGenericModelConfigObjectFromRaw
     >)
@@ -2053,6 +3188,36 @@ public sealed record class SessionObserveParamsOptionsModelGenericModelConfigObj
     }
 
     /// <summary>
+    /// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+    /// API; use chat for Chat Completions-only endpoints.
+    /// </summary>
+    public ApiEnum<
+        string,
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+    >? OpenAIEndpointFormat
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                ApiEnum<
+                    string,
+                    SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+                >
+            >("openaiEndpointFormat");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("openaiEndpointFormat", value);
+        }
+    }
+
+    /// <summary>
     /// AI provider for the model (or provide a baseURL endpoint instead)
     /// </summary>
     public ApiEnum<
@@ -2085,6 +3250,7 @@ public sealed record class SessionObserveParamsOptionsModelGenericModelConfigObj
         _ = this.ApiKey;
         _ = this.BaseUrl;
         _ = this.Headers;
+        this.OpenAIEndpointFormat?.Validate();
         this.Provider?.Validate();
     }
 
@@ -2138,6 +3304,61 @@ class SessionObserveParamsOptionsModelGenericModelConfigObjectFromRaw
     public SessionObserveParamsOptionsModelGenericModelConfigObject FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SessionObserveParamsOptionsModelGenericModelConfigObject.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API;
+/// use chat for Chat Completions-only endpoints.
+/// </summary>
+[JsonConverter(
+    typeof(SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormatConverter)
+)]
+public enum SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat
+{
+    Responses,
+    Chat,
+}
+
+sealed class SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormatConverter
+    : JsonConverter<SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat>
+{
+    public override SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "responses" =>
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses,
+            "chat" =>
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
+            _ => (SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Responses =>
+                    "responses",
+                SessionObserveParamsOptionsModelGenericModelConfigObjectOpenAIEndpointFormat.Chat =>
+                    "chat",
+                _ => throw new StagehandInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }
 
 /// <summary>

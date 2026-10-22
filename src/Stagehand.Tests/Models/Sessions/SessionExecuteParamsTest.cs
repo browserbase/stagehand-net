@@ -1750,6 +1750,52 @@ public class ExecutionModelTest : TestBase
     }
 
     [Fact]
+    public void AzureEntraModelConfigObjectValidationWorks()
+    {
+        ExecutionModel value = new ExecutionModelAzureEntraModelConfigObject()
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void AzureApiKeyModelConfigObjectValidationWorks()
+    {
+        ExecutionModel value = new ExecutionModelAzureApiKeyModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void GenericModelConfigObjectValidationWorks()
     {
         ExecutionModel value = new ExecutionModelGenericModelConfigObject()
@@ -1758,6 +1804,7 @@ public class ExecutionModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
@@ -1819,6 +1866,64 @@ public class ExecutionModelTest : TestBase
     }
 
     [Fact]
+    public void AzureEntraModelConfigObjectSerializationRoundtripWorks()
+    {
+        ExecutionModel value = new ExecutionModelAzureEntraModelConfigObject()
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void AzureApiKeyModelConfigObjectSerializationRoundtripWorks()
+    {
+        ExecutionModel value = new ExecutionModelAzureApiKeyModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
     public void GenericModelConfigObjectSerializationRoundtripWorks()
     {
         ExecutionModel value = new ExecutionModelGenericModelConfigObject()
@@ -1827,6 +1932,7 @@ public class ExecutionModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -3353,6 +3459,1314 @@ public class ExecutionModelVertexModelConfigObjectProviderOptionsVertexTest : Te
     }
 }
 
+public class ExecutionModelAzureEntraModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelAzureEntraModelConfigObjectAuth expectedAuth = new("x");
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        ExecutionModelAzureEntraModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, model.Auth);
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelAzureEntraModelConfigObjectAuth expectedAuth = new("x");
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        ExecutionModelAzureEntraModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, deserialized.Auth);
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelAzureEntraModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureEntraModelConfigObjectAuthTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string expectedToken = "x";
+        JsonElement expectedType = JsonSerializer.SerializeToElement("azureEntraId");
+
+        Assert.Equal(expectedToken, model.Token);
+        Assert.True(JsonElement.DeepEquals(expectedType, model.Type));
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectAuth>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectAuth>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedToken = "x";
+        JsonElement expectedType = JsonSerializer.SerializeToElement("azureEntraId");
+
+        Assert.Equal(expectedToken, deserialized.Token);
+        Assert.True(JsonElement.DeepEquals(expectedType, deserialized.Type));
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        ExecutionModelAzureEntraModelConfigObjectAuth copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureEntraModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, model.Azure);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, deserialized.Azure);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        ExecutionModelAzureEntraModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzureTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, model.ApiVersion);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, model.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, model.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, deserialized.ApiVersion);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, deserialized.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, deserialized.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure { };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        ExecutionModelAzureEntraModelConfigObjectProviderOptionsAzure copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureApiKeyModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        ExecutionModelAzureApiKeyModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, model.Azure);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, deserialized.Azure);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzureTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, model.ApiVersion);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, model.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, model.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, deserialized.ApiVersion);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, deserialized.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, deserialized.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure { };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        ExecutionModelAzureApiKeyModelConfigObjectProviderOptionsAzure copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
 public class ExecutionModelGenericModelConfigObjectTest : TestBase
 {
     [Fact]
@@ -3364,6 +4778,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -3371,6 +4786,11 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
             ExecutionModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -3385,6 +4805,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, model.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, model.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -3397,6 +4818,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -3418,6 +4840,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -3432,6 +4855,11 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, ExecutionModelGenericModelConfigObjectProvider> expectedProvider =
             ExecutionModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -3446,6 +4874,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, deserialized.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, deserialized.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -3458,6 +4887,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -3478,6 +4908,8 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -3504,6 +4936,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -3513,6 +4946,8 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -3528,6 +4963,7 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -3543,12 +4979,73 @@ public class ExecutionModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat = ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = ExecutionModelGenericModelConfigObjectProvider.OpenAI,
         };
 
         ExecutionModelGenericModelConfigObject copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class ExecutionModelGenericModelConfigObjectOpenAIEndpointFormatTest : TestBase
+{
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void Validation_Works(
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void SerializationRoundtrip_Works(
+        ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ExecutionModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -3720,6 +5217,52 @@ public class AgentConfigModelTest : TestBase
     }
 
     [Fact]
+    public void AzureEntraModelConfigObjectValidationWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelAzureEntraModelConfigObject()
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void AzureApiKeyModelConfigObjectValidationWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelAzureApiKeyModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void GenericModelConfigObjectValidationWorks()
     {
         AgentConfigModel value = new AgentConfigModelGenericModelConfigObject()
@@ -3728,6 +5271,8 @@ public class AgentConfigModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         value.Validate();
@@ -3790,6 +5335,64 @@ public class AgentConfigModelTest : TestBase
     }
 
     [Fact]
+    public void AzureEntraModelConfigObjectSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelAzureEntraModelConfigObject()
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void AzureApiKeyModelConfigObjectSerializationRoundtripWorks()
+    {
+        AgentConfigModel value = new AgentConfigModelAzureApiKeyModelConfigObject()
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModel>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
     public void GenericModelConfigObjectSerializationRoundtripWorks()
     {
         AgentConfigModel value = new AgentConfigModelGenericModelConfigObject()
@@ -3798,6 +5401,8 @@ public class AgentConfigModelTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -5337,6 +6942,1314 @@ public class AgentConfigModelVertexModelConfigObjectProviderOptionsVertexTest : 
     }
 }
 
+public class AgentConfigModelAzureEntraModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelAzureEntraModelConfigObjectAuth expectedAuth = new("x");
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, model.Auth);
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelAzureEntraModelConfigObjectAuth expectedAuth = new("x");
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedAuth, deserialized.Auth);
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObject
+        {
+            Auth = new("x"),
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelAzureEntraModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureEntraModelConfigObjectAuthTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string expectedToken = "x";
+        JsonElement expectedType = JsonSerializer.SerializeToElement("azureEntraId");
+
+        Assert.Equal(expectedToken, model.Token);
+        Assert.True(JsonElement.DeepEquals(expectedType, model.Type));
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectAuth>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectAuth>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedToken = "x";
+        JsonElement expectedType = JsonSerializer.SerializeToElement("azureEntraId");
+
+        Assert.Equal(expectedToken, deserialized.Token);
+        Assert.True(JsonElement.DeepEquals(expectedType, deserialized.Type));
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectAuth { Token = "x" };
+
+        AgentConfigModelAzureEntraModelConfigObjectAuth copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureEntraModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, model.Azure);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, deserialized.Azure);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzureTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, model.ApiVersion);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, model.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, model.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, deserialized.ApiVersion);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, deserialized.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, deserialized.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure { };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        AgentConfigModelAzureEntraModelConfigObjectProviderOptionsAzure copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureApiKeyModelConfigObjectTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedModelName, model.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, model.Provider));
+        Assert.Equal(expectedProviderOptions, model.ProviderOptions);
+        Assert.Equal(expectedApiKey, model.ApiKey);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObject>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObject>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedModelName = "openai/gpt-5.4-mini";
+        JsonElement expectedProvider = JsonSerializer.SerializeToElement("azure");
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions expectedProviderOptions = new(
+            new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            }
+        );
+        string expectedApiKey = "sk-some-openai-api-key";
+        string expectedBaseUrl = "https://api.openai.com/v1";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+
+        Assert.Equal(expectedModelName, deserialized.ModelName);
+        Assert.True(JsonElement.DeepEquals(expectedProvider, deserialized.Provider));
+        Assert.Equal(expectedProviderOptions, deserialized.ProviderOptions);
+        Assert.Equal(expectedApiKey, deserialized.ApiKey);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        Assert.Null(model.ApiKey);
+        Assert.False(model.RawData.ContainsKey("apiKey"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+
+            // Null should be interpreted as omitted for these properties
+            ApiKey = null,
+            BaseUrl = null,
+            Headers = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObject
+        {
+            ModelName = "openai/gpt-5.4-mini",
+            ProviderOptions = new(
+                new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure()
+                {
+                    ApiVersion = "2024-10-01-preview",
+                    BaseUrl = "https://example.com",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    ResourceName = "my-azure-openai-resource",
+                    UseDeploymentBasedUrls = true,
+                }
+            ),
+            ApiKey = "sk-some-openai-api-key",
+            BaseUrl = "https://api.openai.com/v1",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        AgentConfigModelAzureApiKeyModelConfigObject copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, model.Azure);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure expectedAzure = new()
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        Assert.Equal(expectedAzure, deserialized.Azure);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions
+        {
+            Azure = new()
+            {
+                ApiVersion = "2024-10-01-preview",
+                BaseUrl = "https://example.com",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                ResourceName = "my-azure-openai-resource",
+                UseDeploymentBasedUrls = true,
+            },
+        };
+
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptions copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzureTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, model.ApiVersion);
+        Assert.Equal(expectedBaseUrl, model.BaseUrl);
+        Assert.NotNull(model.Headers);
+        Assert.Equal(expectedHeaders.Count, model.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(model.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, model.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, model.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                json,
+                ModelBase.SerializerOptions
+            );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized =
+            JsonSerializer.Deserialize<AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        Assert.NotNull(deserialized);
+
+        string expectedApiVersion = "2024-10-01-preview";
+        string expectedBaseUrl = "https://example.com";
+        Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        string expectedResourceName = "my-azure-openai-resource";
+        bool expectedUseDeploymentBasedUrls = true;
+
+        Assert.Equal(expectedApiVersion, deserialized.ApiVersion);
+        Assert.Equal(expectedBaseUrl, deserialized.BaseUrl);
+        Assert.NotNull(deserialized.Headers);
+        Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
+        foreach (var item in expectedHeaders)
+        {
+            Assert.True(deserialized.Headers.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Headers[item.Key]);
+        }
+        Assert.Equal(expectedResourceName, deserialized.ResourceName);
+        Assert.Equal(expectedUseDeploymentBasedUrls, deserialized.UseDeploymentBasedUrls);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure { };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        Assert.Null(model.ApiVersion);
+        Assert.False(model.RawData.ContainsKey("apiVersion"));
+        Assert.Null(model.BaseUrl);
+        Assert.False(model.RawData.ContainsKey("baseURL"));
+        Assert.Null(model.Headers);
+        Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.ResourceName);
+        Assert.False(model.RawData.ContainsKey("resourceName"));
+        Assert.Null(model.UseDeploymentBasedUrls);
+        Assert.False(model.RawData.ContainsKey("useDeploymentBasedUrls"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            // Null should be interpreted as omitted for these properties
+            ApiVersion = null,
+            BaseUrl = null,
+            Headers = null,
+            ResourceName = null,
+            UseDeploymentBasedUrls = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure
+        {
+            ApiVersion = "2024-10-01-preview",
+            BaseUrl = "https://example.com",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            ResourceName = "my-azure-openai-resource",
+            UseDeploymentBasedUrls = true,
+        };
+
+        AgentConfigModelAzureApiKeyModelConfigObjectProviderOptionsAzure copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
 public class AgentConfigModelGenericModelConfigObjectTest : TestBase
 {
     [Fact]
@@ -5348,6 +8261,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -5355,6 +8270,11 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
             AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -5369,6 +8289,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, model.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, model.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, model.Provider);
     }
 
@@ -5381,6 +8302,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -5402,6 +8325,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -5416,6 +8341,11 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         string expectedApiKey = "sk-some-openai-api-key";
         string expectedBaseUrl = "https://api.openai.com/v1";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
+        ApiEnum<
+            string,
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat
+        > expectedOpenAIEndpointFormat =
+            AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat;
         ApiEnum<string, AgentConfigModelGenericModelConfigObjectProvider> expectedProvider =
             AgentConfigModelGenericModelConfigObjectProvider.OpenAI;
 
@@ -5430,6 +8360,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
 
             Assert.Equal(value, deserialized.Headers[item.Key]);
         }
+        Assert.Equal(expectedOpenAIEndpointFormat, deserialized.OpenAIEndpointFormat);
         Assert.Equal(expectedProvider, deserialized.Provider);
     }
 
@@ -5442,6 +8373,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
@@ -5462,6 +8395,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -5488,6 +8423,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -5497,6 +8433,8 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
         Assert.False(model.RawData.ContainsKey("baseURL"));
         Assert.Null(model.Headers);
         Assert.False(model.RawData.ContainsKey("headers"));
+        Assert.Null(model.OpenAIEndpointFormat);
+        Assert.False(model.RawData.ContainsKey("openaiEndpointFormat"));
         Assert.Null(model.Provider);
         Assert.False(model.RawData.ContainsKey("provider"));
     }
@@ -5512,6 +8450,7 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = null,
             BaseUrl = null,
             Headers = null,
+            OpenAIEndpointFormat = null,
             Provider = null,
         };
 
@@ -5527,12 +8466,74 @@ public class AgentConfigModelGenericModelConfigObjectTest : TestBase
             ApiKey = "sk-some-openai-api-key",
             BaseUrl = "https://api.openai.com/v1",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            OpenAIEndpointFormat =
+                AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat,
             Provider = AgentConfigModelGenericModelConfigObjectProvider.OpenAI,
         };
 
         AgentConfigModelGenericModelConfigObject copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormatTest : TestBase
+{
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void Validation_Works(
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<StagehandInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Responses)]
+    [InlineData(AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat.Chat)]
+    public void SerializationRoundtrip_Works(
+        AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat> value =
+            rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AgentConfigModelGenericModelConfigObjectOpenAIEndpointFormat>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 
